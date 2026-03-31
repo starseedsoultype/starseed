@@ -1,538 +1,753 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StarSeed Soul Typology — Interactive Flipbook</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>StarSeed Soul Typology</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: 'Cinzel'; font-display: swap; }
+@font-face { font-family: 'Cormorant Garamond'; font-display: swap; }
+@font-face { font-family: 'Raleway'; font-display: swap; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        :root {
-            --primary-dark: #0a0e27;
-            --primary-purple: #6b46c1;
-            --primary-gold: #d4af37;
-            --accent-violet: #a855f7;
-            --text-light: #e8e8f0;
-            --text-muted: #b0b0c0;
-        }
+:root {
+–W: clamp(280px, 88vw, 420px);
+–H: clamp(400px, 72vh, 580px);
+–gold: #c9a84c;
+–gold2: #e8c97a;
+–dust: #c8b4f0;
+–pale: #f0eaff;
+–rose: #d4a0b0;
+–teal: #7ececa;
+–flip-dur: 680ms;
+}
 
-        body {
-            font-family: 'Cormorant Garamond', 'Georgia', serif;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a3e 100%);
-            color: var(--text-light);
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+html, body {
+width: 100%; height: 100%;
+background: #03020c;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+overflow: hidden;
+font-family: ‘Raleway’, ‘Helvetica Neue’, sans-serif;
+touch-action: none;
+user-select: none;
+-webkit-user-select: none;
+}
 
-        .flipbook-container {
-            width: 100%;
-            height: 100vh;
-            max-width: 1200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-        }
+/* ── Cosmic background ── */
+.cosmos {
+position: fixed; inset: 0; pointer-events: none; z-index: 0;
+background:
+radial-gradient(ellipse 65% 45% at 15% 20%, rgba(28,4,55,0.9) 0%, transparent 60%),
+radial-gradient(ellipse 55% 65% at 85% 80%, rgba(8,20,65,0.75) 0%, transparent 60%),
+radial-gradient(ellipse 40% 40% at 50% 50%, rgba(5,3,15,0.5) 0%, transparent 70%),
+#03020c;
+}
+.cosmos::after {
+content: ‘’; position: absolute; inset: 0;
+background-image:
+radial-gradient(1.2px 1.2px at  7%  9%, rgba(255,255,255,.95) 0,transparent 100%),
+radial-gradient(1px   1px   at 19% 47%, rgba(255,255,255,.70) 0,transparent 100%),
+radial-gradient(1px   1px   at 33%  6%, rgba(255,255,255,.85) 0,transparent 100%),
+radial-gradient(1px   1px   at 53% 68%, rgba(255,255,255,.60) 0,transparent 100%),
+radial-gradient(1.2px 1.2px at 68% 15%, rgba(255,255,255,.90) 0,transparent 100%),
+radial-gradient(1px   1px   at 82% 42%, rgba(255,255,255,.75) 0,transparent 100%),
+radial-gradient(1px   1px   at 91% 85%, rgba(255,255,255,.80) 0,transparent 100%),
+radial-gradient(1px   1px   at 14% 78%, rgba(255,255,255,.55) 0,transparent 100%),
+radial-gradient(1px   1px   at 46% 33%, rgba(255,255,255,.65) 0,transparent 100%),
+radial-gradient(1px   1px   at 60% 88%, rgba(255,255,255,.70) 0,transparent 100%),
+radial-gradient(2px   2px   at 28% 22%, rgba(201,168,76,.55)  0,transparent 100%),
+radial-gradient(2px   2px   at 74% 58%, rgba(200,180,240,.45) 0,transparent 100%),
+radial-gradient(1px   1px   at  4% 38%, rgba(255,255,255,.60) 0,transparent 100%),
+radial-gradient(1px   1px   at 88% 18%, rgba(255,255,255,.80) 0,transparent 100%),
+radial-gradient(1px   1px   at 41% 92%, rgba(255,255,255,.50) 0,transparent 100%),
+radial-gradient(1.5px 1.5px at 57% 25%, rgba(200,180,240,.40) 0,transparent 100%),
+radial-gradient(1px   1px   at 76% 72%, rgba(255,255,255,.65) 0,transparent 100%),
+radial-gradient(1px   1px   at 23% 58%, rgba(255,255,255,.55) 0,transparent 100%);
+}
 
-        .page {
-            width: 100%;
-            height: 100%;
-            max-width: 800px;
-            max-height: 600px;
-            background: linear-gradient(135deg, rgba(107, 70, 193, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
-            border: 2px solid var(--primary-gold);
-            border-radius: 12px;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: absolute;
-            opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            pointer-events: none;
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
-            overflow-y: auto;
-        }
+/* ── Book scene ── */
+.scene {
+position: relative; z-index: 10;
+display: flex; flex-direction: column;
+align-items: center; gap: 30px;
+}
 
-        .page.active {
-            opacity: 1;
-            transform: translateX(0);
-            pointer-events: auto;
-            z-index: 10;
-        }
+/* Perspective wrapper — this is what makes 3D work */
+.book {
+position: relative;
+width: var(–W);
+height: var(–H);
+perspective: 1800px;
+perspective-origin: 50% 50%;
+}
 
-        .page.prev {
-            transform: translateX(-100%);
-        }
+/* Book drop shadow */
+.book::after {
+content: ‘’;
+position: absolute;
+bottom: -22px; left: 8%; right: 8%; height: 24px;
+background: radial-gradient(ellipse, rgba(0,0,0,.6) 0%, transparent 70%);
+filter: blur(7px);
+pointer-events: none;
+}
 
-        .page-number {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 14px;
-            color: var(--primary-gold);
-            opacity: 0.7;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
+/* ── Individual page ── */
+.page {
+position: absolute; inset: 0;
+width: var(–W); height: var(–H);
+transform-origin: left center;
+/* NOTE: no preserve-3d here — conflicts with overflow:hidden in Safari */
+border-radius: 3px 12px 12px 3px;
+overflow: hidden;
+transform: rotateY(0deg);
+transition: none;
+/* GPU acceleration hint */
+will-change: transform;
+-webkit-backface-visibility: hidden;
+backface-visibility: hidden;
+}
 
-        .page-title {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: var(--primary-gold);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
+/* Spine gradient */
+.page::before {
+content: ‘’;
+position: absolute; left: 0; top: 0; bottom: 0; width: 24px;
+background: linear-gradient(90deg, rgba(0,0,0,.6) 0%, rgba(255,255,255,.04) 55%, transparent 100%);
+z-index: 20; pointer-events: none;
+}
 
-        .page-subtitle {
-            font-size: 1.1em;
-            color: var(--accent-violet);
-            margin-bottom: 30px;
-            font-style: italic;
-            letter-spacing: 1px;
-        }
+/* Page turn shadow — visible during flip */
+.page-shadow {
+position: absolute; inset: 0;
+background: linear-gradient(90deg, transparent 70%, rgba(0,0,0,.35) 100%);
+opacity: 0;
+pointer-events: none;
+z-index: 19;
+border-radius: 3px 12px 12px 3px;
+}
 
-        .page-content {
-            font-size: 1em;
-            line-height: 1.8;
-            color: var(--text-light);
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
+/* Corner curl hint on current page */
+.page.is-current .page-shadow {
+background: linear-gradient(90deg, transparent 80%, rgba(0,0,0,.15) 100%);
+opacity: 1;
+}
 
-        .page-content::-webkit-scrollbar {
-            width: 6px;
-        }
+/* ── Flip animations ── */
+@keyframes flip-forward {
+0%   { transform: rotateY(0deg);     }
+45%  { transform: rotateY(-90deg);   }
+100% { transform: rotateY(-180deg);  }
+}
 
-        .page-content::-webkit-scrollbar-track {
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 3px;
-        }
+@keyframes flip-backward {
+0%   { transform: rotateY(-180deg);  }
+55%  { transform: rotateY(-90deg);   }
+100% { transform: rotateY(0deg);     }
+}
 
-        .page-content::-webkit-scrollbar-thumb {
-            background: var(--primary-gold);
-            border-radius: 3px;
-        }
+.page.flipping-fwd {
+animation: flip-forward var(–flip-dur) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.page.flipping-bwd {
+animation: flip-backward var(–flip-dur) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
-        .cover-page {
-            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, rgba(107, 70, 193, 0.05) 100%);
-        }
+/* Shadow sweeps during forward flip */
+@keyframes shadow-fwd {
+0%   { opacity: 0; background: linear-gradient(90deg, transparent 80%, rgba(0,0,0,.1) 100%); }
+45%  { opacity: 1; background: linear-gradient(90deg, rgba(0,0,0,.25) 0%, transparent 40%, rgba(0,0,0,.3) 100%); }
+100% { opacity: 0; }
+}
+.page.flipping-fwd .page-shadow { animation: shadow-fwd var(–flip-dur) ease forwards; }
 
-        .cover-page .page-title {
-            font-size: 3.5em;
-            margin-bottom: 10px;
-        }
+@keyframes shadow-bwd {
+0%   { opacity: 0; }
+45%  { opacity: 1; background: linear-gradient(90deg, rgba(0,0,0,.25) 0%, transparent 40%, rgba(0,0,0,.2) 100%); }
+100% { opacity: 0; }
+}
+.page.flipping-bwd .page-shadow { animation: shadow-bwd var(–flip-dur) ease forwards; }
 
-        .cover-page .page-subtitle {
-            font-size: 1.4em;
-            margin-bottom: 50px;
-        }
+/* ── Tap zones ── */
+.tap-fwd {
+position: absolute; right: 0; top: 0; bottom: 0; width: 64px;
+z-index: 30; cursor: pointer;
+display: flex; align-items: flex-end; justify-content: flex-end;
+padding: 12px;
+}
+.tap-bwd {
+position: absolute; left: 0; top: 0; bottom: 0; width: 64px;
+z-index: 30; cursor: pointer;
+}
 
-        .cover-page .page-content {
-            max-height: none;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-        }
+/* Animated corner fold */
+.corner-fold {
+width: 0; height: 0;
+border-style: solid;
+border-width: 0 0 32px 32px;
+border-color: transparent transparent rgba(201,168,76,.18) transparent;
+transition: all .25s ease;
+filter: drop-shadow(-2px -2px 4px rgba(201,168,76,.1));
+}
+.tap-fwd:hover .corner-fold {
+border-width: 0 0 44px 44px;
+border-color: transparent transparent rgba(201,168,76,.35) transparent;
+filter: drop-shadow(-3px -3px 8px rgba(201,168,76,.25));
+}
 
-        .navigation {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            z-index: 20;
-        }
+/* ── PAGE CONTENT SYSTEM ── */
+.pc {
+position: absolute; inset: 0;
+display: flex; flex-direction: column;
+padding: 36px 32px 26px 36px;
+overflow: hidden;
+}
 
-        .nav-button {
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--primary-gold);
-            background: rgba(107, 70, 193, 0.3);
-            color: var(--primary-gold);
-            cursor: pointer;
-            font-size: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
+/* Backgrounds */
+.bg-cover {
+background:
+radial-gradient(ellipse 85% 65% at 50% 38%, rgba(42,4,78,.97) 0%, transparent 62%),
+radial-gradient(ellipse 55% 85% at 78% 82%, rgba(9,22,68,.85) 0%, transparent 62%),
+linear-gradient(158deg, #08021e 0%, #120448 48%, #030818 100%);
+border: 1px solid rgba(201,168,76,.22);
+align-items: center; justify-content: center; text-align: center;
+padding: 40px 36px;
+}
+.bg-cover::after {
+content: ‘’; position: absolute; inset: 12px;
+border: 1px solid rgba(201,168,76,.08);
+border-radius: 10px; pointer-events: none;
+}
 
-        .nav-button:hover {
-            background: rgba(212, 175, 55, 0.2);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-            transform: scale(1.1);
-        }
+.bg-inner {
+background: linear-gradient(158deg, #0d0a28 0%, #060316 58%, #0f0b26 100%);
+border: 1px solid rgba(200,180,240,.065);
+}
 
-        .nav-button:active {
-            transform: scale(0.95);
-        }
+.bg-type {
+background: linear-gradient(158deg, #0b0922 0%, #050215 55%, #0d0b22 100%);
+border: 1px solid rgba(200,180,240,.055);
+}
 
-        .page-counter {
-            color: var(--primary-gold);
-            font-size: 14px;
-            min-width: 60px;
-            text-align: center;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
+.bg-cta {
+background:
+radial-gradient(ellipse 80% 55% at 50% 38%, rgba(42,4,78,.85) 0%, transparent 62%),
+linear-gradient(158deg, #0d0a28 0%, #060316 58%, #0f0b2e 100%);
+border: 1px solid rgba(201,168,76,.2);
+align-items: center; justify-content: center; text-align: center;
+padding: 40px 32px;
+}
 
-        .touch-hint {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            opacity: 0.6;
-            text-transform: uppercase;
-        }
+/* Group accent lines */
+.gr-r { border-top: 2px solid rgba(212,160,176,.45); }
+.gr-l { border-top: 2px solid rgba(200,180,240,.4); }
+.gr-e { border-top: 2px solid rgba(201,168,76,.45); }
+.gr-m { border-top: 2px solid rgba(126,206,202,.4); }
 
-        @media (max-width: 768px) {
-            .page {
-                padding: 40px 25px;
-                max-height: 70vh;
-            }
+/* Starfield for cover/cta */
+.pg-stars {
+position: absolute; inset: 0; pointer-events: none;
+background-image:
+radial-gradient(1px 1px at 11% 16%, rgba(255,255,255,.9) 0,transparent 100%),
+radial-gradient(1px 1px at 34%  8%, rgba(255,255,255,.7) 0,transparent 100%),
+radial-gradient(1px 1px at 67% 21%, rgba(255,255,255,.8) 0,transparent 100%),
+radial-gradient(1px 1px at 87% 13%, rgba(255,255,255,.6) 0,transparent 100%),
+radial-gradient(1px 1px at 21% 76%, rgba(255,255,255,.7) 0,transparent 100%),
+radial-gradient(1px 1px at 79% 71%, rgba(255,255,255,.8) 0,transparent 100%),
+radial-gradient(1.5px 1.5px at 44% 46%, rgba(201,168,76,.4) 0,transparent 100%),
+radial-gradient(1px 1px at 58% 88%, rgba(200,180,240,.35) 0,transparent 100%);
+}
 
-            .page-title {
-                font-size: 1.8em;
-                letter-spacing: 2px;
-            }
+/* ── Typography ── */
+.t-hdr {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: clamp(6px,1.5vw,7px); letter-spacing: 4px;
+color: rgba(201,168,76,.6); text-transform: uppercase;
+padding-bottom: 9px; margin-bottom: 14px;
+border-bottom: 1px solid rgba(201,168,76,.18);
+flex-shrink: 0;
+}
 
-            .page-subtitle {
-                font-size: 0.95em;
-            }
+.t-pg {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: clamp(6px,1.5vw,7px); letter-spacing: 3px;
+color: rgba(201,168,76,.5); text-align: center;
+margin-top: auto; padding-top: 10px; flex-shrink: 0;
+}
 
-            .page-content {
-                font-size: 0.95em;
-                line-height: 1.7;
-                max-height: 200px;
-            }
+.t-title {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: clamp(13px,3.5vw,16px); color: var(–pale);
+letter-spacing: 1px; margin-bottom: 8px; flex-shrink: 0; line-height: 1.3;
+}
 
-            .navigation {
-                bottom: 20px;
-                gap: 15px;
-            }
+.t-body {
+font-family: ‘Cormorant Garamond’, ‘Georgia’, serif; font-size: clamp(12px, 2.5vw, 13.5px);
+color: rgba(240,234,255,.96); line-height: 1.85;
+flex: 1;
+overflow-y: auto;
+overflow-x: hidden;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none; /* Firefox */
+-ms-overflow-style: none; /* IE */
+}
+.t-body::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
 
-            .nav-button {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
+.t-rule {
+width: 100%; height: 1px;
+background: linear-gradient(90deg, transparent, rgba(201,168,76,.35), transparent);
+flex-shrink: 0; margin: 11px 0;
+}
 
-            .page-counter {
-                font-size: 12px;
-                min-width: 50px;
-            }
+.t-quote {
+font-family: ‘Cormorant Garamond’, ‘Georgia’, serif; font-style: italic;
+font-size: clamp(12px,2.8vw,14px); color: #e8dcff; line-height: 1.85;
+text-align: center; flex-shrink: 0;
+}
 
-            .page-number {
-                top: 15px;
-                right: 20px;
-                font-size: 12px;
-            }
-        }
+.t-typenum {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: clamp(7px,1.8vw,7.5px); letter-spacing: 3.5px;
+color: rgba(201,168,76,.65); margin-bottom: 4px; flex-shrink: 0;
+}
 
-        @media (max-width: 480px) {
-            .page {
-                padding: 30px 15px;
-                max-height: 60vh;
-            }
+.t-name {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-weight: 700;
+font-size: clamp(15px,4.5vw,19px); color: var(–pale);
+letter-spacing: 2px; margin-bottom: 10px; flex-shrink: 0; line-height: 1.2;
+}
 
-            .page-title {
-                font-size: 1.4em;
-                margin-bottom: 15px;
-            }
+.t-glyph {
+font-size: 11px; letter-spacing: 7px;
+margin-bottom: 10px; flex-shrink: 0;
+display: block;
+}
 
-            .page-subtitle {
-                font-size: 0.85em;
-                margin-bottom: 20px;
-            }
+/* Cover elements */
+.cv-label {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: 7.5px; letter-spacing: 5px;
+color: rgba(201,168,76,.48); text-transform: uppercase;
+}
+.cv-orn {
+font-size: 10px; letter-spacing: 10px; color: rgba(201,168,76,.55);
+animation: pulse 5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.45;} 50%{opacity:.85; text-shadow:0 0 22px rgba(201,168,76,.5);} }
+.cv-rule { width: 90px; height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,.48),transparent); }
+.cv-title {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-weight: 700;
+font-size: clamp(20px,5.5vw,26px); color: var(–pale); letter-spacing: 2px; line-height: 1.25;
+text-shadow: 0 0 50px rgba(201,168,76,.2);
+}
+.cv-sub {
+font-family: ‘Cormorant Garamond’, serif; font-style: italic;
+font-size: 12.5px; color: var(–dust); opacity: .78; letter-spacing: .5px; line-height: 1.65;
+}
+.cv-meta {
+font-size: 8.5px; letter-spacing: 3px; color: rgba(200,180,240,.4);
+text-transform: uppercase; line-height: 2.1; margin-top: 2px;
+}
 
-            .page-content {
-                font-size: 0.85em;
-                max-height: 150px;
-            }
+/* TOC */
+.toc-sec {
+font-family: ‘Cinzel’, serif; font-size: 7px; letter-spacing: 3px;
+color: rgba(201,168,76,.48); text-transform: uppercase; margin: 9px 0 3px;
+}
+.toc-row {
+display: flex; align-items: baseline; gap: 5px;
+padding: 2.5px 0; border-bottom: 1px solid rgba(200,180,240,.04);
+}
+.toc-n { font-family: ‘Cormorant Garamond’, ‘Georgia’, serif; font-size: clamp(10px,2.5vw,11.5px); color: rgba(240,234,255,.92); flex: 1; }
+.toc-d { flex: 1; border-bottom: 1px dotted rgba(201,168,76,.16); margin: 0 3px; height: 1px; align-self: center; }
+.toc-p { font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: 7px; color: rgba(201,168,76,.65); letter-spacing: 1px; }
 
-            .navigation {
-                bottom: 15px;
-                gap: 10px;
-            }
+/* CTA */
+.cta-box {
+border: 1px solid rgba(201,168,76,.32); border-radius: 10px;
+padding: 13px 18px; background: rgba(201,168,76,.045); width: 88%; margin: 5px 0;
+}
+.cta-a { font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: 9.5px; letter-spacing: 2px; color: var(–gold); display: block; margin-bottom: 3px; }
+.cta-u { font-family: ‘Raleway’, sans-serif; font-size: 9px; color: rgba(200,180,240,.52); letter-spacing: .5px; }
+.cta-p { font-family: ‘Cormorant Garamond’, serif; font-size: 23px; font-weight: 600; color: var(–gold2); display: block; margin-top: 2px; }
 
-            .nav-button {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
+/* ── Nav ── */
+.nav {
+display: flex; align-items: center; gap: 20px;
+position: relative; z-index: 10;
+}
+.nbtn {
+background: none; border: 1px solid rgba(201,168,76,.26);
+color: var(–gold); font-family: ‘Cinzel’, ‘Palatino Linotype’, serif;
+font-size: 8.5px; letter-spacing: 3px; padding: 9px 22px;
+cursor: pointer; border-radius: 28px; transition: all .28s;
+text-transform: uppercase;
+}
+.nbtn:hover:not(:disabled) {
+background: rgba(201,168,76,.07);
+border-color: rgba(201,168,76,.5);
+box-shadow: 0 0 18px rgba(201,168,76,.1);
+}
+.nbtn:disabled { opacity: .18; cursor: default; }
+.ninfo {
+font-family: ‘Cinzel’, ‘Palatino Linotype’, serif; font-size: 7.5px; letter-spacing: 2px;
+color: rgba(201,168,76,.5); min-width: 95px; text-align: center;
+}
+.hint {
+font-family: ‘Raleway’, ‘Helvetica Neue’, sans-serif; font-size: 7.5px; letter-spacing: 2.5px;
+color: rgba(200,180,240,.3); text-transform: uppercase;
+position: relative; z-index: 10;
+}
 
-            .page-counter {
-                font-size: 11px;
-                min-width: 45px;
-            }
-        }
-    </style>
+/* Progress bar */
+.progress-wrap {
+position: relative; z-index: 10;
+width: var(–W);
+height: 2px;
+background: rgba(255,255,255,.06);
+border-radius: 2px;
+overflow: hidden;
+}
+.progress-bar {
+height: 100%;
+background: linear-gradient(90deg, rgba(201,168,76,.4), rgba(201,168,76,.8));
+border-radius: 2px;
+transition: width .4s ease;
+width: 0%;
+}
+</style>
+
 </head>
 <body>
-    <div class="touch-hint">← Swipe or Click to Navigate →</div>
+<div class="cosmos"></div>
 
-    <div class="flipbook-container">
-        <div id="pages-container"></div>
+<div class="scene">
+  <div class="book" id="book"></div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="pb"></div></div>
+  <div class="nav">
+    <button class="nbtn" id="bp" onclick="goBack()">← Back</button>
+    <div class="ninfo" id="ni">Cover</div>
+    <button class="nbtn" id="bn" onclick="goFwd()">Next →</button>
+  </div>
+  <div class="hint">Tap right edge · swipe · arrow keys</div>
+</div>
+
+<script>
+// ─────────────────────────────────────
+// PAGE DEFINITIONS
+// ─────────────────────────────────────
+function cover() {
+  return `<div class="pc bg-cover">
+    <div class="pg-stars"></div>
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;">
+      <div class="cv-label">The Book of Souls</div>
+      <div class="cv-orn">✦ ✧ ✦</div>
+      <div class="cv-rule"></div>
+      <div class="cv-title">StarSeed Soul<br>Typology</div>
+      <div class="cv-rule"></div>
+      <div class="cv-sub">24 Soul Types · A Map of Who You Are</div>
+      <div class="cv-meta">Olesya Popova · 2026</div>
     </div>
+  </div>`;
+}
 
-    <div class="navigation">
-        <button class="nav-button" id="prev-btn" onclick="previousPage()">‹</button>
-        <div class="page-counter"><span id="current-page">1</span> / <span id="total-pages">27</span></div>
-        <button class="nav-button" id="next-btn" onclick="nextPage()">›</button>
+function toc() {
+  return `<div class="pc bg-inner" style="padding:24px 26px 16px 30px;">
+    <div class="t-hdr">StarSeed Soul Typology</div>
+    <div class="t-title" style="font-size:13px;margin-bottom:8px;">Contents</div>
+    <div class="toc-row"><span class="toc-n">Introduction</span><span class="toc-d"></span><span class="toc-p">II</span></div>
+    <div style="height:4px;"></div>
+    <div class="toc-row"><span class="toc-n">Siriusian Souls</span><span class="toc-d"></span><span class="toc-p">01</span></div>
+    <div class="toc-row"><span class="toc-n">Pleiadian Souls</span><span class="toc-d"></span><span class="toc-p">02</span></div>
+    <div class="toc-row"><span class="toc-n">Lemurian Souls</span><span class="toc-d"></span><span class="toc-p">03</span></div>
+    <div class="toc-row"><span class="toc-n">Cassiopeian Souls</span><span class="toc-d"></span><span class="toc-p">04</span></div>
+    <div class="toc-row"><span class="toc-n">Procyonian Souls</span><span class="toc-d"></span><span class="toc-p">05</span></div>
+    <div class="toc-row"><span class="toc-n">Lyran Souls</span><span class="toc-d"></span><span class="toc-p">06</span></div>
+    <div class="toc-row"><span class="toc-n">Arcturian Souls</span><span class="toc-d"></span><span class="toc-p">07</span></div>
+    <div class="toc-row"><span class="toc-n">Orion Souls</span><span class="toc-d"></span><span class="toc-p">08</span></div>
+    <div class="toc-row"><span class="toc-n">Vegan Souls</span><span class="toc-d"></span><span class="toc-p">09</span></div>
+    <div class="toc-row"><span class="toc-n">Zeta Reticulan Souls</span><span class="toc-d"></span><span class="toc-p">10</span></div>
+    <div class="toc-row"><span class="toc-n">Epsilon Eridan Souls</span><span class="toc-d"></span><span class="toc-p">11</span></div>
+    <div class="toc-row"><span class="toc-n">Atlantean Souls</span><span class="toc-d"></span><span class="toc-p">12</span></div>
+    <div class="toc-row"><span class="toc-n">Andromedan Souls</span><span class="toc-d"></span><span class="toc-p">13</span></div>
+    <div class="toc-row"><span class="toc-n">Polarisian Souls</span><span class="toc-d"></span><span class="toc-p">14</span></div>
+    <div class="toc-row"><span class="toc-n">Nibiruan Souls</span><span class="toc-d"></span><span class="toc-p">15</span></div>
+    <div class="toc-row"><span class="toc-n">Egyptian · Titan · Blue Avian</span><span class="toc-d"></span><span class="toc-p">16–18</span></div>
+    <div class="toc-row"><span class="toc-n">Tau Cetian · Aldebaran · Centaurian</span><span class="toc-d"></span><span class="toc-p">19–21</span></div>
+    <div class="toc-row"><span class="toc-n">Herculean · Anunnaki · Hyperborean</span><span class="toc-d"></span><span class="toc-p">22–24</span></div>
+    <div class="toc-row"><span class="toc-n">Conclusion · Find Your Type</span><span class="toc-d"></span><span class="toc-p">XXV</span></div>
+    <div class="t-pg">I</div>
+  </div>`;
+}
+
+function intro() {
+  return `<div class="pc bg-inner" style="padding:28px 28px 20px 32px;overflow:hidden;">
+    <div class="t-hdr">Introduction</div>
+    <div class="t-quote" style="font-size:12.5px;margin-bottom:4px;">"If you want to find the secrets of the universe, think in terms of energy, frequency and vibration."</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(201,168,76,.8);text-align:right;margin-bottom:8px;padding-right:4px;letter-spacing:.5px;">— Nikola Tesla</div>
+    <div class="t-rule"></div>
+    <div class="t-body" style="font-size:12px;line-height:1.75;">
+      Imagine a map of the universe where every star system carries its own signature — its own way of organizing life, movement, connection, and creation. Not better or worse. Just different patterns of intelligence expressed in different forms.<br><br>
+      This book is built on that idea. Starseed Soul is a system of 24 distinct soul types, each representing a unique energetic blueprint. These types describe how you naturally experience the world, how you relate to others, how you make decisions, and where your natural strengths and challenges live.<br><br>
+      This is not personality typing. It goes deeper than behavior or habits. It speaks to the underlying structure of how you are wired on a soul level.<br><br>
+      Each type you are about to read is a mirror. Some will feel distant. One will land with a sense of clarity that is hard to ignore. Allow yourself to notice what resonates — you are not trying to fit into a category. You are recognizing a pattern that has already been present in your life.<br><br>
+      <span style="color:var(--dust);font-style:italic;">This is where your map begins.</span>
     </div>
+    <div class="t-pg">II</div>
+  </div>`;
+}
 
-    <script>
-        const pages = [
-            {
-                title: "StarSeed Soul Typology",
-                subtitle: "Interactive Flipbook",
-                content: "Discover your cosmic blueprint.<br><br>Remember who you are.<br><br><em>Swipe through the pages to explore all 24 soul types.</em>",
-                isCover: true
-            },
-            {
-                title: "Siriusian Souls",
-                subtitle: "The Relational Architects",
-                content: "You are the one who builds bridges between worlds. Your gift is in feeling the subtle currents between people—the unspoken needs, the hidden longings, the delicate balance of connection. You create belonging wherever you go, not through effort, but through your natural presence. Others sense your depth and find themselves drawn to your orbit. Your challenge is learning that not every disconnection is your responsibility to heal. Your strength lies in knowing when to hold space and when to step back."
-            },
-            {
-                title: "Pleiadian Souls",
-                subtitle: "The Grounded Connectors",
-                content: "You bridge the ethereal and the tangible. Your relationships are built on solid ground—trust, consistency, shared resources, and the practical care that proves love is real. You are the one who shows up. You build homes, not just houses. You create stability in the lives of those you love. Your gift is making the abstract feel real and the distant feel close. Your challenge is learning that love does not always require material proof. Sometimes presence alone is enough."
-            },
-            {
-                title: "Lemurian Souls",
-                subtitle: "The Passionate Connectors",
-                content: "You love with fire. Your relationships are alive with energy, desire, and the raw vitality of connection. You bring aliveness to those around you—your enthusiasm is contagious, your passion is magnetic. You do not do shallow connection; you dive deep into the emotional currents of intimacy. Your gift is awakening others to their own capacity to feel and want. Your challenge is learning that not everyone moves at your pace, and that is not a rejection—it is simply a different rhythm."
-            },
-            {
-                title: "Cassiopeian Souls",
-                subtitle: "The Analytical Connectors",
-                content: "You understand relationships through the lens of meaning and structure. You see the patterns beneath the surface—why people connect, what binds them, where the fractures lie. You are drawn to depth over breadth. Your relationships are built on intellectual resonance and shared understanding. You ask the hard questions because you care about truth. Your gift is bringing clarity to the murky waters of human connection. Your challenge is learning that not everything needs to be understood to be valued."
-            },
-            {
-                title: "Procyonian Souls",
-                subtitle: "The Resourceful Connectors",
-                content: "You are the one who takes care. Your love language is action—providing, protecting, ensuring those you care for have what they need to thrive. You build security through tangible means: money, shelter, stability. You are practical in your devotion. Your relationships are grounded in the real world, not in fantasy. Your gift is making others feel safe and provided for. Your challenge is learning that sometimes people need emotional presence more than material support."
-            },
-            {
-                title: "Lyran Souls",
-                subtitle: "The Visionary Connectors",
-                content: "You see the potential in others before they see it in themselves. Your connections are built on shared vision and mutual growth. You are drawn to people who challenge you, inspire you, and help you evolve. Your relationships are dynamic, never static. You bring clarity and direction to those around you. Your gift is helping others see their own light. Your challenge is learning that not everyone wants to be transformed, and that is okay."
-            },
-            {
-                title: "Arcturian Souls",
-                subtitle: "The Logical Architects",
-                content: "Your mind is your greatest gift. You see systems, patterns, and the underlying logic of how things work. You understand the world through reason and structure. Your creativity flows from your ability to synthesize complex information into elegant solutions. You are the strategist, the planner, the one who sees ten steps ahead. Your gift is bringing order to chaos. Your challenge is learning that not everything can be solved through logic alone—some things require intuition and faith."
-            },
-            {
-                title: "Orion Souls",
-                subtitle: "The Grounded Thinkers",
-                content: "You think with your feet on the ground. Your logic is practical, applied, rooted in the material world. You understand cause and effect through direct experience. You build systems that work in the real world, not just in theory. Your gift is translating abstract ideas into concrete action. You are the builder, the implementer, the one who makes things real. Your challenge is learning that sometimes the most important truths cannot be measured or quantified."
-            },
-            {
-                title: "Vegan Souls",
-                subtitle: "The Energetic Thinkers",
-                content: "Your mind is alive with possibility. You are drawn to big ideas, to the 'what if' questions that others overlook. Your thinking is expansive, creative, and often ahead of its time. You see connections others miss. Your gift is bringing new perspectives and innovative solutions. You inspire others to think differently. Your challenge is learning that not every idea needs to be pursued, and that completion matters as much as initiation."
-            },
-            {
-                title: "Zeta Reticulan Souls",
-                subtitle: "The Intuitive Analysts",
-                content: "You blend logic with intuition in a way that feels almost supernatural. You know things without knowing how you know them. Your analytical mind is guided by a deeper intelligence. You are the strategist with a sixth sense. Your gift is seeing through illusion to the truth beneath. You understand people and systems at a profound level. Your challenge is learning to trust your intuition even when it contradicts the evidence before you."
-            },
-            {
-                title: "Epsilon Eridan Souls",
-                subtitle: "The Practical Innovators",
-                content: "You are the bridge between theory and practice. Your logic is grounded in material reality, but your mind reaches for new possibilities. You understand how to build systems that are both efficient and innovative. Your gift is creating practical solutions to complex problems. You are the engineer, the architect, the one who makes the impossible possible. Your challenge is learning that sometimes imperfection is necessary for progress."
-            },
-            {
-                title: "Atlantean Souls",
-                subtitle: "The Relational Thinkers",
-                content: "Your logic is guided by your understanding of human nature. You think about how ideas affect people, how systems impact relationships. You are the strategist who never loses sight of the human element. Your gift is creating systems that serve people, not the other way around. Your challenge is learning that sometimes logic must override compassion, and that is not a betrayal."
-            },
-            {
-                title: "Andromedan Souls",
-                subtitle: "The Vital Catalysts",
-                content: "You are alive with purpose and desire. Your energy is magnetic—people are drawn to your vitality and your sense of direction. You know what you want and you pursue it with unwavering focus. Your gift is awakening others to their own power and potential. You are the initiator, the pioneer, the one who dares to want more. Your challenge is learning that not everyone shares your intensity, and that is not weakness."
-            },
-            {
-                title: "Polarisian Souls",
-                subtitle: "The Brilliant Catalysts",
-                content: "Your mind and your will are perfectly aligned. You have ideas and the drive to execute them. Your energy is directed toward creation and innovation. You are the visionary entrepreneur, the one who builds empires from nothing. Your gift is turning vision into reality through sheer force of will. Your challenge is learning that sometimes the slowest path is the most sustainable."
-            },
-            {
-                title: "Nibiruan Souls",
-                subtitle: "The Embodied Catalysts",
-                content: "Your energy is grounded in the physical world. You are driven to create, to build, to manifest your desires in material form. Your will is expressed through your hands, your body, your tangible creations. You are the artist, the craftsperson, the one who brings beauty into being. Your gift is making the invisible visible. Your challenge is learning that not all creation requires physical form."
-            },
-            {
-                title: "Egyptian Souls",
-                subtitle: "The Wise Catalysts",
-                content: "Your energy is guided by deep wisdom and understanding. You are driven to create meaning, to build systems of knowledge, to leave a legacy. Your will is expressed through teaching, through sharing what you know. You are the sage, the guide, the keeper of wisdom. Your gift is illuminating the path for others. Your challenge is learning that sometimes people must find their own way, even if you can see the destination."
-            },
-            {
-                title: "Mayan Souls",
-                subtitle: "The Grounded Visionaries",
-                content: "Your energy is rooted in the material world, but your vision reaches far beyond it. You are driven to create systems that work, that endure, that serve a greater purpose. Your will is expressed through building and manifesting. You are the architect of lasting change. Your gift is creating structures that support growth. Your challenge is learning that sometimes the best structures are the ones that allow for flexibility."
-            },
-            {
-                title: "Blue Avian Souls",
-                subtitle: "The Compassionate Catalysts",
-                content: "Your energy is guided by compassion and connection. You are driven to create harmony, to heal, to bring people together. Your will is expressed through service and care. You are the healer, the peacemaker, the one who sees the good in everyone. Your gift is awakening others to their capacity for love. Your challenge is learning that sometimes you must protect your own energy before you can help others."
-            },
-            {
-                title: "Tau Cetian Souls",
-                subtitle: "The Relational Manifestors",
-                content: "You manifest through connection. Your material world is built on relationships and the resources that flow through them. You are the networker, the connector, the one who builds wealth through people. Your gift is creating abundance through collaboration. Your challenge is learning that not all relationships are transactional, and that is where the deepest wealth lies."
-            },
-            {
-                title: "Aldebaran Souls",
-                subtitle: "The Logical Manifestors",
-                content: "You manifest through understanding. Your material world is built on systems, strategy, and clear thinking. You are the planner, the strategist, the one who builds wealth through intelligence. Your gift is creating order and efficiency. Your challenge is learning that sometimes the most valuable things cannot be planned or controlled."
-            },
-            {
-                title: "Centaurian Souls",
-                subtitle: "The Energetic Manifestors",
-                content: "You manifest through will and desire. Your material world is built on your ability to want something and make it real. You are the entrepreneur, the builder, the one who creates through sheer determination. Your gift is turning dreams into reality. Your challenge is learning that not everything worth having comes through force."
-            },
-            {
-                title: "Herculean Souls",
-                subtitle: "The Vital Builders",
-                content: "You are the one who builds through energy and action. Your material world is created through your willingness to work, to move, to do. You are the laborer, the creator, the one who makes things with your hands. Your gift is bringing things into being. Your challenge is learning that rest is not laziness—it is necessary for sustained creation."
-            },
-            {
-                title: "Anunnaki Souls",
-                subtitle: "The Powerful Manifestors",
-                content: "You manifest through power and presence. Your material world is built on your ability to command respect and resources. You are the leader, the authority, the one who shapes reality through will. Your gift is creating order and structure. Your challenge is learning that true power comes from service, not domination."
-            },
-            {
-                title: "Hyperborean Souls",
-                subtitle: "The Grounded Architects",
-                content: "You are the one who builds lasting structures. Your material world is created through patience, planning, and deep understanding. You are the architect, the craftsperson, the one who creates with precision. Your gift is building things that endure. Your challenge is learning that perfection is the enemy of progress, and that sometimes 'good enough' is exactly right."
-            },
-            {
-                title: "The Journey Continues",
-                subtitle: "Remember Your Truth",
-                content: "You have journeyed through the 24 cosmic blueprints. Each one carries a frequency, a gift, a challenge. You are not just one type—you are a constellation of energies, a unique expression of the cosmos.<br><br>The portal awaits your return.<br><br><em>starseedsoultype.github.io/starseed</em>"
-            }
-        ];
+function soulType(num, name, group, groupClass, glyphColor, glyphChar, body) {
+  return `<div class="pc bg-type ${groupClass}">
+    <div class="t-hdr">StarSeed Soul Typology</div>
+    <div class="t-typenum">Soul Type ${String(num).padStart(2,'0')}</div>
+    <div class="t-name">${name}</div>
+    <div class="t-glyph" style="color:${glyphColor}">${glyphChar}</div>
+    <div class="t-body">${body}</div>
+    <div class="t-pg">${String(num).padStart(2,'0')}</div>
+  </div>`;
+}
 
-        let currentPageIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
+function conclusion() {
+  return `<div class="pc bg-inner" style="padding:28px 28px 20px 32px;">
+    <div class="t-hdr">StarSeed Soul Typology</div>
+    <div style="text-align:center;font-size:10px;letter-spacing:8px;color:rgba(201,168,76,.38);margin-bottom:10px;">✦ ✧ ✦</div>
+    <div class="t-body" style="font-size:12.5px;line-height:1.8;">
+      Now you've seen the full map. Twenty four distinct patterns. Twenty four ways a soul can move through life, relate, decide, build, and experience reality.<br><br>
+      Some may have felt familiar. Some may have felt distant. And one likely stayed with you longer than the others. That is where your exploration begins.<br><br>
+      This system is not something you memorize. It is something you return to. The more you observe your life through this lens, the more clarity begins to appear. Patterns that once felt confusing start to make sense. Dynamics with other people become easier to navigate.<br><br>
+      There is no final point here. This is a tool for awareness, for recognition, for deeper understanding of yourself and the people around you. You can come back to it at different stages of your life and see new layers each time.<br><br>
+      <span style="color:var(--dust);font-style:italic;">If one of these types stayed with you, follow that thread. This is where your work with the system begins.</span>
+    </div>
+    <div class="t-pg">XXV</div>
+  </div>`;
+}
 
-        function initializePages() {
-            const container = document.getElementById('pages-container');
-            pages.forEach((page, index) => {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'page' + (page.isCover ? ' cover-page' : '');
-                if (index === 0) pageDiv.classList.add('active');
+function cta() {
+  return `<div class="pc bg-cta">
+    <div class="pg-stars"></div>
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0;width:100%;">
+      <div style="font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:4px;color:rgba(201,168,76,.45);text-transform:uppercase;margin-bottom:13px;">You have read the map</div>
+      <div style="font-family:'Cinzel',serif;font-size:21px;color:var(--pale);letter-spacing:2px;line-height:1.3;margin-bottom:9px;text-align:center;">Now Find<br>Your Place In It</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:var(--dust);opacity:.8;line-height:1.7;margin-bottom:16px;text-align:center;">28 questions. Your soul type revealed —<br>with its full cosmic portrait.</div>
+      <div class="cta-box">
+        <span class="cta-a">✦ Take the PORTAL Quiz</span>
+        <span class="cta-u">starseedsoultype.github.io/starseed</span>
+        <span class="cta-p">$11.11</span>
+      </div>
+      <div class="cta-box" style="margin-top:5px;padding:11px 16px;">
+        <span class="cta-a" style="font-size:8.5px;">Free · Twin Flame Guide</span>
+        <span class="cta-u">@starseedsoul.type · t.me/starseedsoul</span>
+      </div>
+      <div class="t-rule" style="width:65%;margin-top:15px;"></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10.5px;color:rgba(200,180,240,.38);margin-top:4px;">Olesya Popova · StarSeed Soul · 2026</div>
+    </div>
+  </div>`;
+}
 
-                pageDiv.innerHTML = `
-                    <div class="page-number">${index + 1} / ${pages.length}</div>
-                    <h1 class="page-title">${page.title}</h1>
-                    <p class="page-subtitle">${page.subtitle}</p>
-                    <div class="page-content">${page.content}</div>
-                `;
+const R = 'Group I — Relationships', L = 'Group II — Logic', E = 'Group III — Energy', M = 'Group IV — Matter';
+const RC = 'gr-r', LC = 'gr-l', EC = 'gr-e', MC = 'gr-m';
+const RC2 = 'var(--rose)', LC2 = 'var(--dust)', EC2 = 'var(--gold)', MC2 = 'var(--teal)';
+// decorative glyphs — no internal function symbols
+const RG = '✦ ✦ ✦', LG = '✧ ✧ ✧', EG = '✦ ✧ ✦', MG = '✧ ✦ ✧';
 
-                container.appendChild(pageDiv);
-            });
+const PAGES = [
+  { label: 'Cover',              html: cover() },
+  { label: 'Contents',           html: toc() },
+  { label: 'Introduction',       html: intro() },
 
-            document.getElementById('total-pages').textContent = pages.length;
-            updatePageCounter();
-        }
+  { label: 'Siriusian Souls', html: soulType(1, 'Siriusian Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized connection before it is spoken. You came from Sirius — a system where connection exists as a living field. What you carried here is the ability to feel people instantly.<br><br>You enter a space and immediately sense who is open, who is closed, where warmth lives. You simply know.<br><br>There is also a quiet current in you that deepens connection when people come closer. People open faster, conversations deepen, something begins to circulate between them. It happens because you are there.<br><br>At the same time, there is a part of you that keeps returning to the physical layer, adjusting it again and again — rethinking space, details, how your life is arranged, trying to align it with what you feel. This is your growth.`) },
 
-        function nextPage() {
-            if (currentPageIndex < pages.length - 1) {
-                currentPageIndex++;
-                updatePageDisplay();
-            }
-        }
+  { label: 'Pleiadian Souls', html: soulType(2, 'Pleiadian Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized closeness as something gentle, something that can be held, shaped, made real in the physical world. You came from Pleiades — a cluster where connection takes form, where care becomes tangible.<br><br>You care through actions, through space, through touch, through what you create for others. People feel safe around you without needing words. You make connection real.<br><br>You also move through the material layer with ease — creating comfort, organizing space, bringing things into form so others can live inside them. You build what people can feel.<br><br>At the same time, you keep returning to thoughts and meanings, as if something there needs to be clarified again and again. You revisit ideas, rethink explanations, question whether something truly makes sense. This is where you grow.`) },
 
-        function previousPage() {
-            if (currentPageIndex > 0) {
-                currentPageIndex--;
-                updatePageDisplay();
-            }
-        }
+  { label: 'Lemurian Souls', html: soulType(3, 'Lemurian Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized connection as something alive, something that moves and responds, something that cannot be fixed in place. You came from Lemuria — a field where connection flows as living presence.<br><br>You sense when connection is alive, when it fades, when it shifts, even before anything is said. You feel the change.<br><br>When connection deepens, your energy rises. You become more present, more engaged, more alive. You move through connection.<br><br>At the same time, you keep returning to understanding — rethinking conversations, replaying interactions, searching for clarity in what was said and what was felt. You also accept the physical world as it is given, adapting to the environment and continuing to move through connection rather than controlling the material layer. This is where you grow.`) },
 
-        function updatePageDisplay() {
-            const pageElements = document.querySelectorAll('.page');
-            pageElements.forEach((page, index) => {
-                page.classList.remove('active', 'prev');
-                if (index === currentPageIndex) {
-                    page.classList.add('active');
-                } else if (index < currentPageIndex) {
-                    page.classList.add('prev');
-                }
-            });
-            updatePageCounter();
-        }
+  { label: 'Cassiopeian Souls', html: soulType(4, 'Cassiopeian Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized connection as something structured, something that has its own invisible order. You came from Cassiopeia — a constellation where connection follows patterns that can be felt and understood at the same time.<br><br>You see how people relate, what holds them together, what breaks the link, what makes it stable. You understand connection.<br><br>You also naturally bring clarity — you explain dynamics, give structure to situations, help others see what is actually happening between them. You bring clarity.<br><br>At the same time, you keep returning to the physical layer, adjusting it, refining it, trying to make it fit what you understand. You revisit details, space, organization, trying to align the material world with the structure you see. This is where you grow.`) },
 
-        function updatePageCounter() {
-            document.getElementById('current-page').textContent = currentPageIndex + 1;
-        }
+  { label: 'Procyonian Souls', html: soulType(5, 'Procyonian Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized connection as something that becomes real through what is built, arranged, and given form. You came from Procyon — a system where connection takes shape through matter.<br><br>You show care through actions, through space, through what you create for others to live inside. You make connection tangible.<br><br>You also naturally move through the material world with ease — organizing space, creating comfort, making things work so people can rely on what you create. You hold the structure.<br><br>At the same time, there is a current in you that keeps returning to desire and movement, asking again and again what direction to take, what to want, where to go. You revisit choices, question your impulses, search for clarity in what moves you forward. This is where you grow.`) },
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextPage();
-            if (e.key === 'ArrowLeft') previousPage();
-        });
+  { label: 'Lyran Souls', html: soulType(6, 'Lyran Souls', R, RC, RC2, RG,
+    `There is something in you that has always recognized connection as something that carries meaning, something that can be understood as clearly as it can be felt. You came from Lyra — a constellation where connection and understanding move together as one field.<br><br>You sense what is happening between people and you can name it, explain it, give it form in words. You see and you know.<br><br>You also naturally bring clarity into the world — explaining, organizing, giving meaning to what others feel but cannot describe. You bring structure to experience.<br><br>At the same time, there is a current in you that keeps returning to desire and vitality, constantly asking what it wants, where it moves, how alive it feels. You revisit your impulses, question your direction, search for clarity in what energizes you. This is where you grow.`) },
 
-        // Touch/Swipe navigation
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
+  { label: 'Arcturian Souls', html: soulType(7, 'Arcturian Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized structure beneath everything, as if the world reveals its patterns to you before it reveals its surface. You came from Arcturus — a system where understanding exists as a stable field.<br><br>You understand systems, patterns, and connections between events without needing explanation. You see the structure.<br><br>There is also a current in you that moves as quiet vitality — when something aligns, you move with clarity, with calm force, without hesitation. You follow the flow of movement.<br><br>At the same time, you keep returning to the material layer, refining it, adjusting it, trying to make it precise. You revisit details, improve structures, refine how things are built and arranged. This is where you grow.`) },
 
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
+  { label: 'Orion Souls', html: soulType(8, 'Orion Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized the structure of reality before anything else, as if the world arranges itself into clear forms the moment you look at it. You came from Orion — a system where structure holds everything in place.<br><br>You understand how systems work, how decisions connect, how outcomes are formed. You see what holds.<br><br>You also naturally shape the physical world — organizing space, creating structure, making things practical and usable. You make it work.<br><br>At the same time, you keep returning to connection, trying to understand it, revisiting it, searching for clarity in how people relate. You rethink conversations, revisit interactions, try to understand what happened between you and others. This is where you grow.`) },
 
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchStartX - touchEndX > swipeThreshold) {
-                nextPage();
-            } else if (touchEndX - touchStartX > swipeThreshold) {
-                previousPage();
-            }
-        }
+  { label: 'Vegan Souls', html: soulType(9, 'Vegan Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized structure as something alive, as if understanding itself carries movement and direction within it. You came from Vega — a system where clarity and force exist together.<br><br>You understand how things work and you sense where they are going, almost at once. You see and you move.<br><br>There is also a current in you that rises when something makes sense — when you understand something, energy appears, decisions happen quickly, movement begins without delay. You act through understanding.<br><br>At the same time, you keep returning to connection, trying to understand it, searching for what is actually happening between people. You rethink interactions, replay conversations, try to understand what was felt and what was meant. This is where you grow.`) },
 
-        // Click navigation on page edges
-        document.addEventListener('click', (e) => {
-            const container = document.querySelector('.flipbook-container');
-            const rect = container.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
+  { label: 'Zeta Reticulan Souls', html: soulType(10, 'Zeta Reticulan Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized structure inside connection, as if every interaction carries a pattern that can be seen and understood. You came from Zeta Reticuli — a system where clarity lives inside contact.<br><br>You see what is happening between people, what drives it, what holds it together. You understand the link.<br><br>You also naturally express connection — entering it, shaping it, responding to it with ease, becoming part of the interaction as it unfolds. You participate in connection.<br><br>At the same time, there is a current in you that keeps returning to desire and movement, constantly asking where to go, what to choose, what direction to take. You revisit decisions, question impulses, search for clarity in what moves you forward. This is where you grow.`) },
 
-            if (clickX < rect.width / 3) {
-                previousPage();
-            } else if (clickX > (rect.width * 2) / 3) {
-                nextPage();
-            }
-        });
+  { label: 'Epsilon Eridan Souls', html: soulType(11, 'Epsilon Eridan Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized structure in the physical world, as if reality itself reveals how it should be arranged the moment you look at it. You came from Epsilon Eridani — a system where form and understanding are tightly woven.<br><br>You understand how things should be built, arranged, and organized so they function correctly. You see how it holds.<br><br>You also naturally move through the physical layer, shaping it, adjusting it, making it work with precision — organizing space, creating systems, bringing structure into what exists around you. You make it real.<br><br>At the same time, there is a current in you that keeps returning to desire and movement, asking what direction to take, what to want, where to move. You revisit decisions, question impulses, search for clarity in what moves you forward. This is where you grow.`) },
 
-        // Initialize on load
-        window.addEventListener('load', initializePages);
-    </script>
+  { label: 'Atlantean Souls', html: soulType(12, 'Atlantean Souls', L, LC, LC2, LG,
+    `There is something in you that has always recognized structure inside connection, as if every bond carries an internal order that can be seen and understood. You came from Atlantis — a field where intelligence and connection were woven into one system.<br><br>You see what is happening between people, what holds them together, what breaks the link. You understand the pattern.<br><br>You also naturally enter connection — responding to others, shaping interaction through presence and attention, becoming part of the dynamic as it unfolds. You are inside the interaction.<br><br>At the same time, you keep returning to the physical layer, adjusting it, refining it, trying to make it align with what you understand. You revisit details, space, structure, trying to make the material world match the clarity you see. This is where you grow.`) },
+
+  { label: 'Andromedan Souls', html: soulType(13, 'Andromedan Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt a clear inner charge, as if movement begins inside you before any reason appears. You came from Andromeda — a galaxy that carries direction within its own motion.<br><br>You enter a situation and something in you has already moved, already chosen a direction. You know where to go.<br><br>You also naturally form connection through action — you move and others follow, you act and connection forms around that movement. You bring people together.<br><br>At the same time, you keep returning to understanding, trying to make sense of things, revisiting ideas again and again. You rethink decisions, revisit explanations, search for a structure that fully makes sense. This is where you grow.`) },
+
+  { label: 'Polarisian Souls', html: soulType(14, 'Polarisian Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt like an inner axis, a steady direction that remains even when everything around you shifts. You came from Polaris — a star that holds orientation for everything that moves around it.<br><br>Even when situations change, something in you stays aligned, already knowing where it stands. You hold your direction.<br><br>You also naturally bring clarity — explaining, organizing, giving structure to what others experience but cannot articulate. You bring clarity.<br><br>At the same time, you keep returning to the material layer, adjusting it, refining it, trying to make it stable enough to match your inner direction. You revisit decisions about space, resources, and structure, trying to make them truly support your life. This is where you grow.`) },
+
+  { label: 'Nibiruan Souls', html: soulType(15, 'Nibiruan Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt like movement through form, as if desire and the physical world are already linked inside you. You came from Nibiru — a system where motion takes shape and shape begins to move.<br><br>When something appears inside you, it quickly becomes action, structure, something real. You move into form.<br><br>You also naturally build and arrange the physical world — organizing, creating, bringing things into existence so they can be used, lived in, relied on. You make it real.<br><br>At the same time, you keep returning to connection, trying to understand it, revisiting interactions, searching for clarity in what happens between people. You rethink conversations, replay moments, try to understand what was felt and what was meant. This is where you grow.`) },
+
+  { label: 'Egyptian Souls', html: soulType(16, 'Egyptian Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt like a directed current, a movement that carries intention and understanding at the same time. You came from Egypt — a field where will and knowledge were aligned into one line of force.<br><br>When something arises inside you, it already has direction, already knows where it goes. You move with purpose.<br><br>You also naturally bring structure and meaning — explaining, organizing, giving form to ideas so others can see what you see. You bring clarity.<br><br>At the same time, you keep returning to connection, trying to understand it, revisiting interactions, searching for what is happening between people. You replay conversations, rethink dynamics, try to understand what was felt and what was meant. This is where you grow.`) },
+
+  { label: 'Titan Souls', html: soulType(17, 'Titan Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt like a force that takes shape the moment it appears, as if what moves inside you is already becoming real. You came from Titan — an ancient field where creation begins as pressure and becomes form.<br><br>When something arises inside you, it quickly becomes structure, action, something that exists in the world. You bring force into form.<br><br>You also naturally work with the physical world — creating structures, arranging space, making things solid enough to last. You make it hold.<br><br>At the same time, you keep returning to understanding, trying to make sense of things, revisiting ideas again and again. You rethink explanations, revisit decisions, search for a structure that fully makes sense. This is where you grow.`) },
+
+  { label: 'Blue Avian Souls', html: soulType(18, 'Blue Avian Souls', E, EC, EC2, EG,
+    `There is something in you that has always felt like a clear current of movement that begins inside and immediately reaches toward connection. You came from Blue Avian — a field where awareness moves through relationship as one continuous flow.<br><br>When something moves inside you, it reaches outward, draws others in, creates contact without effort. You move toward people.<br><br>You also naturally enter connection — engaging, responding, and staying present in contact, allowing connection to shape itself through you. You are inside the exchange.<br><br>At the same time, you keep returning to the material layer, trying to make it stable, adjusting it, refining it so it can hold what you feel. You revisit space, resources, arrangements, trying to make them support your life and your connections. This is where you grow.`) },
+
+  { label: 'Tau Cetian Souls', html: soulType(19, 'Tau Cetian Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as a stable ground, as if form itself carries certainty and you can rely on it without questioning. You came from Tau Ceti — a system where reality holds its shape.<br><br>You trust what is real, what is built, what can be touched and lived in. You stand on what holds.<br><br>You also naturally form connection — entering it, responding to others, creating contact through presence and attention, building relationships through shared space and simple presence. You are with people.<br><br>At the same time, there is a current in you that keeps returning to desire and movement, constantly asking where to go, what to choose, what direction to take. You revisit impulses, question decisions, search for clarity in what moves you forward. This is where you grow.`) },
+
+  { label: 'Aldebaran Souls', html: soulType(20, 'Aldebaran Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as something ordered, as if form itself carries a structure that can be seen and relied on. You came from Aldebaran — a system where matter and clarity move together.<br><br>You understand how things should be built, organized, and held so they work correctly. You see the order.<br><br>You also naturally bring understanding — explaining, organizing, making sense of what is happening so it becomes clear and usable. You make it understandable.<br><br>At the same time, you keep returning to connection, trying to understand it, revisiting interactions, searching for what is happening between people. You rethink conversations, replay interactions, try to understand what was felt and what was meant. This is where you grow.`) },
+
+  { label: 'Centaurian Souls', html: soulType(21, 'Centaurian Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as something precise, as if reality reveals its structure the moment you engage with it. You came from Centaurus — a system where form and clarity move together in exact alignment.<br><br>You understand how systems, spaces, and structures need to be arranged so they function correctly. You see how it fits.<br><br>You also naturally bring understanding — organizing thoughts, explaining processes, making things understandable and usable. You make it clear.<br><br>At the same time, there is a current in you that keeps returning to desire and movement, constantly asking where to go and what to choose. You revisit impulses, question direction, search for clarity in what moves you forward. This is where you grow.`) },
+
+  { label: 'Herculean Souls', html: soulType(22, 'Herculean Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as something that responds to force, as if form itself changes when you apply yourself to it. You came from Hercules — a field where strength becomes reality.<br><br>When you engage with something, it shifts, it moves, it becomes what you make it. You change what is.<br><br>There is also a current in you that moves as direct vitality — when something appears inside you, you act on it, you move, you bring it into the world. You act with force.<br><br>At the same time, you keep returning to connection, trying to understand it, revisiting interactions, searching for what is happening between people. You rethink conversations, replay moments, try to understand what was felt and what was meant. This is where you grow.`) },
+
+  { label: 'Anunnaki Souls', html: soulType(23, 'Anunnaki Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as something that responds to force and direction, as if reality itself waits for someone to shape it. You came from Anunnaki — a field where form is guided and controlled with precision.<br><br>You see what needs to be built, changed, arranged, and you move it into place. You take control of form.<br><br>There is also a current in you that moves as clear drive — when something appears inside you, you act on it, you bring it into the world, you move things forward. You initiate movement.<br><br>At the same time, you keep returning to understanding, trying to make sense of things, revisiting ideas again and again. You rethink explanations, revisit decisions, search for a structure that fully makes sense. This is where you grow.`) },
+
+  { label: 'Hyperborean Souls', html: soulType(24, 'Hyperborean Souls', M, MC, MC2, MG,
+    `There is something in you that has always felt the physical world as a stable ground that holds connection within it, as if form itself carries the space where people meet. You came from Hyperborea — a field where reality and connection exist as one continuous layer.<br><br>You create environments where people can be together, where interaction feels supported by the space itself. You hold the space.<br><br>You also naturally form connection — entering it, responding to others, creating closeness through presence and attention, allowing connection to unfold naturally. You are with people.<br><br>At the same time, you keep returning to understanding, trying to make sense of things, revisiting ideas again and again. You rethink explanations, revisit decisions, search for a structure that fully makes sense. This is where you grow.`) },
+
+  { label: 'Conclusion', html: conclusion() },
+  { label: 'Find Your Type', html: cta() },
+];
+
+// ─────────────────────────────────────
+// ENGINE
+// ─────────────────────────────────────
+const book = document.getElementById('book');
+const N = PAGES.length;
+let cur = 0;
+let busy = false;
+
+// Build all pages
+const els = PAGES.map((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'page';
+  el.innerHTML = p.html + '<div class="page-shadow"></div>';
+
+  // Right-edge tap zone (forward)
+  const tf = document.createElement('div');
+  tf.className = 'tap-fwd';
+  tf.innerHTML = '<div class="corner-fold"></div>';
+  tf.addEventListener('click', e => { e.stopPropagation(); goFwd(); });
+  el.appendChild(tf);
+
+  // Left-edge tap zone (back) — not on cover
+  if (i > 0) {
+    const tb = document.createElement('div');
+    tb.className = 'tap-bwd';
+    tb.addEventListener('click', e => { e.stopPropagation(); goBack(); });
+    el.appendChild(tb);
+  }
+
+  book.appendChild(el);
+  return el;
+});
+
+function applyStack() {
+  els.forEach((el, i) => {
+    el.classList.remove('is-current', 'flipping-fwd', 'flipping-bwd');
+    if (i < cur) {
+      el.style.cssText = `transform:rotateY(-180deg); z-index:${i + 1}; transition:none;`;
+    } else if (i === cur) {
+      el.style.cssText = `transform:rotateY(0deg); z-index:50; transition:none;`;
+      el.classList.add('is-current');
+    } else {
+      el.style.cssText = `transform:rotateY(0deg); z-index:${N - i}; transition:none;`;
+    }
+  });
+  document.getElementById('ni').textContent = PAGES[cur].label;
+  document.getElementById('bp').disabled = cur === 0;
+  document.getElementById('bn').disabled = cur === N - 1;
+  // Update progress bar
+  document.getElementById('pb').style.width = (cur / (N - 1) * 100) + '%';
+}
+
+let busyTimer = null;
+
+function releaseBusy() {
+  busy = false;
+  if (busyTimer) { clearTimeout(busyTimer); busyTimer = null; }
+}
+
+function goFwd() {
+  if (cur >= N - 1 || busy) return;
+  busy = true;
+  // Safety: release busy after 1.2s no matter what
+  busyTimer = setTimeout(releaseBusy, 1200);
+
+  const flipping = els[cur];
+  const next = els[cur + 1];
+
+  next.style.cssText = `transform:rotateY(0deg); z-index:49; transition:none;`;
+  flipping.style.cssText = `transform:rotateY(0deg); z-index:60; transition:none;`;
+  flipping.classList.remove('is-current');
+
+  flipping.getBoundingClientRect();
+  flipping.classList.add('flipping-fwd');
+
+  setTimeout(() => {
+    cur++;
+    applyStack();
+    releaseBusy();
+  }, 700);
+}
+
+function goBack() {
+  if (cur <= 0 || busy) return;
+  busy = true;
+  busyTimer = setTimeout(releaseBusy, 1200);
+
+  cur--;
+  const unflipping = els[cur];
+
+  unflipping.style.cssText = `transform:rotateY(-180deg); z-index:60; transition:none;`;
+
+  unflipping.getBoundingClientRect();
+  unflipping.classList.add('flipping-bwd');
+
+  setTimeout(() => {
+    applyStack();
+    releaseBusy();
+  }, 700);
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goFwd();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goBack();
+});
+
+// Touch swipe
+let tx0 = 0;
+book.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
+book.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx0;
+  if (dx < -45) goFwd();
+  else if (dx > 45) goBack();
+}, { passive: true });
+
+// Init
+applyStack();
+</script>
+
 </body>
 </html>
