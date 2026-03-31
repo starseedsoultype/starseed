@@ -344,7 +344,7 @@
 <script>
 const PAGES = [
   {
-    cover: true,
+    cover: true, cta: false,
     title: 'StarSeed Soul Typology',
     subtitle: 'Interactive Flipbook',
     star: '✦',
@@ -355,29 +355,17 @@ const PAGES = [
     `
   },
   {
-    title: 'Table of Contents',
-    subtitle: 'The 24 Cosmic Blueprints',
+    title: 'Contents',
+    subtitle: 'All 24 Soul Types',
     star: '✦',
-    html: `
-      <div class="toc-grid" style="text-align: left; max-width: 400px; margin: 0 auto; font-size: 0.95rem; line-height: 1.8;">
-        <p style="color: var(--gold); margin-bottom: 8px; font-family: 'Cinzel', serif; font-size: 1.1em;">The Relational</p>
-        <p style="margin-bottom: 12px; color: rgba(232,232,240,0.85);">Siriusian • Pleiadian • Lemurian • Cassiopeian • Procyonian • Lyran</p>
-        
-        <p style="color: var(--gold); margin-bottom: 8px; font-family: 'Cinzel', serif; font-size: 1.1em;">The Logical</p>
-        <p style="margin-bottom: 12px; color: rgba(232,232,240,0.85);">Arcturian • Orion • Vegan • Zeta Reticulan • Epsilon Eridan • Atlantean</p>
-        
-        <p style="color: var(--gold); margin-bottom: 8px; font-family: 'Cinzel', serif; font-size: 1.1em;">The Energetic</p>
-        <p style="margin-bottom: 12px; color: rgba(232,232,240,0.85);">Andromedan • Polarisian • Nibiruan • Egyptian • Titan • Blue Avian</p>
-        
-        <p style="color: var(--gold); margin-bottom: 8px; font-family: 'Cinzel', serif; font-size: 1.1em;">The Material</p>
-        <p style="margin-bottom: 0; color: rgba(232,232,240,0.85);">Tau Cetian • Aldebaran • Centaurian • Herculean • Anunnaki • Hyperborean</p>
-      </div>
-    `
+    toc: true,
+    html: `<div id="toc-list"></div>`
   },
   {
     title: 'The System',
     subtitle: 'By Olesya Popova',
     star: '✦',
+    about: true,
     html: `
       <p class="intro">StarSeed Soul Typology is born from a deep remembering. It is not just a system of categorization, but a map of your cosmic blueprint.</p>
       <div class="section-divider"></div>
@@ -1044,6 +1032,32 @@ PAGES.forEach((p, i) => {
   page.appendChild(body);
   stageEl.appendChild(page);
 });
+
+// Build TOC dynamically
+const tocListEl = document.getElementById('toc-list');
+if (tocListEl) {
+  // Find indices of soul type pages (skip cover, toc, about, cta)
+  const soulTypes = PAGES
+    .map((p, i) => ({ p, i }))
+    .filter(({ p }) => !p.cover && !p.toc && !p.cta && !p.about);
+
+  const tocHTML = soulTypes.map(({ p, i }) => {
+    const num = i + 1;
+    return `<div class="toc-item" onclick="show(${i})" style="
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 7px 0; border-bottom: 1px solid rgba(255,215,0,0.1);
+      cursor:pointer; transition: color 0.2s;
+    ">
+      <span style="color: var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.5px;">${p.title.replace(' Souls','')}</span>
+      <span style="color: rgba(232,232,240,0.4); font-size:0.8rem; font-family:'Raleway',sans-serif; letter-spacing:1px;">${num}</span>
+    </div>`;
+  }).join('');
+
+  tocListEl.innerHTML = `
+    <div style="font-size:0.75rem; letter-spacing:2px; color:rgba(232,232,240,0.4); font-family:'Raleway',sans-serif; text-transform:uppercase; margin-bottom:12px;">Tap a name to jump directly</div>
+    ${tocHTML}
+  `;
+}
 
 // Build dots
 PAGES.forEach((_, i) => {
