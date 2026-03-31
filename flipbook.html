@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -420,6 +421,12 @@ width: 0%;
   <style>body{color:white;font-family:serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#03020c;}</style>
   <p style="text-align:center;font-size:18px;">Please enable JavaScript to view the StarSeed Soul Typology flipbook.</p>
 </noscript>
+
+<div id="diag" style="position:fixed;top:10px;left:10px;z-index:9999;
+  background:rgba(201,168,76,0.9);color:#000;padding:8px 12px;
+  font-family:monospace;font-size:11px;border-radius:6px;display:none;">
+  JS running...
+</div>
 <div class="cosmos"></div>
 
 <div class="scene">
@@ -435,7 +442,17 @@ width: 0%;
 </div>
 
 <script>
-// ─────────────────────────────────────
+
+// DIAGNOSTIC
+document.getElementById('diag').style.display = 'block';
+document.getElementById('diag').textContent = 'JS started';
+window.onerror = function(msg, src, line, col, err) {
+  var d = document.getElementById('diag');
+  d.style.display = 'block';
+  d.style.background = 'rgba(255,50,50,0.95)';
+  d.textContent = 'ERROR line ' + line + ': ' + msg;
+  return true;
+};
 // PAGE DEFINITIONS
 // ─────────────────────────────────────
 function cover() {
@@ -680,6 +697,7 @@ function applyStack() {
     }
   });
   document.getElementById('ni').textContent = PAGES[cur].label;
+  document.getElementById('diag').textContent = 'OK: ' + (cur+1) + '/' + N + ' pages';
   document.getElementById('bp').disabled = cur === 0;
   document.getElementById('bn').disabled = cur === N - 1;
   // Update progress bar
