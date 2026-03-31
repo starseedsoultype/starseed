@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>StarSeed Soul Typology</title>
+<title>StarSeed Soul Typology v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 @font-face { font-family: 'Cinzel'; font-display: swap; }
@@ -415,6 +415,11 @@ width: 0%;
 
 </head>
 <body>
+
+<noscript>
+  <style>body{color:white;font-family:serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#03020c;}</style>
+  <p style="text-align:center;font-size:18px;">Please enable JavaScript to view the StarSeed Soul Typology flipbook.</p>
+</noscript>
 <div class="cosmos"></div>
 
 <div class="scene">
@@ -745,8 +750,12 @@ book.addEventListener('touchend',   e => {
   else if (dx > 45) goBack();
 }, { passive: true });
 
-// Init
-applyStack();
+// Init — wrapped in rAF to guarantee DOM is painted before we measure
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    applyStack();
+  });
+});
 </script>
 
 </body>
