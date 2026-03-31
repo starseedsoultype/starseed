@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -79,8 +78,8 @@ align-items: center; gap: 30px;
 /* Perspective wrapper — this is what makes 3D work */
 .book {
 position: relative;
-width: var(–W);
-height: var(–H);
+width: var(–W, 360px);
+height: var(–H, 520px);
 perspective: 1800px;
 perspective-origin: 50% 50%;
 }
@@ -98,11 +97,12 @@ pointer-events: none;
 /* ── Individual page ── */
 .page {
 position: absolute; inset: 0;
-width: var(–W); height: var(–H);
+width: var(–W, 360px); height: var(–H, 520px);
 transform-origin: left center;
 /* NOTE: no preserve-3d here — conflicts with overflow:hidden in Safari */
 border-radius: 3px 12px 12px 3px;
 overflow: hidden;
+background: #0a0820;
 transform: rotateY(0deg);
 transition: none;
 /* GPU acceleration hint */
@@ -203,6 +203,7 @@ position: absolute; inset: 0;
 display: flex; flex-direction: column;
 padding: 36px 32px 26px 36px;
 overflow: hidden;
+z-index: 1;
 }
 
 /* Backgrounds */
@@ -399,7 +400,7 @@ position: relative; z-index: 10;
 /* Progress bar */
 .progress-wrap {
 position: relative; z-index: 10;
-width: var(–W);
+width: var(–W, 360px);
 height: 2px;
 background: rgba(255,255,255,.06);
 border-radius: 2px;
@@ -421,12 +422,6 @@ width: 0%;
   <style>body{color:white;font-family:serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#03020c;}</style>
   <p style="text-align:center;font-size:18px;">Please enable JavaScript to view the StarSeed Soul Typology flipbook.</p>
 </noscript>
-
-<div id="diag" style="position:fixed;top:10px;left:10px;z-index:9999;
-  background:rgba(201,168,76,0.9);color:#000;padding:8px 12px;
-  font-family:monospace;font-size:11px;border-radius:6px;display:none;">
-  JS running...
-</div>
 <div class="cosmos"></div>
 
 <div class="scene">
@@ -442,21 +437,11 @@ width: 0%;
 </div>
 
 <script>
-
-// DIAGNOSTIC
-document.getElementById('diag').style.display = 'block';
-document.getElementById('diag').textContent = 'JS started';
-window.onerror = function(msg, src, line, col, err) {
-  var d = document.getElementById('diag');
-  d.style.display = 'block';
-  d.style.background = 'rgba(255,50,50,0.95)';
-  d.textContent = 'ERROR line ' + line + ': ' + msg;
-  return true;
-};
+// ─────────────────────────────────────
 // PAGE DEFINITIONS
 // ─────────────────────────────────────
 function cover() {
-  return `<div class="pc bg-cover">
+  return `<div class="pc" style="background:radial-gradient(ellipse 85% 65% at 50% 38%,rgba(42,4,78,.97) 0%,transparent 62%),linear-gradient(158deg,#08021e 0%,#120448 48%,#030818 100%);border:1px solid rgba(201,168,76,.22);align-items:center;justify-content:center;text-align:center;padding:40px 36px;">
     <div class="pg-stars"></div>
     <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px;">
       <div class="cv-label">The Book of Souls</div>
@@ -471,7 +456,7 @@ function cover() {
 }
 
 function toc() {
-  return `<div class="pc bg-inner" style="padding:24px 26px 16px 30px;">
+  return `<div class="pc" style="background:linear-gradient(158deg,#0d0a28 0%,#060316 58%,#0f0b26 100%);border:1px solid rgba(200,180,240,.065);" style="padding:24px 26px 16px 30px;">
     <div class="t-hdr">StarSeed Soul Typology</div>
     <div class="t-title" style="font-size:13px;margin-bottom:8px;">Contents</div>
     <div class="toc-row"><span class="toc-n">Introduction</span><span class="toc-d"></span><span class="toc-p">II</span></div>
@@ -500,7 +485,7 @@ function toc() {
 }
 
 function intro() {
-  return `<div class="pc bg-inner" style="padding:28px 28px 20px 32px;overflow:hidden;">
+  return `<div class="pc" style="background:linear-gradient(158deg,#0d0a28 0%,#060316 58%,#0f0b26 100%);border:1px solid rgba(200,180,240,.065);" style="padding:28px 28px 20px 32px;overflow:hidden;">
     <div class="t-hdr">Introduction</div>
     <div class="t-quote" style="font-size:12.5px;margin-bottom:4px;">"If you want to find the secrets of the universe, think in terms of energy, frequency and vibration."</div>
     <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(201,168,76,.8);text-align:right;margin-bottom:8px;padding-right:4px;letter-spacing:.5px;">— Nikola Tesla</div>
@@ -517,7 +502,10 @@ function intro() {
 }
 
 function soulType(num, name, group, groupClass, glyphColor, glyphChar, body) {
-  return `<div class="pc bg-type ${groupClass}">
+  const borderColors = {'gr-r':'rgba(212,160,176,.45)','gr-l':'rgba(200,180,240,.4)','gr-e':'rgba(201,168,76,.45)','gr-m':'rgba(126,206,202,.4)'};
+  const bc = borderColors[groupClass] || 'rgba(200,180,240,.4)';
+  const bg = 'background:linear-gradient(158deg,#0b0922 0%,#050215 55%,#0d0b22 100%);border:1px solid rgba(200,180,240,.055);border-top:2px solid ' + bc + ';';
+  return `<div class="pc" style="${bg}">
     <div class="t-hdr">StarSeed Soul Typology</div>
     <div class="t-typenum">Soul Type ${String(num).padStart(2,'0')}</div>
     <div class="t-name">${name}</div>
@@ -528,7 +516,7 @@ function soulType(num, name, group, groupClass, glyphColor, glyphChar, body) {
 }
 
 function conclusion() {
-  return `<div class="pc bg-inner" style="padding:28px 28px 20px 32px;">
+  return `<div class="pc" style="background:linear-gradient(158deg,#0d0a28 0%,#060316 58%,#0f0b26 100%);border:1px solid rgba(200,180,240,.065);" style="padding:28px 28px 20px 32px;">
     <div class="t-hdr">StarSeed Soul Typology</div>
     <div style="text-align:center;font-size:10px;letter-spacing:8px;color:rgba(201,168,76,.38);margin-bottom:10px;">✦ ✧ ✦</div>
     <div class="t-body" style="font-size:12.5px;line-height:1.8;">
@@ -543,7 +531,7 @@ function conclusion() {
 }
 
 function cta() {
-  return `<div class="pc bg-cta">
+  return `<div class="pc" style="background:radial-gradient(ellipse 80% 55% at 50% 38%,rgba(42,4,78,.85) 0%,transparent 62%),linear-gradient(158deg,#0d0a28 0%,#060316 58%,#0f0b2e 100%);border:1px solid rgba(201,168,76,.2);align-items:center;justify-content:center;text-align:center;padding:40px 32px;">
     <div class="pg-stars"></div>
     <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0;width:100%;">
       <div style="font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:4px;color:rgba(201,168,76,.45);text-transform:uppercase;margin-bottom:13px;">You have read the map</div>
@@ -684,23 +672,27 @@ const els = PAGES.map((p, i) => {
   return el;
 });
 
+function setPageStyle(el, transform, zIndex) {
+  el.style.transform = transform;
+  el.style.zIndex = zIndex;
+  el.style.transition = 'none';
+}
+
 function applyStack() {
   els.forEach((el, i) => {
     el.classList.remove('is-current', 'flipping-fwd', 'flipping-bwd');
     if (i < cur) {
-      el.style.cssText = `transform:rotateY(-180deg); z-index:${i + 1}; transition:none;`;
+      setPageStyle(el, 'rotateY(-180deg)', i + 1);
     } else if (i === cur) {
-      el.style.cssText = `transform:rotateY(0deg); z-index:50; transition:none;`;
+      setPageStyle(el, 'rotateY(0deg)', 50);
       el.classList.add('is-current');
     } else {
-      el.style.cssText = `transform:rotateY(0deg); z-index:${N - i}; transition:none;`;
+      setPageStyle(el, 'rotateY(0deg)', N - i);
     }
   });
   document.getElementById('ni').textContent = PAGES[cur].label;
-  document.getElementById('diag').textContent = 'OK: ' + (cur+1) + '/' + N + ' pages';
   document.getElementById('bp').disabled = cur === 0;
   document.getElementById('bn').disabled = cur === N - 1;
-  // Update progress bar
   document.getElementById('pb').style.width = (cur / (N - 1) * 100) + '%';
 }
 
@@ -720,8 +712,8 @@ function goFwd() {
   const flipping = els[cur];
   const next = els[cur + 1];
 
-  next.style.cssText = `transform:rotateY(0deg); z-index:49; transition:none;`;
-  flipping.style.cssText = `transform:rotateY(0deg); z-index:60; transition:none;`;
+  next.style.transform = 'rotateY(0deg)'; next.style.zIndex = 49; next.style.transition = 'none';
+  flipping.style.transform = 'rotateY(0deg)'; flipping.style.zIndex = 60; flipping.style.transition = 'none';
   flipping.classList.remove('is-current');
 
   flipping.getBoundingClientRect();
@@ -742,7 +734,7 @@ function goBack() {
   cur--;
   const unflipping = els[cur];
 
-  unflipping.style.cssText = `transform:rotateY(-180deg); z-index:60; transition:none;`;
+  unflipping.style.transform = 'rotateY(-180deg)'; unflipping.style.zIndex = 60; unflipping.style.transition = 'none';
 
   unflipping.getBoundingClientRect();
   unflipping.classList.add('flipping-bwd');
