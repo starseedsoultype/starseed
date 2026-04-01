@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лев — Мой мир</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dirt: #8B6914;
+  --grass: #5D9E2F;
+  --grass-dark: #3A7A1A;
+  --stone: #888;
+  --sky: #87CEEB;
+  --sky2: #5BB8F5;
+  --wood: #9B7B3A;
+  --leaf: #4A9E2F;
+  --sand: #E8C87A;
+  --water: #3A7FC1;
+  --night: #0a0a1a;
+  --pixel: 4px;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; image-rendering: pixelated; }
+
+body {
+background: var(–sky);
+font-family: ‘VT323’, monospace;
+font-size: 20px;
+overflow-x: hidden;
+cursor: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘16’ height=‘16’%3E%3Crect width=‘16’ height=‘16’ fill=’%23000’/%3E%3Crect x=‘4’ y=‘4’ width=‘8’ height=‘8’ fill=’%23fff’/%3E%3C/svg%3E”) 8 8, crosshair;
+}
+
+/* CLOUDS */
+.clouds {
+position: fixed;
+top: 0; left: 0; right: 0;
+height: 200px;
+pointer-events: none;
+z-index: 0;
+overflow: hidden;
+}
+.cloud {
+position: absolute;
+background: white;
+animation: cloudMove linear infinite;
+}
+.cloud::before, .cloud::after {
+content: ‘’;
+position: absolute;
+background: white;
+}
+
+@keyframes cloudMove {
+from { transform: translateX(-300px); }
+to { transform: translateX(110vw); }
+}
+
+/* SUN */
+.sun {
+position: fixed;
+top: 30px; right: 60px;
+width: 64px; height: 64px;
+background: #FFD700;
+box-shadow: 8px 8px 0 #FFA500;
+z-index: 1;
+animation: sunBob 4s ease-in-out infinite;
+}
+@keyframes sunBob {
+0%,100% { transform: translateY(0); }
+50% { transform: translateY(-8px); }
+}
+
+/* GROUND */
+.ground {
+position: fixed;
+bottom: 0; left: 0; right: 0;
+height: 80px;
+z-index: 0;
+}
+.grass-row {
+height: 20px;
+background: repeating-linear-gradient(
+90deg,
+var(–grass) 0px, var(–grass) 20px,
+var(–grass-dark) 20px, var(–grass-dark) 40px
+);
+}
+.dirt-row {
+height: 60px;
+background: repeating-linear-gradient(
+90deg,
+var(–dirt) 0px, var(–dirt) 20px,
+#7A5C10 20px, #7A5C10 40px
+);
+}
+
+/* TREES */
+.trees {
+position: fixed;
+bottom: 80px;
+left: 0; right: 0;
+pointer-events: none;
+z-index: 0;
+}
+.tree {
+position: absolute;
+bottom: 0;
+}
+.tree-trunk {
+width: 20px; height: 40px;
+background: var(–wood);
+margin: 0 auto;
+}
+.tree-leaves {
+width: 60px; height: 60px;
+background: var(–leaf);
+box-shadow: 4px 4px 0 #3A8A20;
+margin: 0 auto;
+}
+
+/* MAIN CONTENT */
+.page {
+position: relative;
+z-index: 10;
+min-height: 100vh;
+padding: 20px;
+padding-bottom: 100px;
+}
+
+/* MINECRAFT PANEL STYLE */
+.mc-panel {
+background: rgba(0,0,0,0.7);
+border: 4px solid #555;
+border-right-color: #222;
+border-bottom-color: #222;
+padding: 20px;
+margin: 20px auto;
+max-width: 700px;
+position: relative;
+}
+.mc-panel::before {
+content: ‘’;
+position: absolute;
+inset: 2px;
+border: 2px solid #777;
+border-right-color: #333;
+border-bottom-color: #333;
+pointer-events: none;
+}
+
+.mc-title {
+font-family: ‘Press Start 2P’, monospace;
+font-size: clamp(1.5rem, 5vw, 2.5rem);
+color: #FFD700;
+text-shadow: 4px 4px 0 #B8860B, -2px -2px 0 #8B6914;
+text-align: center;
+margin-bottom: 10px;
+line-height: 1.4;
+}
+
+.mc-subtitle {
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.6rem;
+color: #aaa;
+text-align: center;
+margin-bottom: 20px;
+letter-spacing: 2px;
+}
+
+.mc-text {
+color: #ddd;
+font-size: 1.3rem;
+line-height: 1.6;
+}
+
+.mc-text span { color: #5D9E2F; }
+.mc-text .gold { color: #FFD700; }
+.mc-text .blue { color: #5BB8F5; }
+
+/* HOTBAR */
+.hotbar {
+display: flex;
+justify-content: center;
+gap: 4px;
+margin: 20px auto;
+max-width: 700px;
+}
+.hotbar-slot {
+width: 50px; height: 50px;
+background: rgba(0,0,0,0.6);
+border: 3px solid #555;
+border-right-color: #222;
+border-bottom-color: #222;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.8rem;
+cursor: pointer;
+transition: background 0.1s;
+position: relative;
+}
+.hotbar-slot:hover { background: rgba(255,255,255,0.1); }
+.hotbar-slot.active {
+border-color: #fff;
+background: rgba(255,255,255,0.15);
+}
+.hotbar-slot .label {
+position: absolute;
+bottom: -22px;
+font-size: 0.7rem;
+color: #fff;
+white-space: nowrap;
+font-family: ‘Press Start 2P’, monospace;
+display: none;
+}
+.hotbar-slot:hover .label { display: block; }
+
+/* SECTIONS */
+.section { display: none; }
+.section.active { display: block; }
+
+/* MINI MINECRAFT GAME */
+#game-canvas {
+display: block;
+margin: 0 auto;
+border: 4px solid #555;
+border-right-color: #222;
+border-bottom-color: #222;
+image-rendering: pixelated;
+cursor: crosshair;
+}
+
+.game-controls {
+text-align: center;
+color: #aaa;
+font-size: 0.9rem;
+margin-top: 10px;
+}
+
+.selected-block {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin: 10px 0;
+flex-wrap: wrap;
+}
+.block-btn {
+width: 40px; height: 40px;
+border: 3px solid #555;
+cursor: pointer;
+transition: transform 0.1s;
+font-size: 0;
+}
+.block-btn:hover { transform: scale(1.2); }
+.block-btn.sel { border-color: #FFD700; transform: scale(1.2); }
+
+/* PIANO */
+.piano-wrap {
+overflow-x: auto;
+padding: 10px 0;
+}
+.piano {
+display: flex;
+position: relative;
+height: 140px;
+width: max-content;
+margin: 0 auto;
+user-select: none;
+}
+.white-key {
+width: 36px; height: 140px;
+background: #f5f5f5;
+border: 2px solid #333;
+border-radius: 0 0 4px 4px;
+cursor: pointer;
+position: relative;
+transition: background 0.05s;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+padding-bottom: 6px;
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.4rem;
+color: #666;
+}
+.white-key:active, .white-key.pressed {
+background: #5D9E2F;
+color: white;
+}
+.black-key {
+width: 24px; height: 90px;
+background: #111;
+border: 2px solid #000;
+border-radius: 0 0 3px 3px;
+cursor: pointer;
+position: absolute;
+top: 0;
+z-index: 2;
+transition: background 0.05s;
+}
+.black-key:active, .black-key.pressed { background: #5D9E2F; }
+
+.piano-note {
+text-align: center;
+color: #FFD700;
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.7rem;
+margin-top: 10px;
+min-height: 20px;
+}
+
+/* ABOUT */
+.about-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 16px;
+margin-top: 16px;
+}
+.stat-block {
+background: rgba(255,255,255,0.05);
+border: 2px solid #444;
+padding: 12px;
+text-align: center;
+}
+.stat-block .num {
+font-family: ‘Press Start 2P’, monospace;
+font-size: 1.5rem;
+color: #5D9E2F;
+display: block;
+}
+.stat-block .lab {
+color: #aaa;
+font-size: 0.9rem;
+}
+
+.xp-bar {
+height: 16px;
+background: #333;
+border: 2px solid #555;
+margin: 8px 0;
+position: relative;
+overflow: hidden;
+}
+.xp-fill {
+height: 100%;
+background: #5D9E2F;
+transition: width 1s ease;
+}
+.xp-label {
+color: #aaa;
+font-size: 0.85rem;
+margin-bottom: 2px;
+}
+
+@media (max-width: 500px) {
+.about-grid { grid-template-columns: 1fr; }
+.mc-title { font-size: 1.2rem; }
+#game-canvas { width: 100%; height: auto; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- SKY DECOR -->
+
+<div class="sun"></div>
+<div class="clouds" id="clouds"></div>
+<div class="trees" id="trees"></div>
+<div class="ground">
+  <div class="grass-row"></div>
+  <div class="dirt-row"></div>
+</div>
+
+<div class="page">
+
+  <!-- TITLE -->
+
+  <div class="mc-panel" style="text-align:center; padding: 30px 20px;">
+    <div class="mc-title">ЛЕВ</div>
+    <div class="mc-subtitle">// PLAYER SINCE BIRTH //</div>
+    <div class="mc-text" style="text-align:center;">
+      Привет! Я живу на острове <span>Панган</span> в Таиланде 🌴<br>
+      Играю в <span>Minecraft</span>, люблю строить и исследовать.<br>
+      Ещё умею играть на <span class="gold">пианино</span> 🎹
+    </div>
+  </div>
+
+  <!-- HOTBAR NAV -->
+
+  <div class="hotbar">
+    <div class="hotbar-slot active" onclick="showSection('about', this)">
+      ❤️ <span class="label">О МНЕ</span>
+    </div>
+    <div class="hotbar-slot" onclick="showSection('game', this)">
+      🧱 <span class="label">ИГРАТЬ</span>
+    </div>
+    <div class="hotbar-slot" onclick="showSection('piano', this)">
+      🎹 <span class="label">ПИАНИНО</span>
+    </div>
+    <div class="hotbar-slot" onclick="showSection('world', this)">
+      🌍 <span class="label">МОЙ МИР</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+
+  <div class="mc-panel section active" id="about">
+    <div style="font-family:'Press Start 2P',monospace; font-size:0.7rem; color:#FFD700; margin-bottom:16px;">[ ХАРАКТЕРИСТИКИ ПЕРСОНАЖА ]</div>
+
+```
+<div class="about-grid">
+  <div class="stat-block">
+    <span class="num">🌴</span>
+    <span class="lab">Остров Панган</span>
+  </div>
+  <div class="stat-block">
+    <span class="num">⚔️</span>
+    <span class="lab">Режим: Выживание</span>
+  </div>
+  <div class="stat-block">
+    <span class="num">🎹</span>
+    <span class="lab">Пианист</span>
+  </div>
+  <div class="stat-block">
+    <span class="num">🏆</span>
+    <span class="lab">Строитель</span>
+  </div>
+</div>
+
+<div style="margin-top: 20px;">
+  <div class="xp-label">⚒️ Строительство</div>
+  <div class="xp-bar"><div class="xp-fill" style="width:90%"></div></div>
+
+  <div class="xp-label">🎹 Музыка</div>
+  <div class="xp-bar"><div class="xp-fill" style="width:75%"></div></div>
+
+  <div class="xp-label">🗡️ Сражения</div>
+  <div class="xp-bar"><div class="xp-fill" style="width:60%"></div></div>
+
+  <div class="xp-label">🌊 Плавание (остров!)</div>
+  <div class="xp-bar"><div class="xp-fill" style="width:95%"></div></div>
+</div>
+```
+
+  </div>
+
+  <!-- GAME -->
+
+  <div class="mc-panel section" id="game">
+    <div style="font-family:'Press Start 2P',monospace; font-size:0.7rem; color:#FFD700; margin-bottom:16px;">[ ИГРАТЬ В MINECRAFT ]</div>
+
+```
+<!-- EAGLERCRAFT LAUNCHER -->
+<div id="launcher" style="text-align:center;">
+  <div style="font-size:5rem; margin-bottom:10px;">⛏️</div>
+  <div style="font-family:'Press Start 2P',monospace; font-size:1rem; color:white; margin-bottom:6px;">Minecraft в браузере</div>
+  <div class="mc-text" style="margin-bottom:20px; font-size:1rem;">
+    Версия 1.8 · Бесплатно · Без скачивания<br>
+    Работает прямо здесь!
+  </div>
+  <button onclick="launchGame()" style="
+    font-family:'Press Start 2P',monospace;
+    font-size:1rem;
+    background:#5D9E2F;
+    color:white;
+    border:4px solid #3A7A1A;
+    border-right-color:#2A5A0A;
+    border-bottom-color:#2A5A0A;
+    padding:16px 32px;
+    cursor:pointer;
+    display:block;
+    margin:0 auto 16px;
+    transition:transform 0.1s;
+  " onmouseover="this.style.background='#6DB83F'" onmouseout="this.style.background='#5D9E2F'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
+    ▶ ИГРАТЬ
+  </button>
+  <div style="color:#888; font-size:0.85rem;">
+    нажми кнопку — откроется игра в новом окне
+  </div>
+</div>
+
+<div style="border-top:2px solid #444; margin-top:20px; padding-top:16px;">
+  <div style="font-family:'Press Start 2P',monospace; font-size:0.6rem; color:#FFD700; margin-bottom:10px;">[ ПОСТРОЙ МИР ПОКА ГРУЗИТСЯ ]</div>
+  <div class="selected-block" id="blockPicker"></div>
+  <canvas id="game-canvas" width="560" height="200"></canvas>
+  <div class="game-controls">Кликай — ставь блоки · Правая кнопка — убирай</div>
+</div>
+```
+
+  </div>
+
+  <!-- PIANO -->
+
+  <div class="mc-panel section" id="piano">
+    <div style="font-family:'Press Start 2P',monospace; font-size:0.7rem; color:#FFD700; margin-bottom:10px;">[ ПИАНИНО ЛЬВА ]</div>
+    <div class="mc-text" style="margin-bottom:16px; font-size:1rem;">
+      Нажимай на клавиши или используй клавиатуру:<br>
+      <span>A S D F G H J</span> — белые клавиши<br>
+      <span class="gold">W E T Y U</span> — чёрные клавиши
+    </div>
+    <div class="piano-wrap">
+      <div class="piano" id="piano"></div>
+    </div>
+    <div class="piano-note" id="pianoNote">🎵 Нажми на клавишу!</div>
+  </div>
+
+  <!-- WORLD -->
+
+  <div class="mc-panel section" id="world">
+    <div style="font-family:'Press Start 2P',monospace; font-size:0.7rem; color:#FFD700; margin-bottom:16px;">[ МОЙ МИР ]</div>
+    <div class="mc-text">
+      🌴 <span>Остров Панган, Таиланд</span><br><br>
+      Я живу у моря. Каждый день вижу закат над водой.<br>
+      Это как Minecraft — только настоящий!<br><br>
+      🌊 Тёплое море<br>
+      🐠 Рыбки под водой<br>
+      🌺 Джунгли рядом с домом<br>
+      ⭐ Миллион звёзд ночью<br><br>
+      <span class="gold">Это лучший биом на земле.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== EAGLERCRAFT =====
+function launchGame() {
+  window.open('https://eaglercraft.com/mc/1.8.8/', '_blank');
+}
+
+// ===== CLOUDS =====
+const cloudsEl = document.getElementById('clouds');
+for (let i = 0; i < 4; i++) {
+  const c = document.createElement('div');
+  c.className = 'cloud';
+  const w = 60 + Math.random()*80;
+  const h = 20 + Math.random()*20;
+  c.style.cssText = `width:${w}px;height:${h}px;top:${20+Math.random()*80}px;animation-duration:${20+Math.random()*30}s;animation-delay:${-Math.random()*30}s`;
+  cloudsEl.appendChild(c);
+}
+
+// ===== TREES =====
+const treesEl = document.getElementById('trees');
+for (let i = 0; i < 8; i++) {
+  const t = document.createElement('div');
+  t.className = 'tree';
+  t.style.left = (5 + i*13 + Math.random()*5) + '%';
+  t.innerHTML = `<div class="tree-leaves"></div><div class="tree-trunk"></div>`;
+  treesEl.appendChild(t);
+}
+
+// ===== SECTION NAV =====
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.hotbar-slot').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ===== MINECRAFT GAME =====
+const canvas = document.getElementById('game-canvas');
+const ctx = canvas.getContext('2d');
+const TILE = 20;
+const COLS = canvas.width / TILE;
+const ROWS = canvas.height / TILE;
+
+const BLOCKS = {
+  grass:  { color: '#5D9E2F', top: '#3A7A1A', label: '🌿 Трава' },
+  dirt:   { color: '#8B6914', top: null,       label: '🟫 Земля' },
+  stone:  { color: '#888',    top: '#666',     label: '⬜ Камень' },
+  wood:   { color: '#9B7B3A', top: '#7A5C10',  label: '🪵 Дерево' },
+  leaf:   { color: '#4A9E2F', top: '#3A8020',  label: '🍃 Листья' },
+  sand:   { color: '#E8C87A', top: '#D4B060',  label: '🏖️ Песок' },
+  water:  { color: '#3A7FC1', top: '#2A6FA1',  label: '💧 Вода' },
+  gold:   { color: '#FFD700', top: '#DAA520',  label: '🌟 Золото' },
+};
+
+const blockKeys = Object.keys(BLOCKS);
+let selectedBlock = 'grass';
+
+// Build picker
+const picker = document.getElementById('blockPicker');
+blockKeys.forEach(k => {
+  const btn = document.createElement('div');
+  btn.className = 'block-btn' + (k === selectedBlock ? ' sel' : '');
+  btn.style.background = BLOCKS[k].color;
+  btn.title = BLOCKS[k].label;
+  btn.innerHTML = `<span style="font-family:'VT323';font-size:12px;color:white;padding:2px;">${BLOCKS[k].label.split(' ')[0]}</span>`;
+  btn.style.display = 'flex';
+  btn.style.alignItems = 'center';
+  btn.style.justifyContent = 'center';
+  btn.onclick = () => {
+    selectedBlock = k;
+    document.querySelectorAll('.block-btn').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+  };
+  picker.appendChild(btn);
+});
+
+// Init world
+const world = [];
+for (let r = 0; r < ROWS; r++) {
+  world[r] = [];
+  for (let c = 0; c < COLS; c++) {
+    if (r < ROWS - 4) world[r][c] = null;
+    else if (r === ROWS - 4) world[r][c] = 'grass';
+    else world[r][c] = 'dirt';
+  }
+}
+// Add some random stuff
+for (let c = 0; c < COLS; c++) {
+  if (Math.random() > 0.7) world[ROWS-5][c] = 'stone';
+}
+
+function drawWorld() {
+  ctx.fillStyle = '#87CEEB';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const b = world[r][c];
+      if (!b) continue;
+      const block = BLOCKS[b];
+      ctx.fillStyle = block.color;
+      ctx.fillRect(c*TILE, r*TILE, TILE, TILE);
+      if (block.top) {
+        ctx.fillStyle = block.top;
+        ctx.fillRect(c*TILE, r*TILE, TILE, 4);
+      }
+      ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+      ctx.strokeRect(c*TILE, r*TILE, TILE, TILE);
+    }
+  }
+}
+
+function getCell(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+  return { c: Math.floor(x/TILE), r: Math.floor(y/TILE) };
+}
+
+let painting = false;
+let paintMode = 'place';
+
+canvas.addEventListener('mousedown', e => {
+  painting = true;
+  paintMode = e.button === 2 ? 'remove' : 'place';
+  const {r,c} = getCell(e);
+  if (r>=0&&r<ROWS&&c>=0&&c<COLS) {
+    world[r][c] = paintMode === 'place' ? selectedBlock : null;
+    drawWorld();
+  }
+});
+canvas.addEventListener('mousemove', e => {
+  if (!painting) return;
+  const {r,c} = getCell(e);
+  if (r>=0&&r<ROWS&&c>=0&&c<COLS) {
+    world[r][c] = paintMode === 'place' ? selectedBlock : null;
+    drawWorld();
+  }
+});
+canvas.addEventListener('mouseup', () => painting = false);
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// Touch support
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  painting = true; paintMode = 'place';
+  const touch = e.touches[0];
+  const {r,c} = getCell(touch);
+  if (r>=0&&r<ROWS&&c>=0&&c<COLS) { world[r][c] = selectedBlock; drawWorld(); }
+}, {passive:false});
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const {r,c} = getCell(touch);
+  if (r>=0&&r<ROWS&&c>=0&&c<COLS) { world[r][c] = selectedBlock; drawWorld(); }
+}, {passive:false});
+canvas.addEventListener('touchend', () => painting = false);
+
+drawWorld();
+
+// ===== PIANO =====
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function getAudio() {
+  if (!audioCtx) audioCtx = new AudioContext();
+  return audioCtx;
+}
+
+const noteNames = ['До','Ре','Ми','Фа','Соль','Ля','Си','До²'];
+const noteFreqs = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+const blackFreqs = [277.18, 311.13, null, 369.99, 415.30, 466.16, null, null];
+const blackPos = [22, 58, null, 130, 166, 202, null, null];
+const keyMap = {'a':0,'s':1,'d':2,'f':3,'g':4,'h':5,'j':6,'k':7,'w':0,'e':1,'t':3,'y':4,'u':5};
+
+function playNote(freq, el) {
+  const ac = getAudio();
+  const osc = ac.createOscillator();
+  const gain = ac.createGain();
+  osc.connect(gain);
+  gain.connect(ac.destination);
+  osc.type = 'triangle';
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0.3, ac.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 1.2);
+  osc.start();
+  osc.stop(ac.currentTime + 1.2);
+  if (el) {
+    el.classList.add('pressed');
+    setTimeout(() => el.classList.remove('pressed'), 200);
+  }
+}
+
+const pianoEl = document.getElementById('piano');
+const noteEl = document.getElementById('pianoNote');
+const whiteKeys = [];
+const blackKeyEls = [];
+
+// White keys
+for (let i = 0; i < 8; i++) {
+  const key = document.createElement('div');
+  key.className = 'white-key';
+  key.textContent = noteNames[i];
+  key.dataset.freq = noteFreqs[i];
+  key.dataset.name = noteNames[i];
+  key.addEventListener('mousedown', () => { playNote(noteFreqs[i], key); noteEl.textContent = '🎵 ' + noteNames[i]; });
+  key.addEventListener('touchstart', e => { e.preventDefault(); playNote(noteFreqs[i], key); noteEl.textContent = '🎵 ' + noteNames[i]; }, {passive:false});
+  pianoEl.appendChild(key);
+  whiteKeys.push(key);
+}
+
+// Black keys
+for (let i = 0; i < 8; i++) {
+  if (!blackFreqs[i] || !blackPos[i]) continue;
+  const key = document.createElement('div');
+  key.className = 'black-key';
+  key.style.left = blackPos[i] + 'px';
+  key.addEventListener('mousedown', () => { playNote(blackFreqs[i], key); noteEl.textContent = '🎵 ♯'; });
+  key.addEventListener('touchstart', e => { e.preventDefault(); playNote(blackFreqs[i], key); noteEl.textContent = '🎵 ♯'; }, {passive:false});
+  pianoEl.appendChild(key);
+  blackKeyEls.push({el: key, freq: blackFreqs[i], idx: i});
+}
+
+// Keyboard
+const whiteKeyMap = {'a':0,'s':1,'d':2,'f':3,'g':4,'h':5,'j':6,'k':7};
+const blackKeyMapKb = {'w':0,'e':1,'t':3,'y':4,'u':5};
+
+document.addEventListener('keydown', e => {
+  if (e.repeat) return;
+  const k = e.key.toLowerCase();
+  if (k in whiteKeyMap) {
+    const i = whiteKeyMap[k];
+    playNote(noteFreqs[i], whiteKeys[i]);
+    noteEl.textContent = '🎵 ' + noteNames[i];
+  }
+  if (k in blackKeyMapKb) {
+    const i = blackKeyMapKb[k];
+    const bk = blackKeyEls.find(b => b.idx === i);
+    if (bk) { playNote(bk.freq, bk.el); noteEl.textContent = '🎵 ♯'; }
+  }
+});
+</script>
+
+</body>
+</html>
