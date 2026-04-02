@@ -207,27 +207,65 @@
   }
   .manifesto-line strong { font-style: normal; color: var(--gold-light); }
 
-  .types-cloud {
-    max-width: 800px;
+  /* Types section — crystal preview grid */
+  .types-section {
+    max-width: 860px;
     margin: 0 auto;
+    text-align: center;
+  }
+  .types-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 20px;
     justify-content: center;
+    margin-bottom: 48px;
   }
-  .type-pill {
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 8px 14px;
+  .type-crystal-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
     text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
+    transition: transform 0.25s ease;
+    width: 80px;
   }
-  .type-pill:hover { border-color: var(--gold-dim); color: var(--gold-light); }
+  .type-crystal-card:hover { transform: translateY(-5px); }
+  .type-crystal-card canvas {
+    width: 72px;
+    height: 72px;
+    display: block;
+  }
+  .type-crystal-label {
+    font-family: Arial, sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .type-crystal-card:hover .type-crystal-label { color: var(--gold-light); }
+
+  .btn-outline {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 14px 36px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative; z-index: 1;
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    box-shadow: 0 0 24px rgba(201,168,76,0.15);
+  }
 
   .products { max-width: 960px; margin: 0 auto; display: grid; gap: 2px; }
   .product-card {
@@ -382,6 +420,8 @@
     }
     .hero::before { width: 300px; height: 300px; }
     .hero::after { width: 160px; height: 160px; }
+    .type-crystal-card { width: 68px; }
+    .type-crystal-card canvas { width: 60px; height: 60px; }
   }
 </style>
 </head>
@@ -423,32 +463,11 @@
   </div>
   <div class="section-label">Звёздные души</div>
   <h2 class="section-title">24 типа<br><em>звёздных душ</em></h2>
-  <p class="section-desc">Каждый тип несёт уникальную частоту, особую миссию и свой способ воздействия на реальность. Пройди тест, чтобы узнать, к какой волне света ты принадлежишь.</p>
-  <div class="types-cloud">
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Siriusian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Pleiadian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Lemurian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Cassiopeian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Procyonian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Lyran</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Arcturian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Orion</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Vegan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Zeta Reticulan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Epsilon Eridan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Atlantean</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Andromedan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Polarisian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Nibiruan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Egyptian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Titan</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Blue Avian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Tau Cetian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Aldebaran</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Centaurian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Herculean</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Anunnaki</a>
-    <a href="https://starseedsoultype.github.io/starseed/quizru.html" class="type-pill">Hyperborean</a>
+  <p class="section-desc">Каждый тип несёт уникальную частоту, особую миссию и свой способ воздействия на реальность. Исследуй все 24 кристалла и узнай свою природу.</p>
+
+  <div class="types-section">
+    <div class="types-grid" id="typesGrid"></div>
+    <a href="https://starseedsoultype.github.io/starseed/crystalru.html" class="btn-outline">Исследовать все 24 кристалла</a>
   </div>
 </section>
 
@@ -514,7 +533,7 @@
         </ul>
       </div>
       <div class="product-action">
-        <a href="/cdn-cgi/l/email-protection#3d4954504e525e5452537d5a505c5451135e5250" class="btn-card">Рассчитать связь</a>
+        <a href="https://starseedsoultype.github.io/starseed/bondru.html" class="btn-card">Рассчитать связь</a>
       </div>
     </div>
 
@@ -564,10 +583,148 @@
   <div class="footer-copy">© 2026 Olesya Popova · StarSeedSoul · All rights reserved</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  /* Stars background */
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 160; i++) {
     const s = document.createElement('div');
     s.classList.add('star');
     const size = Math.random() * 2 + 0.5;
-    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*1
+    const dur = (Math.random() * 4 + 2).toFixed(1);
+    const delay = (Math.random() * 6).toFixed(1);
+    const op = (Math.random() * 0.5 + 0.1).toFixed(2);
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${dur}s;--delay:${delay}s;--op:${op};`;
+    starsEl.appendChild(s);
+  }
+
+  /* Mini crystals */
+  (function(){
+    const TYPES = [
+      {name:"Siriusian",     funcs:["R","E","M","L"]},
+      {name:"Pleiadian",     funcs:["R","M","L","E"]},
+      {name:"Lemurian",      funcs:["R","E","L","M"]},
+      {name:"Cassiopeian",   funcs:["R","L","M","E"]},
+      {name:"Procyonian",    funcs:["R","M","E","L"]},
+      {name:"Lyran",         funcs:["R","L","E","M"]},
+      {name:"Arcturian",     funcs:["L","E","M","R"]},
+      {name:"Orion",         funcs:["L","M","R","E"]},
+      {name:"Vegan",         funcs:["L","E","R","M"]},
+      {name:"Zeta Reticulan",funcs:["L","R","E","M"]},
+      {name:"Epsilon Eridan",funcs:["L","M","E","R"]},
+      {name:"Atlantean",     funcs:["L","R","M","E"]},
+      {name:"Andromedan",    funcs:["E","R","L","M"]},
+      {name:"Polarisian",    funcs:["E","L","M","R"]},
+      {name:"Nibiruan",      funcs:["E","M","R","L"]},
+      {name:"Egyptian",      funcs:["E","L","R","M"]},
+      {name:"Titanian",       funcs:["E","M","L","R"]},
+      {name:"Blue Avian",    funcs:["E","R","M","L"]},
+      {name:"Tau Cetian",    funcs:["M","R","E","L"]},
+      {name:"Aldebaran",     funcs:["M","L","R","E"]},
+      {name:"Centaurian",    funcs:["M","L","E","R"]},
+      {name:"Herculean",     funcs:["M","E","R","L"]},
+      {name:"Anunnaki",      funcs:["M","E","L","R"]},
+      {name:"Hyperborean",   funcs:["M","R","L","E"]},
+    ];
+
+    const FC = {
+      E:{r:255,g:200,b:20},
+      M:{r:210,g:40, b:40},
+      R:{r:40, g:180,b:80},
+      L:{r:60, g:120,b:255},
+    };
+    const AXIS   = {E:-Math.PI/2, M:Math.PI/2, R:0, L:Math.PI};
+    const RADII  = [0,32,22,14,7];
+    const WEIGHTS= [0,0.60,0.25,0.12,0.03];
+
+    function blend(funcs){
+      let r=0,g=0,b=0;
+      funcs.forEach((f,i)=>{const w=WEIGHTS[i+1],fc=FC[f];r+=fc.r*w;g+=fc.g*w;b+=fc.b*w;});
+      return{r:Math.round(r),g:Math.round(g),b:Math.round(b)};
+    }
+
+    function drawMini(canvas, funcs){
+      const ctx=canvas.getContext('2d');
+      const W=72,H=72,cx=36,cy=36;
+      ctx.clearRect(0,0,W,H);
+
+      const ch={};
+      funcs.forEach((f,i)=>{ ch[f]=i+1; });
+      const bl=blend(funcs);
+
+      const tips={};
+      for(const[f,c] of Object.entries(ch)){
+        tips[f]={x:cx+Math.cos(AXIS[f])*RADII[c], y:cy+Math.sin(AXIS[f])*RADII[c]};
+      }
+
+      // bg glow
+      const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,36);
+      bg.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},0.13)`);
+      bg.addColorStop(1,'rgba(4,2,10,0)');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+      // faces
+      const tE=tips.E,tM=tips.M,tR=tips.R,tL=tips.L;
+      ctx.save(); ctx.globalCompositeOperation='screen';
+      [
+        {p:[cx,cy,tE.x,tE.y,tR.x,tR.y],f1:'E',f2:'R',a:0.48},
+        {p:[cx,cy,tE.x,tE.y,tL.x,tL.y],f1:'E',f2:'L',a:0.36},
+        {p:[cx,cy,tM.x,tM.y,tR.x,tR.y],f1:'M',f2:'R',a:0.32},
+        {p:[cx,cy,tM.x,tM.y,tL.x,tL.y],f1:'M',f2:'L',a:0.24},
+      ].forEach(({p,f1,f2,a})=>{
+        const c1=FC[f1],c2=FC[f2];
+        const bf={r:Math.round((c1.r+c2.r)/2),g:Math.round((c1.g+c2.g)/2),b:Math.round((c1.b+c2.b)/2)};
+        ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[2],p[3]);ctx.lineTo(p[4],p[5]);
+        ctx.closePath();
+        ctx.fillStyle=`rgba(${bf.r},${bf.g},${bf.b},${a})`;ctx.fill();
+        ctx.strokeStyle=`rgba(${bf.r+60},${bf.g+60},${bf.b+60},.5)`;ctx.lineWidth=0.6;ctx.stroke();
+      });
+      ctx.restore();
+
+      // outline diamond
+      ctx.beginPath();
+      ctx.moveTo(tE.x,tE.y);ctx.lineTo(tR.x,tR.y);
+      ctx.lineTo(tM.x,tM.y);ctx.lineTo(tL.x,tL.y);
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(${bl.r+100},${bl.g+100},${bl.b+100},.75)`;ctx.lineWidth=1.1;ctx.stroke();
+
+      // tip dots
+      ctx.save(); ctx.globalCompositeOperation='screen';
+      for(const[f,c] of Object.entries(ch)){
+        const t=tips[f],fc=FC[f];
+        const sz=[0,4.5,3,2,1.2][c];
+        ctx.beginPath();ctx.arc(t.x,t.y,sz,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${fc.r},${fc.g},${fc.b},.95)`;ctx.fill();
+      }
+      ctx.restore();
+
+      // center star
+      const star=ctx.createRadialGradient(cx,cy,0,cx,cy,6);
+      star.addColorStop(0,'rgba(255,255,255,.9)');
+      star.addColorStop(1,'rgba(4,2,10,0)');
+      ctx.fillStyle=star;ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fill();
+    }
+
+    const grid=document.getElementById('typesGrid');
+    TYPES.forEach(t=>{
+      const card=document.createElement('a');
+      card.href='https://starseedsoultype.github.io/starseed/crystalru.html';
+      card.className='type-crystal-card';
+
+      const canvas=document.createElement('canvas');
+      canvas.width=72; canvas.height=72;
+
+      const label=document.createElement('div');
+      label.className='type-crystal-label';
+      label.textContent=t.name;
+
+      card.appendChild(canvas);
+      card.appendChild(label);
+      grid.appendChild(card);
+
+      drawMini(canvas, t.funcs);
+    });
+  })();
+</script>
+
+</body>
+</html>
