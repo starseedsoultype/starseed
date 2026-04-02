@@ -200,6 +200,10 @@
     animation: fadeUp 1s ease forwards 1.8s;
     z-index: 1;
   }
+
+  @media (max-width: 700px) {
+    .scroll-hint { display: none; }
+  }
   .scroll-hint span {
     font-size: 10px;
     letter-spacing: 0.2em;
@@ -434,6 +438,7 @@
     justify-content: flex-end;
     border-left: 1px solid rgba(255,255,255,0.05);
     min-width: 160px;
+    gap: 16px;
   }
 
   .product-price {
@@ -563,7 +568,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="logo-mark">StarSeedSoul · Типология души</div>
+  <div class="logo-mark">StarSeedSoul · Звёздные души</div>
 
   <svg class="crystal-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <polygon points="40,4 68,40 40,76 12,40" stroke="#c9a84c" stroke-width="0.8" fill="rgba(107,63,160,0.15)"/>
@@ -574,11 +579,12 @@
     <line x1="12" y1="40" x2="68" y2="40" stroke="#c9a84c" stroke-width="0.3" opacity="0.3"/>
   </svg>
 
-  <h1 class="hero-title">Твоя душа<br>пришла <em>не случайно</em></h1>
+  <h1 class="hero-title">Твоя душа пришла<br>сюда <em>не случайно</em></h1>
   <p class="hero-sub">Узнай своё происхождение. Найди свою частоту.</p>
   <p class="hero-desc">
-    Система 24 типов душ — не личность, не архетип.<br>
-    Это структура, с которой ты явился сюда.
+    Созвездие звёздных душ. Система из 24 типов.<br>
+    Гармония, созданная самой вселенной.<br>
+    Я покажу тебе структуру частот, на которых ты вибрируешь.
   </p>
   <a href="#products" class="btn-primary">Войти в PORTAL</a>
 
@@ -591,13 +597,13 @@
 <!-- MANIFESTO -->
 <section style="padding: 40px 24px 80px;">
   <div class="manifesto">
-    <p class="manifesto-line">Ты всегда чувствовал, что <strong>несёшь что-то особенное.</strong></p>
-    <p class="manifesto-line">Не мог объяснить — но знал.</p>
+    <p class="manifesto-line">Ты всегда чувствовал, что пришёл сюда <strong>не просто так.</strong></p>
+    <p class="manifesto-line">Не мог объяснить — но всегда знал.</p>
     <p class="manifesto-line">Теперь у этого <strong>есть язык.</strong></p>
   </div>
 </section>
 
-<!-- SYSTEM -->
+<!-- TYPES -->
 <section>
   <div class="divider" style="margin-bottom: 64px;">
     <div class="divider-line"></div>
@@ -605,34 +611,10 @@
     <div class="divider-line"></div>
   </div>
 
-  <div class="section-label reveal">Четыре стихии</div>
-  <h2 class="section-title reveal">Каждая душа движется<br>через <em>четыре частоты</em></h2>
-  <p class="section-desc reveal">Твой тип определяется тем, в каком порядке они стоят внутри тебя.</p>
+  <div class="section-label reveal">Звёздные души</div>
+  <h2 class="section-title reveal">24 типа.<br><em>Один из них — твой.</em></h2>
+  <p class="section-desc reveal">Нажми на любой тип чтобы узнать свой.</p>
 
-  <div class="system-grid reveal">
-    <div class="system-cell" style="--color: #28b450;">
-      <div class="system-cell-symbol">◈</div>
-      <div class="system-cell-name">Вода · Отношения</div>
-      <div class="system-cell-desc">Читает поле между людьми. Знает что происходит раньше чем кто-то скажет.</div>
-    </div>
-    <div class="system-cell" style="--color: #ffc814;">
-      <div class="system-cell-symbol">◈</div>
-      <div class="system-cell-name">Огонь · Энергия</div>
-      <div class="system-cell-desc">Движется из желания. Знает куда — до того как появились причины.</div>
-    </div>
-    <div class="system-cell" style="--color: #d22828;">
-      <div class="system-cell-symbol">◈</div>
-      <div class="system-cell-name">Земля · Материя</div>
-      <div class="system-cell-desc">Делает реальным. Доводит до формы то, что другие оставляют идеей.</div>
-    </div>
-    <div class="system-cell" style="--color: #3c78ff;">
-      <div class="system-cell-symbol">◈</div>
-      <div class="system-cell-name">Воздух · Логика</div>
-      <div class="system-cell-desc">Видит структуру. Понимает систему до того как её кто-то объяснил.</div>
-    </div>
-  </div>
-
-  <div class="section-label reveal" style="margin-top: 48px;">24 типа</div>
   <div class="types-cloud reveal" style="margin-top: 16px;">
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Siriusian</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Pleiadian</a>
@@ -650,7 +632,7 @@
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Polarisian</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Nibiruan</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Egyptian</a>
-    <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Mayan</a>
+    <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Titan</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Blue Avian</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Tau Cetian</a>
     <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="type-pill">Aldebaran</a>
@@ -671,27 +653,27 @@
 
   <div class="section-label reveal">Продукты</div>
   <h2 class="section-title reveal">С чего начать</h2>
-  <p class="section-desc reveal">Каждый шаг ведёт глубже. Начни с PORTAL — остальное откроется само.</p>
+  <p class="section-desc reveal">Каждый шаг ведёт глубже. Начни с PORTAL 11.11 — остальное откроется само.</p>
 
   <div class="products">
 
     <div class="product-card reveal" style="--accent: #c9a84c;">
       <div class="product-body">
         <div class="product-tag">Начало</div>
-        <h3 class="product-name">PORTAL<br><em>Квиз типа души</em></h3>
+        <h3 class="product-name">PORTAL 11.11<br><em>Тест типа души</em></h3>
         <p class="product-desc">
-          28 вопросов. Не самоописание — сценарии из жизни. Твои автоматические реакции определяют тип точнее чем любой ответ из головы.
+          Пройди тест. Узнай своё звёздное происхождение. 28 вопросов — и ты узнаешь, как частоты вселенной превращаются в сценарий твоей жизни. Откуда твои автоматические реакции. Это будет точнее, чем любой ответ из твоей головы.
         </p>
         <ul class="product-features">
-          <li>7 минут. Результат мгновенно</li>
-          <li>Твой тип + описание двух открытых слоёв</li>
-          <li>Полный PDF с четырьмя слоями профиля</li>
+          <li>7 минут. Точный результат мгновенно</li>
+          <li>Название твоей звёздной души и её описание</li>
+          <li>Полная расшифровка со всеми частотами твоей души</li>
           <li>Кристалл души — уникальный визуал</li>
         </ul>
       </div>
       <div class="product-action">
         <div>
-          <div class="product-price">$11<span style="font-size:20px">.11</span></div>
+          <div class="product-price">111 <span style="font-size:20px">₽</span></div>
           <div class="product-price-note">Полный PDF</div>
         </div>
         <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="btn-card">Войти в PORTAL</a>
@@ -700,22 +682,17 @@
 
     <div class="product-card reveal" style="--accent: #6b3fa0;">
       <div class="product-body">
-        <div class="product-tag">После квиза</div>
-        <h3 class="product-name">Активация<br><em>Звуковая передача</em></h3>
+        <h3 class="product-name">Активация<br><em>Ключи доступа</em></h3>
         <p class="product-desc">
-          Аудио-активация для твоего конкретного типа. Не медитация и не музыка. Частотная передача — для тех кто уже знает свой тип.
+          Аудио-активация только для звёздных душ. Не медитация и не просто музыка. Это особые частоты, в которых заключены коды именно твоей души.
         </p>
         <ul class="product-features">
           <li>4 минуты. Один тип — одна активация</li>
           <li>24 активации в системе — одна для каждого типа</li>
-          <li>Сначала узнай тип в PORTAL</li>
+          <li>Активируй свои частоты. Присвой себе свою силу</li>
         </ul>
       </div>
       <div class="product-action">
-        <div>
-          <div class="product-price">$11<span style="font-size:20px">.11</span></div>
-          <div class="product-price-note">За активацию</div>
-        </div>
         <a href="https://starseedsoul.gumroad.com" class="btn-card">Получить активацию</a>
       </div>
     </div>
@@ -723,23 +700,19 @@
     <div class="product-card reveal" style="--accent: #28b450;">
       <div class="product-body">
         <div class="product-tag">Отношения</div>
-        <h3 class="product-name">Soul Bond<br><em>Калькулятор связи</em></h3>
+        <h3 class="product-name">Калькулятор<br><em>отношений</em></h3>
         <p class="product-desc">
-          Ты пришёл сюда из-за конкретной связи. Эта связь не случайна — у неё есть структура. Калькулятор показывает что происходит между двумя типами душ.
+          Ты пришёл сюда потому что связан с другими. С кем-то вибрируешь в унисон — а с кем-то музыка вселенной звучит как драма. Все эти связи не случайны. У каждой из них есть своя структура. Расчёт отношений звёздных душ показывает что происходит между ними на самом деле.
         </p>
         <ul class="product-features">
           <li>10 типов отношений в системе</li>
-          <li>Полный PDF с картой совместимости</li>
-          <li>Тип встречи: от Frequency Twins до Star Alchemy</li>
-          <li>Для любой пары — романтика, дружба, семья</li>
+          <li>Полный PDF карты совместимости</li>
+          <li>Романтика, дружба, семья, деловые отношения</li>
+          <li>Для пары, для троих, для группы</li>
         </ul>
       </div>
       <div class="product-action">
-        <div>
-          <div class="product-price">$22<span style="font-size:20px">.22</span></div>
-          <div class="product-price-note">Полная карта</div>
-        </div>
-        <a href="https://starseedsoultype.github.io/starseed/bond.html" class="btn-card">Рассчитать связь</a>
+        <a href="mailto:timsocion@gmail.com" class="btn-card">Рассчитать связь</a>
       </div>
     </div>
 
@@ -748,19 +721,15 @@
         <div class="product-tag">Личная работа</div>
         <h3 class="product-name">Личная сессия<br><em>с Олесей</em></h3>
         <p class="product-desc">
-          Система даёт карту. Сессия — разговор о том, где ты сейчас и как твоя частота уже работает в твоей жизни прямо сейчас.
+          Система которую я построила даёт тебе карту твоей души. Личная сессия — это глубокий разговор о том, как применить свои высшие вибрации здесь на земле. Как понять свою миссию и реализовать её прямо сейчас — в этом человеческом теле, в этой жизни.
         </p>
         <ul class="product-features">
           <li>Один час. Личный формат</li>
-          <li>Разбор твоего типа в контексте твоей жизни</li>
-          <li>Оплата фиксирует время. Перенос невозможен</li>
+          <li>Разбор твоего типа звёздной души в контексте твоей жизни</li>
+          <li>Здесь и сейчас. Не в теории — в практике</li>
         </ul>
       </div>
       <div class="product-action">
-        <div>
-          <div class="product-price">$111</div>
-          <div class="product-price-note">За сессию</div>
-        </div>
         <a href="https://calendly.com" class="btn-card">Записаться</a>
       </div>
     </div>
