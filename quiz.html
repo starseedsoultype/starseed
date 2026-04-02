@@ -245,6 +245,43 @@ font-family: Georgia, serif; font-size: 11px; letter-spacing: 2px;
 text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s;
 }
 .retake-btn:hover { border-color: var(–border2); color: var(–text3); }
+
+/* EMAIL CAPTURE */
+#email-capture {
+  max-width: 560px; width: 100%;
+  text-align: center; padding-top: 80px; display: none;
+}
+.ec-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--text4); text-transform: uppercase; margin-bottom: 24px; }
+.ec-title { font-size: 26px; color: var(--text); letter-spacing: 1px; margin-bottom: 12px; font-style: italic; font-family: Georgia, serif; }
+.ec-sub { font-size: 14px; color: var(--text3); line-height: 1.8; margin-bottom: 32px; }
+.ec-form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
+.ec-input {
+  padding: 14px 18px; background: var(--bg3);
+  border: 1px solid var(--border2); color: var(--text);
+  font-family: Georgia, serif; font-size: 14px;
+  border-radius: 3px; outline: none; text-align: center;
+  transition: border-color 0.2s;
+}
+.ec-input:focus { border-color: var(--accent); }
+.ec-input::placeholder { color: var(--text4); }
+.ec-btn {
+  padding: 15px; background: linear-gradient(135deg, #553388, #7744aa);
+  border: none; color: #fff; font-family: Georgia, serif;
+  font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; border-radius: 3px; transition: all 0.2s;
+}
+.ec-btn:hover { background: linear-gradient(135deg, #6644aa, #9955cc); }
+.ec-note { font-size: 10px; color: var(--text4); margin-top: 8px; letter-spacing: 1px; }
+.ec-error { font-size: 12px; color: var(--red); margin-top: 4px; display: none; }
+
+/* SOUL RESONANCE PHRASE */
+.soul-resonance {
+  background: linear-gradient(135deg, #0e0820, #130d22);
+  border: 1px solid var(--border2); border-left: 3px solid var(--accent);
+  padding: 20px 24px; border-radius: 4px; margin-bottom: 24px;
+  font-size: 15px; color: var(--text2); line-height: 1.85;
+  font-style: italic; text-align: center;
+}
 </style>
 
 </head>
@@ -281,6 +318,23 @@ text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 
 <!-- RESULT -->
 
 <div id="result"></div>
+
+<!-- EMAIL CAPTURE -->
+<div id="email-capture">
+  <div class="ec-eyebrow">Origin Consciousness System</div>
+  <div class="ec-title">Your Origin has been identified</div>
+  <div class="ec-sub">Enter your email to receive your Soul Frequency reading and unlock your result.</div>
+  <form class="ec-form" id="ecForm">
+    <input type="hidden" name="access_key" value="5e2462a8-4fac-406d-bf44-c9457170c983">
+    <input type="hidden" name="subject" value="New Starseed Soul Quiz Lead">
+    <input type="hidden" name="from_name" value="Starseed Soul Quiz">
+    <input type="hidden" name="redirect" value="false">
+    <input class="ec-input" type="email" name="email" id="ecEmail" placeholder="your@email.com" required autocomplete="email">
+    <div class="ec-error" id="ecError">Please enter a valid email address</div>
+    <button class="ec-btn" type="submit">Reveal My Origin</button>
+    <div class="ec-note">No spam. Unsubscribe anytime.</div>
+  </form>
+</div>
 
 <script>
 // ── TYPES ──────────────────────────────────────────────────────────────────
@@ -780,7 +834,7 @@ function calculateResult() {
     }
   }
 
-  showResult();
+  showEmailCapture();
 }
 
 function getType() {
@@ -1000,8 +1054,43 @@ function moveRank(qId, pos, dir) {
   answers[qId] = order;
   renderQuestion();
 }
+// ── EMAIL CAPTURE LOGIC ───────────────────────────────────────────────────────────
+function showEmailCapture() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('email-capture').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
-// ── RESULT ─────────────────────────────────────────────────────────────────
+  const form = document.getElementById('ecForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('ecEmail').value.trim();
+    const errorEl = document.getElementById('ecError');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    const btn = form.querySelector('.ec-btn');
+    btn.textContent = 'Opening portal...';
+    btn.disabled = true;
+    // Send email to Web3Forms
+    try {
+      const formData = new FormData(form);
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+    } catch(err) {
+      // Silently continue even if submission fails
+    }
+    // Show result regardless
+    document.getElementById('email-capture').style.display = 'none';
+    showResult();
+  });
+}
+
+// ── RESULT ──────────────────────────────────────────────────────────────────────
 function showResult() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
@@ -1011,11 +1100,20 @@ function showResult() {
   const [ch1, ch2, ch3] = type.funcs;
   const fc1 = FC[ch1];
 
+  const SOUL_RESONANCE = {
+    "I":  "You have spent your life translating the unspoken spaces between people. Your sensitivity is not a burden to be managed\u2014it is the exact instrument you were sent here to use.",
+    "II": "You see the architecture underneath the chaos. Your constant need to understand how things connect is not overthinking\u2014it is your soul trying to build a map for others to follow.",
+    "III":"You have always known what you wanted before you had the words for it. Your intensity scares people, so you learned to turn it down. It is time to turn it back up.",
+    "IV": "You carry an innate authority over the physical world. While others get lost in ideas, you know exactly how to make things real. Your grounding is your greatest power."
+  };
+
   const html = `
     <div class="result-eyebrow">Origin Consciousness System</div>
     <div class="result-crystal"><canvas id="resCrystal" width="200" height="200"></canvas></div>
     <div class="result-origin" style="color:${fc1.hex}">${type.name}</div>
     <div class="result-subtitle">Soul Origin Reading · ${new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'})}</div>
+
+    <div class="soul-resonance">${SOUL_RESONANCE[type.group]}</div>
 
     <div class="preview-box">
       <h2>Your Soul Frequency</h2>
