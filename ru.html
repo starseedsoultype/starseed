@@ -588,10 +588,7 @@
   </p>
   <a href="#products" class="btn-primary">Войти в PORTAL</a>
 
-  <div class="scroll-hint">
-    <span>Подробнее</span>
-    <div class="scroll-line"></div>
-  </div>
+
 </section>
 
 <!-- MANIFESTO -->
@@ -713,7 +710,7 @@
         </ul>
       </div>
       <div class="product-action">
-        <a href="mailto:timsocion@gmail.com" class="btn-card">Рассчитать связь</a>
+        <a href="/cdn-cgi/l/email-protection#dda9b4b0aeb2beb4b2b39dbab0bcb4b1f3beb2b0" class="btn-card">Рассчитать связь</a>
       </div>
     </div>
 
@@ -767,7 +764,7 @@
   <div class="footer-copy">© 2026 Olesya Popova · StarSeedSoul · All rights reserved</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Stars
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 180; i++) {
@@ -791,10 +788,4 @@
         setTimeout(() => entry.target.classList.add('visible'), 80);
         observer.unobserve(entry.target);
       }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal, .manifesto-line').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+    }
