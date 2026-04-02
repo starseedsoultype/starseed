@@ -232,6 +232,43 @@ body {
   text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s;
 }
 .retake-btn:hover { border-color: var(--border2); color: var(--text3); }
+
+/* EMAIL CAPTURE */
+#email-capture {
+  max-width: 560px; width: 100%;
+  text-align: center; padding-top: 80px; display: none;
+}
+.ec-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--text4); text-transform: uppercase; margin-bottom: 24px; }
+.ec-title { font-size: 26px; color: var(--text); letter-spacing: 1px; margin-bottom: 12px; font-style: italic; font-family: Georgia, serif; }
+.ec-sub { font-size: 14px; color: var(--text3); line-height: 1.8; margin-bottom: 32px; }
+.ec-form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin: 0 auto; }
+.ec-input {
+  padding: 14px 18px; background: var(--bg3);
+  border: 1px solid var(--border2); color: var(--text);
+  font-family: Georgia, serif; font-size: 14px;
+  border-radius: 3px; outline: none; text-align: center;
+  transition: border-color 0.2s;
+}
+.ec-input:focus { border-color: var(--accent); }
+.ec-input::placeholder { color: var(--text4); }
+.ec-btn {
+  padding: 15px; background: linear-gradient(135deg, #553388, #7744aa);
+  border: none; color: #fff; font-family: Georgia, serif;
+  font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; border-radius: 3px; transition: all 0.2s;
+}
+.ec-btn:hover { background: linear-gradient(135deg, #6644aa, #9955cc); }
+.ec-note { font-size: 10px; color: var(--text4); margin-top: 8px; letter-spacing: 1px; }
+.ec-error { font-size: 12px; color: var(--red); margin-top: 4px; display: none; }
+
+/* SOUL RESONANCE PHRASE */
+.soul-resonance {
+  background: linear-gradient(135deg, #0e0820, #130d22);
+  border: 1px solid var(--border2); border-left: 3px solid var(--accent);
+  padding: 20px 24px; border-radius: 4px; margin-bottom: 24px;
+  font-size: 15px; color: var(--text2); line-height: 1.85;
+  font-style: italic; text-align: center;
+}
 </style>
 </head>
 <body>
@@ -250,10 +287,10 @@ body {
   <div class="intro-title">Происхождение твоей звёздной души</div>
   <div class="divider"></div>
   <div class="intro-body">
-    Твоя душа пришла сюда с конкретной частотой. Особым способом видеть, знать, двигаться сквозь это измерение. То, что следует дальше — это воспоминание.
+    Каждая душа воплощается с определённой частотой — уникальным способом воспринимать мир, строить отношения, принимать решения и реализовывать свою миссию. Эти 28 вопросов помогут тебе распознать свою частоту и понять, к какому типу звёздных душ ты принадлежишь.
   </div>
   <div class="intro-body">
-    Ты входишь в PORTAL 11.11. Момент, когда душа видит себя полностью. Отвечай из того места, которое знает — до того, как начинается мышление.
+    Отвечай не из того, каким ты хочешь быть или каким тебя видят другие — а из того, как ты устроен на самом деле. Система анализирует твои глубинные паттерны, а не твои представления о себе.
   </div>
   <div class="intro-note">28 вопросов · 7 минут · отвечай из внутреннего знания</div>
   <button class="start-btn" onclick="startQuiz()">Начать</button>
@@ -261,6 +298,23 @@ body {
 
 <!-- QUIZ -->
 <div id="quiz"></div>
+
+<!-- EMAIL CAPTURE -->
+<div id="email-capture">
+  <div class="ec-eyebrow">Система Происхождения Души</div>
+  <div class="ec-title">Твоё происхождение определено</div>
+  <div class="ec-sub">Оставь свой email, чтобы получить чтение твоей частоты души и открыть результат.</div>
+  <form class="ec-form" id="ecForm">
+    <input type="hidden" name="access_key" value="5e2462a8-4fac-406d-bf44-c9457170c983">
+    <input type="hidden" name="subject" value="New Starseed Soul Quiz Lead (RU)">
+    <input type="hidden" name="from_name" value="Starseed Soul Quiz RU">
+    <input type="hidden" name="redirect" value="false">
+    <input class="ec-input" type="email" name="email" id="ecEmail" placeholder="твой@email.com" required autocomplete="email">
+    <div class="ec-error" id="ecError">Пожалуйста, введи корректный email</div>
+    <button class="ec-btn" type="submit">Открыть моё происхождение</button>
+    <div class="ec-note">Без спама. Отписка в любой момент.</div>
+  </form>
+</div>
 
 <!-- RESULT -->
 <div id="result"></div>
@@ -759,7 +813,42 @@ function calculateResult() {
     }
   }
 
-  showResult();
+   showEmailCapture();
+}
+
+function showEmailCapture() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('email-capture').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const form = document.getElementById('ecForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const emailVal = document.getElementById('ecEmail').value;
+    const errorEl = document.getElementById('ecError');
+    if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    const btn = form.querySelector('.ec-btn');
+    btn.textContent = 'Открываю portal...';
+    btn.disabled = true;
+    // Send email to Web3Forms
+    try {
+      const formData = new FormData(form);
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+    } catch(err) {
+      // Silently continue even if submission fails
+    }
+    // Show result regardless
+    document.getElementById('email-capture').style.display = 'none';
+    showResult();
+  });
 }
 
 function getType() {
@@ -986,11 +1075,20 @@ function showResult() {
   const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
+  const SOUL_RESONANCE = {
+    "I":  "Ты всю жизнь чувствуешь то, что другие не замечают — напряжение между людьми, невысказанные слова, скрытые эмоции. Твоя чувствительность — это не слабость, которую нужно контролировать. Это именно тот инструмент, с которым ты пришёл сюда.",
+    "II": "Ты видишь структуру там, где другие видят хаос. Твоя постоянная потребность понять, как всё устроено и связано — это не избыточное мышление. Это твоя душа, которая строит карту для тех, кто идёт следом.",
+    "III": "Ты всегда знал, чего хочешь, ещё до того, как находил для этого слова. Твоя интенсивность пугала людей — и ты научился её приглушать. Пришло время снова её включить.",
+    "IV": "В тебе есть врождённое понимание того, как устроен физический мир. Пока другие теряются в идеях, ты точно знаешь, как сделать что-то реальным. Твоя заземлённость — это твоя главная сила."
+  };
+
   const html = `
     <div class="result-eyebrow">Система Происхождения Души</div>
     <div class="result-crystal"><canvas id="resCrystal" width="200" height="200"></canvas></div>
     <div class="result-origin" style="color:${fc1.hex}">${type.name}</div>
     <div class="result-subtitle">Чтение происхождения души · ${dateStr}</div>
+
+    <div class="soul-resonance">${SOUL_RESONANCE[type.group]}</div>
 
     <div class="preview-box">
       <h2>Твоя частота души</h2>
@@ -1012,14 +1110,13 @@ function showResult() {
     <div class="unlock-box">
       <div class="portal-num">PORTAL 11.11</div>
       <div class="unlock-title">Ты в одном шаге</div>
-      <div class="unlock-sub">Чтение подготовлено. Остался только шаг сквозь него.</div>
+      <div class="unlock-sub">Твоё чтение подготовлено. Открой полный доступ к своей карте души.</div>
       <div class="unlock-list">
-        <div class="unlock-item">Полный космический портрет твоего происхождения души. Откуда ты пришла и что несёшь сюда</div>
-        <div class="unlock-item">Все четыре слоя твоей частоты. Как они движутся через твою жизнь, отношения, работу, тело</div>
-        <div class="unlock-item">Территория, которую это воплощение требует от тебя больше всего</div>
-        <div class="unlock-item">Место, где ты получаешь без разборчивости. И чего это тебе стоило</div>
-        <div class="unlock-item">Конкретная миссия твоей души в этом измерении</div>
-        <div class="unlock-item">Твоя карта совместимости. Какие происхождения душ завершают тебя, а какие тянут</div>
+        <div class="unlock-item">Полное описание твоего типа звёздной души — откуда ты пришла и что несёшь в это воплощение</div>
+        <div class="unlock-item">Все четыре слоя твоей частоты и то, как они проявляются в твоих отношениях, работе, теле и жизненных выборах</div>
+        <div class="unlock-item">Сфера жизни, которая требует от тебя больше всего в этом воплощении</div>
+        <div class="unlock-item">Твоя миссия — конкретно и без общих слов</div>
+        <div class="unlock-item">Карта совместимости с другими типами звёздных душ — кто усиливает тебя, а кто забирает энергию</div>
       </div>
       <div class="price">$11.11</div>
       <div class="price-note">Единоразово · Мгновенный доступ · Навсегда твоё</div>
@@ -1058,6 +1155,7 @@ function retake() {
   current = 0; answers = {}; tbQueue = [];
   scores = { R:0, E:0, M:0, L:0 };
   document.getElementById('result').style.display = 'none';
+  document.getElementById('email-capture').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
   document.getElementById('intro').style.display = 'block';
 }
