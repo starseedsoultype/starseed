@@ -404,7 +404,7 @@
 <script>
   // ─── CONFIG ───────────────────────────────────────────────
   const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co'
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTI2NjQxMSwiZXhwIjoyMDkwODQyNDExfQ.ojiguJpOEknM9YKII9BV7XbA2JW4q_AdIQVmbrkfU_c'
   // ──────────────────────────────────────────────────────────
 
   const { createClient } = supabase
@@ -416,6 +416,16 @@
       document.getElementById('loader').classList.add('hide')
     }, 600)
   })
+
+  // Handle auth redirect (email confirmation)
+  const hash = window.location.hash
+  if (hash.includes("access_token")) {
+    sb.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        window.location.href = "onboarding.html"
+      }
+    })
+  }
 
   // Check if already logged in
   sb.auth.getSession().then(({ data }) => {
