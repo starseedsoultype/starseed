@@ -892,6 +892,7 @@
   let currentIndex = 0
   let myProfile = null
   let myUser = null
+  let accessToken = null
   let isAnimating = false
   let matchAnimFrame = null
   let flameAnimFrame = null
@@ -905,13 +906,32 @@
       return
     }
     myUser = sessionData.session.user
+    accessToken = sessionData.session.access_token
 
     const { data: me } = await sb.from('profiles').select('*').eq('id', myUser.id).single()
     myProfile = me
 
-    const { data: realProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
-    const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
-    profiles = [...(realProfiles || []), ...(testProfiles || [])]
+    // ── Загрузка ленты через Edge Function (алгоритм совместимости на сервере)
+    let feedLoaded = false
+    try {
+      const feedResp = await fetch(`${SUPABASE_URL}/functions/v1/get-feed`, {
+        headers: {
+          'Authorization': `Bearer ${sessionData.session.access_token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      if (feedResp.ok) {
+        const feedData = await feedResp.json()
+        profiles = feedData.profiles || []
+        feedLoaded = true
+      }
+    } catch (e) { console.warn('Edge Function unavailable, falling back', e) }
+    // ── Фолбэк: прямой запрос если Edge Function недоступна
+    if (!feedLoaded) {
+      const { data: realProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
+      const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
+      profiles = [...(realProfiles || []), ...(testProfiles || [])]
+    }
 
     document.getElementById('loader').classList.add('hide')
 
@@ -992,10 +1012,30 @@
       stamp.classList.add('show')
       setTimeout(() => stamp.classList.remove('show'), 400)
 
-      // 50% match chance for demo
-      if (Math.random() > 0.5) {
-        setTimeout(() => showMatch(profile), 500)
-      }
+      // ── Записать лайк и проверить взаимность через Edge Function
+      ;(async () => {
+        try {
+          const resp = await fetch(`${SUPABASE_URL}/functions/v1/record-swipe`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ to_user: profile.id, action: 'like' })
+          })
+          if (resp.ok) {
+            const result = await resp.json()
+            if (result.matched) setTimeout(() => showMatch(profile), 500)
+          } else {
+            // Фолбэк: прямой INSERT + 50% демо-мэтч
+            await sb.from('likes').insert({ from_user: myUser.id, to_user: profile.id })
+            if (Math.random() > 0.5) setTimeout(() => showMatch(profile), 500)
+          }
+        } catch (e) {
+          await sb.from('likes').insert({ from_user: myUser.id, to_user: profile.id }).catch(() => {})
+          if (Math.random() > 0.5) setTimeout(() => showMatch(profile), 500)
+        }
+      })()
     } else {
       const stamp = card.querySelector('.stamp-pass')
       stamp.classList.add('show')
