@@ -681,7 +681,7 @@
       const other = match.user1 === myUser.id ? match.profile2 : match.profile1
       if (!other) continue
 
-      const connType = getConnectionType(myProfile?.origin, other.origin)
+      const connType = match.connection_type || getConnectionType(myProfile?.origin, other.origin)
       const color = CONNECTION_COLORS[connType] || CONNECTION_COLORS['Cosmic Flow']
 
       // Загружаем последнее сообщение

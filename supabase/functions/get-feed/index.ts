@@ -16,22 +16,48 @@ const ORIGIN_GROUP: Record<string, number> = {
 }
 
 // ═══════════════════════════════════════════════════════════
-// CONNECTION TYPE ALGORITHM
-// This logic lives SERVER-SIDE only — never exposed to client
+// CONNECTION TYPE ALGORITHM — SERVER-SIDE ONLY
+// Full 10-type matrix. Never exposed to client in raw form.
 // ═══════════════════════════════════════════════════════════
 function getConnectionType(origin1: string, origin2: string): string {
   if (!origin1 || !origin2 || origin1 === "Unknown" || origin2 === "Unknown") return "Unknown"
-  if (origin1 === origin2) return "Eternal Reflection"
+
+  // Identical origin — rarest, most powerful resonance
+  if (origin1 === origin2) return "Frequency Twins"
 
   const g1 = ORIGIN_GROUP[origin1]
   const g2 = ORIGIN_GROUP[origin2]
-  if (!g1 || !g2) return "Cosmic Flow"
+  if (!g1 || !g2) return "Unknown"
 
   const diff = Math.abs(g1 - g2)
-  if (diff === 0) return "Twin Stars"
-  if (diff === 1) return "Cosmic Flow"
-  if (diff === 2) return "Mirror Portals"
-  return "Celestial Mentor"
+
+  // Same group, different origin
+  if (diff === 0) return "Eternal Reflection"
+
+  // Adjacent groups
+  if (diff === 1) {
+    const lower = Math.min(g1, g2)
+    if (lower === 1) return "Twin Stars"       // heart ↔ mind
+    if (lower === 2) return "Cosmic Flow"      // mind ↔ energy
+    if (lower === 3) return "Star Alchemy"     // energy ↔ matter
+  }
+
+  // Two groups apart
+  if (diff === 2) {
+    const lower = Math.min(g1, g2)
+    if (lower === 1) return "Mirror Portals"   // heart ↔ energy
+    if (lower === 2) return "Celestial Mentor" // mind ↔ matter
+  }
+
+  // Maximum polarity — groups 1 & 4
+  if (diff === 3) {
+    const hash = (origin1.charCodeAt(0) + origin2.charCodeAt(0)) % 3
+    if (hash === 0) return "Karmic Bonds"
+    if (hash === 1) return "Shadow Contracts"
+    return "Black Holes"
+  }
+
+  return "Unknown"
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -40,6 +66,7 @@ function getConnectionType(origin1: string, origin2: string): string {
 // ═══════════════════════════════════════════════════════════
 function getCompatibilityScore(myOrigin: string, theirOrigin: string): number {
   const type = getConnectionType(myOrigin, theirOrigin)
+  // Score is used for feed ranking only — not exposed to users
   const scores: Record<string, number> = {
     "Frequency Twins": 100,
     "Eternal Reflection": 95,

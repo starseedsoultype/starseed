@@ -975,7 +975,7 @@
       card.className = 'card' + (i === 0 ? ' active' : '')
       card.dataset.index = i
 
-      const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+      const connectionType = profile.connection_type || getConnectionType(myProfile?.origin, profile.origin)
       const theme = MATCH_THEMES[connectionType] || MATCH_THEMES['Cosmic Flow']
       const dotColor = theme.badgeColor
       const isUnknown = connectionType === 'Unknown'
@@ -1073,7 +1073,7 @@
   // ═══════════════════════════════════════════════════════════
 
   function showMatch(profile) {
-    const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+    const connectionType = profile.connection_type || getConnectionType(myProfile?.origin, profile.origin)
     currentMatchType = connectionType
 
     const theme = MATCH_THEMES[connectionType] || MATCH_THEMES['Cosmic Flow']
