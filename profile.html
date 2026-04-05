@@ -1343,7 +1343,8 @@
 
   // ─── LIBRARY LINK ─────────────────────────────────────────
   function openLibrary() {
-    alert('Library: ' + (profile.origin || 'Unknown') + '\n\n(Coming soon)')
+    const origin = profile.origin || 'Unknown'
+    window.location.href = 'library.html?origin=' + encodeURIComponent(origin)
   }
 
   // ─── LOGOUT ───────────────────────────────────────────────
