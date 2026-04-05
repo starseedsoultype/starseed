@@ -410,28 +410,17 @@
   const { createClient } = supabase
   const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-  // Hide loader
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('loader').classList.add('hide')
-    }, 600)
-  })
-
-  // Handle all auth state changes including OAuth redirects
-  sb.auth.onAuthStateChange((event, session) => {
-    if (session && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
-      setTimeout(() => {
-        window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
-      }, 100)
-    }
-  })
-
-  // Also check existing session on load
-  sb.auth.getSession().then(({ data }) => {
-    if (data.session) {
+ sb.auth.onAuthStateChange((event, session) => {
+    if (session) {
       window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+    } else if (event === 'INITIAL_SESSION') {
+      document.getElementById('loader').classList.add('hide')
     }
-  })
+   })
+
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hide')
+  }, 3000)
 
   // Stars canvas
   const canvas = document.getElementById('stars')
