@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Match Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --gold: #c9a96e; --gold-soft: #e8d5b0; --deep: #04030a; --text: #e8e0d5; --muted: #6b6478; }
+  html, body { height: 100%; background: #04030a; color: var(--text); font-family: 'Jost', sans-serif; font-weight: 200; overflow: hidden; }
+
+  .match-overlay {
+    position: fixed; inset: 0; z-index: 200; background: #04030a;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; padding: 40px 32px; overflow: hidden;
+  }
+  #match-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .match-content {
+    position: relative; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; opacity: 0; transform: translateY(20px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
+  .match-content.visible { opacity: 1; transform: translateY(0); }
+  .match-label { font-size: 10px; letter-spacing: 0.6em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .match-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 8vw, 56px); font-weight: 300; color: var(--gold-soft); margin-bottom: 4px; line-height: 1.1; }
+  .match-connection-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px;
+    border-radius: 20px; border: 1px solid rgba(201,169,110,0.35);
+    background: rgba(201,169,110,0.08); margin-bottom: 36px; cursor: pointer; transition: background 0.2s;
+  }
+  .match-connection-badge:hover { background: rgba(201,169,110,0.15); }
+  .match-connection-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .match-connection-text { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; }
+  .match-portraits { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px; position: relative; }
+  .match-portrait {
+    width: 96px; height: 96px; border-radius: 50%;
+    background-size: cover; background-position: center; background-color: #0d0b18;
+    flex-shrink: 0; position: relative; transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .match-portrait-them { transform: translateX(40px); border: 1px solid rgba(255,255,255,0.1); }
+  .match-portrait-me { transform: translateX(-40px); border: 1px solid rgba(255,255,255,0.1); }
+  .match-portrait-them.moved { transform: translateX(8px); }
+  .match-portrait-me.moved { transform: translateX(-8px); }
+  .match-flame-wrap {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    z-index: 3; pointer-events: none; opacity: 0; transition: opacity 0.6s ease 1.2s;
+  }
+  .match-flame-wrap.visible { opacity: 1; }
+  #flame-canvas { display: block; }
+  .match-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn-match { padding: 14px 28px; border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-message { background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.4); color: var(--gold-soft); }
+  .btn-message:hover { background: rgba(201,169,110,0.25); }
+  .btn-continue { background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--muted); }
+  .btn-continue:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+  /* Back button */
+  .back-btn {
+    position: fixed; top: 16px; left: 16px; z-index: 300;
+    padding: 8px 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted); font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; cursor: pointer; border-radius: 2px;
+  }
+  .back-btn:hover { color: var(--text); }
+
+  /* Type selector */
+  .type-selector {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 300; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    max-width: 90vw;
+  }
+  .type-btn {
+    padding: 6px 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted); font-family: 'Jost', sans-serif; font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s;
+  }
+  .type-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .type-btn.active { color: var(--gold); border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.08); }
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="history.back()">← Back</button>
+
+<div class="match-overlay" id="match-overlay">
+  <canvas id="match-canvas"></canvas>
+  <div class="match-content" id="match-content">
+    <p class="match-label">A new frequency aligned</p>
+    <h2 class="match-name" id="match-name">Aurora</h2>
+    <div class="match-connection-badge" id="match-connection-badge">
+      <div class="match-connection-dot" id="match-connection-dot"></div>
+      <span class="match-connection-text" id="match-connection-text">—</span>
+    </div>
+    <div class="match-portraits">
+      <div class="match-portrait match-portrait-them" id="match-photo-them"
+        style="background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=aurora&backgroundColor=0d0b18')">
+      </div>
+      <div class="match-flame-wrap" id="flame-wrap">
+        <canvas id="flame-canvas" width="60" height="120"></canvas>
+      </div>
+      <div class="match-portrait match-portrait-me" id="match-photo-me"
+        style="background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=me&backgroundColor=0d0b18')">
+      </div>
+    </div>
+    <div class="match-actions">
+      <button class="btn-match btn-message">Send a message</button>
+      <button class="btn-match btn-continue" onclick="resetAndReload()">Keep exploring</button>
+    </div>
+  </div>
+</div>
+
+<!-- Type selector -->
+<div class="type-selector" id="type-selector"></div>
+
+<script>
+  const MATCH_THEMES = {
+    'Frequency Twins': {
+      badgeColor: '#c9a96e',
+      flame: { colors: ['#ffe066', '#c9a96e', '#fff0b0', '#f0c040'], style: 'steady', intensity: 1.0, height: 1.0, speed: 0.8 },
+      bg: { colors: ['rgba(201,169,110,0.12)', 'rgba(255,220,80,0.06)'], particleCount: 80, style: 'radiate' }
+    },
+    'Twin Stars': {
+      badgeColor: '#d4a0c0',
+      flame: { colors: ['#d4a0c0', '#c9a96e', '#f0c0d8', '#ffe0b0'], style: 'reaching', intensity: 0.85, height: 0.9, speed: 0.7 },
+      bg: { colors: ['rgba(212,160,192,0.12)', 'rgba(201,169,110,0.08)'], particleCount: 70, style: 'drift' }
+    },
+    'Cosmic Flow': {
+      badgeColor: '#c0a0d4',
+      flame: { colors: ['#c0a0d4', '#d4a0c0', '#a080c0', '#e0c0f0'], style: 'flowing', intensity: 0.75, height: 0.85, speed: 0.5 },
+      bg: { colors: ['rgba(192,160,212,0.12)', 'rgba(212,160,192,0.08)'], particleCount: 90, style: 'nebula' }
+    },
+    'Mirror Portals': {
+      badgeColor: '#a080c8',
+      flame: { colors: ['#a080c8', '#c0a0e0', '#8060b0', '#d0b0f0'], style: 'shimmer', intensity: 0.7, height: 0.8, speed: 0.6 },
+      bg: { colors: ['rgba(160,128,200,0.14)', 'rgba(128,96,176,0.08)'], particleCount: 60, style: 'mirror' }
+    },
+    'Celestial Mentor': {
+      badgeColor: '#c0b8e8',
+      flame: { colors: ['#c0b8e8', '#e8e4f8', '#a8a0d8', '#f0eeff'], style: 'calm', intensity: 0.6, height: 0.75, speed: 0.35 },
+      bg: { colors: ['rgba(192,184,232,0.1)', 'rgba(240,238,255,0.06)'], particleCount: 50, style: 'gentle' }
+    },
+    'Karmic Bonds': {
+      badgeColor: '#7060c0',
+      flame: { colors: ['#7060c0', '#5080d0', '#9070d0', '#4060b0'], style: 'pulse', intensity: 0.8, height: 0.85, speed: 1.1 },
+      bg: { colors: ['rgba(112,96,192,0.14)', 'rgba(80,128,208,0.08)'], particleCount: 65, style: 'pulse' }
+    },
+    'Shadow Contracts': {
+      badgeColor: '#604880',
+      flame: { colors: ['#604880', '#503870', '#705890', '#402860'], style: 'dim', intensity: 0.55, height: 0.7, speed: 0.9 },
+      bg: { colors: ['rgba(96,72,128,0.12)', 'rgba(64,40,96,0.08)'], particleCount: 40, style: 'sparse' }
+    },
+    'Black Holes': {
+      badgeColor: '#304070',
+      flame: { colors: ['#304070', '#203060', '#405080', '#102040'], style: 'implode', intensity: 0.45, height: 0.6, speed: 0.7 },
+      bg: { colors: ['rgba(48,64,112,0.14)', 'rgba(16,32,64,0.1)'], particleCount: 35, style: 'vortex' }
+    },
+    'Star Alchemy': {
+      badgeColor: '#4080c0',
+      flame: { colors: ['#4080c0', '#60a0e0', '#2060a0', '#80c0ff'], style: 'collide', intensity: 0.9, height: 0.9, speed: 1.2 },
+      bg: { colors: ['rgba(64,128,192,0.14)', 'rgba(96,160,224,0.08)'], particleCount: 75, style: 'clash' }
+    },
+    'Eternal Reflection': {
+      badgeColor: '#d0d0e8',
+      flame: { colors: ['#d0d0e8', '#e8e8f8', '#b8b8d8', '#f0f0ff'], style: 'mirror_static', intensity: 0.65, height: 0.8, speed: 0.2 },
+      bg: { colors: ['rgba(208,208,232,0.1)', 'rgba(232,232,248,0.06)'], particleCount: 55, style: 'symmetric' }
+    }
+  }
+
+  let matchAnimFrame = null
+  let flameAnimFrame = null
+
+  // Build type selector
+  const sel = document.getElementById('type-selector')
+  Object.keys(MATCH_THEMES).forEach(t => {
+    const b = document.createElement('button')
+    b.className = 'type-btn'
+    b.textContent = t
+    b.onclick = () => {
+      document.querySelectorAll('.type-btn').forEach(x => x.classList.remove('active'))
+      b.classList.add('active')
+      loadTheme(t)
+    }
+    sel.appendChild(b)
+  })
+
+  function loadTheme(connectionType) {
+    // Stop old animations
+    if (matchAnimFrame) { cancelAnimationFrame(matchAnimFrame); matchAnimFrame = null }
+    if (flameAnimFrame) { cancelAnimationFrame(flameAnimFrame); flameAnimFrame = null }
+
+    const theme = MATCH_THEMES[connectionType]
+
+    // Update badge
+    document.getElementById('match-connection-dot').style.background = theme.badgeColor
+    document.getElementById('match-connection-text').textContent = connectionType
+    document.getElementById('match-connection-text').style.color = theme.badgeColor
+    document.getElementById('match-connection-badge').style.borderColor = theme.badgeColor + '55'
+
+    // Update portrait borders
+    document.getElementById('match-photo-them').style.borderColor = theme.badgeColor + '60'
+    document.getElementById('match-photo-me').style.borderColor = theme.badgeColor + '60'
+
+    // Animate portraits sliding in
+    const them = document.getElementById('match-photo-them')
+    const me = document.getElementById('match-photo-me')
+    them.classList.remove('moved')
+    me.classList.remove('moved')
+    setTimeout(() => { them.classList.add('moved'); me.classList.add('moved') }, 50)
+
+    // Show content
+    const content = document.getElementById('match-content')
+    content.classList.remove('visible')
+    setTimeout(() => content.classList.add('visible'), 50)
+
+    // Show flame
+    const flameWrap = document.getElementById('flame-wrap')
+    flameWrap.classList.remove('visible')
+    setTimeout(() => flameWrap.classList.add('visible'), 50)
+
+    startBgAnimation(theme)
+    startFlameAnimation(theme)
+  }
+
+  // ── BG ANIMATION ──────────────────────────────────────────
+  function startBgAnimation(theme) {
+    const canvas = document.getElementById('match-canvas')
+    const ctx = canvas.getContext('2d')
+
+    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight }
+    resize()
+
+    const W = () => canvas.width
+    const H = () => canvas.height
+    const count = theme.bg.particleCount
+    const style = theme.bg.style
+    const cols = theme.bg.colors
+
+    const particles = Array.from({ length: count }, (_, i) => createBgParticle(i, count, style, W(), H(), cols))
+    let t = 0
+
+    function draw() {
+      ctx.clearRect(0, 0, W(), H())
+
+      const grd = ctx.createRadialGradient(W()/2, H()/2, 0, W()/2, H()/2, W()*0.7)
+      grd.addColorStop(0, theme.bg.colors[0])
+      grd.addColorStop(1, 'transparent')
+      ctx.fillStyle = grd
+      ctx.fillRect(0, 0, W(), H())
+
+      particles.forEach(p => {
+        updateBgParticle(p, t, style, W(), H())
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.fill()
+      })
+
+      t += 0.016
+      matchAnimFrame = requestAnimationFrame(draw)
+    }
+    draw()
+  }
+
+  function createBgParticle(i, total, style, W, H, cols) {
+    const angle = (i / total) * Math.PI * 2
+    const dist = Math.random() * Math.min(W, H) * 0.45 + 20
+    const col = cols[Math.floor(Math.random() * cols.length)]
+    const alpha = (Math.random() * 0.5 + 0.2).toFixed(2)
+    const rgb = hexToRgbStr(col.includes('rgba') ? '#a0a0c0' : col)
+    return {
+      angle, dist,
+      baseX: W/2 + Math.cos(angle) * dist,
+      baseY: H/2 + Math.sin(angle) * dist,
+      x: W/2, y: H/2,
+      r: Math.random() * 1.8 + 0.4,
+      speed: Math.random() * 0.4 + 0.1,
+      phase: Math.random() * Math.PI * 2,
+      color: col.includes('rgba') ? col.replace(/[\d.]+\)$/, alpha + ')') : `rgba(${rgb},${alpha})`,
+      style
+    }
+  }
+
+  function updateBgParticle(p, t, style, W, H) {
+    const cx = W/2, cy = H/2
+    switch (style) {
+      case 'radiate':
+        p.x = cx + Math.cos(p.angle + t*0.1) * (p.dist * (0.3 + 0.7*((t*p.speed)%1)))
+        p.y = cy + Math.sin(p.angle + t*0.1) * (p.dist * (0.3 + 0.7*((t*p.speed)%1)))
+        p.r = 1.8 * (1 - ((t*p.speed)%1)*0.5)
+        break
+      case 'drift':
+        p.x = p.baseX + Math.sin(t*p.speed + p.phase)*20
+        p.y = p.baseY + Math.cos(t*p.speed*0.7 + p.phase)*15
+        break
+      case 'nebula':
+        p.x = p.baseX + Math.sin(t*p.speed*0.5 + p.phase)*30
+        p.y = p.baseY + Math.cos(t*p.speed*0.3 + p.phase)*20
+        p.r = 1.5 + Math.sin(t*0.5 + p.phase)*0.8
+        break
+      case 'mirror':
+        p.x = cx + Math.sin(t*p.speed + p.phase)*p.dist
+        p.y = cy + Math.cos(t*p.speed*0.8 + p.phase)*p.dist*0.6
+        break
+      case 'gentle':
+        p.x = p.baseX + Math.sin(t*p.speed*0.3 + p.phase)*12
+        p.y = p.baseY + Math.cos(t*p.speed*0.2 + p.phase)*8
+        break
+      case 'pulse':
+        const pulse = 0.7 + 0.3*Math.sin(t*2 + p.phase)
+        p.x = cx + Math.cos(p.angle)*p.dist*pulse
+        p.y = cy + Math.sin(p.angle)*p.dist*pulse
+        p.r = 1.2 + 0.8*Math.sin(t*3 + p.phase)
+        break
+      case 'sparse':
+        p.x = p.baseX + Math.sin(t*p.speed*0.4 + p.phase)*10
+        p.y = p.baseY + Math.cos(t*p.speed*0.3 + p.phase)*8
+        p.r = 0.8 + Math.sin(t + p.phase)*0.4
+        break
+      case 'vortex':
+        p.angle += 0.015*p.speed
+        p.dist = Math.max(5, p.dist - 0.3*p.speed)
+        p.x = cx + Math.cos(p.angle)*p.dist
+        p.y = cy + Math.sin(p.angle)*p.dist
+        if (p.dist < 8) { p.dist = Math.random()*Math.min(W,H)*0.4+40; p.angle = Math.random()*Math.PI*2 }
+        break
+      case 'clash':
+        p.x = p.baseX + Math.sin(t*p.speed*1.5 + p.phase)*25
+        p.y = p.baseY + Math.cos(t*p.speed + p.phase)*20
+        p.r = 1.0 + Math.abs(Math.sin(t*2 + p.phase))*1.2
+        break
+      case 'symmetric':
+        const sx = Math.sin(t*p.speed*0.25 + p.phase)*p.dist*0.5
+        const sy = Math.cos(t*p.speed*0.25 + p.phase)*p.dist*0.4
+        p.x = cx + sx; p.y = cy + sy
+        break
+      default:
+        p.x = p.baseX + Math.sin(t*p.speed + p.phase)*15
+        p.y = p.baseY + Math.cos(t*p.speed + p.phase)*10
+    }
+  }
+
+  // ── FLAME ANIMATION ───────────────────────────────────────
+  function startFlameAnimation(theme) {
+    const canvas = document.getElementById('flame-canvas')
+    const ctx = canvas.getContext('2d')
+    const W = canvas.width, H = canvas.height, cx = W/2
+    const { colors, style, intensity, height: heightFactor, speed } = theme.flame
+    const particles = Array.from({ length: 28 }, () => createFlameParticle(cx, H, colors, style, heightFactor))
+    let t = 0
+
+    function drawFlame() {
+      ctx.clearRect(0, 0, W, H)
+      particles.forEach(p => {
+        updateFlameParticle(p, t, style, cx, H, heightFactor, speed)
+        if (p.life <= 0) Object.assign(p, createFlameParticle(cx, H, colors, style, heightFactor))
+        const alpha = (p.life / p.maxLife) * intensity * 0.85
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2)
+        ctx.fillStyle = p.color.replace('COLOR_ALPHA', alpha.toFixed(2))
+        ctx.fill()
+      })
+      // Glow
+      ctx.beginPath()
+      ctx.arc(cx, H*0.62, 8, 0, Math.PI*2)
+      ctx.fillStyle = hexToRgba(colors[0], 0.25*intensity)
+      ctx.fill()
+      t += 0.04*speed
+      flameAnimFrame = requestAnimationFrame(drawFlame)
+    }
+    drawFlame()
+  }
+
+  function createFlameParticle(cx, H, colors, style, heightFactor) {
+    const col = colors[Math.floor(Math.random()*colors.length)]
+    const maxLife = 40 + Math.random()*30
+    const spread = style === 'collide' ? 14 : style === 'reaching' ? 10 : 8
+    return {
+      x: cx + (Math.random()-0.5)*spread,
+      y: H*0.75 + Math.random()*H*0.15,
+      vx: (Math.random()-0.5)*0.8,
+      vy: -(Math.random()*1.2+0.4)*heightFactor,
+      r: Math.random()*3.5+1.5,
+      life: maxLife, maxLife,
+      color: `rgba(${hexToRgbStr(col)},COLOR_ALPHA)`,
+      phase: Math.random()*Math.PI*2
+    }
+  }
+
+  function updateFlameParticle(p, t, style, cx, H, heightFactor, speed) {
+    p.life -= speed*0.8
+    switch (style) {
+      case 'steady':   p.x += p.vx*0.3 + Math.sin(t+p.phase)*0.3; p.y += p.vy; p.r *= 0.985; break
+      case 'reaching': p.x += p.vx + (p.x>cx?-1:1)*0.15; p.y += p.vy; p.r *= 0.982; break
+      case 'flowing':  p.x += p.vx + Math.sin(t*1.5+p.phase)*0.7; p.y += p.vy*0.9; p.r *= 0.984; break
+      case 'shimmer':  p.x += p.vx + Math.sin(t*3+p.phase)*0.5; p.y += p.vy; p.r = (1.5+Math.sin(t*4+p.phase))*1.5; p.life -= Math.random()*0.5; break
+      case 'calm':     p.x += p.vx*0.2 + Math.sin(t*0.5+p.phase)*0.2; p.y += p.vy*0.7; p.r *= 0.988; break
+      case 'pulse':    const pb = 1+0.4*Math.sin(t*2); p.x += p.vx*pb; p.y += p.vy*pb; p.r = (2+Math.sin(t*3+p.phase))*1.2; break
+      case 'dim':      p.x += p.vx + (Math.random()-0.5)*0.6; p.y += p.vy*0.8; p.r *= 0.978; p.life -= Math.random()*0.8; break
+      case 'implode':  p.x += (cx-p.x)*0.02 + p.vx*0.5; p.y += p.vy*0.6; p.r *= 0.975; break
+      case 'collide':  const dir = p.x>cx?-1:1; p.x += p.vx + dir*0.4; p.y += p.vy; p.r *= 0.983; if(Math.abs(p.x-cx)<4) p.vy*=1.3; break
+      case 'mirror_static': p.x = cx + (p.x>cx?1:-1)*Math.abs(p.x-cx)*0.99 + Math.sin(t*0.3+p.phase)*0.15; p.y += p.vy*0.5; p.r *= 0.990; break
+      default: p.x += p.vx + Math.sin(t+p.phase)*0.4; p.y += p.vy; p.r *= 0.984
+    }
+  }
+
+  function hexToRgbStr(hex) {
+    if (!hex || hex.includes('rgba') || hex.includes('rgb')) return '160,160,192'
+    hex = hex.replace('#','')
+    if (hex.length===3) hex = hex.split('').map(c=>c+c).join('')
+    return `${parseInt(hex.slice(0,2),16)},${parseInt(hex.slice(2,4),16)},${parseInt(hex.slice(4,6),16)}`
+  }
+
+  function hexToRgba(hex, alpha) { return `rgba(${hexToRgbStr(hex)},${alpha.toFixed(2)})` }
+
+  function resetAndReload() {
+    if (matchAnimFrame) { cancelAnimationFrame(matchAnimFrame); matchAnimFrame = null }
+    if (flameAnimFrame) { cancelAnimationFrame(flameAnimFrame); flameAnimFrame = null }
+    history.back()
+  }
+
+  // Auto-load from URL param or default
+  const urlType = new URLSearchParams(window.location.search).get('type')
+  const defaultType = urlType && MATCH_THEMES[urlType] ? urlType : 'Frequency Twins'
+
+  // Mark active button
+  document.querySelectorAll('.type-btn').forEach(b => {
+    if (b.textContent === defaultType) b.classList.add('active')
+  })
+
+  // Small delay for fonts
+  setTimeout(() => loadTheme(defaultType), 200)
+</script>
+</body>
+</html>

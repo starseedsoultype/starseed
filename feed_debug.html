@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feed Debug — Match Animation</title>
+<script>
+// Mock Supabase before feed.html loads
+window.supabase = {
+  createClient: () => ({
+    auth: {
+      getSession: async () => ({ data: { session: { user: { id: 'test-user-id' } } } }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } })
+    },
+    from: (table) => ({
+      select: (cols) => ({
+        eq: (col, val) => ({
+          single: async () => ({
+            data: {
+              id: 'test-user-id',
+              name: 'Me',
+              origin: 'Pleiadian',
+              photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=me&backgroundColor=0d0b18',
+              age: 28,
+              location: 'New York'
+            }
+          })
+        }),
+        neq: (col, val) => ({
+          order: (col) => ({
+            data: [
+              { id: '2', name: 'Aurora', origin: 'Siriusian', photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aurora&backgroundColor=0d0b18', age: 26, location: 'LA' },
+              { id: '3', name: 'Lyra', origin: 'Arcturian', photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=lyra&backgroundColor=0d0b18', age: 30, location: 'NYC' }
+            ]
+          })
+        }),
+        order: (col) => ({ data: [] })
+      })
+    })
+  })
+}
+</script>
+</head>
+<body>
+<script>
+// Load feed.html content
+fetch('feed.html')
+  .then(r => r.text())
+  .then(html => {
+    // Remove supabase CDN script (already mocked)
+    html = html.replace('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>', '')
+    // Remove auth redirect
+    html = html.replace("window.location.href = 'login.html'", "console.log('auth redirect skipped')")
+    document.open()
+    document.write(html)
+    document.close()
+  })
+</script>
+</body>
+</html>
