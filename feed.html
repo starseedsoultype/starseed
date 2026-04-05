@@ -577,7 +577,7 @@ background-color: #04030a;
     myProfile = me
 
     // Get test profiles
-    const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
+    const { data: testProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
     profiles = testProfiles || []
 
     document.getElementById('loader').classList.add('hide')
