@@ -90,12 +90,11 @@
     position: absolute;
     inset: 0;
     background-size: contain;
-background-color: #04030a;
+    background-color: #04030a;
     background-position: center 20%;
     background-repeat: no-repeat;
   }
 
-  /* Photo overlay gradient */
   .card-photo::after {
     content: '';
     position: absolute;
@@ -131,9 +130,7 @@ background-color: #04030a;
     transition: background 0.2s;
   }
 
-  .card-connection:hover {
-    background: rgba(201,169,110,0.2);
-  }
+  .card-connection:hover { background: rgba(201,169,110,0.2); }
 
   .connection-dot {
     width: 6px; height: 6px;
@@ -235,18 +232,7 @@ background-color: #04030a;
     transform: scale(1.05);
   }
 
-  .btn-super {
-    width: 56px; height: 56px;
-    border: 1px solid rgba(100,150,255,0.2);
-  }
-
-  .btn-super:hover {
-    background: rgba(100,150,255,0.15);
-    border-color: rgba(100,150,255,0.4);
-    transform: scale(1.05);
-  }
-
-  /* LIKE/PASS OVERLAY */
+  /* LIKE/PASS STAMP */
   .stamp {
     position: absolute;
     top: 30%;
@@ -325,9 +311,7 @@ background-color: #04030a;
     transition: all 0.3s;
   }
 
-  .btn-circle:hover {
-    background: rgba(201,169,110,0.2);
-  }
+  .btn-circle:hover { background: rgba(201,169,110,0.2); }
 
   /* LOADING */
   .loading-screen {
@@ -350,71 +334,160 @@ background-color: #04030a;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* MATCH OVERLAY */
+  /* ═══════════════════════════════════════════
+     MATCH OVERLAY — полный редизайн
+  ═══════════════════════════════════════════ */
   .match-overlay {
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(4,3,10,0.95);
+    background: #04030a;
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px;
+    padding: 40px 32px;
+    overflow: hidden;
   }
 
   .match-overlay.show { display: flex; }
 
-  .match-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 0.5em;
+  /* Фоновый canvas для анимации */
+  #match-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* Контент поверх canvas */
+  .match-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
+
+  .match-overlay.show .match-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .match-label {
+    font-size: 10px;
+    letter-spacing: 0.6em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .match-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
+    font-size: clamp(36px, 8vw, 56px);
     font-weight: 300;
     color: var(--gold-soft);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    line-height: 1.1;
   }
 
-  .match-connection {
-    font-size: 11px;
+  /* Тип связи — кликабельный */
+  .match-connection-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,169,110,0.35);
+    background: rgba(201,169,110,0.08);
+    margin-bottom: 36px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .match-connection-badge:hover { background: rgba(201,169,110,0.15); }
+
+  .match-connection-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+
+  .match-connection-text {
+    font-size: 10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 40px;
   }
 
-  .match-photos {
+  /* Два портрета + пламя между ними */
+  .match-portraits {
     display: flex;
-    gap: 16px;
-    margin-bottom: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 36px;
+    position: relative;
   }
 
-  .match-photo {
-    width: 100px; height: 100px;
+  .match-portrait {
+    width: 96px; height: 96px;
     border-radius: 50%;
-    background-size: contain;
-background-color: #04030a;
+    background-size: cover;
     background-position: center;
-    border: 1px solid rgba(201,169,110,0.3);
+    background-color: #0d0b18;
+    flex-shrink: 0;
+    position: relative;
+    transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .match-flame {
+  .match-portrait-them {
+    transform: translateX(40px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .match-portrait-me {
+    transform: translateX(-40px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .match-overlay.show .match-portrait-them {
+    transform: translateX(8px);
+  }
+
+  .match-overlay.show .match-portrait-me {
+    transform: translateX(-8px);
+  }
+
+  /* Пламя между портретами */
+  .match-flame-wrap {
     position: absolute;
-    font-size: 32px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease 1.2s;
   }
 
+  .match-overlay.show .match-flame-wrap {
+    opacity: 1;
+  }
+
+  #flame-canvas {
+    display: block;
+  }
+
+  /* Кнопки действий */
   .match-actions {
     display: flex;
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .btn-match {
@@ -434,10 +507,20 @@ background-color: #04030a;
     color: var(--gold-soft);
   }
 
+  .btn-message:hover {
+    background: rgba(201,169,110,0.25);
+    border-color: rgba(201,169,110,0.7);
+  }
+
   .btn-continue {
     background: none;
     border: 1px solid rgba(255,255,255,0.1);
     color: var(--muted);
+  }
+
+  .btn-continue:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text);
   }
 </style>
 </head>
@@ -466,9 +549,7 @@ background-color: #04030a;
 </nav>
 
 <!-- CARD STACK -->
-<div class="card-stack" id="card-stack">
-  <!-- Cards injected here -->
-</div>
+<div class="card-stack" id="card-stack"></div>
 
 <!-- ACTION BUTTONS -->
 <div class="actions">
@@ -483,12 +564,6 @@ background-color: #04030a;
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round" fill="rgba(201,169,110,0.1)"/>
     </svg>
   </button>
-
-  <button class="btn-action btn-super" onclick="swipe('super')" title="Super like">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#6496ff" stroke-width="1.2" stroke-linecap="round" fill="rgba(100,150,255,0.1)"/>
-    </svg>
-  </button>
 </div>
 
 <!-- EMPTY STATE -->
@@ -499,18 +574,42 @@ background-color: #04030a;
   <button class="btn-circle" onclick="window.location.href='chats.html'">Go to my circle</button>
 </div>
 
-<!-- MATCH OVERLAY -->
+<!-- ═══════════════════════════════════════════
+     MATCH OVERLAY
+═══════════════════════════════════════════ -->
 <div class="match-overlay" id="match-overlay">
-  <p class="match-title">A new frequency aligned</p>
-  <h2 class="match-name" id="match-name">—</h2>
-  <p class="match-connection" id="match-connection">—</p>
-  <div class="match-photos">
-    <div class="match-photo" id="match-photo-them"></div>
-    <div class="match-photo" id="match-photo-me"></div>
-  </div>
-  <div class="match-actions">
-    <button class="btn-match btn-message" onclick="closeMatch(true)">Send a message</button>
-    <button class="btn-match btn-continue" onclick="closeMatch(false)">Keep exploring</button>
+
+  <!-- Фоновая анимация (частицы/туманность) -->
+  <canvas id="match-canvas"></canvas>
+
+  <div class="match-content">
+
+    <p class="match-label">A new frequency aligned</p>
+    <h2 class="match-name" id="match-name">—</h2>
+
+    <!-- Тип связи — кликабельный, ведёт в библиотеку -->
+    <div class="match-connection-badge" id="match-connection-badge" onclick="openLibraryFromMatch()">
+      <div class="match-connection-dot" id="match-connection-dot"></div>
+      <span class="match-connection-text" id="match-connection-text">—</span>
+    </div>
+
+    <!-- Два портрета с пламенем между ними -->
+    <div class="match-portraits">
+      <div class="match-portrait match-portrait-them" id="match-photo-them"></div>
+
+      <!-- Canvas для пламени между портретами -->
+      <div class="match-flame-wrap">
+        <canvas id="flame-canvas" width="60" height="120"></canvas>
+      </div>
+
+      <div class="match-portrait match-portrait-me" id="match-photo-me"></div>
+    </div>
+
+    <div class="match-actions">
+      <button class="btn-match btn-message" onclick="closeMatch(true)">Send a message</button>
+      <button class="btn-match btn-continue" onclick="closeMatch(false)">Keep exploring</button>
+    </div>
+
   </div>
 </div>
 
@@ -523,21 +622,173 @@ background-color: #04030a;
   const { createClient } = supabase
   const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-  // Connection type calculator based on Origins
-  const CONNECTION_TYPES = {
-    'Frequency Twins': { score: 10, color: '#c9a96e' },
-    'Twin Stars': { score: 6, color: '#d4a0c0' },
-    'Cosmic Flow': { score: 4, color: '#c0a0d4' },
-    'Mirror Portals': { score: 3, color: '#a0b4d4' },
-    'Celestial Mentor': { score: 1, color: '#b4c4d4' },
-    'Karmic Bonds': { score: -1, color: '#8090a4' },
-    'Shadow Contracts': { score: -2, color: '#607080' },
-    'Black Holes': { score: -4, color: '#405060' },
-    'Star Alchemy': { score: -6, color: '#304050' },
-    'Eternal Reflection': { score: 0, color: '#d4d0e0' }
+  // ═══════════════════════════════════════════════════════════
+  // 10 типов связи — цвета, характер пламени, фоновые частицы
+  // ═══════════════════════════════════════════════════════════
+  const MATCH_THEMES = {
+    'Frequency Twins': {
+      // Золотой — мощный, ровный, высокий
+      badgeColor: '#c9a96e',
+      flame: {
+        colors: ['#ffe066', '#c9a96e', '#fff0b0', '#f0c040'],
+        style: 'steady',       // ровный высокий
+        intensity: 1.0,
+        height: 1.0,
+        speed: 0.8
+      },
+      bg: {
+        colors: ['rgba(201,169,110,0.12)', 'rgba(255,220,80,0.06)'],
+        particleCount: 80,
+        style: 'radiate'       // расходятся от центра
+      }
+    },
+    'Twin Stars': {
+      // Золотисто-розовый — два огня тянутся друг к другу
+      badgeColor: '#d4a0c0',
+      flame: {
+        colors: ['#d4a0c0', '#c9a96e', '#f0c0d8', '#ffe0b0'],
+        style: 'reaching',     // два огня тянутся навстречу
+        intensity: 0.85,
+        height: 0.9,
+        speed: 0.7
+      },
+      bg: {
+        colors: ['rgba(212,160,192,0.12)', 'rgba(201,169,110,0.08)'],
+        particleCount: 70,
+        style: 'drift'
+      }
+    },
+    'Cosmic Flow': {
+      // Розово-сиреневый — плавный, текучий, как туманность
+      badgeColor: '#c0a0d4',
+      flame: {
+        colors: ['#c0a0d4', '#d4a0c0', '#a080c0', '#e0c0f0'],
+        style: 'flowing',      // текучий, волнистый
+        intensity: 0.75,
+        height: 0.85,
+        speed: 0.5
+      },
+      bg: {
+        colors: ['rgba(192,160,212,0.12)', 'rgba(212,160,192,0.08)'],
+        particleCount: 90,
+        style: 'nebula'        // туманность
+      }
+    },
+    'Mirror Portals': {
+      // Сиреневый — мерцающий, зеркальный
+      badgeColor: '#a080c8',
+      flame: {
+        colors: ['#a080c8', '#c0a0e0', '#8060b0', '#d0b0f0'],
+        style: 'shimmer',      // мерцающий
+        intensity: 0.7,
+        height: 0.8,
+        speed: 0.6
+      },
+      bg: {
+        colors: ['rgba(160,128,200,0.14)', 'rgba(128,96,176,0.08)'],
+        particleCount: 60,
+        style: 'mirror'        // симметричные частицы
+      }
+    },
+    'Celestial Mentor': {
+      // Лавандово-белый — спокойный, ровный, мудрый
+      badgeColor: '#c0b8e8',
+      flame: {
+        colors: ['#c0b8e8', '#e8e4f8', '#a8a0d8', '#f0eeff'],
+        style: 'calm',         // спокойный, почти неподвижный
+        intensity: 0.6,
+        height: 0.75,
+        speed: 0.35
+      },
+      bg: {
+        colors: ['rgba(192,184,232,0.1)', 'rgba(240,238,255,0.06)'],
+        particleCount: 50,
+        style: 'gentle'
+      }
+    },
+    'Karmic Bonds': {
+      // Фиолетово-синий — неустойчивый, пульсирующий
+      badgeColor: '#7060c0',
+      flame: {
+        colors: ['#7060c0', '#5080d0', '#9070d0', '#4060b0'],
+        style: 'pulse',        // пульсирующий
+        intensity: 0.8,
+        height: 0.85,
+        speed: 1.1
+      },
+      bg: {
+        colors: ['rgba(112,96,192,0.14)', 'rgba(80,128,208,0.08)'],
+        particleCount: 65,
+        style: 'pulse'
+      }
+    },
+    'Shadow Contracts': {
+      // Тёмно-фиолетовый — тусклый, неравномерный
+      badgeColor: '#604880',
+      flame: {
+        colors: ['#604880', '#503870', '#705890', '#402860'],
+        style: 'dim',          // тусклый, неравномерный
+        intensity: 0.55,
+        height: 0.7,
+        speed: 0.9
+      },
+      bg: {
+        colors: ['rgba(96,72,128,0.12)', 'rgba(64,40,96,0.08)'],
+        particleCount: 40,
+        style: 'sparse'
+      }
+    },
+    'Black Holes': {
+      // Глубокий индиго — почти угасающий, засасывающий
+      badgeColor: '#304070',
+      flame: {
+        colors: ['#304070', '#203060', '#405080', '#102040'],
+        style: 'implode',      // засасывающий, к центру
+        intensity: 0.45,
+        height: 0.6,
+        speed: 0.7
+      },
+      bg: {
+        colors: ['rgba(48,64,112,0.14)', 'rgba(16,32,64,0.1)'],
+        particleCount: 35,
+        style: 'vortex'        // вихрь к центру
+      }
+    },
+    'Star Alchemy': {
+      // Холодный синий — два огня сталкиваются, не сливаются
+      badgeColor: '#4080c0',
+      flame: {
+        colors: ['#4080c0', '#60a0e0', '#2060a0', '#80c0ff'],
+        style: 'collide',      // сталкиваются
+        intensity: 0.9,
+        height: 0.9,
+        speed: 1.2
+      },
+      bg: {
+        colors: ['rgba(64,128,192,0.14)', 'rgba(96,160,224,0.08)'],
+        particleCount: 75,
+        style: 'clash'         // частицы разлетаются
+      }
+    },
+    'Eternal Reflection': {
+      // Серебристо-белый — идеально симметричный, статичный
+      badgeColor: '#d0d0e8',
+      flame: {
+        colors: ['#d0d0e8', '#e8e8f8', '#b8b8d8', '#f0f0ff'],
+        style: 'mirror_static', // симметричный, почти статичный
+        intensity: 0.65,
+        height: 0.8,
+        speed: 0.2
+      },
+      bg: {
+        colors: ['rgba(208,208,232,0.1)', 'rgba(232,232,248,0.06)'],
+        particleCount: 55,
+        style: 'symmetric'     // идеально симметричные
+      }
+    }
   }
 
-  // Simple connection type based on origin groups
+  // ─── Origin Groups ────────────────────────────────────────
   const ORIGIN_GROUP = {
     'Siriusian': 1, 'Pleiadian': 1, 'Lemurian': 1, 'Cassiopeian': 1, 'Procyonian': 1, 'Lyran': 1,
     'Arcturian': 2, 'Orion': 2, 'Vegan': 2, 'Zeta Reticulan': 2, 'Epsilon Eridan': 2, 'Atlantean': 2,
@@ -558,12 +809,17 @@ background-color: #04030a;
     return 'Celestial Mentor'
   }
 
+  // ─── State ────────────────────────────────────────────────
   let profiles = []
   let currentIndex = 0
   let myProfile = null
   let myUser = null
   let isAnimating = false
+  let matchAnimFrame = null
+  let flameAnimFrame = null
+  let currentMatchType = null
 
+  // ─── Load ─────────────────────────────────────────────────
   window.addEventListener('load', async () => {
     const { data: sessionData } = await sb.auth.getSession()
     if (!sessionData.session) {
@@ -572,11 +828,9 @@ background-color: #04030a;
     }
     myUser = sessionData.session.user
 
-    // Get my profile
     const { data: me } = await sb.from('profiles').select('*').eq('id', myUser.id).single()
     myProfile = me
 
-    // Get all profiles
     const { data: realProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
     const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
     profiles = [...(realProfiles || []), ...(testProfiles || [])]
@@ -591,6 +845,7 @@ background-color: #04030a;
     renderCards()
   })
 
+  // ─── Cards ────────────────────────────────────────────────
   function renderCards() {
     const stack = document.getElementById('card-stack')
     stack.innerHTML = ''
@@ -601,15 +856,17 @@ background-color: #04030a;
       card.dataset.index = i
 
       const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+      const theme = MATCH_THEMES[connectionType] || MATCH_THEMES['Cosmic Flow']
+      const dotColor = theme.badgeColor
 
       card.innerHTML = `
         <div class="card-photo" style="background-image: url('${profile.photo_url}')"></div>
         <div class="stamp stamp-like">✦ Like</div>
         <div class="stamp stamp-pass">Pass</div>
         <div class="card-info">
-          <div class="card-connection" onclick="openLibrary('${connectionType}')">
-            <div class="connection-dot"></div>
-            <span class="connection-name">${connectionType}</span>
+          <div class="card-connection" onclick="openLibrary('${connectionType}')" style="border-color: ${dotColor}33; background: ${dotColor}18;">
+            <div class="connection-dot" style="background: ${dotColor}"></div>
+            <span class="connection-name" style="color: ${dotColor}">${connectionType}</span>
           </div>
           <h2 class="card-name">${profile.name}<span class="card-age" style="font-family:'Jost';font-size:20px;font-weight:200;margin-left:12px">${profile.age}</span></h2>
           <div class="card-meta">
@@ -631,6 +888,7 @@ background-color: #04030a;
     })
   }
 
+  // ─── Swipe ────────────────────────────────────────────────
   function swipe(action) {
     if (isAnimating) return
     if (currentIndex >= profiles.length) return
@@ -641,12 +899,12 @@ background-color: #04030a;
 
     const profile = profiles[currentIndex]
 
-    if (action === 'like' || action === 'super') {
+    if (action === 'like') {
       const stamp = card.querySelector('.stamp-like')
       stamp.classList.add('show')
       setTimeout(() => stamp.classList.remove('show'), 400)
 
-      // Check for match (50% chance for demo)
+      // 50% match chance for demo
       if (Math.random() > 0.5) {
         setTimeout(() => showMatch(profile), 500)
       }
@@ -667,60 +925,423 @@ background-color: #04030a;
     }, 400)
   }
 
+  // ═══════════════════════════════════════════════════════════
+  // MATCH ANIMATION ENGINE
+  // ═══════════════════════════════════════════════════════════
+
   function showMatch(profile) {
     const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+    currentMatchType = connectionType
+
+    const theme = MATCH_THEMES[connectionType] || MATCH_THEMES['Cosmic Flow']
+
+    // Обновить текст
     document.getElementById('match-name').textContent = profile.name
-    document.getElementById('match-connection').textContent = connectionType
+
+    // Обновить бейдж типа связи
+    document.getElementById('match-connection-dot').style.background = theme.badgeColor
+    document.getElementById('match-connection-text').textContent = connectionType
+    document.getElementById('match-connection-text').style.color = theme.badgeColor
+    document.getElementById('match-connection-badge').style.borderColor = theme.badgeColor + '55'
+
+    // Фото
     document.getElementById('match-photo-them').style.backgroundImage = `url('${profile.photo_url}')`
+    document.getElementById('match-photo-them').style.borderColor = theme.badgeColor + '60'
     if (myProfile?.photo_url) {
       document.getElementById('match-photo-me').style.backgroundImage = `url('${myProfile.photo_url}')`
+      document.getElementById('match-photo-me').style.borderColor = theme.badgeColor + '60'
     }
+
+    // Показать оверлей
     document.getElementById('match-overlay').classList.add('show')
+
+    // Запустить анимации
+    startBgAnimation(theme)
+    startFlameAnimation(theme)
   }
 
   function closeMatch(goToChat) {
+    // Остановить анимации
+    if (matchAnimFrame) { cancelAnimationFrame(matchAnimFrame); matchAnimFrame = null }
+    if (flameAnimFrame) { cancelAnimationFrame(flameAnimFrame); flameAnimFrame = null }
+
     document.getElementById('match-overlay').classList.remove('show')
     if (goToChat) window.location.href = 'chats.html'
   }
 
+  function openLibraryFromMatch() {
+    if (currentMatchType) openLibrary(currentMatchType)
+  }
+
   function openLibrary(connectionType) {
-    // Will link to library page
     alert('Library: ' + connectionType + '\n\n(Coming soon)')
   }
 
-  // ── SWIPE GESTURES ──
-  function setupSwipe() {
-    const stack = document.getElementById('card-stack')
-    let startX = 0, startY = 0, isDragging = false
+  // ─────────────────────────────────────────────────────────
+  // ФОНОВАЯ АНИМАЦИЯ (частицы / туманность)
+  // ─────────────────────────────────────────────────────────
+  function startBgAnimation(theme) {
+    if (matchAnimFrame) cancelAnimationFrame(matchAnimFrame)
 
-    function onStart(x, y) {
-      startX = x
-      startY = y
-      isDragging = true
+    const canvas = document.getElementById('match-canvas')
+    const ctx = canvas.getContext('2d')
+
+    function resize() {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const W = () => canvas.width
+    const H = () => canvas.height
+
+    const count = theme.bg.particleCount
+    const style = theme.bg.style
+    const cols = theme.bg.colors
+
+    // Генерация частиц
+    const particles = Array.from({ length: count }, (_, i) => createBgParticle(i, count, style, W(), H(), cols))
+
+    let t = 0
+
+    function draw() {
+      ctx.clearRect(0, 0, W(), H())
+
+      // Фоновый градиент-туманность
+      const grd = ctx.createRadialGradient(W() / 2, H() / 2, 0, W() / 2, H() / 2, W() * 0.7)
+      grd.addColorStop(0, theme.bg.colors[0])
+      grd.addColorStop(1, 'transparent')
+      ctx.fillStyle = grd
+      ctx.fillRect(0, 0, W(), H())
+
+      // Частицы
+      particles.forEach(p => {
+        updateBgParticle(p, t, style, W(), H())
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = p.color
+        ctx.fill()
+      })
+
+      t += 0.016
+      matchAnimFrame = requestAnimationFrame(draw)
     }
 
+    draw()
+  }
+
+  function createBgParticle(i, total, style, W, H, cols) {
+    const angle = (i / total) * Math.PI * 2
+    const dist = Math.random() * Math.min(W, H) * 0.45 + 20
+    const col = cols[Math.floor(Math.random() * cols.length)]
+
+    const p = {
+      angle,
+      dist,
+      baseX: W / 2 + Math.cos(angle) * dist,
+      baseY: H / 2 + Math.sin(angle) * dist,
+      x: W / 2,
+      y: H / 2,
+      r: Math.random() * 1.8 + 0.4,
+      o: Math.random() * 0.5 + 0.1,
+      speed: Math.random() * 0.4 + 0.1,
+      phase: Math.random() * Math.PI * 2,
+      color: col.replace(')', `,${Math.random() * 0.5 + 0.2})`).replace('rgb', 'rgba').replace('rgba(rgba', 'rgba'),
+      style
+    }
+
+    // Для vortex — начинают снаружи и движутся к центру
+    if (style === 'vortex') {
+      p.x = W / 2 + Math.cos(angle) * dist
+      p.y = H / 2 + Math.sin(angle) * dist
+    }
+
+    return p
+  }
+
+  function updateBgParticle(p, t, style, W, H) {
+    const cx = W / 2, cy = H / 2
+
+    switch (style) {
+      case 'radiate':
+        // Расходятся от центра
+        p.x = cx + Math.cos(p.angle + t * 0.1) * (p.dist * (0.3 + 0.7 * ((t * p.speed) % 1)))
+        p.y = cy + Math.sin(p.angle + t * 0.1) * (p.dist * (0.3 + 0.7 * ((t * p.speed) % 1)))
+        p.r = 1.8 * (1 - ((t * p.speed) % 1) * 0.5)
+        break
+
+      case 'drift':
+        // Медленный дрейф
+        p.x = p.baseX + Math.sin(t * p.speed + p.phase) * 20
+        p.y = p.baseY + Math.cos(t * p.speed * 0.7 + p.phase) * 15
+        break
+
+      case 'nebula':
+        // Туманность — медленные волны
+        p.x = p.baseX + Math.sin(t * p.speed * 0.5 + p.phase) * 30
+        p.y = p.baseY + Math.cos(t * p.speed * 0.3 + p.phase) * 20
+        p.r = 1.5 + Math.sin(t * 0.5 + p.phase) * 0.8
+        break
+
+      case 'mirror':
+        // Зеркальные — симметрично относительно центра
+        p.x = cx + Math.sin(t * p.speed + p.phase) * p.dist
+        p.y = cy + Math.cos(t * p.speed * 0.8 + p.phase) * p.dist * 0.6
+        break
+
+      case 'gentle':
+        // Спокойное парение
+        p.x = p.baseX + Math.sin(t * p.speed * 0.3 + p.phase) * 12
+        p.y = p.baseY + Math.cos(t * p.speed * 0.2 + p.phase) * 8
+        break
+
+      case 'pulse':
+        // Пульсирующий — расширяются и сжимаются
+        const pulse = 0.7 + 0.3 * Math.sin(t * 2 + p.phase)
+        p.x = cx + Math.cos(p.angle) * p.dist * pulse
+        p.y = cy + Math.sin(p.angle) * p.dist * pulse
+        p.r = 1.2 + 0.8 * Math.sin(t * 3 + p.phase)
+        break
+
+      case 'sparse':
+        // Редкие, медленные
+        p.x = p.baseX + Math.sin(t * p.speed * 0.4 + p.phase) * 10
+        p.y = p.baseY + Math.cos(t * p.speed * 0.3 + p.phase) * 8
+        p.r = 0.8 + Math.sin(t + p.phase) * 0.4
+        break
+
+      case 'vortex':
+        // Вихрь к центру
+        p.angle += 0.015 * p.speed
+        p.dist = Math.max(5, p.dist - 0.3 * p.speed)
+        p.x = cx + Math.cos(p.angle) * p.dist
+        p.y = cy + Math.sin(p.angle) * p.dist
+        if (p.dist < 8) {
+          p.dist = Math.random() * Math.min(W, H) * 0.4 + 40
+          p.angle = Math.random() * Math.PI * 2
+        }
+        break
+
+      case 'clash':
+        // Разлетаются от центра при столкновении
+        p.x = p.baseX + Math.sin(t * p.speed * 1.5 + p.phase) * 25
+        p.y = p.baseY + Math.cos(t * p.speed + p.phase) * 20
+        p.r = 1.0 + Math.abs(Math.sin(t * 2 + p.phase)) * 1.2
+        break
+
+      case 'symmetric':
+        // Идеально симметричные
+        const sx = Math.sin(t * p.speed * 0.25 + p.phase) * p.dist * 0.5
+        const sy = Math.cos(t * p.speed * 0.25 + p.phase) * p.dist * 0.4
+        p.x = cx + sx
+        p.y = cy + sy
+        break
+
+      default:
+        p.x = p.baseX + Math.sin(t * p.speed + p.phase) * 15
+        p.y = p.baseY + Math.cos(t * p.speed + p.phase) * 10
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // ПЛАМЯ МЕЖДУ ПОРТРЕТАМИ (flame canvas)
+  // ─────────────────────────────────────────────────────────
+  function startFlameAnimation(theme) {
+    if (flameAnimFrame) cancelAnimationFrame(flameAnimFrame)
+
+    const canvas = document.getElementById('flame-canvas')
+    const ctx = canvas.getContext('2d')
+    const W = canvas.width
+    const H = canvas.height
+    const cx = W / 2
+    const flameStyle = theme.flame.style
+    const colors = theme.flame.colors
+    const intensity = theme.flame.intensity
+    const heightFactor = theme.flame.height
+    const speed = theme.flame.speed
+
+    // Частицы пламени
+    const flameParticles = Array.from({ length: 28 }, () => createFlameParticle(cx, H, colors, flameStyle, heightFactor))
+
+    let t = 0
+
+    function drawFlame() {
+      ctx.clearRect(0, 0, W, H)
+
+      flameParticles.forEach(p => {
+        updateFlameParticle(p, t, flameStyle, cx, H, heightFactor, speed)
+
+        if (p.life <= 0) {
+          Object.assign(p, createFlameParticle(cx, H, colors, flameStyle, heightFactor))
+        }
+
+        const alpha = (p.life / p.maxLife) * intensity * 0.85
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = p.color.replace('COLOR_ALPHA', alpha.toFixed(2))
+        ctx.fill()
+      })
+
+      // Свечение в центре
+      const glow = ctx.createRadialGradient(cx, H * 0.6, 0, cx, H * 0.6, 20)
+      glow.addColorStop(0, colors[0].replace(')', `,${(0.3 * intensity).toFixed(2)})`).replace('#', 'rgba(').replace(/([0-9a-f]{2})/gi, (m, p) => parseInt(p, 16) + ',').replace(/,$/, ')'))
+      // Упрощённое свечение через hex
+      ctx.beginPath()
+      ctx.arc(cx, H * 0.62, 8, 0, Math.PI * 2)
+      ctx.fillStyle = hexToRgba(colors[0], 0.25 * intensity)
+      ctx.fill()
+
+      t += 0.04 * speed
+      flameAnimFrame = requestAnimationFrame(drawFlame)
+    }
+
+    drawFlame()
+  }
+
+  function createFlameParticle(cx, H, colors, style, heightFactor) {
+    const col = colors[Math.floor(Math.random() * colors.length)]
+    const maxLife = 40 + Math.random() * 30
+    const spread = style === 'collide' ? 14 : style === 'reaching' ? 10 : 8
+
+    return {
+      x: cx + (Math.random() - 0.5) * spread,
+      y: H * 0.75 + Math.random() * H * 0.15,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: -(Math.random() * 1.2 + 0.4) * heightFactor,
+      r: Math.random() * 3.5 + 1.5,
+      life: maxLife,
+      maxLife,
+      color: `rgba(${hexToRgbStr(col)},COLOR_ALPHA)`,
+      phase: Math.random() * Math.PI * 2
+    }
+  }
+
+  function updateFlameParticle(p, t, style, cx, H, heightFactor, speed) {
+    p.life -= speed * 0.8
+
+    switch (style) {
+      case 'steady':
+        // Ровный высокий — почти вертикальный
+        p.x += p.vx * 0.3 + Math.sin(t + p.phase) * 0.3
+        p.y += p.vy
+        p.r *= 0.985
+        break
+
+      case 'reaching':
+        // Два огня тянутся — лёгкое раздвоение
+        const pull = (p.x > cx ? -1 : 1) * 0.15
+        p.x += p.vx + pull
+        p.y += p.vy
+        p.r *= 0.982
+        break
+
+      case 'flowing':
+        // Текучий, волнистый
+        p.x += p.vx + Math.sin(t * 1.5 + p.phase) * 0.7
+        p.y += p.vy * 0.9
+        p.r *= 0.984
+        break
+
+      case 'shimmer':
+        // Мерцающий
+        p.x += p.vx + Math.sin(t * 3 + p.phase) * 0.5
+        p.y += p.vy
+        p.r = (1.5 + Math.sin(t * 4 + p.phase)) * 1.5
+        p.life -= Math.random() * 0.5  // неравномерное угасание
+        break
+
+      case 'calm':
+        // Спокойный, почти неподвижный
+        p.x += p.vx * 0.2 + Math.sin(t * 0.5 + p.phase) * 0.2
+        p.y += p.vy * 0.7
+        p.r *= 0.988
+        break
+
+      case 'pulse':
+        // Пульсирующий — периодически усиливается
+        const pulseBoost = 1 + 0.4 * Math.sin(t * 2)
+        p.x += p.vx * pulseBoost
+        p.y += p.vy * pulseBoost
+        p.r = (2 + Math.sin(t * 3 + p.phase)) * 1.2
+        break
+
+      case 'dim':
+        // Тусклый, неравномерный
+        p.x += p.vx + (Math.random() - 0.5) * 0.6
+        p.y += p.vy * 0.8
+        p.r *= 0.978
+        p.life -= Math.random() * 0.8
+        break
+
+      case 'implode':
+        // Засасывающий — движется к центру снизу
+        p.x += (cx - p.x) * 0.02 + p.vx * 0.5
+        p.y += p.vy * 0.6
+        p.r *= 0.975
+        break
+
+      case 'collide':
+        // Сталкиваются — два потока навстречу
+        const dir = p.x > cx ? -1 : 1
+        p.x += p.vx + dir * 0.4
+        p.y += p.vy
+        p.r *= 0.983
+        if (Math.abs(p.x - cx) < 4) p.vy *= 1.3  // ускорение при столкновении
+        break
+
+      case 'mirror_static':
+        // Симметричный, почти статичный
+        p.x = cx + (p.x > cx ? 1 : -1) * Math.abs(p.x - cx) * 0.99
+        p.x += Math.sin(t * 0.3 + p.phase) * 0.15
+        p.y += p.vy * 0.5
+        p.r *= 0.990
+        break
+
+      default:
+        p.x += p.vx + Math.sin(t + p.phase) * 0.4
+        p.y += p.vy
+        p.r *= 0.984
+    }
+  }
+
+  // ─── Утилиты цвета ────────────────────────────────────────
+  function hexToRgbStr(hex) {
+    hex = hex.replace('#', '')
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('')
+    const r = parseInt(hex.slice(0, 2), 16)
+    const g = parseInt(hex.slice(2, 4), 16)
+    const b = parseInt(hex.slice(4, 6), 16)
+    return `${r},${g},${b}`
+  }
+
+  function hexToRgba(hex, alpha) {
+    return `rgba(${hexToRgbStr(hex)},${alpha.toFixed(2)})`
+  }
+
+  // ─── SWIPE GESTURES ───────────────────────────────────────
+  function setupSwipe() {
+    const stack = document.getElementById('card-stack')
+    let startX = 0, isDragging = false
+
+    function onStart(x) { startX = x; isDragging = true }
     function onEnd(x) {
       if (!isDragging) return
       isDragging = false
       const diffX = x - startX
-      if (Math.abs(diffX) > 60) {
-        swipe(diffX > 0 ? 'like' : 'pass')
-      }
+      if (Math.abs(diffX) > 60) swipe(diffX > 0 ? 'like' : 'pass')
     }
 
-    // Touch
-    stack.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true })
+    stack.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true })
     stack.addEventListener('touchend', e => onEnd(e.changedTouches[0].clientX))
-
-    // Mouse
-    stack.addEventListener('mousedown', e => onStart(e.clientX, e.clientY))
+    stack.addEventListener('mousedown', e => onStart(e.clientX))
     stack.addEventListener('mouseup', e => onEnd(e.clientX))
   }
 
-  // Keyboard shortcuts
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') swipe('like')
     if (e.key === 'ArrowLeft') swipe('pass')
+    if (e.key === 'Escape') closeMatch(false)
   })
 </script>
 </body>
