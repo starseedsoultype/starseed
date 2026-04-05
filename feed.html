@@ -32,11 +32,15 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 50;
-    padding: 16px 20px;
+    height: 56px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(4,3,10,0.8), transparent);
+    background: rgba(4,3,10,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,169,110,0.08);
   }
 
   .nav-logo {
@@ -187,8 +191,8 @@
   /* UNKNOWN ORIGIN BANNER */
   .unknown-banner {
     position: fixed;
-    top: 64px; left: 0; right: 0;
-    z-index: 40;
+    top: 56px; left: 0; right: 0;
+    z-index: 45;
     padding: 10px 20px;
     background: rgba(4,3,10,0.85);
     border-bottom: 1px solid rgba(201,169,110,0.15);
@@ -602,6 +606,9 @@
   </div>
 </nav>
 
+<!-- TEST MATCH BUTTON (remove before production) -->
+<button id="test-match-btn" onclick="testMatch()" style="position:fixed;bottom:120px;right:16px;z-index:100;padding:8px 14px;background:rgba(201,169,110,0.15);border:1px solid rgba(201,169,110,0.4);border-radius:4px;color:var(--gold);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.2em;cursor:pointer;display:none">TEST MATCH</button>
+
 <!-- UNKNOWN ORIGIN BANNER -->
 <div class="unknown-banner" id="unknown-banner">
   <div class="unknown-banner-text">Your Origin is <em>unknown</em> — discover it to unlock full compatibility</div>
@@ -948,7 +955,15 @@
     }
 
     renderCards()
+
+    // Показать тестовую кнопку мэтча
+    document.getElementById('test-match-btn').style.display = 'block'
   })
+
+  function testMatch() {
+    const testProfile = profiles[currentIndex] || profiles[0]
+    if (testProfile) showMatch(testProfile)
+  }
 
   // ─── Cards ────────────────────────────────────────────────
   function renderCards() {
@@ -1021,7 +1036,7 @@
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ to_user: profile.id, action: 'like' })
+            body: JSON.stringify({ target_id: profile.id, action: 'like' })
           })
           if (resp.ok) {
             const result = await resp.json()
@@ -1083,14 +1098,11 @@
     // Показать оверлей
     document.getElementById('match-overlay').classList.add('show')
 
-    // Запустить анимации с задержкой — дать overlay стать видимым (display:flex)
-    // чтобы canvas.offsetWidth/offsetHeight вернули реальные размеры
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        startBgAnimation(theme)
-        startFlameAnimation(theme)
-      })
-    })
+    // Запустить анимации через setTimeout — гарантированно после display:flex
+    setTimeout(() => {
+      startBgAnimation(theme)
+      startFlameAnimation(theme)
+    }, 50)
   }
 
   function closeMatch(goToChat) {
@@ -1107,7 +1119,7 @@
   }
 
   function openLibrary(connectionType) {
-    alert('Library: ' + connectionType + '\n\n(Coming soon)')
+    window.location.href = 'library.html?connection=' + encodeURIComponent(connectionType)
   }
 
   // ─────────────────────────────────────────────────────────
@@ -1142,14 +1154,15 @@
     function draw() {
       ctx.clearRect(0, 0, W(), H())
 
-      // Фоновый градиент-туманность — усиленный
+      // Фоновый градиент-туманность
       const rawColor = theme.bg.colors[0]
-      const rgbMatch = rawColor.match(/\d+,\s*\d+,\s*\d+/)
-      const nebulaColor = rgbMatch ? `rgba(${rgbMatch[0]},0.35)` : rawColor
-      const grd = ctx.createRadialGradient(W() / 2, H() / 2, 0, W() / 2, H() / 2, W() * 0.6)
-      grd.addColorStop(0, nebulaColor)
-      grd.addColorStop(0.4, rawColor)
-      grd.addColorStop(1, 'transparent')
+      const rgbMatch = rawColor.match(/(\d+),\s*(\d+),\s*(\d+)/)
+      const nebulaInner = rgbMatch ? `rgba(${rgbMatch[1]},${rgbMatch[2]},${rgbMatch[3]},0.45)` : 'rgba(160,128,200,0.45)'
+      const nebulaMid   = rgbMatch ? `rgba(${rgbMatch[1]},${rgbMatch[2]},${rgbMatch[3]},0.18)` : 'rgba(160,128,200,0.18)'
+      const grd = ctx.createRadialGradient(W() / 2, H() / 2, 0, W() / 2, H() / 2, W() * 0.65)
+      grd.addColorStop(0, nebulaInner)
+      grd.addColorStop(0.45, nebulaMid)
+      grd.addColorStop(1, 'rgba(4,3,10,0)')
       ctx.fillStyle = grd
       ctx.fillRect(0, 0, W(), H())
 
