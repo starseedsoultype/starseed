@@ -712,8 +712,8 @@ html, body {
 
 <script>
 // ─── SUPABASE ───────────────────────────────────────────────────────────────
-const SUPABASE_URL = 'https://qjsktpjxbdekzjnwvqos.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqc2t0cGp4YmRla3pqbnd2cW9zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NTI5MDIsImV4cCI6MjA1OTMyODkwMn0.8-2Z0GkCFELwJFCHiHNGnzEXGYqnBLfMKxJBEFJgAIc'
+const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU'
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
 // ─── STARS ──────────────────────────────────────────────────────────────────
@@ -1185,30 +1185,38 @@ async function init() {
     if (!session) { window.location.href = 'login.html'; return }
     const { data: profile } = await sb.from('profiles').select('origin').eq('id', session.user.id).single()
     if (profile) currentUserOrigin = profile.origin?.toLowerCase().replace(/\s+/g, '-')
-  } catch(e) {}
+  } catch(e) {
+    // Если ошибка сессии — всё равно показываем библиотеку
+  }
   checkDeepLink()
+}
+
+function normalizeKey(str) {
+  return str.toLowerCase().replace(/\s+/g, '-')
 }
 
 function checkDeepLink() {
   const params = new URLSearchParams(window.location.search)
   const origin = params.get('origin')
   const connection = params.get('connection')
-  if (origin) openOrigin(origin)
-  else if (connection) openConnection(connection)
+  if (origin) openOrigin(normalizeKey(origin))
+  else if (connection) openConnection(normalizeKey(connection))
 }
 
 function openOrigin(id) {
-  const data = ORIGINS[id]
+  const key = normalizeKey(id)
+  const data = ORIGINS[key]
   if (!data) return
-  history.push({ type: 'origin', id })
-  showDetail('origin', id, data)
+  history.push({ type: 'origin', id: key })
+  showDetail('origin', key, data)
 }
 
 function openConnection(id) {
-  const data = CONNECTIONS[id]
+  const key = normalizeKey(id)
+  const data = CONNECTIONS[key]
   if (!data) return
-  history.push({ type: 'connection', id })
-  showDetail('connection', id, data)
+  history.push({ type: 'connection', id: key })
+  showDetail('connection', key, data)
 }
 
 function goBack() {
