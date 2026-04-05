@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test — Congratulations</title>
+<style>
+  body { background: #04030a; color: #e8e0d5; font-family: sans-serif; padding: 20px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  button {
+    padding: 8px 16px;
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.3);
+    color: #c9a96e;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+  }
+  button:hover { background: rgba(201,169,110,0.2); }
+  iframe {
+    width: 100%;
+    height: 700px;
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+<h3 style="color:#c9a96e;letter-spacing:0.3em;font-size:12px;margin-bottom:16px;">CONGRATULATIONS TEST — Select Origin</h3>
+<div class="grid" id="btns"></div>
+<iframe id="frame" src="about:blank"></iframe>
+
+<script>
+const origins = ['Pleiadian','Siriusian','Lemurian','Cassiopeian','Procyonian','Lyran',
+  'Arcturian','Orion','Vegan','Zeta Reticulan','Epsilon Eridan','Atlantean',
+  'Andromedan','Polarisian','Nibiruan','Egyptian','Mayan','Blue Avian',
+  'Tau Cetian','Aldebaran','Centaurian','Herculean','Anunnaki','Hyperborean','Unknown']
+
+const btns = document.getElementById('btns')
+origins.forEach(o => {
+  const b = document.createElement('button')
+  b.textContent = o
+  b.onclick = () => loadOrigin(o)
+  btns.appendChild(b)
+})
+
+function loadOrigin(origin) {
+  // Inject mock session into iframe via URL param
+  document.getElementById('frame').src = `congratulations_mock.html?origin=${encodeURIComponent(origin)}`
+}
+
+// Load first by default
+loadOrigin('Pleiadian')
+</script>
+</body>
+</html>
