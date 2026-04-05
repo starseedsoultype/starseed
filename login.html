@@ -455,6 +455,22 @@
   resize()
   drawStars()
 
+  // Обработка URL-параметров: ?join=1&origin=Pleiadian (пришёл с квиза)
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get('join') === '1') {
+    switchTab('signup')
+    // Сохраняем Origin в sessionStorage — после регистрации передадим в onboarding
+    const originFromQuiz = urlParams.get('origin')
+    if (originFromQuiz) {
+      sessionStorage.setItem('quiz_origin', originFromQuiz)
+      // Показываем подсказку под формой
+      const hint = document.createElement('div')
+      hint.style.cssText = 'text-align:center;font-size:11px;color:#c9a96e;letter-spacing:2px;margin-top:12px;opacity:0.8;'
+      hint.textContent = 'Your Origin: ' + originFromQuiz
+      document.getElementById('panel-signup').appendChild(hint)
+    }
+  }
+
   // Tab switching
   function switchTab(tab) {
     document.querySelectorAll('.tab').forEach((t, i) => {
@@ -493,7 +509,17 @@
     setMsg('Opening the portal...')
     const { error } = await sb.auth.signUp({ email, password })
     if (error) return setMsg(error.message, true)
-    setMsg('Check your email to confirm your frequency ✦')
+    // Если пришёл с квиза с известным Origin — передаём его в onboarding
+    const savedOrigin = sessionStorage.getItem('quiz_origin')
+    if (savedOrigin) {
+      sessionStorage.removeItem('quiz_origin')
+      setMsg('Check your email to confirm your frequency ✦')
+      // После подтверждения email Supabase редиректнет в onboarding сам
+      // Записываем в localStorage чтобы пережило перезагрузку
+      localStorage.setItem('pending_origin', savedOrigin)
+    } else {
+      setMsg('Check your email to confirm your frequency ✦')
+    }
   }
 
   // Google
