@@ -514,11 +514,19 @@
       return
     }
 
-    // Check if returning from quiz
+    // Check if returning from quiz (via URL param)
     const params = new URLSearchParams(window.location.search)
     const originFromQuiz = params.get('origin')
     if (originFromQuiz) {
       await saveOrigin(originFromQuiz)
+      return
+    }
+
+    // Check if Origin was set during registration from quiz landing page (via localStorage)
+    const pendingOrigin = localStorage.getItem('pending_origin')
+    if (pendingOrigin) {
+      localStorage.removeItem('pending_origin')
+      await saveOrigin(pendingOrigin)
       return
     }
 

@@ -246,6 +246,50 @@ text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 
 }
 .retake-btn:hover { border-color: var(–border2); color: var(–text3); }
 
+/* APP ENTRY BOX */
+.app-entry-box {
+  background: linear-gradient(135deg, #06040f, #0d0820);
+  border: 1px solid rgba(201,169,110,0.4);
+  padding: 28px 24px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.app-entry-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: #c9a96e;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.app-entry-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #1a1408, #2a2010);
+  border: 1px solid rgba(201,169,110,0.6);
+  color: #e8d5b0;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.25s;
+  margin-bottom: 12px;
+}
+.app-entry-btn:hover {
+  background: linear-gradient(135deg, #2a2010, #3a3018);
+  border-color: rgba(201,169,110,0.9);
+  color: #f0e0c0;
+}
+.app-entry-note {
+  font-size: 11px;
+  color: #6b6478;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
 /* EMAIL CAPTURE */
 #email-capture {
   max-width: 560px; width: 100%;
@@ -750,6 +794,9 @@ let answers = {};
 let tbQueue = [];
 let scores = { R:0, E:0, M:0, L:0 };
 
+// Контекст: пришёл из онбординга (зарегистрированный) или с лендинга
+const isOnboarding = new URLSearchParams(window.location.search).get('redirect') === 'onboarding';
+
 // ── GUMROAD LINKS — replace each URL with your actual Gumroad product link ──
 // To update: find GUMROAD_LINKS below, paste your link for each soul type
 const GUMROAD_LINKS = {
@@ -1149,6 +1196,20 @@ function showResult() {
       <a href="${GUMROAD_LINKS[type.name]}" target="_blank" class="unlock-btn" id="portalBtn" data-url="${GUMROAD_LINKS[type.name]}">Complete the Portal</a>
     </div>
 
+    ${isOnboarding ? `
+    <div class="app-entry-box" id="appEntryBox">
+      <div class="app-entry-label">Your origin is saved. You are ready.</div>
+      <button class="app-entry-btn" id="enterAppBtn">Enter Twin Frequency &nbsp;✦</button>
+      <div class="app-entry-note">Find your frequency matches — people who resonate with ${type.name}</div>
+    </div>
+    ` : `
+    <div class="app-entry-box" id="appEntryBox">
+      <div class="app-entry-label">Ready to meet your frequency matches?</div>
+      <button class="app-entry-btn" id="enterAppBtn">Join Twin Frequency &nbsp;✦</button>
+      <div class="app-entry-note">Create your profile as ${type.name} and find people who resonate</div>
+    </div>
+    `}
+
     <button class="retake-btn" onclick="retake()" style="display:none">Begin again</button>
   `;
 
@@ -1170,6 +1231,20 @@ function showResult() {
           <button onclick="this.parentElement.remove()" style="padding:12px 32px;border:1px solid #9966cc;background:#130d22;color:#bb88ff;font-family:Georgia,serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;">Close</button>
         `;
         document.body.appendChild(overlay);
+      }
+    });
+  }
+
+  // Attach app entry button handler
+  const enterAppBtn = document.getElementById('enterAppBtn');
+  if (enterAppBtn) {
+    enterAppBtn.addEventListener('click', function() {
+      if (isOnboarding) {
+        // Зарегистрированный пользователь — сохранить Origin и войти в приложение
+        window.location.href = 'onboarding.html?origin=' + encodeURIComponent(type.name);
+      } else {
+        // Незарегистрированный — на регистрацию с предзаполненным Origin
+        window.location.href = 'login.html?join=1&origin=' + encodeURIComponent(type.name);
       }
     });
   }
