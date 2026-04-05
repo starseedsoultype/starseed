@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<script>
+window.supabase = {
+  createClient: () => ({
+    auth: { getSession: async () => ({ data: { session: { user: { id: 'test' } } } }) },
+    from: () => ({ select: () => ({ eq: () => ({ single: async () => ({ data: { origin: 'Pleiadian' } }) }) }) })
+  })
+}
+</script>
+</head>
+<body>
+<script>
+fetch('library.html').then(r=>r.text()).then(html=>{
+  html = html.replace('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>','')
+  document.open();document.write(html);document.close()
+})
+</script>
+</body></html>

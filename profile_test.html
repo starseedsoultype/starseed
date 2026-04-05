@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Profile Test — Twin Frequency</title>
+<script>
+// Mock Supabase
+window.supabase = {
+  createClient: () => ({
+    auth: {
+      getSession: async () => ({ data: { session: { user: { id: 'test-user' } } } }),
+      signOut: async () => {}
+    },
+    from: () => ({
+      select: () => ({ eq: () => ({ single: async () => ({
+        data: {
+          name: 'Sophia',
+          age: 28,
+          gender: 'Woman',
+          origin: 'Pleiadian',
+          location: 'New York, USA',
+          photo_url: '',
+          show_location: true,
+          notif_match: true,
+          notif_messages: true,
+          notif_library: false,
+          search_age_min: 24,
+          search_age_max: 38,
+          search_gender: 'men'
+        }
+      }) }) }),
+      update: () => ({ eq: async () => ({}) })
+    }),
+    storage: {
+      from: () => ({
+        upload: async () => ({}),
+        getPublicUrl: () => ({ data: { publicUrl: '' } })
+      })
+    }
+  })
+}
+</script>
+</head>
+<body>
+<script>
+  // Inject profile.html content
+  fetch('profile.html').then(r => r.text()).then(html => {
+    // Remove Supabase CDN script tag to avoid conflict
+    html = html.replace('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>', '')
+    document.open(); document.write(html); document.close()
+  })
+</script>
+</body>
+</html>
