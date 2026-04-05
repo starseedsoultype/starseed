@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Twin Frequency — Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a96e;
+    --gold-soft: #e8d5b0;
+    --deep: #04030a;
+    --text: #e8e0d5;
+    --muted: #6b6478;
+  }
+
+  html, body {
+    height: 100%;
+    background: #000;
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  /* TOP NAV */
+  .top-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(4,3,10,0.8), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold-soft);
+  }
+
+  .nav-logo em { font-style: italic; color: var(--gold); }
+
+  .nav-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-icon {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .nav-icon:hover { opacity: 1; }
+
+  /* CARD STACK */
+  .card-stack {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .card.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .card-photo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
+  /* Photo overlay gradient */
+  .card-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(4,3,10,0.1) 0%,
+      transparent 30%,
+      transparent 45%,
+      rgba(4,3,10,0.7) 70%,
+      rgba(4,3,10,0.95) 100%
+    );
+  }
+
+  /* CARD INFO */
+  .card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 24px 120px;
+    z-index: 2;
+  }
+
+  .card-connection {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .card-connection:hover {
+    background: rgba(201,169,110,0.2);
+  }
+
+  .connection-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .connection-name {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .card-age {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(232,224,213,0.6);
+    letter-spacing: 0.05em;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .card-origin {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    opacity: 0.8;
+  }
+
+  .card-dot { color: var(--muted); font-size: 8px; }
+
+  .card-location {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* ACTION BUTTONS */
+  .actions {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 20px 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: linear-gradient(to top, rgba(4,3,10,0.9), transparent);
+  }
+
+  .btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-pass {
+    width: 56px; height: 56px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .btn-pass:hover {
+    background: rgba(255,100,100,0.15);
+    border-color: rgba(255,100,100,0.3);
+    transform: scale(1.05);
+  }
+
+  .btn-like {
+    width: 72px; height: 72px;
+    border: 1px solid rgba(201,169,110,0.3);
+    background: rgba(201,169,110,0.08);
+  }
+
+  .btn-like:hover {
+    background: rgba(201,169,110,0.2);
+    border-color: rgba(201,169,110,0.6);
+    transform: scale(1.05);
+  }
+
+  .btn-super {
+    width: 56px; height: 56px;
+    border: 1px solid rgba(100,150,255,0.2);
+  }
+
+  .btn-super:hover {
+    background: rgba(100,150,255,0.15);
+    border-color: rgba(100,150,255,0.4);
+    transform: scale(1.05);
+  }
+
+  /* LIKE/PASS OVERLAY */
+  .stamp {
+    position: absolute;
+    top: 30%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    border: 2px solid;
+    padding: 8px 20px;
+    border-radius: 4px;
+    opacity: 0;
+    transform: rotate(-15deg);
+    transition: opacity 0.15s;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .stamp-like {
+    left: 20px;
+    color: var(--gold);
+    border-color: var(--gold);
+    transform: rotate(-15deg);
+  }
+
+  .stamp-pass {
+    right: 20px;
+    color: #e07070;
+    border-color: #e07070;
+    transform: rotate(15deg);
+  }
+
+  .stamp.show { opacity: 0.9; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: var(--deep);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .empty-state.show { display: flex; }
+
+  .empty-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold-soft);
+    margin-bottom: 12px;
+  }
+
+  .empty-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .btn-circle {
+    padding: 14px 32px;
+    background: rgba(201,169,110,0.1);
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 2px;
+    color: var(--gold-soft);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-circle:hover {
+    background: rgba(201,169,110,0.2);
+  }
+
+  /* LOADING */
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease;
+  }
+  .loading-screen.hide { opacity: 0; pointer-events: none; }
+  .loading-pulse {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* MATCH OVERLAY */
+  .match-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(4,3,10,0.95);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .match-overlay.show { display: flex; }
+
+  .match-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .match-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold-soft);
+    margin-bottom: 8px;
+  }
+
+  .match-connection {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  .match-photos {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .match-photo {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(201,169,110,0.3);
+  }
+
+  .match-flame {
+    position: absolute;
+    font-size: 32px;
+  }
+
+  .match-actions {
+    display: flex;
+    gap: 16px;
+  }
+
+  .btn-match {
+    padding: 14px 28px;
+    border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-message {
+    background: rgba(201,169,110,0.15);
+    border: 1px solid rgba(201,169,110,0.4);
+    color: var(--gold-soft);
+  }
+
+  .btn-continue {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loader">
+  <div class="loading-pulse"></div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-logo">Twin <em>Frequency</em></div>
+  <div class="nav-icons">
+    <div class="nav-icon" onclick="window.location.href='chats.html'" title="Chats">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="var(--gold-soft)" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="nav-icon" onclick="window.location.href='profile.html'" title="Profile">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" stroke="var(--gold-soft)" stroke-width="1"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--gold-soft)" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</nav>
+
+<!-- CARD STACK -->
+<div class="card-stack" id="card-stack">
+  <!-- Cards injected here -->
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <button class="btn-action btn-pass" onclick="swipe('pass')" title="Pass">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" stroke="#e07070" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <button class="btn-action btn-like" onclick="swipe('like')" title="Like">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round" fill="rgba(201,169,110,0.1)"/>
+    </svg>
+  </button>
+
+  <button class="btn-action btn-super" onclick="swipe('super')" title="Super like">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#6496ff" stroke-width="1.2" stroke-linecap="round" fill="rgba(100,150,255,0.1)"/>
+    </svg>
+  </button>
+</div>
+
+<!-- EMPTY STATE -->
+<div class="empty-state" id="empty-state">
+  <p style="font-size:32px;margin-bottom:20px">✦</p>
+  <h2 class="empty-title">You've seen everyone</h2>
+  <p class="empty-sub">Come back tomorrow — or join<br>your circle while you wait.</p>
+  <button class="btn-circle" onclick="window.location.href='chats.html'">Go to my circle</button>
+</div>
+
+<!-- MATCH OVERLAY -->
+<div class="match-overlay" id="match-overlay">
+  <p class="match-title">A new frequency aligned</p>
+  <h2 class="match-name" id="match-name">—</h2>
+  <p class="match-connection" id="match-connection">—</p>
+  <div class="match-photos">
+    <div class="match-photo" id="match-photo-them"></div>
+    <div class="match-photo" id="match-photo-me"></div>
+  </div>
+  <div class="match-actions">
+    <button class="btn-match btn-message" onclick="closeMatch(true)">Send a message</button>
+    <button class="btn-match btn-continue" onclick="closeMatch(false)">Keep exploring</button>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────
+  const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU'
+  // ──────────────────────────────────────────────────────────
+
+  const { createClient } = supabase
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+  // Connection type calculator based on Origins
+  const CONNECTION_TYPES = {
+    'Frequency Twins': { score: 10, color: '#c9a96e' },
+    'Twin Stars': { score: 6, color: '#d4a0c0' },
+    'Cosmic Flow': { score: 4, color: '#c0a0d4' },
+    'Mirror Portals': { score: 3, color: '#a0b4d4' },
+    'Celestial Mentor': { score: 1, color: '#b4c4d4' },
+    'Karmic Bonds': { score: -1, color: '#8090a4' },
+    'Shadow Contracts': { score: -2, color: '#607080' },
+    'Black Holes': { score: -4, color: '#405060' },
+    'Star Alchemy': { score: -6, color: '#304050' },
+    'Eternal Reflection': { score: 0, color: '#d4d0e0' }
+  }
+
+  // Simple connection type based on origin groups
+  const ORIGIN_GROUP = {
+    'Siriusian': 1, 'Pleiadian': 1, 'Lemurian': 1, 'Cassiopeian': 1, 'Procyonian': 1, 'Lyran': 1,
+    'Arcturian': 2, 'Orion': 2, 'Vegan': 2, 'Zeta Reticulan': 2, 'Epsilon Eridan': 2, 'Atlantean': 2,
+    'Andromedan': 3, 'Polarisian': 3, 'Nibiruan': 3, 'Egyptian': 3, 'Mayan': 3, 'Blue Avian': 3,
+    'Tau Cetian': 4, 'Aldebaran': 4, 'Centaurian': 4, 'Herculean': 4, 'Anunnaki': 4, 'Hyperborean': 4
+  }
+
+  function getConnectionType(origin1, origin2) {
+    if (!origin1 || !origin2) return 'Cosmic Flow'
+    if (origin1 === origin2) return 'Eternal Reflection'
+    const g1 = ORIGIN_GROUP[origin1]
+    const g2 = ORIGIN_GROUP[origin2]
+    if (!g1 || !g2) return 'Cosmic Flow'
+    const diff = Math.abs(g1 - g2)
+    if (diff === 0) return 'Twin Stars'
+    if (diff === 1) return 'Cosmic Flow'
+    if (diff === 2) return 'Mirror Portals'
+    return 'Celestial Mentor'
+  }
+
+  let profiles = []
+  let currentIndex = 0
+  let myProfile = null
+  let myUser = null
+  let isAnimating = false
+
+  window.addEventListener('load', async () => {
+    const { data: sessionData } = await sb.auth.getSession()
+    if (!sessionData.session) {
+      window.location.href = 'login.html'
+      return
+    }
+    myUser = sessionData.session.user
+
+    // Get my profile
+    const { data: me } = await sb.from('profiles').select('*').eq('id', myUser.id).single()
+    myProfile = me
+
+    // Get test profiles
+    const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
+    profiles = testProfiles || []
+
+    document.getElementById('loader').classList.add('hide')
+
+    if (profiles.length === 0) {
+      document.getElementById('empty-state').classList.add('show')
+      return
+    }
+
+    renderCards()
+  })
+
+  function renderCards() {
+    const stack = document.getElementById('card-stack')
+    stack.innerHTML = ''
+
+    profiles.forEach((profile, i) => {
+      const card = document.createElement('div')
+      card.className = 'card' + (i === 0 ? ' active' : '')
+      card.dataset.index = i
+
+      const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+
+      card.innerHTML = `
+        <div class="card-photo" style="background-image: url('${profile.photo_url}')"></div>
+        <div class="stamp stamp-like">✦ Like</div>
+        <div class="stamp stamp-pass">Pass</div>
+        <div class="card-info">
+          <div class="card-connection" onclick="openLibrary('${connectionType}')">
+            <div class="connection-dot"></div>
+            <span class="connection-name">${connectionType}</span>
+          </div>
+          <h2 class="card-name">${profile.name}<span class="card-age" style="font-family:'Jost';font-size:20px;font-weight:200;margin-left:12px">${profile.age}</span></h2>
+          <div class="card-meta">
+            <span class="card-origin">${profile.origin}</span>
+            <span class="card-dot">●</span>
+            <span class="card-location">${profile.location || ''}</span>
+          </div>
+        </div>
+      `
+      stack.appendChild(card)
+    })
+
+    setupSwipe()
+  }
+
+  function showCard(index) {
+    document.querySelectorAll('.card').forEach((c, i) => {
+      c.classList.toggle('active', i === index)
+    })
+  }
+
+  function swipe(action) {
+    if (isAnimating) return
+    if (currentIndex >= profiles.length) return
+
+    isAnimating = true
+    const card = document.querySelector('.card.active')
+    if (!card) return
+
+    const profile = profiles[currentIndex]
+
+    if (action === 'like' || action === 'super') {
+      const stamp = card.querySelector('.stamp-like')
+      stamp.classList.add('show')
+      setTimeout(() => stamp.classList.remove('show'), 400)
+
+      // Check for match (50% chance for demo)
+      if (Math.random() > 0.5) {
+        setTimeout(() => showMatch(profile), 500)
+      }
+    } else {
+      const stamp = card.querySelector('.stamp-pass')
+      stamp.classList.add('show')
+      setTimeout(() => stamp.classList.remove('show'), 400)
+    }
+
+    setTimeout(() => {
+      currentIndex++
+      if (currentIndex >= profiles.length) {
+        document.getElementById('empty-state').classList.add('show')
+      } else {
+        showCard(currentIndex)
+      }
+      isAnimating = false
+    }, 400)
+  }
+
+  function showMatch(profile) {
+    const connectionType = getConnectionType(myProfile?.origin, profile.origin)
+    document.getElementById('match-name').textContent = profile.name
+    document.getElementById('match-connection').textContent = connectionType
+    document.getElementById('match-photo-them').style.backgroundImage = `url('${profile.photo_url}')`
+    if (myProfile?.photo_url) {
+      document.getElementById('match-photo-me').style.backgroundImage = `url('${myProfile.photo_url}')`
+    }
+    document.getElementById('match-overlay').classList.add('show')
+  }
+
+  function closeMatch(goToChat) {
+    document.getElementById('match-overlay').classList.remove('show')
+    if (goToChat) window.location.href = 'chats.html'
+  }
+
+  function openLibrary(connectionType) {
+    // Will link to library page
+    alert('Library: ' + connectionType + '\n\n(Coming soon)')
+  }
+
+  // ── SWIPE GESTURES ──
+  function setupSwipe() {
+    const stack = document.getElementById('card-stack')
+    let startX = 0, startY = 0, isDragging = false
+
+    function onStart(x, y) {
+      startX = x
+      startY = y
+      isDragging = true
+    }
+
+    function onEnd(x) {
+      if (!isDragging) return
+      isDragging = false
+      const diffX = x - startX
+      if (Math.abs(diffX) > 60) {
+        swipe(diffX > 0 ? 'like' : 'pass')
+      }
+    }
+
+    // Touch
+    stack.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true })
+    stack.addEventListener('touchend', e => onEnd(e.changedTouches[0].clientX))
+
+    // Mouse
+    stack.addEventListener('mousedown', e => onStart(e.clientX, e.clientY))
+    stack.addEventListener('mouseup', e => onEnd(e.clientX))
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') swipe('like')
+    if (e.key === 'ArrowLeft') swipe('pass')
+  })
+</script>
+</body>
+</html>
