@@ -417,20 +417,17 @@
     }, 600)
   })
 
-  // Handle auth redirect (email confirmation)
-  const hash = window.location.hash
-  if (hash.includes("access_token")) {
-    sb.auth.getSession().then(({ data }) => {
-      if (data.session) {
-        window.location.href = "onboarding.html"
-      }
-    })
-  }
+  // Handle all auth state changes including OAuth redirects
+  sb.auth.onAuthStateChange((event, session) => {
+    if (session && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+      window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+    }
+  })
 
-  // Check if already logged in
+  // Also check existing session on load
   sb.auth.getSession().then(({ data }) => {
     if (data.session) {
-      window.location.href = 'onboarding.html'
+      window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
     }
   })
 
@@ -492,7 +489,7 @@
     setMsg('Aligning frequencies...')
     const { error } = await sb.auth.signInWithPassword({ email, password })
     if (error) return setMsg(error.message, true)
-    window.location.href = 'onboarding.html'
+    window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
   }
 
   // Sign Up
