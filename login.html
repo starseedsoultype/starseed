@@ -420,7 +420,9 @@
   // Handle all auth state changes including OAuth redirects
   sb.auth.onAuthStateChange((event, session) => {
     if (session && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
-      window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+      setTimeout(() => {
+        window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+      }, 100)
     }
   })
 
