@@ -576,9 +576,10 @@ background-color: #04030a;
     const { data: me } = await sb.from('profiles').select('*').eq('id', myUser.id).single()
     myProfile = me
 
-    // Get test profiles
-    const { data: testProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
-    profiles = testProfiles || []
+    // Get all profiles
+    const { data: realProfiles } = await sb.from('profiles').select('*').neq('id', myUser.id).order('created_at')
+    const { data: testProfiles } = await sb.from('test_profiles').select('*').order('created_at')
+    profiles = [...(realProfiles || []), ...(testProfiles || [])]
 
     document.getElementById('loader').classList.add('hide')
 
