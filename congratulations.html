@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twin Frequency — Welcome</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #c9a96e;
+    --gold-soft: #e8d5b0;
+    --deep: #04030a;
+    --text: #e8e0d5;
+    --muted: #6b6478;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    overflow: hidden;
+  }
+
+  canvas#stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* PARTICLES */
+  canvas#particles {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .nebula {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 2s ease;
+  }
+  .nebula-gold {
+    width: 600px; height: 600px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+    opacity: 0;
+  }
+  .nebula-blue {
+    width: 500px; height: 500px;
+    top: -100px; right: -100px;
+    background: radial-gradient(circle, rgba(40,60,140,0.2) 0%, transparent 70%);
+  }
+  .nebula-purple {
+    width: 400px; height: 400px;
+    bottom: -50px; left: -50px;
+    background: radial-gradient(circle, rgba(80,40,120,0.2) 0%, transparent 70%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  /* SYMBOL RING */
+  .symbol-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 40px;
+    opacity: 0;
+  }
+
+  .symbol-wrap svg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ring-outer {
+    animation: rotateRing 20s linear infinite;
+    transform-origin: center;
+  }
+
+  .ring-inner {
+    animation: rotateRing 12s linear infinite reverse;
+    transform-origin: center;
+  }
+
+  /* TEXTS */
+  .welcome-line {
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    margin-bottom: 10px;
+  }
+
+  .name-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 9vw, 58px);
+    font-weight: 300;
+    color: var(--gold-soft);
+    opacity: 0;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .divider-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin: 20px auto;
+    opacity: 0;
+  }
+
+  .frequency-line {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    margin-bottom: 6px;
+  }
+
+  .origin-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    opacity: 0;
+    margin-bottom: 32px;
+  }
+
+  .message-line {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 300px;
+    opacity: 0;
+    margin-bottom: 48px;
+  }
+
+  .message-line em {
+    color: var(--gold-soft);
+    font-style: normal;
+  }
+
+  .btn-enter {
+    padding: 16px 48px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.18), rgba(201,169,110,0.08));
+    border: 1px solid rgba(201,169,110,0.5);
+    border-radius: 2px;
+    color: var(--gold-soft);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-enter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,169,110,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-enter:hover::before { opacity: 1; }
+  .btn-enter:hover { border-color: rgba(201,169,110,0.8); }
+
+  .circle-notification {
+    margin-top: 16px;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    opacity: 0;
+    text-transform: uppercase;
+  }
+
+  @keyframes rotateRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* LOADING */
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease;
+  }
+  .loading-screen.hide { opacity: 0; pointer-events: none; }
+  .loading-pulse {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loader">
+  <div class="loading-pulse"></div>
+</div>
+
+<canvas id="stars"></canvas>
+<canvas id="particles"></canvas>
+<div class="nebula nebula-gold" id="nebula-gold"></div>
+<div class="nebula nebula-blue"></div>
+<div class="nebula nebula-purple"></div>
+
+<div class="container">
+
+  <!-- Symbol -->
+  <div class="symbol-wrap" id="symbol">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring with dashes -->
+      <circle cx="60" cy="60" r="55" stroke="rgba(201,169,110,0.2)" stroke-width="0.5"/>
+      <g class="ring-outer">
+        <circle cx="60" cy="5" r="2" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="115" cy="60" r="2" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="60" cy="115" r="2" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="5" cy="60" r="2" fill="rgba(201,169,110,0.5)"/>
+        <circle cx="93" cy="14" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="106" cy="27" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="27" cy="14" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="14" cy="27" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="106" cy="93" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="93" cy="106" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="14" cy="93" r="1.5" fill="rgba(201,169,110,0.3)"/>
+        <circle cx="27" cy="106" r="1.5" fill="rgba(201,169,110,0.3)"/>
+      </g>
+      <!-- Inner ring -->
+      <circle cx="60" cy="60" r="35" stroke="rgba(201,169,110,0.15)" stroke-width="0.5"/>
+      <g class="ring-inner">
+        <circle cx="60" cy="25" r="1.5" fill="rgba(201,169,110,0.4)"/>
+        <circle cx="95" cy="60" r="1.5" fill="rgba(201,169,110,0.4)"/>
+        <circle cx="60" cy="95" r="1.5" fill="rgba(201,169,110,0.4)"/>
+        <circle cx="25" cy="60" r="1.5" fill="rgba(201,169,110,0.4)"/>
+      </g>
+      <!-- Cross lines -->
+      <line x1="60" y1="25" x2="60" y2="95" stroke="rgba(201,169,110,0.1)" stroke-width="0.5"/>
+      <line x1="25" y1="60" x2="95" y2="60" stroke="rgba(201,169,110,0.1)" stroke-width="0.5"/>
+      <!-- Center -->
+      <circle cx="60" cy="60" r="5" fill="none" stroke="rgba(201,169,110,0.6)" stroke-width="0.8"/>
+      <circle cx="60" cy="60" r="2" fill="#c9a96e"/>
+    </svg>
+  </div>
+
+  <p class="welcome-line" id="t1">Welcome</p>
+  <h1 class="name-line" id="t2">—</h1>
+  <div class="divider-dot" id="t3"></div>
+  <p class="frequency-line" id="t4">Your frequency</p>
+  <h2 class="origin-line" id="t5">—</h2>
+
+  <p class="message-line" id="t6">
+    For the first time, you will see<br>
+    your <em>connection type</em> with another soul<br>
+    before the first word.
+  </p>
+
+  <button class="btn-enter" id="btn-enter" onclick="enterFeed()">
+    Enter your circle
+  </button>
+  <p class="circle-notification" id="t7">✦ Your circle is already waiting</p>
+
+</div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────
+  const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU'
+  // ──────────────────────────────────────────────────────────
+
+  const { createClient } = supabase
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+  let userName = ''
+  let userOrigin = ''
+
+  window.addEventListener('load', async () => {
+    const { data } = await sb.auth.getSession()
+    if (!data.session) {
+      window.location.href = 'login.html'
+      return
+    }
+
+    const { data: profile } = await sb.from('profiles')
+      .select('name, origin')
+      .eq('id', data.session.user.id)
+      .single()
+
+    userName = profile?.name || 'Traveller'
+    userOrigin = profile?.origin || 'Unknown'
+
+    document.getElementById('t2').textContent = userName
+    document.getElementById('t5').textContent = userOrigin
+
+    document.getElementById('loader').classList.add('hide')
+
+    initStars()
+    initParticles()
+    startAnimation()
+  })
+
+  function startAnimation() {
+    const timeline = [
+      { el: 'symbol', delay: 200 },
+      { el: 't1', delay: 600 },
+      { el: 't2', delay: 900 },
+      { el: 't3', delay: 1300 },
+      { el: 't4', delay: 1600 },
+      { el: 't5', delay: 1900 },
+      { el: 't6', delay: 2400 },
+      { el: 'btn-enter', delay: 3000 },
+      { el: 't7', delay: 3400 },
+    ]
+
+    timeline.forEach(({ el, delay }) => {
+      setTimeout(() => {
+        const elem = document.getElementById(el)
+        elem.style.transition = 'opacity 1s ease, transform 0.8s ease'
+        elem.style.transform = 'translateY(0)'
+        elem.style.opacity = '1'
+      }, delay)
+    })
+
+    // Gold nebula bloom
+    setTimeout(() => {
+      document.getElementById('nebula-gold').style.opacity = '1'
+    }, 1800)
+
+    // Particles burst
+    setTimeout(() => {
+      burstParticles()
+    }, 1500)
+  }
+
+  function enterFeed() {
+    document.querySelector('.container').style.transition = 'opacity 0.6s ease'
+    document.querySelector('.container').style.opacity = '0'
+    setTimeout(() => window.location.href = 'feed.html', 600)
+  }
+
+  // ── STARS ──
+  function initStars() {
+    const canvas = document.getElementById('stars')
+    const ctx = canvas.getContext('2d')
+    let stars = []
+
+    function resize() {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      stars = Array.from({ length: 200 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2,
+        o: Math.random() * 0.6 + 0.1,
+        s: Math.random() * 0.3 + 0.05
+      }))
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      stars.forEach(s => {
+        s.o += Math.sin(Date.now() * s.s * 0.001) * 0.005
+        ctx.beginPath()
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(232,213,176,${Math.max(0.05, Math.min(0.7, s.o))})`
+        ctx.fill()
+      })
+      requestAnimationFrame(draw)
+    }
+
+    window.addEventListener('resize', resize)
+    resize()
+    draw()
+  }
+
+  // ── PARTICLES ──
+  let particlesList = []
+  let particleCanvas, particleCtx
+
+  function initParticles() {
+    particleCanvas = document.getElementById('particles')
+    particleCtx = particleCanvas.getContext('2d')
+    particleCanvas.width = window.innerWidth
+    particleCanvas.height = window.innerHeight
+    window.addEventListener('resize', () => {
+      particleCanvas.width = window.innerWidth
+      particleCanvas.height = window.innerHeight
+    })
+    drawParticles()
+  }
+
+  function burstParticles() {
+    const cx = window.innerWidth / 2
+    const cy = window.innerHeight / 2
+    for (let i = 0; i < 40; i++) {
+      const angle = Math.random() * Math.PI * 2
+      const speed = Math.random() * 3 + 0.5
+      particlesList.push({
+        x: cx, y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: Math.random() * 2 + 0.5,
+        o: 1,
+        fade: Math.random() * 0.015 + 0.008
+      })
+    }
+  }
+
+  function drawParticles() {
+    particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height)
+    particlesList = particlesList.filter(p => p.o > 0)
+    particlesList.forEach(p => {
+      p.x += p.vx
+      p.y += p.vy
+      p.vy += 0.02
+      p.o -= p.fade
+      particleCtx.beginPath()
+      particleCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+      particleCtx.fillStyle = `rgba(201,169,110,${Math.max(0, p.o)})`
+      particleCtx.fill()
+    })
+    requestAnimationFrame(drawParticles)
+  }
+</script>
+</body>
+</html>
