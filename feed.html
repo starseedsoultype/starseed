@@ -184,6 +184,60 @@
     color: var(--muted);
   }
 
+  /* UNKNOWN ORIGIN BANNER */
+  .unknown-banner {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    z-index: 40;
+    padding: 10px 20px;
+    background: rgba(4,3,10,0.85);
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    backdrop-filter: blur(8px);
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+  }
+  .unknown-banner.show { transform: translateY(0); }
+  .unknown-banner-text {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(232,224,213,0.6);
+    line-height: 1.5;
+  }
+  .unknown-banner-text em { color: var(--gold); font-style: normal; }
+  .unknown-banner-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.35);
+    border-radius: 2px;
+    color: var(--gold);
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .unknown-banner-btn:hover {
+    background: rgba(201,169,110,0.1);
+    border-color: rgba(201,169,110,0.6);
+  }
+  .unknown-banner-close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+
   /* ACTION BUTTONS */
   .actions {
     position: fixed;
@@ -548,6 +602,13 @@
   </div>
 </nav>
 
+<!-- UNKNOWN ORIGIN BANNER -->
+<div class="unknown-banner" id="unknown-banner">
+  <div class="unknown-banner-text">Your Origin is <em>unknown</em> — discover it to unlock full compatibility</div>
+  <button class="unknown-banner-btn" onclick="window.location.href='quiz.html?redirect=onboarding'">Take the quiz</button>
+  <button class="unknown-banner-close" onclick="document.getElementById('unknown-banner').classList.remove('show')">×</button>
+</div>
+
 <!-- CARD STACK -->
 <div class="card-stack" id="card-stack"></div>
 
@@ -785,6 +846,22 @@
         particleCount: 55,
         style: 'symmetric'     // идеально симметричные
       }
+    },
+    'Unknown': {
+      // Туманный серо-фиолетовый — неопределённость, тайна
+      badgeColor: '#7a7090',
+      flame: {
+        colors: ['#7a7090', '#9a90b0', '#5a5070', '#b0a8c8'],
+        style: 'flowing',
+        intensity: 0.5,
+        height: 0.7,
+        speed: 0.4
+      },
+      bg: {
+        colors: ['rgba(122,112,144,0.22)', 'rgba(90,80,112,0.14)'],
+        particleCount: 45,
+        style: 'nebula'
+      }
     }
   }
 
@@ -797,7 +874,8 @@
   }
 
   function getConnectionType(origin1, origin2) {
-    if (!origin1 || !origin2) return 'Cosmic Flow'
+    if (!origin1 || !origin2) return 'Unknown'
+    if (origin1 === 'Unknown' || origin2 === 'Unknown') return 'Unknown'
     if (origin1 === origin2) return 'Eternal Reflection'
     const g1 = ORIGIN_GROUP[origin1]
     const g2 = ORIGIN_GROUP[origin2]
@@ -837,6 +915,13 @@
 
     document.getElementById('loader').classList.add('hide')
 
+    // Показать баннер если Origin неизвестен
+    if (!myProfile?.origin || myProfile.origin === 'Unknown') {
+      setTimeout(() => {
+        document.getElementById('unknown-banner').classList.add('show')
+      }, 800)
+    }
+
     if (profiles.length === 0) {
       document.getElementById('empty-state').classList.add('show')
       return
@@ -858,15 +943,18 @@
       const connectionType = getConnectionType(myProfile?.origin, profile.origin)
       const theme = MATCH_THEMES[connectionType] || MATCH_THEMES['Cosmic Flow']
       const dotColor = theme.badgeColor
+      const isUnknown = connectionType === 'Unknown'
+      const displayType = isUnknown ? '? Unknown' : connectionType
+      const dotStyle = isUnknown ? 'border: 1px dashed ' + dotColor + '; background: transparent;' : 'background: ' + dotColor
 
       card.innerHTML = `
         <div class="card-photo" style="background-image: url('${profile.photo_url}')"></div>
         <div class="stamp stamp-like">✦ Like</div>
         <div class="stamp stamp-pass">Pass</div>
         <div class="card-info">
-          <div class="card-connection" onclick="openLibrary('${connectionType}')" style="border-color: ${dotColor}33; background: ${dotColor}18;">
-            <div class="connection-dot" style="background: ${dotColor}"></div>
-            <span class="connection-name" style="color: ${dotColor}">${connectionType}</span>
+          <div class="card-connection" onclick="${isUnknown ? 'void(0)' : "openLibrary('" + connectionType + "')" }" style="border-color: ${dotColor}${isUnknown ? '55' : '33'}; background: ${dotColor}${isUnknown ? '10' : '18'}; ${isUnknown ? 'cursor:default;' : ''}">
+            <div class="connection-dot" style="${dotStyle}"></div>
+            <span class="connection-name" style="color: ${dotColor}; ${isUnknown ? 'font-style:italic;letter-spacing:0.15em;' : ''}">${displayType}</span>
           </div>
           <h2 class="card-name">${profile.name}<span class="card-age" style="font-family:'Jost';font-size:20px;font-weight:200;margin-left:12px">${profile.age}</span></h2>
           <div class="card-meta">

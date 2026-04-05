@@ -429,6 +429,7 @@
 
     <button class="btn-next" onclick="goToQuiz()">Begin the discovery</button>
     <button class="btn-skip" onclick="goStep(4)">I already know my Origin</button>
+    <button class="btn-skip" onclick="saveUnknownOrigin()" style="opacity:0.55;font-size:10px;letter-spacing:0.2em;">I’m not sure yet — enter anyway</button>
     <div class="message" id="msg-3"></div>
   </div>
 
@@ -634,6 +635,12 @@
     setMsg(4, 'Saving your frequency...')
     await saveProfileProgress()
     await saveOrigin(origin)
+  }
+
+  async function saveUnknownOrigin() {
+    setMsg(3, 'Entering the frequency...')
+    await saveProfileProgress()
+    await saveOrigin('Unknown')
   }
 
   // Stars
