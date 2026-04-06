@@ -131,13 +131,13 @@ serve(async (req) => {
       )
     }
 
-    // Get already-swiped profile IDs
+    // Get already-swiped profile IDs (table is 'likes', columns: from_user, to_user)
     const { data: swipedRows } = await supabase
-      .from("swipes")
-      .select("target_id")
-      .eq("actor_id", user.id)
+      .from("likes")
+      .select("to_user")
+      .eq("from_user", user.id)
 
-    const swipedIds = new Set((swipedRows || []).map((r: any) => r.target_id))
+    const swipedIds = new Set((swipedRows || []).map((r: any) => r.to_user))
     swipedIds.add(user.id) // exclude self
 
     // Get blocked users (both directions)
@@ -151,7 +151,7 @@ serve(async (req) => {
       blockedIds.add(b.blocker_id === user.id ? b.blocked_id : b.blocker_id)
     }
 
-    // Fetch candidate profiles
+    // Fetch real candidate profiles
     let query = supabase
       .from("profiles")
       .select("id, name, age, gender, photo_url, origin, location_name, last_active_at")
@@ -164,10 +164,25 @@ serve(async (req) => {
       query = query.in("gender", me.pref_gender)
     }
 
-    const { data: candidates } = await query
+    const { data: realCandidates } = await query
+
+    // Also fetch test profiles (demo accounts for feed population)
+    const { data: testCandidates } = await supabase
+      .from("test_profiles")
+      .select("id, name, age, gender, photo_url, origin, location, created_at")
+
+    // Normalize test profiles to match real profile shape
+    const normalizedTest = (testCandidates || []).map((p: any) => ({
+      ...p,
+      location_name: p.location || null,
+      last_active_at: p.created_at,
+      onboarding_completed: true,
+    }))
+
+    const candidates = [...(realCandidates || []), ...normalizedTest]
 
     // Filter out swiped & blocked
-    const eligible = (candidates || []).filter(
+    const eligible = candidates.filter(
       (p: any) => !swipedIds.has(p.id) && !blockedIds.has(p.id)
     )
 
