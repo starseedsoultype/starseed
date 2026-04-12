@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Is Your Soul Connection?</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --void: #050508;
@@ -671,6 +672,34 @@ function restart() {
     render('q1');
   }
 }
+
+// ─── ANALYTICS ──────────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Generate a session ID for this visit
+const sessionId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+
+async function track(event, resultKey = null) {
+  try {
+    await sb.from('quiz_analytics').insert({ event, result_key: resultKey, session_id: sessionId });
+  } catch (e) {
+    // silent fail — analytics should never break the quiz
+  }
+}
+
+// Track page visit on load
+track('quiz_open');
+
+// Patch choose() to track completion
+const _origChoose = choose;
+window.choose = function(nextKey) {
+  if (nextKey.startsWith('result_')) {
+    track('quiz_complete', nextKey);
+  }
+  _origChoose(nextKey);
+};
 
 // Init
 render('q1');
