@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Analytics · Soul Connection</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050508;
+    --deep: #0a0a12;
+    --surface: #0f0f1a;
+    --card: #13131f;
+    --border: #1e1e30;
+    --text: #e8e0f0;
+    --muted: #6b6880;
+    --gold: #c9a84c;
+    --violet: #7b5ea7;
+    --glow: rgba(201,168,76,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px auto;
+    opacity: 0.4;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    max-width: 700px;
+    margin: 0 auto 48px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .results-list {
+    max-width: 700px;
+    margin: 0 auto 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .result-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .result-emoji {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: center;
+  }
+
+  .result-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .result-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .result-tension {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .result-bar-wrap {
+    flex: 1;
+    min-width: 80px;
+    max-width: 160px;
+  }
+
+  .result-bar-bg {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .result-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--violet), var(--gold));
+    border-radius: 2px;
+    transition: width 1s ease;
+    width: 0%;
+  }
+
+  .result-count {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .loading {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    padding: 40px;
+  }
+
+  .refresh-btn {
+    display: block;
+    margin: 0 auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .refresh-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .last-updated {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Starseed Soul System</div>
+  <h1>Quiz Analytics</h1>
+  <div class="subtitle">Soul Connection · Live Statistics</div>
+  <div class="divider"></div>
+</header>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value" id="total-opens">—</div>
+    <div class="stat-label">Total Visits</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="total-completes">—</div>
+    <div class="stat-label">Completions</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="conversion">—</div>
+    <div class="stat-label">Conversion</div>
+  </div>
+</div>
+
+<div class="section-title">Results Distribution</div>
+
+<div class="results-list" id="results-list">
+  <div class="loading">Reading the frequency...</div>
+</div>
+
+<button class="refresh-btn" onclick="loadStats()">↻ &nbsp; Refresh</button>
+<div class="last-updated" id="last-updated"></div>
+
+<div class="divider" style="margin-top:40px;"></div>
+<a href="connection-quiz.html" class="back-link">← Back to Quiz</a>
+
+<script>
+const SB_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
+
+const RESULTS = {
+  result_ft: { emoji: "⚡", name: "Frequency Twins",     tension: "5% tension · the rarest bond" },
+  result_er: { emoji: "♾",  name: "Eternal Reflection",  tension: "0% tension · complete recognition" },
+  result_ts: { emoji: "🌟", name: "Twin Stars",           tension: "15% tension · deep complementarity" },
+  result_cf: { emoji: "✨", name: "Cosmic Flow",          tension: "25% tension · natural current" },
+  result_cm: { emoji: "📚", name: "Celestial Mentor",     tension: "50% tension · growth through difference" },
+  result_mp: { emoji: "🪞", name: "Mirror Portals",       tension: "35% tension · beautiful disorientation" },
+  result_sa: { emoji: "⚖️", name: "Star Alchemy",         tension: "95% tension · maximum transformation" },
+  result_sc: { emoji: "🌓", name: "Shadow Contracts",     tension: "70% tension · shadow activation" },
+  result_bh: { emoji: "🕳", name: "Black Holes",          tension: "80% tension · intense and consuming" },
+  result_kb: { emoji: "🔗", name: "Karmic Bonds",         tension: "60% tension · something unfinished" },
+};
+
+async function query(sql) {
+  const res = await fetch(SB_URL + '/rest/v1/rpc/execute_sql', {
+    method: 'POST',
+    headers: {
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer ' + SB_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ query: sql })
+  });
+  return res.json();
+}
+
+async function fetchCount(event) {
+  const res = await fetch(
+    SB_URL + '/rest/v1/quiz_analytics?event=eq.' + event + '&select=id',
+    {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Prefer': 'count=exact',
+        'Range': '0-0'
+      }
+    }
+  );
+  const range = res.headers.get('content-range');
+  if (range) {
+    const match = range.match(/\/(\d+)/);
+    if (match) return parseInt(match[1]);
+  }
+  return 0;
+}
+
+async function fetchResultCounts() {
+  const res = await fetch(
+    SB_URL + '/rest/v1/quiz_analytics?event=eq.quiz_complete&select=result_key',
+    {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY
+      }
+    }
+  );
+  const rows = await res.json();
+  const counts = {};
+  rows.forEach(r => {
+    const k = r.result_key;
+    if (k) counts[k] = (counts[k] || 0) + 1;
+  });
+  return counts;
+}
+
+async function loadStats() {
+  document.getElementById('total-opens').textContent = '…';
+  document.getElementById('total-completes').textContent = '…';
+  document.getElementById('conversion').textContent = '…';
+  document.getElementById('results-list').innerHTML = '<div class="loading">Reading the frequency...</div>';
+
+  try {
+    const [opens, completes, resultCounts] = await Promise.all([
+      fetchCount('quiz_open'),
+      fetchCount('quiz_complete'),
+      fetchResultCounts()
+    ]);
+
+    document.getElementById('total-opens').textContent = opens.toLocaleString();
+    document.getElementById('total-completes').textContent = completes.toLocaleString();
+    const pct = opens > 0 ? Math.round((completes / opens) * 100) : 0;
+    document.getElementById('conversion').textContent = pct + '%';
+
+    // Build results list sorted by count desc
+    const sorted = Object.entries(RESULTS).map(([key, info]) => ({
+      key,
+      ...info,
+      count: resultCounts[key] || 0
+    })).sort((a, b) => b.count - a.count);
+
+    const maxCount = sorted[0]?.count || 1;
+    const list = document.getElementById('results-list');
+
+    if (completes === 0) {
+      list.innerHTML = '<div class="loading" style="color:var(--muted)">No completions yet — share the quiz!</div>';
+    } else {
+      list.innerHTML = sorted.map(r => `
+        <div class="result-row">
+          <div class="result-emoji">${r.emoji}</div>
+          <div class="result-info">
+            <div class="result-name">${r.name}</div>
+            <div class="result-tension">${r.tension}</div>
+          </div>
+          <div class="result-bar-wrap">
+            <div class="result-bar-bg">
+              <div class="result-bar-fill" data-pct="${maxCount > 0 ? Math.round((r.count / maxCount) * 100) : 0}"></div>
+            </div>
+            <div class="result-count">${r.count} ${r.count === 1 ? 'person' : 'people'}</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Animate bars
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.result-bar-fill').forEach(el => {
+          el.style.width = el.dataset.pct + '%';
+        });
+      });
+    }
+
+    const now = new Date();
+    document.getElementById('last-updated').textContent =
+      'Updated ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  } catch (err) {
+    document.getElementById('results-list').innerHTML =
+      '<div class="loading" style="color:#c0392b">Could not load data. Check your connection.</div>';
+  }
+}
+
+loadStats();
+</script>
+</body>
+</html>
