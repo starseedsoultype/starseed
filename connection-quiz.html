@@ -19,11 +19,11 @@
     --accent: #7c3aed;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-background: var(–void);
-color: var(–text);
+background: var(--void);
+color: var(--text);
 font-family: ‘Raleway’, sans-serif;
 font-weight: 300;
 min-height: 100vh;
@@ -94,7 +94,7 @@ animation: fadeDown 1s ease both;
 font-family: ‘Cinzel’, serif;
 font-size: 10px;
 letter-spacing: 0.35em;
-color: var(–gold);
+color: var(--gold);
 text-transform: uppercase;
 margin-bottom: 20px;
 opacity: 0.8;
@@ -106,18 +106,18 @@ font-size: clamp(32px, 6vw, 52px);
 font-weight: 300;
 line-height: 1.15;
 letter-spacing: 0.02em;
-color: var(–text);
+color: var(--text);
 margin-bottom: 20px;
 }
 
 .header h1 em {
 font-style: italic;
-color: var(–glow);
+color: var(--glow);
 }
 
 .header-sub {
 font-size: 14px;
-color: var(–muted);
+color: var(--muted);
 letter-spacing: 0.06em;
 line-height: 1.7;
 }
@@ -132,10 +132,10 @@ margin: 40px 0;
 .divider-line {
 flex: 1;
 height: 1px;
-background: linear-gradient(90deg, transparent, var(–border), transparent);
+background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
 .divider-star {
-color: var(–gold);
+color: var(--gold);
 font-size: 12px;
 opacity: 0.6;
 }
@@ -143,7 +143,7 @@ opacity: 0.6;
 /* Question card */
 .question-card {
 background: linear-gradient(135deg, rgba(15,15,26,0.95) 0%, rgba(20,15,35,0.95) 100%);
-border: 1px solid var(–border);
+border: 1px solid var(--border);
 border-radius: 2px;
 padding: 48px 40px;
 position: relative;
@@ -156,7 +156,7 @@ content: ‘’;
 position: absolute;
 top: 0; left: 0; right: 0;
 height: 1px;
-background: linear-gradient(90deg, transparent, var(–glow), transparent);
+background: linear-gradient(90deg, transparent, var(--glow), transparent);
 opacity: 0.4;
 }
 
@@ -164,7 +164,7 @@ opacity: 0.4;
 font-family: ‘Cinzel’, serif;
 font-size: 10px;
 letter-spacing: 0.3em;
-color: var(–gold);
+color: var(--gold);
 opacity: 0.7;
 margin-bottom: 28px;
 }
@@ -175,13 +175,13 @@ font-size: clamp(20px, 3.5vw, 28px);
 font-weight: 300;
 font-style: italic;
 line-height: 1.5;
-color: var(–text);
+color: var(--text);
 margin-bottom: 40px;
 }
 
 .question-context {
 font-size: 13px;
-color: var(–muted);
+color: var(--muted);
 margin-top: -28px;
 margin-bottom: 36px;
 letter-spacing: 0.04em;
@@ -217,7 +217,7 @@ transform: translateX(4px);
 font-family: ‘Cinzel’, serif;
 font-size: 10px;
 letter-spacing: 0.2em;
-color: var(–gold);
+color: var(--gold);
 opacity: 0.6;
 min-width: 16px;
 padding-top: 2px;
@@ -226,7 +226,7 @@ padding-top: 2px;
 .option-text {
 font-size: 15px;
 line-height: 1.6;
-color: var(–text);
+color: var(--text);
 opacity: 0.85;
 letter-spacing: 0.02em;
 }
@@ -247,14 +247,14 @@ margin-bottom: 8px;
 
 .progress-fill {
 height: 100%;
-background: linear-gradient(90deg, var(–accent), var(–glow));
+background: linear-gradient(90deg, var(--accent), var(--glow));
 border-radius: 1px;
 transition: width 0.5s ease;
 }
 
 .progress-text {
 font-size: 11px;
-color: var(–muted);
+color: var(--muted);
 letter-spacing: 0.1em;
 text-align: right;
 }
@@ -276,7 +276,7 @@ content: ‘’;
 position: absolute;
 top: 0; left: 0; right: 0;
 height: 1px;
-background: linear-gradient(90deg, transparent, var(–glow), var(–gold), var(–glow), transparent);
+background: linear-gradient(90deg, transparent, var(--glow), var(--gold), var(--glow), transparent);
 opacity: 0.6;
 }
 
@@ -308,7 +308,7 @@ animation: pulse 3s ease infinite;
 font-family: ‘Cinzel’, serif;
 font-size: 10px;
 letter-spacing: 0.35em;
-color: var(–gold);
+color: var(--gold);
 opacity: 0.8;
 text-transform: uppercase;
 margin-bottom: 16px;
@@ -318,14 +318,14 @@ margin-bottom: 16px;
 font-family: ‘Cormorant Garamond’, serif;
 font-size: clamp(28px, 5vw, 42px);
 font-weight: 300;
-color: var(–text);
+color: var(--text);
 margin-bottom: 8px;
 letter-spacing: 0.04em;
 }
 
 .result-tension {
 font-size: 12px;
-color: var(–glow);
+color: var(--glow);
 opacity: 0.7;
 letter-spacing: 0.12em;
 margin-bottom: 36px;
@@ -334,7 +334,7 @@ margin-bottom: 36px;
 .result-divider {
 width: 60px;
 height: 1px;
-background: linear-gradient(90deg, transparent, var(–gold), transparent);
+background: linear-gradient(90deg, transparent, var(--gold), transparent);
 margin: 0 auto 36px;
 }
 
@@ -350,7 +350,7 @@ margin-bottom: 32px;
 
 .result-truth {
 font-size: 13px;
-color: var(–muted);
+color: var(--muted);
 line-height: 1.8;
 letter-spacing: 0.03em;
 padding: 24px;
@@ -365,8 +365,8 @@ display: inline-block;
 font-family: ‘Cinzel’, serif;
 font-size: 11px;
 letter-spacing: 0.25em;
-color: var(–void);
-background: linear-gradient(135deg, var(–gold) 0%, #e8c96d 100%);
+color: var(--void);
+background: linear-gradient(135deg, var(--gold) 0%, #e8c96d 100%);
 padding: 16px 40px;
 border: none;
 border-radius: 1px;
@@ -383,14 +383,14 @@ box-shadow: 0 8px 32px rgba(201,168,76,0.3);
 
 .cta-sub {
 font-size: 12px;
-color: var(–muted);
+color: var(--muted);
 letter-spacing: 0.06em;
 }
 
 .restart-btn {
 background: none;
-border: 1px solid var(–border);
-color: var(–muted);
+border: 1px solid var(--border);
+color: var(--muted);
 font-family: ‘Raleway’, sans-serif;
 font-size: 12px;
 letter-spacing: 0.12em;
@@ -402,7 +402,7 @@ margin-top: 20px;
 
 .restart-btn:hover {
 border-color: rgba(180,140,255,0.3);
-color: var(–text);
+color: var(--text);
 }
 
 /* Animations */
