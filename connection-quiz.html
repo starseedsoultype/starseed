@@ -676,7 +676,7 @@ function restart() {
 // ─── ANALYTICS ──────────────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Generate a session ID for this visit
 const sessionId = Math.random().toString(36).slice(2) + Date.now().toString(36);
