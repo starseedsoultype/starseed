@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Your Soul Connection?</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050508;
+    --deep: #0a0a12;
+    --surface: #0f0f1a;
+    --border: rgba(180, 140, 255, 0.12);
+    --glow: #b48cff;
+    --gold: #c9a84c;
+    --text: #e8e0f0;
+    --muted: rgba(232, 224, 240, 0.45);
+    --accent: #7c3aed;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–void);
+color: var(–text);
+font-family: ‘Raleway’, sans-serif;
+font-weight: 300;
+min-height: 100vh;
+overflow-x: hidden;
+cursor: default;
+}
+
+/* Stars background */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image:
+radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+radial-gradient(1px 1px at 40% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+radial-gradient(1px 1px at 55% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
+radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+radial-gradient(1px 1px at 85% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+radial-gradient(1px 1px at 92% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+radial-gradient(1px 1px at 33% 60%, rgba(180,140,255,0.4) 0%, transparent 100%),
+radial-gradient(1px 1px at 77% 75%, rgba(180,140,255,0.3) 0%, transparent 100%),
+radial-gradient(2px 2px at 48% 35%, rgba(255,255,255,0.3) 0%, transparent 100%),
+radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+radial-gradient(1px 1px at 95% 85%, rgba(255,255,255,0.4) 0%, transparent 100%);
+pointer-events: none;
+z-index: 0;
+}
+
+/* Nebula glow */
+body::after {
+content: ‘’;
+position: fixed;
+width: 600px;
+height: 600px;
+background: radial-gradient(ellipse, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+top: -100px;
+left: 50%;
+transform: translateX(-50%);
+pointer-events: none;
+z-index: 0;
+animation: nebula 8s ease-in-out infinite alternate;
+}
+
+@keyframes nebula {
+0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+100% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+}
+
+.container {
+position: relative;
+z-index: 1;
+max-width: 680px;
+margin: 0 auto;
+padding: 60px 24px 80px;
+}
+
+/* Header */
+.header {
+text-align: center;
+margin-bottom: 64px;
+animation: fadeDown 1s ease both;
+}
+
+.header-eyebrow {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 0.35em;
+color: var(–gold);
+text-transform: uppercase;
+margin-bottom: 20px;
+opacity: 0.8;
+}
+
+.header h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(32px, 6vw, 52px);
+font-weight: 300;
+line-height: 1.15;
+letter-spacing: 0.02em;
+color: var(–text);
+margin-bottom: 20px;
+}
+
+.header h1 em {
+font-style: italic;
+color: var(–glow);
+}
+
+.header-sub {
+font-size: 14px;
+color: var(–muted);
+letter-spacing: 0.06em;
+line-height: 1.7;
+}
+
+/* Divider */
+.divider {
+display: flex;
+align-items: center;
+gap: 16px;
+margin: 40px 0;
+}
+.divider-line {
+flex: 1;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–border), transparent);
+}
+.divider-star {
+color: var(–gold);
+font-size: 12px;
+opacity: 0.6;
+}
+
+/* Question card */
+.question-card {
+background: linear-gradient(135deg, rgba(15,15,26,0.95) 0%, rgba(20,15,35,0.95) 100%);
+border: 1px solid var(–border);
+border-radius: 2px;
+padding: 48px 40px;
+position: relative;
+overflow: hidden;
+animation: fadeUp 0.6s ease both;
+}
+
+.question-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–glow), transparent);
+opacity: 0.4;
+}
+
+.question-number {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 0.3em;
+color: var(–gold);
+opacity: 0.7;
+margin-bottom: 28px;
+}
+
+.question-text {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(20px, 3.5vw, 28px);
+font-weight: 300;
+font-style: italic;
+line-height: 1.5;
+color: var(–text);
+margin-bottom: 40px;
+}
+
+.question-context {
+font-size: 13px;
+color: var(–muted);
+margin-top: -28px;
+margin-bottom: 36px;
+letter-spacing: 0.04em;
+}
+
+/* Options */
+.options {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.option {
+background: rgba(255,255,255,0.02);
+border: 1px solid rgba(180,140,255,0.08);
+border-radius: 2px;
+padding: 18px 24px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: flex-start;
+gap: 16px;
+text-align: left;
+}
+
+.option:hover {
+background: rgba(124, 58, 237, 0.08);
+border-color: rgba(180,140,255,0.3);
+transform: translateX(4px);
+}
+
+.option-letter {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 0.2em;
+color: var(–gold);
+opacity: 0.6;
+min-width: 16px;
+padding-top: 2px;
+}
+
+.option-text {
+font-size: 15px;
+line-height: 1.6;
+color: var(–text);
+opacity: 0.85;
+letter-spacing: 0.02em;
+}
+
+/* Progress */
+.progress {
+margin-bottom: 32px;
+animation: fadeDown 0.8s ease both;
+}
+
+.progress-bar {
+height: 1px;
+background: rgba(255,255,255,0.06);
+border-radius: 1px;
+overflow: hidden;
+margin-bottom: 8px;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent), var(–glow));
+border-radius: 1px;
+transition: width 0.5s ease;
+}
+
+.progress-text {
+font-size: 11px;
+color: var(–muted);
+letter-spacing: 0.1em;
+text-align: right;
+}
+
+/* Result */
+.result-card {
+background: linear-gradient(135deg, rgba(15,15,26,0.98) 0%, rgba(20,12,40,0.98) 100%);
+border: 1px solid rgba(180,140,255,0.2);
+border-radius: 2px;
+padding: 56px 40px;
+text-align: center;
+animation: fadeUp 0.8s ease both;
+position: relative;
+overflow: hidden;
+}
+
+.result-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–glow), var(–gold), var(–glow), transparent);
+opacity: 0.6;
+}
+
+.result-card::after {
+content: ‘’;
+position: absolute;
+bottom: -100px;
+left: 50%;
+transform: translateX(-50%);
+width: 300px;
+height: 300px;
+background: radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%);
+pointer-events: none;
+}
+
+.result-emoji {
+font-size: 48px;
+margin-bottom: 24px;
+display: block;
+animation: pulse 3s ease infinite;
+}
+
+@keyframes pulse {
+0%, 100% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.08); opacity: 0.85; }
+}
+
+.result-label {
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 0.35em;
+color: var(–gold);
+opacity: 0.8;
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.result-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(28px, 5vw, 42px);
+font-weight: 300;
+color: var(–text);
+margin-bottom: 8px;
+letter-spacing: 0.04em;
+}
+
+.result-tension {
+font-size: 12px;
+color: var(–glow);
+opacity: 0.7;
+letter-spacing: 0.12em;
+margin-bottom: 36px;
+}
+
+.result-divider {
+width: 60px;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–gold), transparent);
+margin: 0 auto 36px;
+}
+
+.result-description {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(17px, 2.5vw, 20px);
+font-weight: 300;
+font-style: italic;
+line-height: 1.75;
+color: rgba(232,224,240,0.85);
+margin-bottom: 32px;
+}
+
+.result-truth {
+font-size: 13px;
+color: var(–muted);
+line-height: 1.8;
+letter-spacing: 0.03em;
+padding: 24px;
+border: 1px solid rgba(180,140,255,0.08);
+background: rgba(124,58,237,0.04);
+border-radius: 2px;
+margin-bottom: 40px;
+}
+
+.cta-button {
+display: inline-block;
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+letter-spacing: 0.25em;
+color: var(–void);
+background: linear-gradient(135deg, var(–gold) 0%, #e8c96d 100%);
+padding: 16px 40px;
+border: none;
+border-radius: 1px;
+cursor: pointer;
+transition: all 0.3s ease;
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.cta-button:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+}
+
+.cta-sub {
+font-size: 12px;
+color: var(–muted);
+letter-spacing: 0.06em;
+}
+
+.restart-btn {
+background: none;
+border: 1px solid var(–border);
+color: var(–muted);
+font-family: ‘Raleway’, sans-serif;
+font-size: 12px;
+letter-spacing: 0.12em;
+padding: 12px 28px;
+cursor: pointer;
+transition: all 0.3s ease;
+margin-top: 20px;
+}
+
+.restart-btn:hover {
+border-color: rgba(180,140,255,0.3);
+color: var(–text);
+}
+
+/* Animations */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+from { opacity: 0; transform: translateY(-12px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+animation: fadeOut 0.3s ease forwards;
+}
+@keyframes fadeOut {
+to { opacity: 0; transform: translateY(-12px); }
+}
+
+@media (max-width: 480px) {
+.container { padding: 40px 16px 60px; }
+.question-card, .result-card { padding: 36px 24px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">StarSeed Soul System</div>
+    <h1>What is the <em>true nature</em><br>of your connection?</h1>
+    <p class="header-sub">Think of one specific person.<br>Answer what you feel — not what you think you should feel.</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-star">✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div id="quiz-area"></div>
+
+</div>
+
+<script>
+const questions = {
+  q1: {
+    number: "Question 01",
+    text: "Think of this person. When you are around them — what is the feeling underneath everything else?",
+    context: null,
+    options: [
+      { letter: "A", text: "Natural. Easy. Like something finally makes sense.", next: "q2a" },
+      { letter: "B", text: "Pulled in — even when you're not sure why. Drawn and confused at the same time.", next: "q3" },
+      { letter: "C", text: "Heavy. Painful. But impossible to leave. Something keeps you there.", next: "q4" },
+    ]
+  },
+  q2a: {
+    number: "Question 02",
+    text: "When you imagine your life without them...",
+    context: null,
+    options: [
+      { letter: "A", text: "There is a quiet certainty. They belong here. It feels inevitable — not dramatic, just true.", next: "q2b" },
+      { letter: "B", text: "It feels fine. Comfortable, even. But not fated. They are good, not necessary.", next: "q2c" },
+    ]
+  },
+  q2b: {
+    number: "Question 03",
+    text: "Through this connection, do you feel yourself expanding?",
+    context: "Not comfortable — expanding. Growing into something you weren't before.",
+    options: [
+      { letter: "A", text: "Yes. I grow. I become more. Something in me opens that was closed.", next: "result_ft" },
+      { letter: "B", text: "I recognize myself in them completely. But I don't grow. I just... am.", next: "result_er" },
+    ]
+  },
+  q2c: {
+    number: "Question 03",
+    text: "Has this connection changed who you are?",
+    context: "Not just how you feel — who you fundamentally are.",
+    options: [
+      { letter: "A", text: "Yes. Deeply. Something shifted. I am different because of them.", next: "result_ts" },
+      { letter: "B", text: "No. It is simply easy and good. I am the same — just more at ease.", next: "result_cf" },
+    ]
+  },
+  q3: {
+    number: "Question 02",
+    text: "Between the two of you — is there a teacher and a student?",
+    context: "One who holds the map, and one who is still learning the territory.",
+    options: [
+      { letter: "A", text: "Yes. One of us leads. The other follows, learns, grows toward them.", next: "result_cm" },
+      { letter: "B", text: "No. We confuse each other equally. Neither leads. We are mirrors of the same mystery.", next: "result_mp" },
+    ]
+  },
+  q4: {
+    number: "Question 02",
+    text: "What has this connection done to you?",
+    context: null,
+    options: [
+      { letter: "A", text: "We collided. Both of us broke open. I am fundamentally different — and so are they.", next: "result_sa" },
+      { letter: "B", text: "It works through shadow. Hidden patterns. Things I don't show anyone. Something dark and magnetic.", next: "result_sc" },
+      { letter: "C", text: "It depletes me. The same cycles repeat. Nothing transforms — it just takes.", next: "result_bh" },
+      { letter: "D", text: "Something unfinished keeps pulling me back. Like there is a debt between us that hasn't been paid.", next: "result_kb" },
+    ]
+  }
+};
+
+const results = {
+  result_ft: {
+    emoji: "⚡",
+    name: "Frequency Twins",
+    tension: "5% tension · the rarest bond",
+    description: "The rarest resonance — two souls vibrating at the same fundamental frequency.",
+    truth: "When Frequency Twins meet, there is often an immediate recognition that bypasses the usual process of getting to know someone. You may feel as if you have always known this person — not because you have met before, but because you are, in some essential way, made of the same substance.\n\nThis is not similarity of personality or shared interests. It is a resonance at the deepest level of being, as if two instruments tuned to the same note are played simultaneously and the sound that emerges is something neither could produce alone.\n\nIn the presence of your Frequency Twin, the usual effort of self-explanation falls away. You do not need to translate yourself. This creates a quality of rest that is rare and deeply nourishing.\n\nThe invitation of this connection is to use this profound recognition in service of something larger — to let the resonance between you amplify your individual gifts rather than creating a closed circuit that excludes the world."
+  },
+  result_er: {
+    emoji: "♾",
+    name: "Eternal Reflection",
+    tension: "0% tension · complete recognition",
+    description: "Perfect recognition — two souls that are, in essence, the same.",
+    truth: "This is not a relationship between two different souls — it is the same soul type meeting itself. Every strength mirrors the same strength. Every shadow mirrors the same shadow. There is no complementarity because there is nothing to complement.\n\nThe recognition is total and immediate, like looking into a mirror and seeing not your reflection but your self. There is nowhere to hide in this connection — and nowhere you would want to hide.\n\nThe relationship can be deeply comforting or deeply stagnating depending on where both souls are in their development. The comfort is absolute. The expansion is not.\n\nEvolution requires difference — and Eternal Reflection offers none. The invitation is to let the recognition be a foundation for expansion, not a substitute for it. The danger is a hall of mirrors that reflects endlessly without admitting new light."
+  },
+  result_ts: {
+    emoji: "🌟",
+    name: "Twin Stars",
+    tension: "15% tension · deep complementarity",
+    description: "Two luminous beings orbiting a shared center of gravity.",
+    truth: "Twin Stars are two souls who, though distinct in their nature, are drawn into a shared orbit by a gravitational pull that neither fully understands. Like binary stars in the cosmos, each maintains its own light while being fundamentally shaped by the presence of the other.\n\nThis connection has a quality of inevitability — a sense that the meeting was written into the fabric of your respective journeys long before it occurred. There is deep recognition here, though it is accompanied by the awareness that you are genuinely different from each other.\n\nYour Twin Star sees you clearly and also calls you toward a version of yourself that you could not have reached alone. The relationship is both mirror and doorway. You feel both met and known.\n\nThe most luminous Twin Star connections are those where each person's individual light is amplified, not diminished, by the connection. The gravitational pull is real — but so is the distinct nature of each star."
+  },
+  result_cf: {
+    emoji: "✨",
+    name: "Cosmic Flow",
+    tension: "25% tension · natural current",
+    description: "A connection that moves like water — finding its way through every terrain.",
+    truth: "There is a lightness to Cosmic Flow connections that can be mistaken for superficiality. In fact, the ease is a sign of genuine compatibility — the absence of friction does not mean the absence of depth. It means that the two frequencies are naturally harmonious.\n\nNeither soul needs to work hard to connect. They generate for each other without realizing it. They speak a similar language and tend to bring out each other's ease rather than their edges. A sustainable current rather than a dramatic charge.\n\nThe gift is the experience of love without struggle. This does not mean the relationship is without challenge — life brings challenges to all connections. But the challenges are met with a shared orientation, a natural tendency to move together rather than against each other.\n\nIn a culture that often equates difficulty with depth, Cosmic Flow connections can be undervalued. The invitation is to recognize that harmony is not the absence of growth — it is its most natural expression."
+  },
+  result_cm: {
+    emoji: "📚",
+    name: "Celestial Mentor",
+    tension: "50% tension · growth through difference",
+    description: "One soul carries what the other is learning to become.",
+    truth: "Celestial Mentor describes a connection in which there is a natural asymmetry of experience or wisdom in a particular domain — one soul has walked a path that the other is beginning. This asymmetry is not permanent or absolute; it is specific to a particular dimension of growth.\n\nThe connection is characterized by a quality of transmission — something passes from one person to the other that cannot be fully articulated. It is not merely information or advice; it is a frequency, a way of being, that the student absorbs through proximity.\n\nThe mentor carries the destination; the student carries the fresh eyes that remind the mentor why the journey matters. What feels like inequality is actually the mechanism of expansion. Not all connections are meant to be equal.\n\nThe invitation is to hold the asymmetry lightly — to recognize that the roles of teacher and student are not fixed, and that the student often teaches the teacher things that could not be learned any other way."
+  },
+  result_mp: {
+    emoji: "🪞",
+    name: "Mirror Portals",
+    tension: "35% tension · beautiful disorientation",
+    description: "Each reflects what the other cannot yet see in themselves.",
+    truth: "Mirror Portals describes a connection in which each person serves as a precise reflection of the other — showing them aspects of themselves that they cannot perceive directly. This is not always comfortable, but it is always illuminating.\n\nThe attraction is real. The confusion is also real. One layer of your souls meets in ideal complementarity; another meets in complete indifference. You cannot fully understand each other — and cannot fully leave.\n\nWhat you see in your Mirror Portal that frustrates, confuses, or disturbs you is often a reflection of something within yourself that is asking for attention. The mirror does not judge — it simply reflects.\n\nThis connection is most valuable when both people are committed to using what they see in service of their own growth. The portal is open. Whether you step through it consciously is the only question that matters."
+  },
+  result_sa: {
+    emoji: "⚖️",
+    name: "Star Alchemy",
+    tension: "95% tension · maximum transformation",
+    description: "Two forces that cannot merge — and in their collision, create something new.",
+    truth: "Star Alchemy describes a connection of profound creative tension — two frequencies that are fundamentally different in their nature, and whose meeting generates an alchemical reaction. Like stars that collide in the cosmos, the encounter releases extraordinary energy.\n\nThe connection is characterized by intensity, friction, and a quality of creative electricity. The tension between the two frequencies does not resolve into harmony; instead, it generates something new — ideas, transformation, understanding — that neither could have produced alone.\n\nEach person's deepest certainty meets the other's deepest insecurity — and this happens in both directions simultaneously. The result is either extraordinary transformation or extraordinary damage. There is no neutral outcome here.\n\nStar Alchemy requires both people to be strong enough to hold the tension without collapsing it — to let the friction generate light rather than heat. What you do with this connection is everything."
+  },
+  result_sc: {
+    emoji: "🌓",
+    name: "Shadow Contracts",
+    tension: "70% tension · shadow activation",
+    description: "A meeting in the dark — both souls carrying what the other needs to face.",
+    truth: "Shadow Contracts describes a connection in which both people carry complementary shadows — aspects of themselves that they have not yet integrated. The connection creates the conditions in which these shadows become visible, often through conflict, projection, or intense attraction.\n\nSomething in their presence activates your shadow — and something in yours activates theirs. This is not random. It is structural. Shadow Contract connections often feel fated — as if you were meant to meet this person, though the meeting may not feel comfortable.\n\nThe discomfort is not a sign that the connection is wrong. It is a sign that it is doing its work. The shadow that is brought into the light loses its power to drive behavior unconsciously.\n\nThe invitation is to resist the temptation to make the other person the problem. The shadow that you see in them is pointing to something in yourself. This is not about blame — it is about the precise mechanics of how consciousness uses relationship to know itself."
+  },
+  result_bh: {
+    emoji: "🕳",
+    name: "Black Holes",
+    tension: "80% tension · intense and consuming",
+    description: "A gravitational pull that transforms everything it touches.",
+    truth: "Black Holes describes a connection of extraordinary gravitational intensity — a pull so powerful that it can feel as if your entire life is being reorganized around it. Neither soul is indifferent to the other. Neither ever will be.\n\nThe Black Hole connection is not inherently destructive, though it can feel that way. What it destroys are the structures — beliefs, identities, patterns — that are no longer serving your evolution. The destruction is in service of a transformation that could not occur any other way.\n\nThe pull is intense precisely because the need activation is so strong. These often become the most significant relationships in a person's life — not because they nourish, but because they activate everything that has been waiting to be seen.\n\nIf you are willing to surrender to the process, you will emerge from a Black Hole connection fundamentally different — not diminished, but distilled. What remains after the transformation is what is most essentially you."
+  },
+  result_kb: {
+    emoji: "🔗",
+    name: "Karmic Bonds",
+    tension: "60% tension · something unfinished",
+    description: "Ancient unfinished business, returning for completion.",
+    truth: "Karmic Bonds describes a connection that carries the weight of unresolved patterns — something between you that was not completed, not said, not resolved. There is an intensity to this connection that can feel both compelling and destabilizing.\n\nThe pull can feel irresistible — as if you are drawn to this person by a force that bypasses your rational mind. This is not an accident. The intensity is proportional to the significance of what is asking to be resolved.\n\nWhen a Karmic Bond reaches completion, both people are freed in ways that ripple through their entire lives. The pattern will repeat until it is seen clearly. Seeing it clearly is the first step toward completing it.\n\nThe invitation is to approach the intensity with consciousness rather than being swept away by it. This bond asks for resolution, not repetition. The question is whether you can tell the difference."
+  }
+};
+
+let currentQ = 'q1';
+let totalSteps = 0;
+let answeredSteps = 0;
+
+function getMaxSteps(qKey) {
+  // Calculate rough progress
+  if (qKey === 'q1') return 3;
+  return 3;
+}
+
+function render(key, animate = true) {
+  const area = document.getElementById('quiz-area');
+
+  if (key.startsWith('result_')) {
+    const r = results[key];
+    answeredSteps = 3;
+    area.innerHTML = `
+      <div class="progress" style="animation-delay:0s">
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+        <div class="progress-text">Complete</div>
+      </div>
+      <div class="result-card">
+        <span class="result-emoji">${r.emoji}</span>
+        <div class="result-label">Your Soul Connection</div>
+        <div class="result-name">${r.name}</div>
+        <div class="result-tension">${r.tension}</div>
+        <div class="result-divider"></div>
+        <p class="result-description">"${r.description}"</p>
+        <div class="result-truth">${r.truth.split('\n\n').map(p => `<p style="margin-bottom:14px">${p}</p>`).join('')}</div>
+        <div>
+          <button class="cta-button" onclick="window.open('https://starseedsoultype.github.io/starseed','_blank')">
+            Discover Your Soul Type
+          </button>
+        </div>
+        <br>
+        <button class="restart-btn" onclick="window.open('https://starseedsoultype.github.io/twinfrequency/library.html','_blank')">Read another connection ↺</button>
+      </div>
+    `;
+    return;
+  }
+
+  const q = questions[key];
+  // Estimate progress
+  const progressMap = { q1: 10, q2a: 40, q2b: 70, q2c: 70, q3: 60, q4: 60 };
+  const progress = progressMap[key] || 30;
+
+  const optionsHTML = q.options.map(opt => `
+    <div class="option" onclick="choose('${opt.next}')">
+      <span class="option-letter">${opt.letter}</span>
+      <span class="option-text">${opt.text}</span>
+    </div>
+  `).join('');
+
+  area.innerHTML = `
+    <div class="progress">
+      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+      <div class="progress-text">Reading your frequency</div>
+    </div>
+    <div class="question-card">
+      <div class="question-number">${q.number}</div>
+      <p class="question-text">${q.text}</p>
+      ${q.context ? `<p class="question-context">${q.context}</p>` : ''}
+      <div class="options">${optionsHTML}</div>
+    </div>
+  `;
+}
+
+function choose(nextKey) {
+  const area = document.getElementById('quiz-area');
+  const card = area.querySelector('.question-card, .result-card');
+  if (card) {
+    card.classList.add('fade-out');
+    setTimeout(() => render(nextKey), 300);
+  } else {
+    render(nextKey);
+  }
+}
+
+function restart() {
+  const area = document.getElementById('quiz-area');
+  const card = area.querySelector('.result-card');
+  if (card) {
+    card.classList.add('fade-out');
+    setTimeout(() => render('q1'), 300);
+  } else {
+    render('q1');
+  }
+}
+
+// Init
+render('q1');
+</script>
+
+</body>
+</html>
