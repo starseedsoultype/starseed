@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starseed Relationships & Twin Flame Connections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #04030a;
+    --deep: #0a0714;
+    --surface: #110e1f;
+    --gold: #c9a96e;
+    --gold-dim: #7a6242;
+    --rose: #c17070;
+    --ice: #a8b8d0;
+    --text: #e8e0d4;
+    --text-dim: #8a8090;
+    --glow: rgba(201, 169, 110, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(193,112,112,0.06) 0%, transparent 70%);
+    top: 30%;
+    right: 15%;
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-hook {
+    font-size: clamp(20px, 3vw, 30px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 560px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-hook span {
+    color: var(--gold);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 120px 24px;
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-wide {
+    max-width: 1000px;
+  }
+
+  .divider {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+    margin: 0 auto;
+  }
+
+  .label {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  p {
+    font-size: clamp(17px, 2vw, 20px);
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  p strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  p em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .pull-quote {
+    font-size: clamp(22px, 3vw, 34px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--text);
+    border-left: 1px solid var(--gold-dim);
+    padding-left: 32px;
+    margin: 56px 0;
+  }
+
+  /* FREQUENCIES GRID */
+  .frequencies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 64px;
+  }
+
+  .freq-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .freq-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--glow), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .freq-card:hover::before { opacity: 1; }
+  .freq-card:hover { background: #15111f; }
+
+  .freq-emoji {
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .freq-name {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .freq-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    margin-bottom: 0;
+  }
+
+  /* MISSION SECTION */
+  .mission {
+    background: var(--surface);
+    padding: 120px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 60%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mission-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .mission h2 {
+    font-size: clamp(32px, 5vw, 60px);
+  }
+
+  .mission-lines {
+    margin: 56px 0;
+  }
+
+  .mission-line {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 2;
+    color: var(--text-dim);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .mission-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mission-line em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .mission-final {
+    font-size: clamp(20px, 3vw, 32px);
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    margin-top: 56px;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 160px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .cta-inner h2 {
+    font-size: clamp(28px, 4vw, 52px);
+    margin-bottom: 16px;
+  }
+
+  .cta-inner p {
+    font-size: clamp(16px, 2vw, 20px);
+    margin-bottom: 56px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+
+  .cta-btn:hover { color: var(--void); }
+  .cta-btn:hover::before { transform: translateX(0); }
+
+  .cta-btn span { position: relative; z-index: 1; }
+
+  .cta-tagline {
+    margin-top: 48px;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(201,169,110,0.08);
+  }
+
+  .footer p {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin: 0;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .section { padding: 80px 20px; }
+    .mission { padding: 80px 20px; }
+    .cta-section { padding: 100px 20px; }
+    .frequencies { grid-template-columns: 1fr; }
+    .pull-quote { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow">StarSeedSoul Project · Olesya Popova · 2025</p>
+  <h1 class="hero-title">You can't stop<br>thinking about<br><em>this person.</em></h1>
+  <p class="hero-sub">You've tried. It doesn't work.<br>Something inside you already knows — this is not random.</p>
+  <p class="hero-hook">This guide won't tell you to let go.<br>It will tell you <span>why it feels the way it does.</span></p>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 1 -->
+<section class="section">
+  <div class="label reveal">On intensity</div>
+  <h2 class="reveal reveal-delay-1">Why the intensity doesn't mean <em>what you think</em> it means</h2>
+  <p class="reveal reveal-delay-2">Starseed connections don't feel ordinary. They arrive suddenly. They wake something ancient up inside you. They don't follow the rules of normal relationships — because they aren't normal relationships.</p>
+  <p class="reveal reveal-delay-2">For Starseeds, connection is not just emotional. It is energetic, structural, and deeply encoded. This is why certain people feel like fate. Like recognition. Like something you've been waiting for without knowing you were waiting.</p>
+
+  <div class="pull-quote reveal">
+    Intensity is not a map.
+  </div>
+
+  <p class="reveal">Without understanding the actual frequency of a connection, the most powerful feeling in your life can become the most disorienting one. You can spend years inside a dynamic that was never meant to be permanent — because it felt too significant to question.</p>
+  <p class="reveal">It is easy to confuse <strong>activation with compatibility</strong>. Mirroring with union. Emotional charge with destiny.</p>
+  <p class="reveal">Twin Flame is not one type of connection. It is a word people reach for when they have no other word. But what is actually happening between you — that requires a different kind of clarity.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2 — FREQUENCIES -->
+<section class="section section-wide">
+  <div class="label reveal">The system</div>
+  <h2 class="reveal reveal-delay-1">What your connection <em>is actually made of</em></h2>
+  <p class="reveal reveal-delay-2">Within the StarSeedSoul system, every connection between two souls has a specific frequency. Not a feeling — a structure. A pattern that determines how two inner systems interact, what they activate in each other, and what the connection is actually here to do.</p>
+  <p class="reveal reveal-delay-2">There are ten of these frequencies. All of them can feel like Twin Flame. Each of them means something completely different.</p>
+
+  <div class="frequencies">
+    <div class="freq-card reveal">
+      <span class="freq-emoji">⚡</span>
+      <div class="freq-name">Frequency Twins</div>
+      <p class="freq-text">The rarest connection. Every layer of two souls meets in perfect interplay — no friction, no mismatch anywhere. Like two instruments tuned to each other before either knew the other existed.</p>
+    </div>
+    <div class="freq-card reveal reveal-delay-1">
+      <span class="freq-emoji">🌟</span>
+      <div class="freq-name">Twin Stars</div>
+      <p class="freq-text">Deep complementarity with pockets of recognition. These souls complete each other where it matters most. <em>I see myself in you and also you complete me.</em></p>
+    </div>
+    <div class="freq-card reveal reveal-delay-2">
+      <span class="freq-emoji">✨</span>
+      <div class="freq-name">Cosmic Flow</div>
+      <p class="freq-text">Comfortable, flowing, mutually sustaining. Neither soul needs to work hard to connect. A sustainable current rather than a dramatic charge.</p>
+    </div>
+    <div class="freq-card reveal">
+      <span class="freq-emoji">🪞</span>
+      <div class="freq-name">Mirror Portals</div>
+      <p class="freq-text">Inspiring with an edge. One area where they simply cannot reach each other no matter how they try. The mirror creates recognition. The gap creates longing.</p>
+    </div>
+    <div class="freq-card reveal reveal-delay-1">
+      <span class="freq-emoji">📚</span>
+      <div class="freq-name">Celestial Mentor</div>
+      <p class="freq-text">A teaching connection. The friction is real but so is the growth. These are the relationships that develop you.</p>
+    </div>
+    <div class="freq-card reveal reveal-delay-2">
+      <span class="freq-emoji">🔗</span>
+      <div class="freq-name">Karmic Bonds</div>
+      <p class="freq-text">Magnetic and unresolved. These souls keep finding each other across time. Something that hasn't been completed yet.</p>
+    </div>
+    <div class="freq-card reveal">
+      <span class="freq-emoji">🌓</span>
+      <div class="freq-name">Shadow Contracts</div>
+      <p class="freq-text">Activating and difficult. Shadow material surfaces quickly and consistently. Transformative if both souls can work with what comes up. Consuming if they can't.</p>
+    </div>
+    <div class="freq-card reveal reveal-delay-1">
+      <span class="freq-emoji">🕳</span>
+      <div class="freq-name">Black Holes</div>
+      <p class="freq-text">Intense and costly. Enormous charge — neither soul is indifferent. But the pattern tends toward depletion rather than growth.</p>
+    </div>
+    <div class="freq-card reveal reveal-delay-2">
+      <span class="freq-emoji">⚖️</span>
+      <div class="freq-name">Star Alchemy</div>
+      <p class="freq-text">Maximum tension. Maximum potential. Each person's deepest certainty meets the other's deepest insecurity. These are the relationships that change people permanently.</p>
+    </div>
+    <div class="freq-card reveal">
+      <span class="freq-emoji">♾</span>
+      <div class="freq-name">Eternal Reflection</div>
+      <p class="freq-text">Total recognition with zero growth through difference. Deeply comforting or deeply stagnating — depending on where both souls are in their development.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-inner">
+    <p class="label reveal">The real mission</p>
+    <h2 class="reveal reveal-delay-1">Here is what the intensity<br>is actually pointing to.<br><em>Not to another person.<br>To you.</em></h2>
+
+    <div class="mission-lines">
+      <div class="mission-line">The one who feels like home is showing you where you've <em>lost your own home inside.</em></div>
+      <div class="mission-line">The one who destabilizes you is showing you where you <em>haven't yet found your own ground.</em></div>
+      <div class="mission-line">The one you can't let go of is showing you something <em>you haven't yet completed within yourself.</em></div>
+      <div class="mission-line">The one who teaches you is showing you what you <em>already know but haven't claimed.</em></div>
+    </div>
+
+    <div class="pull-quote reveal" style="text-align:left; margin: 40px 0;">
+      Twin Flame is not a person you are meant to find.<br>It is a state you are meant to return to.
+    </div>
+
+    <p class="reveal">The real union that every intense connection is calling you toward — is the union with your own source. The part of you that was whole before any relationship, and will be whole after.</p>
+    <p class="reveal">This is why the journey is never really about whether they come back, whether they choose you, whether it works out.</p>
+
+    <p class="mission-final reveal">It is about whether <em>you</em> come back to yourself.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3 -->
+<section class="section">
+  <div class="label reveal">What changes</div>
+  <h2 class="reveal reveal-delay-1">When you understand the frequency,<br><em>something in you settles.</em></h2>
+  <p class="reveal reveal-delay-2">You stop asking <em>what is this</em> — and start seeing <em>what this is here to do.</em></p>
+  <p class="reveal">You stop measuring intensity as proof of permanence. You stop forcing a connection into a shape it was never meant to hold. You stop losing yourself inside something you cannot name.</p>
+  <p class="reveal">Strong emotion doesn't disappear. But it stops running the show.</p>
+  <p class="reveal">You begin to make choices — about staying, leaving, redefining — from clarity instead of confusion. From understanding instead of need.</p>
+
+  <div class="pull-quote reveal">
+    This is what it means to read your connection<br>rather than be consumed by it.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <p class="label reveal">Your next step</p>
+    <h2 class="reveal reveal-delay-1">Your connection has<br>a specific <em>frequency.</em></h2>
+    <p class="reveal reveal-delay-2">Your Origin determines how you experience it. Knowing both changes everything.</p>
+    <a href="#" class="cta-btn reveal reveal-delay-3"><span>→ Enter Portal 11.11</span></a>
+    <p class="cta-tagline reveal">The truth of your connection does not live in labels.<br><em>It reveals itself through resonance, clarity, and inner recognition.</em></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2025 StarSeedSoul Project · Olesya Popova</p>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Mission lines staggered reveal
+  const missionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const lines = entry.target.querySelectorAll('.mission-line');
+        lines.forEach((line, i) => {
+          setTimeout(() => line.classList.add('visible'), i * 200);
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.mission-lines').forEach(el => missionObserver.observe(el));
+</script>
+</body>
+</html>
