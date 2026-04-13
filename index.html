@@ -21,7 +21,7 @@ body { background:var(--bg); color:var(--text); font-family:'Georgia',serif; ove
 
 /* STARS */
 body::before {
-content:’’; position:fixed; inset:0; pointer-events:none; z-index:0;
+content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
 background-image:
 radial-gradient(1px 1px at 7% 15%, rgba(255,255,255,0.5) 0%,transparent 100%),
 radial-gradient(1px 1px at 19% 72%, rgba(255,255,255,0.3) 0%,transparent 100%),
@@ -45,15 +45,15 @@ padding:16px 32px; display:flex; justify-content:space-between; align-items:cent
 background:linear-gradient(180deg,rgba(7,5,15,0.96) 0%,transparent 100%);
 backdrop-filter:blur(8px);
 }
-.nav-logo { font-size:18px; letter-spacing:2px; color:var(–text); font-style:italic; text-decoration:none; }
-.nav-logo span { color:var(–gold); }
+.nav-logo { font-size:18px; letter-spacing:2px; color:var(--text); font-style:italic; text-decoration:none; }
+.nav-logo span { color:var(--gold); }
 .nav-btn {
-padding:8px 22px; border:1px solid var(–border2);
-background:transparent; color:var(–gold2);
-font-family:Georgia,serif; font-size:11px; letter-spacing:2px;
+padding:8px 22px; border:1px solid var(--border2);
+background:transparent; color:var(--gold2);
+font-family:Georgia,serif; font-size:12px; letter-spacing:2px;
 text-transform:uppercase; text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
-.nav-btn:hover { border-color:var(–accent); background:var(–bg3); }
+.nav-btn:hover { border-color:var(--accent); background:var(--bg3); }
 
 /* KEYFRAMES */
 @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
@@ -70,61 +70,61 @@ background-size:cover;
 background-position:center;
 }
 .hero-eyebrow {
-font-size:10px; letter-spacing:6px; color:var(–text4); text-transform:uppercase;
+font-size:12px; letter-spacing:6px; color:var(--text4); text-transform:uppercase;
 margin-bottom:20px; opacity:0; animation:fadeUp 0.8s ease 0.2s both;
 }
 .hero-brand {
-font-size:clamp(48px,10vw,96px); color:var(–text); font-weight:normal;
+font-size:clamp(48px,10vw,96px); color:var(--text); font-weight:normal;
 letter-spacing:6px; font-style:italic; margin-bottom:4px;
 opacity:0; animation:fadeUp 0.8s ease 0.3s both, glow 4s ease 1s infinite;
 }
-.hero-brand span { color:var(–gold); }
+.hero-brand span { color:var(--gold); }
 .hero-sub-brand {
-font-size:10px; letter-spacing:8px; color:var(–text4); text-transform:uppercase;
+font-size:12px; letter-spacing:8px; color:var(--text4); text-transform:uppercase;
 margin-bottom:32px; opacity:0; animation:fadeUp 0.8s ease 0.45s both;
 }
 .hero-tagline {
-font-size:clamp(14px,2.2vw,18px); color:var(–text3); line-height:1.9;
+font-size:clamp(15px,2.2vw,18px); color:var(--text3); line-height:1.9;
 max-width:540px; margin:0 auto 32px;
 opacity:0; animation:fadeUp 0.8s ease 0.55s both;
 }
 .hero-portal-note {
-font-size:11px; letter-spacing:5px; color:var(–gold2); text-transform:uppercase;
+font-size:13px; letter-spacing:5px; color:var(--gold2); text-transform:uppercase;
 margin-bottom:48px; opacity:0; animation:fadeUp 0.8s ease 0.65s both;
 }
 .hero-cta {
 display:inline-block; padding:18px 60px;
-border:1px solid var(–gold); background:transparent; color:var(–gold2);
+border:1px solid var(--gold); background:transparent; color:var(--gold2);
 font-family:Georgia,serif; font-size:13px; letter-spacing:4px; text-transform:uppercase;
 text-decoration:none; border-radius:2px; transition:all 0.3s;
 opacity:0; animation:fadeUp 0.8s ease 0.75s both;
 }
-.hero-cta:hover { background:rgba(212,168,67,0.08); border-color:var(–gold2); }
+.hero-cta:hover { background:rgba(212,168,67,0.08); border-color:var(--gold2); }
 .hero-scroll {
 position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
 opacity:0; animation:fadeUp 0.8s ease 1s both; text-align:center;
 }
-.hero-scroll span { font-size:9px; letter-spacing:3px; color:var(–border2); text-transform:uppercase; }
-.hero-scroll-line { width:1px; height:32px; background:linear-gradient(180deg,var(–border2),transparent); margin:8px auto 0; animation:pulse 2.5s ease infinite; }
+.hero-scroll span { font-size:12px; letter-spacing:3px; color:var(--border2); text-transform:uppercase; }
+.hero-scroll-line { width:1px; height:32px; background:linear-gradient(180deg,var(--border2),transparent); margin:8px auto 0; animation:pulse 2.5s ease infinite; }
 
 /* SECTIONS */
 section { position:relative; z-index:1; }
 .section-wrap { max-width:940px; margin:0 auto; padding:0 24px; }
 
 /* DIVIDER */
-.divider { max-width:940px; margin:0 auto; height:1px; background:linear-gradient(90deg,transparent,var(–border2),transparent); }
+.divider { max-width:940px; margin:0 auto; height:1px; background:linear-gradient(90deg,transparent,var(--border2),transparent); }
 
 /* SYSTEM INTRO */
 #system-intro { padding:60px 24px 30px; text-align:center; }
 .system-intro-inner { max-width:680px; margin:0 auto; }
-.sec-eyebrow { font-size:10px; letter-spacing:5px; color:var(–text4); text-transform:uppercase; margin-bottom:16px; }
-.sec-title { font-size:clamp(22px,4vw,34px); color:var(–text); font-weight:normal; font-style:italic; margin-bottom:24px; line-height:1.4; }
-.sec-body { font-size:15px; color:var(–text3); line-height:1.9; margin-bottom:14px; }
+.sec-eyebrow { font-size:12px; letter-spacing:5px; color:var(--text4); text-transform:uppercase; margin-bottom:16px; }
+.sec-title { font-size:clamp(22px,4vw,34px); color:var(--text); font-weight:normal; font-style:italic; margin-bottom:24px; line-height:1.4; }
+.sec-body { font-size:15px; color:var(--text3); line-height:1.9; margin-bottom:14px; }
 
 /* PRODUCT BLOCKS */
 .product-block {
 padding:80px 24px;
-border-top:1px solid var(–border);
+border-top:1px solid var(--border);
 }
 .product-block:nth-child(even) { background:linear-gradient(135deg,rgba(18,13,32,0.6),rgba(12,7,24,0.8)); }
 @media(max-width:660px) { .product-block { padding:32px 24px; } #system-intro { padding:32px 24px 16px; } }
@@ -134,62 +134,62 @@ border-top:1px solid var(–border);
 .pb-inner.reverse > * { direction:ltr; }
 @media(max-width:660px) { .pb-inner, .pb-inner.reverse { grid-template-columns:1fr; gap:32px; direction:ltr; } }
 
-.pb-label { font-size:9px; letter-spacing:5px; color:var(–gold2); text-transform:uppercase; margin-bottom:12px; }
-.pb-title { font-size:clamp(22px,3.5vw,30px); color:var(–text); font-weight:normal; font-style:italic; margin-bottom:14px; line-height:1.3; }
-.pb-body { font-size:14px; color:var(–text3); line-height:1.85; margin-bottom:20px; }
-.pb-price { font-size:28px; color:var(–gold); margin-bottom:6px; letter-spacing:2px; }
-.pb-price-note { font-size:11px; color:var(–text4); margin-bottom:22px; font-style:italic; }
-.pb-free { font-size:12px; color:var(–gold2); letter-spacing:3px; text-transform:uppercase; margin-bottom:22px; }
+.pb-label { font-size:12px; letter-spacing:5px; color:var(--gold2); text-transform:uppercase; margin-bottom:12px; }
+.pb-title { font-size:clamp(22px,3.5vw,30px); color:var(--text); font-weight:normal; font-style:italic; margin-bottom:14px; line-height:1.3; }
+.pb-body { font-size:14px; color:var(--text3); line-height:1.85; margin-bottom:20px; }
+.pb-price { font-size:28px; color:var(--gold); margin-bottom:6px; letter-spacing:2px; }
+.pb-price-note { font-size:13px; color:var(--text4); margin-bottom:22px; font-style:italic; }
+.pb-free { font-size:13px; color:var(--gold2); letter-spacing:3px; text-transform:uppercase; margin-bottom:22px; }
 
 /* VISUAL SIDE */
 .pb-visual {
-background:var(–bg2); border:1px solid var(–border);
+background:var(--bg2); border:1px solid var(--border);
 border-radius:4px; padding:40px 32px; text-align:center;
 display:flex; flex-direction:column; align-items:center; justify-content:center;
 min-height:260px;
 }
 .pb-visual-label {
-font-size:9px; letter-spacing:5px; color:var(–text4); text-transform:uppercase; margin-bottom:16px;
+font-size:12px; letter-spacing:5px; color:var(--text4); text-transform:uppercase; margin-bottom:16px;
 }
 .pb-visual-num {
-font-size:64px; color:var(–gold); letter-spacing:4px; font-style:italic;
+font-size:64px; color:var(--gold); letter-spacing:4px; font-style:italic;
 text-shadow:0 0 30px rgba(212,168,67,0.4); margin-bottom:8px; line-height:1;
 }
-.pb-visual-desc { font-size:11px; color:var(–text4); letter-spacing:2px; text-transform:uppercase; }
+.pb-visual-desc { font-size:13px; color:var(--text4); letter-spacing:2px; text-transform:uppercase; }
 
 .pb-visual-icon {
 font-size:48px; margin-bottom:12px; opacity:0.8;
 }
 .pb-visual-title {
-font-size:20px; color:var(–text2); font-style:italic; margin-bottom:8px;
+font-size:20px; color:var(--text2); font-style:italic; margin-bottom:8px;
 }
-.pb-visual-sub { font-size:12px; color:var(–text4); line-height:1.6; }
+.pb-visual-sub { font-size:13px; color:var(--text4); line-height:1.6; }
 
 /* RELATIONSHIP TABLE */
 .rel-table { width:100%; border-collapse:collapse; margin:32px 0; }
-.rel-table th { font-size:9px; letter-spacing:3px; color:var(–text4); text-transform:uppercase; padding:10px 14px; border-bottom:1px solid var(–border2); text-align:left; }
-.rel-table td { padding:12px 14px; border-bottom:1px solid var(–border); font-size:13px; color:var(–text3); }
-.rel-table td:first-child { color:var(–text2); font-style:italic; }
-.rel-table tr:hover td { background:var(–bg3); }
+.rel-table th { font-size:12px; letter-spacing:3px; color:var(--text4); text-transform:uppercase; padding:10px 14px; border-bottom:1px solid var(--border2); text-align:left; }
+.rel-table td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:14px; color:var(--text3); }
+.rel-table td:first-child { color:var(--text2); font-style:italic; }
+.rel-table tr:hover td { background:var(--bg3); }
 
 /* TWIN FLAME BLOCK */
 .tf-block {
 background:linear-gradient(135deg,#0e0618,#180a2a);
-border:1px solid var(–accent); border-radius:4px; padding:48px 40px;
+border:1px solid var(--accent); border-radius:4px; padding:48px 40px;
 max-width:860px; margin:0 auto; display:grid;
 grid-template-columns:1fr 1fr; gap:48px; align-items:center;
 }
 @media(max-width:660px) { .tf-block { grid-template-columns:1fr; padding:32px 24px; } }
-.tf-left .pb-label { color:var(–pink2); }
+.tf-left .pb-label { color:var(--pink2); }
 .tf-right { text-align:center; }
 .tf-free-badge {
 display:inline-block; padding:6px 20px;
-border:1px solid var(–pink); color:var(–pink2);
-font-size:10px; letter-spacing:4px; text-transform:uppercase; border-radius:20px;
+border:1px solid var(--pink); color:var(--pink2);
+font-size:12px; letter-spacing:4px; text-transform:uppercase; border-radius:20px;
 margin-bottom:16px;
 }
-.tf-right-title { font-size:18px; color:var(–text); font-style:italic; margin-bottom:8px; }
-.tf-right-body { font-size:13px; color:var(–text3); line-height:1.7; }
+.tf-right-title { font-size:18px; color:var(--text); font-style:italic; margin-bottom:8px; }
+.tf-right-body { font-size:14px; color:var(--text3); line-height:1.7; }
 
 /* PERSONAL SESSION */
 .session-block {
@@ -198,52 +198,52 @@ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
 }
 @media(max-width:660px) { .session-block { grid-template-columns:1fr; } }
 .session-photo {
-background:var(–bg2); border:1px solid var(–border);
+background:var(--bg2); border:1px solid var(--border);
 border-radius:4px; padding:48px 32px; text-align:center;
 }
-.session-photo-name { font-size:22px; color:var(–text); font-style:italic; margin-bottom:6px; }
-.session-photo-role { font-size:10px; letter-spacing:3px; color:var(–text4); text-transform:uppercase; line-height:1.6; }
-.session-photo-divider { width:40px; height:1px; background:var(–border2); margin:16px auto; }
-.session-photo-quote { font-size:13px; color:var(–text3); line-height:1.7; font-style:italic; }
+.session-photo-name { font-size:22px; color:var(--text); font-style:italic; margin-bottom:6px; }
+.session-photo-role { font-size:12px; letter-spacing:3px; color:var(--text4); text-transform:uppercase; line-height:1.6; }
+.session-photo-divider { width:40px; height:1px; background:var(--border2); margin:16px auto; }
+.session-photo-quote { font-size:14px; color:var(--text3); line-height:1.7; font-style:italic; }
 
 /* GRID 2 — community + workshop */
 .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:3px; max-width:860px; margin:0 auto; }
 @media(max-width:600px) { .grid2 { grid-template-columns:1fr; } }
-.grid2-card { background:var(–bg2); border:1px solid var(–border); padding:36px 28px; transition:border-color 0.3s; }
-.grid2-card:hover { border-color:var(–border2); }
-.g2-label { font-size:9px; letter-spacing:4px; color:var(–text4); text-transform:uppercase; margin-bottom:10px; }
-.g2-title { font-size:20px; color:var(–text); font-style:italic; margin-bottom:12px; }
-.g2-body { font-size:13px; color:var(–text3); line-height:1.8; margin-bottom:20px; }
+.grid2-card { background:var(--bg2); border:1px solid var(--border); padding:36px 28px; transition:border-color 0.3s; }
+.grid2-card:hover { border-color:var(--border2); }
+.g2-label { font-size:12px; letter-spacing:4px; color:var(--text4); text-transform:uppercase; margin-bottom:10px; }
+.g2-title { font-size:20px; color:var(--text); font-style:italic; margin-bottom:12px; }
+.g2-body { font-size:14px; color:var(--text3); line-height:1.8; margin-bottom:20px; }
 
 /* TRAINING BLOCK */
 .training-block {
 max-width:860px; margin:0 auto; text-align:center;
-border:1px solid var(–border2); padding:56px 40px; background:var(–bg2);
+border:1px solid var(--border2); padding:56px 40px; background:var(--bg2);
 }
 @media(max-width:600px) { .training-block { padding:36px 24px; } }
 
 /* FINAL BLOCK */
 #final { padding:100px 24px; text-align:center; }
 .final-inner { max-width:640px; margin:0 auto; }
-.final-title { font-size:clamp(24px,4vw,36px); color:var(–text); font-style:italic; font-weight:normal; margin-bottom:24px; }
-.final-body { font-size:15px; color:var(–text3); line-height:1.9; margin-bottom:40px; }
+.final-title { font-size:clamp(24px,4vw,36px); color:var(--text); font-style:italic; font-weight:normal; margin-bottom:24px; }
+.final-body { font-size:15px; color:var(--text3); line-height:1.9; margin-bottom:40px; }
 .final-btns { display:flex; flex-direction:column; align-items:center; gap:12px; max-width:320px; margin:0 auto; }
 .final-btns a { width:100%; text-align:center; }
 
 /* FOOTER */
-footer { border-top:1px solid var(–border); padding:40px 24px; text-align:center; }
-.footer-logo { font-size:18px; color:var(–text3); font-style:italic; margin-bottom:8px; }
-.footer-logo span { color:var(–gold); }
-.footer-copy { font-size:11px; color:var(–text4); letter-spacing:1px; margin-bottom:4px; }
-.footer-contact { font-size:11px; color:var(–text4); }
-.footer-contact a { color:var(–text4); text-decoration:none; }
-.footer-contact a:hover { color:var(–text3); }
+footer { border-top:1px solid var(--border); padding:40px 24px; text-align:center; }
+.footer-logo { font-size:18px; color:var(--text3); font-style:italic; margin-bottom:8px; }
+.footer-logo span { color:var(--gold); }
+.footer-copy { font-size:13px; color:var(--text4); letter-spacing:1px; margin-bottom:4px; }
+.footer-contact { font-size:13px; color:var(--text4); }
+.footer-contact a { color:var(--text4); text-decoration:none; }
+.footer-contact a:hover { color:var(--text3); }
 
 /* BUTTONS */
 .btn-gold {
 display:inline-block; padding:14px 36px;
-border:1px solid var(–gold); background:transparent; color:var(–gold2);
-font-family:Georgia,serif; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+border:1px solid var(--gold); background:transparent; color:var(--gold2);
+font-family:Georgia,serif; font-size:13px; letter-spacing:3px; text-transform:uppercase;
 text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
 .btn-gold:hover { background:rgba(212,168,67,0.08); }
@@ -252,23 +252,23 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
 display:inline-block; padding:14px 36px;
 background:linear-gradient(135deg,#4a2a88,#6a3aaa);
 border:none; color:#fff;
-font-family:Georgia,serif; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+font-family:Georgia,serif; font-size:13px; letter-spacing:3px; text-transform:uppercase;
 text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
 .btn-purple:hover { background:linear-gradient(135deg,#5a3a98,#7a4abb); }
 
 .btn-ghost {
 display:inline-block; padding:12px 28px;
-border:1px solid var(–border2); background:transparent; color:var(–text3);
-font-family:Georgia,serif; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+border:1px solid var(--border2); background:transparent; color:var(--text3);
+font-family:Georgia,serif; font-size:13px; letter-spacing:2px; text-transform:uppercase;
 text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
-.btn-ghost:hover { border-color:var(–accent); color:var(–text2); }
+.btn-ghost:hover { border-color:var(--accent); color:var(--text2); }
 
 .btn-pink {
 display:inline-block; padding:14px 36px;
-border:1px solid var(–pink); background:transparent; color:var(–pink2);
-font-family:Georgia,serif; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+border:1px solid var(--pink); background:transparent; color:var(--pink2);
+font-family:Georgia,serif; font-size:13px; letter-spacing:3px; text-transform:uppercase;
 text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
 .btn-pink:hover { background:rgba(204,102,187,0.08); }
@@ -284,15 +284,17 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
   <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="nav-btn">Enter Portal 11.11</a>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — Starseed + Twin Flame united -->
 
 <section id="hero">
   <div style="position:absolute;inset:0;background:rgba(7,5,15,0.75);z-index:0;"></div>
-  <div class="hero-eyebrow">Origin Consciousness System</div>
+  <div class="hero-eyebrow">Origin · Frequency · Connection</div>
   <div class="hero-brand">Star<span>Seed</span>Soul</div>
   <div class="hero-sub-brand">by Olesya Popova</div>
   <div class="hero-tagline">
-    Discover your Origin. Understand your relationships.<br>Awaken your cosmic frequency.
+    Discover your Origin. Decode your deepest connections.<br>
+    Your soul frequency shapes who you are — and who you are drawn to.<br>
+    Starseed Origins. Twin Flame frequencies. One system.
   </div>
   <div class="hero-portal-note">You are entering a PORTAL 11.11</div>
   <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="hero-cta">Enter the Portal</a>
@@ -324,11 +326,11 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
       <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center, rgba(119,68,187,0.25) 0%, rgba(7,5,15,0.95) 70%);z-index:0;"></div>
       <div style="position:relative;z-index:1;text-align:center;padding:40px 32px;">
         <div style="font-size:52px;color:var(--gold);margin-bottom:12px;opacity:0.9;text-shadow:0 0 30px rgba(212,168,67,0.4);">✦</div>
-        <div style="font-size:11px;letter-spacing:5px;color:var(--text4);text-transform:uppercase;margin-bottom:12px;">24 Soul Origins</div>
+        <div style="font-size:13px;letter-spacing:5px;color:var(--text4);text-transform:uppercase;margin-bottom:12px;">24 Soul Origins</div>
         <div style="font-size:20px;font-style:italic;color:var(--text);margin-bottom:10px;">Siriusian · Pleiadian · Lemurian</div>
         <div style="width:40px;height:1px;background:var(--border2);margin:12px auto;"></div>
-        <div style="font-size:13px;color:var(--text4);letter-spacing:1px;">Arcturian · Andromedan · Titan</div>
-        <div style="font-size:13px;color:var(--text4);letter-spacing:1px;margin-top:6px;">...and 18 more</div>
+        <div style="font-size:14px;color:var(--text4);letter-spacing:1px;">Arcturian · Andromedan · Titan</div>
+        <div style="font-size:14px;color:var(--text4);letter-spacing:1px;margin-top:6px;">...and 18 more</div>
       </div>
     </div>
     <div>
@@ -380,50 +382,7 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
 
 <div class="divider"></div>
 
-<!-- RELATIONSHIPS -->
-
-<section class="product-block" id="relationships">
-  <div class="section-wrap">
-    <div class="sec-eyebrow" style="text-align:center">Relationships</div>
-    <div class="sec-title" style="text-align:center;margin-bottom:16px">Understand the pattern of your connections</div>
-    <div class="sec-body" style="text-align:center;max-width:620px;margin:0 auto 48px">
-      Once two Origins are known, the StarSeedSoul system reveals the real resonance between people. Every connection operates on a specific frequency. Knowing that frequency changes everything.
-    </div>
-
-```
-<table class="rel-table">
-  <thead>
-    <tr>
-      <th>Relationship Frequency</th>
-      <th>Core Experience</th>
-      <th>How It Often Feels</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Cosmic Flow ✦</td><td>Natural resonance and stability</td><td>Calm recognition, ease, emotional safety</td></tr>
-    <tr><td>Twin Stars ✦</td><td>Parallel inner structures</td><td>Deep familiarity, shared direction</td></tr>
-    <tr><td>Celestial Mentor ✦</td><td>Growth through asymmetry</td><td>Inspiration, learning, unequal energetic roles</td></tr>
-    <tr><td>Mirror Portals ✦</td><td>Direct self-reflection</td><td>Triggers, intense self-awareness</td></tr>
-    <tr><td>Black Holes ✦</td><td>Destabilizing attraction</td><td>Obsession, energetic drain</td></tr>
-    <tr><td>Karmic Bonds ✦</td><td>Repetitive unresolved patterns</td><td>Cycles, difficulty letting go</td></tr>
-    <tr><td>Shadow Contracts ✦</td><td>Activation of suppressed parts</td><td>Strong reactions, shame, inner conflict</td></tr>
-    <tr><td>Star Alchemy ✦</td><td>Transformational polarity</td><td>Creative tension, mutual evolution</td></tr>
-  </tbody>
-</table>
-
-<div style="text-align:center">
-  <div class="pb-price" style="margin-bottom:6px">$22.22</div>
-  <div class="pb-price-note" style="margin-bottom:24px">Per relationship reading · Specific Origin pair · Deep frequency map</div>
-  <a href="bond.html" class="btn-purple">Explore Relationship Readings</a>
-</div>
-```
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- TWIN FLAME FREE PDF -->
+<!-- TWIN FLAME FREE PDF — moved right after Portal -->
 
 <section class="product-block" id="twinflame">
   <div class="section-wrap">
@@ -455,6 +414,47 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
 
 <div class="divider"></div>
 
+<!-- RELATIONSHIPS -->
+
+<section class="product-block" id="relationships">
+  <div class="section-wrap">
+    <div class="sec-eyebrow" style="text-align:center">Relationships</div>
+    <div class="sec-title" style="text-align:center;margin-bottom:16px">Understand the pattern of your connections</div>
+    <div class="sec-body" style="text-align:center;max-width:620px;margin:0 auto 48px">
+      Once two Origins are known, the StarSeedSoul system reveals the real resonance between people. Every connection operates on a specific frequency. Knowing that frequency changes everything.
+    </div>
+
+    <table class="rel-table">
+      <thead>
+        <tr>
+          <th>Relationship Frequency</th>
+          <th>Core Experience</th>
+          <th>How It Often Feels</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Cosmic Flow ✦</td><td>Natural resonance and stability</td><td>Calm recognition, ease, emotional safety</td></tr>
+        <tr><td>Twin Stars ✦</td><td>Parallel inner structures</td><td>Deep familiarity, shared direction</td></tr>
+        <tr><td>Celestial Mentor ✦</td><td>Growth through asymmetry</td><td>Inspiration, learning, unequal energetic roles</td></tr>
+        <tr><td>Mirror Portals ✦</td><td>Direct self-reflection</td><td>Triggers, intense self-awareness</td></tr>
+        <tr><td>Black Holes ✦</td><td>Destabilizing attraction</td><td>Obsession, energetic drain</td></tr>
+        <tr><td>Karmic Bonds ✦</td><td>Repetitive unresolved patterns</td><td>Cycles, difficulty letting go</td></tr>
+        <tr><td>Shadow Contracts ✦</td><td>Activation of suppressed parts</td><td>Strong reactions, shame, inner conflict</td></tr>
+        <tr><td>Star Alchemy ✦</td><td>Transformational polarity</td><td>Creative tension, mutual evolution</td></tr>
+      </tbody>
+    </table>
+
+    <div style="text-align:center">
+      <div class="pb-price" style="margin-bottom:6px">$22.22</div>
+      <div class="pb-price-note" style="margin-bottom:24px">Per relationship reading · Specific Origin pair · Deep frequency map</div>
+      <a href="bond.html" class="btn-purple">Explore Relationship Readings</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ACTIVATIONS -->
 
 <section class="product-block" id="activations">
@@ -473,11 +473,9 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
       <a href="https://starseedsoul.gumroad.com/?_gl=1*izn40m*_ga*MTUyMzg3NzEyMy4xNzY1Njk3ODkw*_ga_6LJN6D94N6*czE3NzQyNDA3MDEkbzEwNCRnMSR0MTc3NDI0Mjk3OCRqNjAkbDAkaDA.&section=B3bLGKMy1RA8DybOCfwIdA%3D%3D" class="btn-purple">Browse Activations</a>
     </div>
 
-    <!-- Правая часть — точно такие же цифры, как в Portal 11.11 -->
     <div class="pb-visual" style="position:relative;overflow:hidden;padding:0;">
       <img src="activations.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7;">
       
-      <!-- Точно такая же подложка, как в Portal -->
       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,5,15,0.55) 0%,rgba(7,5,15,0.75) 100%);z-index:1;"></div>
       
       <div style="position:relative;z-index:1;text-align:center;padding:40px 32px;">
@@ -496,7 +494,7 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
 
 <div class="divider"></div>
 
-<!-- PERSONAL SESSION -->
+<!-- PERSONAL SESSION — 30 minutes, limited availability -->
 
 <section class="product-block" id="session">
   <div class="session-block">
@@ -513,7 +511,7 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
       <div class="pb-label">Personal Reading</div>
       <div class="pb-title">Receive direct guidance from Olesya</div>
       <div class="pb-body">
-        A focused one-on-one session where Olesya reads your StarSeedSoul Origin and the deeper patterns shaping your life.
+        A focused 30-minute one-on-one session where Olesya reads your StarSeedSoul Origin and the deeper patterns shaping your life.
       </div>
       <div class="pb-body">
         Together you explore your strengths, repeating themes, and relationship dynamics — gaining clear insight into what is unfolding in your path right now and how to move forward with alignment.
@@ -522,15 +520,15 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
         For those who want personal clarity, direct feedback, and a deeper connection with their Origin.
       </div>
       <div class="pb-price">$111</div>
-      <div class="pb-price-note">One session · Via Calendly · Limited availability</div>
-      <a href="https://calendly.com/readingstarseedsoul/fifteen-minute-starseed-soul-origin-reading-ses-clone" class="btn-gold">Book a Session</a>
+      <div class="pb-price-note">30-minute session · Very limited availability · Only a few slots per month</div>
+      <a href="https://calendly.com/readingstarseedsoul/thirty-minute-starseed-soul-origin-reading" class="btn-gold">Book a Session</a>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- COMMUNITY + WORKSHOP -->
+<!-- COMMUNITY + WORKSHOP PRE-REGISTRATION -->
 
 <section class="product-block" id="community">
   <div class="section-wrap">
@@ -544,12 +542,12 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
         <a href="https://t.me/starseedsoul" class="btn-ghost">Join Telegram</a>
       </div>
       <div class="grid2-card">
-        <div class="g2-label">Free Workshop</div>
-        <div class="g2-title">Understand the StarSeedSoul system</div>
+        <div class="g2-label">Workshop Pre-Registration</div>
+        <div class="g2-title">Pre-register to study the StarSeedSoul system</div>
         <div class="g2-body">
-          A free workshop introducing the 24 Origins, the relationship patterns, and the deeper structure of the StarSeedSoul knowledge. Learn how these patterns influence personality, relationships, and life direction.
+          A free workshop for those who want to study the system in depth — the 24 Origins, the relationship frequencies, and the deeper structure of the StarSeedSoul knowledge. Pre-register now to secure your place.
         </div>
-        <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-ghost">Start the Workshop</a>
+        <a href="workshop.html" class="btn-ghost">Pre-Register for Workshop</a>
       </div>
     </div>
   </div>
