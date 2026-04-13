@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StarSeedSoul — Workshop Pre-Registration · Study the System</title>
@@ -200,7 +218,7 @@ footer { border-top:1px solid var(--border); padding:40px 24px; text-align:cente
   <div class="hero-sub">
     Pre-register for the free workshop and begin your journey into the system of 24 Soul Origins, relationship frequencies, and the deeper structure of consciousness that shapes who you are and how you connect.
   </div>
-  <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="hero-cta">Pre-Register Now</a>
+  <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="hero-cta" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
 </section>
 
 <div class="divider"></div>
@@ -303,7 +321,7 @@ footer { border-top:1px solid var(--border); padding:40px 24px; text-align:cente
     <div class="cta-body">
       The workshop is free. Pre-registration secures your place and ensures you receive all materials and scheduling details as soon as the workshop dates are confirmed.
     </div>
-    <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-gold">Pre-Register Now</a>
+    <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-gold" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
     <div class="cta-note">Pre-registration does not commit you to attending. You will be notified when the workshop is scheduled.</div>
   </div>
 </section>

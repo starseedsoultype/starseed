@@ -2,6 +2,24 @@
 
 <html lang="en">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StarSeedSoul — Discover Your Origin</title>
@@ -523,7 +541,7 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
       </div>
       <div class="pb-price">$111</div>
       <div class="pb-price-note">30-minute session · Very limited availability · Only a few slots per month</div>
-      <a href="https://calendly.com/readingstarseedsoul/thirty-minute-starseed-soul-origin-reading" class="btn-gold">Book a Session</a>
+      <a href="https://calendly.com/readingstarseedsoul/thirty-minute-starseed-soul-origin-reading" class="btn-gold" onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book a Session</a>
     </div>
   </div>
 </section>
@@ -549,7 +567,7 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
         <div class="g2-body">
           A free workshop for those who want to study the system in depth — the 24 Origins, the relationship frequencies, and the deeper structure of the StarSeedSoul knowledge. Pre-register now to secure your place.
         </div>
-        <a href="workshop.html" class="btn-ghost">Pre-Register for Workshop</a>
+        <a href="workshop.html" class="btn-ghost" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register for Workshop</a>
       </div>
     </div>
   </div>
