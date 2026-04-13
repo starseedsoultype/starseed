@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StarSeedSoul — Workshop Pre-Registration · Study the System</title>
+<meta name="description" content="Pre-register for the free StarSeedSoul workshop. Study the system of 24 Origins, relationship frequencies, and soul structure.">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg:#07050f; --bg2:#0c0718; --bg3:#120d20;
+  --border:#1e1030; --border2:#2d1a48;
+  --text:#f0eaff; --text2:#ccbbdd; --text3:#9988aa; --text4:#665588;
+  --accent:#7744bb; --accent2:#aa77ee;
+  --gold:#d4a843; --gold2:#f0c060;
+  --pink:#cc66bb; --pink2:#ee99dd;
+}
+html { scroll-behavior:smooth; }
+a { color:var(--gold2); }
+body { background:var(--bg); color:var(--text); font-family:'Georgia',serif; overflow-x:hidden; }
+
+/* STARS */
+body::before {
+content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+background-image:
+radial-gradient(1px 1px at 7% 15%, rgba(255,255,255,0.5) 0%,transparent 100%),
+radial-gradient(1px 1px at 19% 72%, rgba(255,255,255,0.3) 0%,transparent 100%),
+radial-gradient(1px 1px at 33% 5%, rgba(255,255,255,0.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 48% 88%, rgba(255,255,255,0.25) 0%,transparent 100%),
+radial-gradient(1px 1px at 62% 38%, rgba(255,255,255,0.35) 0%,transparent 100%),
+radial-gradient(1px 1px at 77% 61%, rgba(255,255,255,0.3) 0%,transparent 100%),
+radial-gradient(1px 1px at 91% 24%, rgba(255,255,255,0.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 85% 90%, rgba(255,255,255,0.2) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 25% 50%, rgba(170,119,238,0.3) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 70% 20%, rgba(212,168,67,0.25) 0%,transparent 100%),
+radial-gradient(1.5px 1.5px at 55% 75%, rgba(170,119,238,0.2) 0%,transparent 100%),
+radial-gradient(1px 1px at 42% 42%, rgba(255,255,255,0.15) 0%,transparent 100%),
+radial-gradient(1px 1px at 13% 35%, rgba(255,255,255,0.3) 0%,transparent 100%);
+}
+
+/* NAV */
+nav {
+position:fixed; top:0; left:0; right:0; z-index:100;
+padding:16px 32px; display:flex; justify-content:space-between; align-items:center;
+background:linear-gradient(180deg,rgba(7,5,15,0.96) 0%,transparent 100%);
+backdrop-filter:blur(8px);
+}
+.nav-logo { font-size:18px; letter-spacing:2px; color:var(--text); font-style:italic; text-decoration:none; }
+.nav-logo span { color:var(--gold); }
+.nav-btn {
+padding:8px 22px; border:1px solid var(--border2);
+background:transparent; color:var(--gold2);
+font-family:Georgia,serif; font-size:12px; letter-spacing:2px;
+text-transform:uppercase; text-decoration:none; border-radius:2px; transition:all 0.2s;
+}
+.nav-btn:hover { border-color:var(--accent); background:var(--bg3); }
+
+/* KEYFRAMES */
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+@keyframes glow { 0%,100%{text-shadow:0 0 20px rgba(212,168,67,0.3)} 50%{text-shadow:0 0 40px rgba(212,168,67,0.6),0 0 80px rgba(212,168,67,0.2)} }
+
+/* HERO */
+.hero {
+min-height:100vh; position:relative; z-index:1;
+display:flex; flex-direction:column; align-items:center; justify-content:center;
+text-align:center; padding:120px 24px 80px;
+}
+.hero::before {
+content:''; position:absolute; width:500px; height:500px; border-radius:50%;
+background:radial-gradient(circle, rgba(119,68,187,0.15) 0%, transparent 70%);
+top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none;
+}
+.hero-eyebrow {
+font-size:12px; letter-spacing:6px; color:var(--text4); text-transform:uppercase;
+margin-bottom:20px; opacity:0; animation:fadeUp 0.8s ease 0.2s both;
+}
+.hero-badge {
+display:inline-block; padding:8px 24px; border:1px solid var(--accent);
+color:var(--accent2); font-size:12px; letter-spacing:4px; text-transform:uppercase;
+border-radius:20px; margin-bottom:24px;
+opacity:0; animation:fadeUp 0.8s ease 0.3s both;
+}
+.hero-title {
+font-size:clamp(32px,7vw,64px); color:var(--text); font-weight:normal;
+font-style:italic; margin-bottom:16px; line-height:1.2;
+opacity:0; animation:fadeUp 0.8s ease 0.4s both, glow 4s ease 1s infinite;
+}
+.hero-title span { color:var(--gold); }
+.hero-sub {
+font-size:clamp(15px,2.2vw,18px); color:var(--text3); line-height:1.9;
+max-width:580px; margin:0 auto 40px;
+opacity:0; animation:fadeUp 0.8s ease 0.55s both;
+}
+.hero-cta {
+display:inline-block; padding:18px 60px;
+border:1px solid var(--gold); background:transparent; color:var(--gold2);
+font-family:Georgia,serif; font-size:13px; letter-spacing:4px; text-transform:uppercase;
+text-decoration:none; border-radius:2px; transition:all 0.3s;
+opacity:0; animation:fadeUp 0.8s ease 0.7s both;
+}
+.hero-cta:hover { background:rgba(212,168,67,0.08); border-color:var(--gold2); }
+
+/* SECTIONS */
+section { position:relative; z-index:1; }
+.section-wrap { max-width:800px; margin:0 auto; padding:0 24px; }
+.divider { max-width:800px; margin:0 auto; height:1px; background:linear-gradient(90deg,transparent,var(--border2),transparent); }
+
+.sec-eyebrow { font-size:12px; letter-spacing:5px; color:var(--text4); text-transform:uppercase; margin-bottom:16px; text-align:center; }
+.sec-title { font-size:clamp(22px,4vw,34px); color:var(--text); font-weight:normal; font-style:italic; margin-bottom:24px; line-height:1.4; text-align:center; }
+.sec-body { font-size:15px; color:var(--text3); line-height:1.9; margin-bottom:16px; text-align:center; max-width:640px; margin-left:auto; margin-right:auto; }
+
+/* WHAT YOU'LL STUDY */
+.study-grid {
+display:grid; grid-template-columns:1fr 1fr; gap:24px;
+max-width:760px; margin:48px auto 0;
+}
+@media(max-width:660px) { .study-grid { grid-template-columns:1fr; } }
+.study-card {
+background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+padding:32px 28px; transition:border-color 0.3s;
+}
+.study-card:hover { border-color:var(--border2); }
+.study-card-icon { font-size:28px; margin-bottom:12px; opacity:0.8; }
+.study-card-title { font-size:18px; color:var(--text); font-style:italic; margin-bottom:10px; }
+.study-card-body { font-size:14px; color:var(--text3); line-height:1.8; }
+
+/* FOR WHOM */
+.for-whom {
+max-width:640px; margin:0 auto; padding:48px 0;
+}
+.for-whom-item {
+padding:16px 0; border-bottom:1px solid var(--border);
+display:flex; gap:16px; align-items:flex-start;
+}
+.for-whom-item:last-child { border-bottom:none; }
+.for-whom-marker { color:var(--gold); font-size:18px; flex-shrink:0; margin-top:2px; }
+.for-whom-text { font-size:15px; color:var(--text3); line-height:1.8; }
+
+/* CTA SECTION */
+.cta-section {
+padding:80px 24px; text-align:center;
+}
+.cta-block {
+max-width:640px; margin:0 auto;
+background:linear-gradient(135deg,#0e0618,#180a2a);
+border:1px solid var(--accent); border-radius:4px;
+padding:56px 40px;
+}
+@media(max-width:660px) { .cta-block { padding:36px 24px; } }
+.cta-badge {
+display:inline-block; padding:6px 20px;
+border:1px solid var(--gold); color:var(--gold2);
+font-size:12px; letter-spacing:4px; text-transform:uppercase; border-radius:20px;
+margin-bottom:20px;
+}
+.cta-title { font-size:clamp(22px,4vw,30px); color:var(--text); font-style:italic; font-weight:normal; margin-bottom:16px; line-height:1.3; }
+.cta-body { font-size:15px; color:var(--text3); line-height:1.8; margin-bottom:32px; max-width:480px; margin-left:auto; margin-right:auto; }
+.cta-note { font-size:13px; color:var(--text4); margin-top:20px; font-style:italic; }
+
+.btn-gold {
+display:inline-block; padding:18px 52px;
+border:1px solid var(--gold); background:transparent; color:var(--gold2);
+font-family:Georgia,serif; font-size:13px; letter-spacing:3px; text-transform:uppercase;
+text-decoration:none; border-radius:2px; transition:all 0.2s;
+}
+.btn-gold:hover { background:rgba(212,168,67,0.08); }
+
+.btn-ghost {
+display:inline-block; padding:12px 28px;
+border:1px solid var(--border2); background:transparent; color:var(--text3);
+font-family:Georgia,serif; font-size:13px; letter-spacing:2px; text-transform:uppercase;
+text-decoration:none; border-radius:2px; transition:all 0.2s; margin-top:12px;
+}
+.btn-ghost:hover { border-color:var(--accent); color:var(--text2); }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:40px 24px; text-align:center; }
+.footer-logo { font-size:18px; color:var(--text3); font-style:italic; margin-bottom:8px; }
+.footer-logo span { color:var(--gold); }
+.footer-copy { font-size:13px; color:var(--text4); letter-spacing:1px; margin-bottom:4px; }
+.footer-contact { font-size:13px; color:var(--text4); }
+.footer-contact a { color:var(--text4); text-decoration:none; }
+.footer-contact a:hover { color:var(--text3); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Star<span>Seed</span>Soul</a>
+  <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="nav-btn">Enter Portal 11.11</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">StarSeedSoul Workshop</div>
+  <div class="hero-badge">Free · Pre-Registration Open</div>
+  <div class="hero-title">Study the <span>StarSeedSoul</span> System</div>
+  <div class="hero-sub">
+    Pre-register for the free workshop and begin your journey into the system of 24 Soul Origins, relationship frequencies, and the deeper structure of consciousness that shapes who you are and how you connect.
+  </div>
+  <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="hero-cta">Pre-Register Now</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT IS THE WORKSHOP -->
+<section style="padding:80px 24px;">
+  <div class="section-wrap">
+    <div class="sec-eyebrow">About the Workshop</div>
+    <div class="sec-title">A free workshop for studying the StarSeedSoul system</div>
+    <div class="sec-body">
+      This is not just a lecture. It is a structured introduction to the system that maps 24 soul Origins — distinct patterns of perception, connection, and purpose that define how you move through life and relationships.
+    </div>
+    <div class="sec-body">
+      The workshop is designed for those who want to go beyond knowing their type and truly understand the architecture of the system — the frequencies, the relationship dynamics, and the deeper logic behind it all.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU'LL STUDY -->
+<section style="padding:80px 24px;">
+  <div class="section-wrap">
+    <div class="sec-eyebrow">What You Will Study</div>
+    <div class="sec-title">The core structure of the system</div>
+
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-card-icon">✦</div>
+        <div class="study-card-title">24 Soul Origins</div>
+        <div class="study-card-body">
+          Learn the full map of 24 Origins — the distinct frequencies, their gifts, shadows, and the patterns of activation that define each type.
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-card-icon">◈</div>
+        <div class="study-card-title">Relationship Frequencies</div>
+        <div class="study-card-body">
+          Understand the 8 relationship frequencies — from Cosmic Flow to Shadow Contracts — and how they shape every connection in your life.
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-card-icon">⬡</div>
+        <div class="study-card-title">System Architecture</div>
+        <div class="study-card-body">
+          Go deeper into the logic of the system — the four core functions, the crystal structure, and how Origins interact at the frequency level.
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-card-icon">☽</div>
+        <div class="study-card-title">Practical Application</div>
+        <div class="study-card-body">
+          Learn how to apply this knowledge in real life — in relationships, personal growth, and understanding the people around you.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO THIS IS FOR -->
+<section style="padding:80px 24px;">
+  <div class="section-wrap">
+    <div class="sec-eyebrow">Who This Is For</div>
+    <div class="sec-title">This pre-registration is for you if...</div>
+
+    <div class="for-whom">
+      <div class="for-whom-item">
+        <div class="for-whom-marker">✦</div>
+        <div class="for-whom-text">You have already taken the Portal and want to understand the system on a deeper level — not just your type, but the full architecture.</div>
+      </div>
+      <div class="for-whom-item">
+        <div class="for-whom-marker">✦</div>
+        <div class="for-whom-text">You are curious about the relationship frequencies and want to learn how different Origins interact with each other.</div>
+      </div>
+      <div class="for-whom-item">
+        <div class="for-whom-marker">✦</div>
+        <div class="for-whom-text">You are considering becoming a StarSeedSoul Reader and want to study the system before committing to the full training.</div>
+      </div>
+      <div class="for-whom-item">
+        <div class="for-whom-marker">✦</div>
+        <div class="for-whom-text">You are new to StarSeedSoul and want a guided introduction to the system before taking the Portal.</div>
+      </div>
+      <div class="for-whom-item">
+        <div class="for-whom-marker">✦</div>
+        <div class="for-whom-text">You feel drawn to studying soul frequencies and want to understand how this system maps consciousness.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRE-REGISTRATION CTA -->
+<section class="cta-section">
+  <div class="cta-block">
+    <div class="cta-badge">Free Workshop · Pre-Registration</div>
+    <div class="cta-title">Pre-register to study the system</div>
+    <div class="cta-body">
+      The workshop is free. Pre-registration secures your place and ensures you receive all materials and scheduling details as soon as the workshop dates are confirmed.
+    </div>
+    <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-gold">Pre-Register Now</a>
+    <div class="cta-note">Pre-registration does not commit you to attending. You will be notified when the workshop is scheduled.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BACK TO MAIN -->
+<section style="padding:60px 24px;text-align:center;">
+  <a href="index.html" class="btn-ghost">Back to StarSeedSoul</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Star<span>Seed</span>Soul</div>
+  <div class="footer-copy">© 2025 StarSeedSoul Project · Olesya Popova</div>
+  <div class="footer-contact">
+    Instagram: <a href="https://instagram.com/starseedsoul.type" target="_blank">@starseedsoul.type</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:timsocion@gmail.com">timsocion@gmail.com</a>
+  </div>
+  <div class="footer-contact" style="margin-top:8px">
+    <a href="privacy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+</body>
+</html>
