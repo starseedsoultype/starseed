@@ -630,18 +630,68 @@ function render(key, animate = true) {
         <div class="result-tension">${r.tension}</div>
         <div class="result-divider"></div>
         <p class="result-description">"${r.description}"</p>
-        <div class="result-truth">${r.truth.split('\n\n').map(p => `<p style="margin-bottom:14px">${p}</p>`).join('')}</div>
-        <div>
-          <a href="https://starseedsoultype.github.io/starseed" target="_blank" class="cta-button" style="text-decoration:none;display:inline-block;">
-            Explore Starseed Soul System
-          </a>
+
+        <div id="email-capture-section" style="margin-top:28px;">
+          <p style="font-size:14px;letter-spacing:0.08em;color:var(--gold);opacity:0.9;margin-bottom:16px;font-family:'Cinzel',serif;text-align:center;">Receive the full reading for ${r.name}</p>
+          <form id="connection-email-form" style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+            <input type="hidden" name="access_key" value="5e2462a8-4fac-406d-bf44-c9457170c983">
+            <input type="hidden" name="subject" value="Soul Connection Reading: ${r.name}">
+            <input type="hidden" name="connection_type" value="${r.name}">
+            <input type="hidden" name="connection_tension" value="${r.tension}">
+            <input type="hidden" name="full_reading" value="${r.truth.replace(/"/g, '&quot;').replace(/\n/g, ' ')}">
+            <input type="hidden" name="soul_origin_invite" value="Discover your Soul Origin: https://starseedsoultype.github.io/starseed/quiz.html">
+            <input
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+              style="width:100%;max-width:320px;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.4);border-radius:8px;color:#fff;font-size:14px;letter-spacing:0.05em;outline:none;font-family:'Cinzel',serif;"
+            />
+            <button type="submit" class="cta-button" style="margin-top:4px;">Send My Reading ✦</button>
+          </form>
+          <p id="email-success-msg" style="display:none;font-size:13px;color:var(--gold);text-align:center;margin-top:12px;letter-spacing:0.08em;">✦ Your reading is on its way</p>
         </div>
+
+        <div id="next-steps-section" style="display:none;margin-top:28px;">
+          <a href="https://twinfrequency.io/library.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;">Explore All 10 Connection Types ✦</a>
+          <a href="https://starseedsoultype.github.io/starseed/bond.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);">Calculate Your Bond ◈</a>
+        </div>
+
         <br>
-        <button class="restart-btn" onclick="restart()">↺ &nbsp; Take the quiz again</button>
-        <br>
-        <button class="restart-btn" onclick="window.open('https://starseedsoultype.github.io/starseed/library.html','_blank')" style="margin-top:8px;">Explore all 10 connection types →</button>
+        <button class="restart-btn" onclick="restart()" style="margin-top:16px;">↺ &nbsp; Take the quiz again</button>
       </div>
     `;
+
+    // Handle email form submission
+    const form = document.getElementById('connection-email-form');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const formData = new FormData(form);
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            document.getElementById('email-capture-section').style.display = 'none';
+            document.getElementById('email-success-msg').style.display = 'block';
+            document.getElementById('next-steps-section').style.display = 'block';
+          } else {
+            btn.textContent = 'Try again';
+            btn.disabled = false;
+          }
+        } catch(err) {
+          btn.textContent = 'Try again';
+          btn.disabled = false;
+        }
+      });
+    }
+
     return;
   }
 
