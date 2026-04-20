@@ -264,6 +264,17 @@ text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 
 }
 .retake-btn:hover { border-color: var(–border2); color: var(–text3); }
 
+/* SHARE BUTTON */
+.share-btn {
+  display: block; width: 100%; padding: 14px;
+  background: transparent;
+  border: 1px solid rgba(201,169,110,0.5); color: #c9a96e;
+  font-family: Georgia, serif; font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; cursor: pointer; border-radius: 3px;
+  transition: all 0.2s; margin-bottom: 12px; box-sizing: border-box;
+}
+.share-btn:hover { border-color: #c9a96e; background: rgba(201,169,110,0.06); }
+
 /* APP ENTRY BOX */
 .app-entry-box {
   background: linear-gradient(135deg, #06040f, #0d0820);
@@ -1279,6 +1290,7 @@ function showResult() {
       <div class="app-entry-note">Find your frequency matches as ${type.name}</div>
     </div>
 
+    <button class="share-btn" id="shareBtn" onclick="downloadShareCard('${type.name}')">✦ Save for Stories</button>
     <button class="retake-btn" onclick="retake()" style="display:none">Begin again</button>
   `;
 
@@ -1308,6 +1320,41 @@ function showResult() {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   setTimeout(() => drawCrystal(type), 100);
+}
+
+// ── SHARE CARD ────────────────────────────────────────────────────────────
+const SHARE_CARD_NAMES = {
+  'Siriusian': 'siriusian', 'Pleiadian': 'pleiadian', 'Lemurian': 'lemurian',
+  'Cassiopeian': 'cassiopeian', 'Procyonian': 'procyonian', 'Lyran': 'lyran',
+  'Arcturian': 'arcturian', 'Orion': 'orion', 'Vegan': 'vegan',
+  'Zeta Reticulan': 'zeta-reticulan', 'Epsilon Eridan': 'epsilon-eridan',
+  'Atlantean': 'atlantean', 'Andromedan': 'andromedan', 'Polarisian': 'polarisian',
+  'Nibiruan': 'nibiruan', 'Egyptian': 'egyptian', 'Titanian': 'titanian',
+  'Blue Avian': 'blue-avian', 'Tau Cetian': 'tau-cetian', 'Aldebaran': 'aldebaran',
+  'Centaurian': 'centaurian', 'Herculean': 'herculean', 'Anunnaki': 'anunnaki',
+  'Hyperborean': 'hyperborean'
+};
+function downloadShareCard(typeName) {
+  const slug = SHARE_CARD_NAMES[typeName];
+  if (!slug) return;
+  const btn = document.getElementById('shareBtn');
+  if (btn) { btn.textContent = '✦ Downloading...'; btn.disabled = true; }
+  const url = 'shares/' + slug + '.png';
+  fetch(url)
+    .then(r => r.blob())
+    .then(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = slug + '-frequency.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      if (btn) { btn.textContent = '✦ Saved — Share your origin ✦'; btn.disabled = false; }
+    })
+    .catch(() => {
+      window.open(url, '_blank');
+      if (btn) { btn.textContent = '✦ Save for Stories'; btn.disabled = false; }
+    });
 }
 
 function retake() {
