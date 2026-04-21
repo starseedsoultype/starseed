@@ -423,6 +423,111 @@ border-color: rgba(180,140,255,0.3);
 color: var(--text);
 }
 
+/* Social proof */
+.social-proof {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.75;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 28px 0 24px;
+  padding: 14px 20px;
+  border: 1px solid rgba(201,168,76,0.15);
+  background: rgba(201,168,76,0.04);
+  border-radius: 2px;
+}
+
+/* Pairs list */
+.pairs-block {
+  margin: 0 0 28px;
+  text-align: center;
+}
+.pairs-block-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  opacity: 0.6;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.pairs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.pair-row {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: rgba(232,224,240,0.75);
+}
+.pair-row a {
+  color: var(--glow);
+  text-decoration: underline;
+  text-decoration-color: rgba(167,139,250,0.4);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.pair-row a:hover {
+  color: var(--text);
+  text-decoration-color: rgba(167,139,250,0.8);
+}
+.pair-separator {
+  color: rgba(201,168,76,0.5);
+  margin: 0 6px;
+  font-size: 13px;
+}
+
+/* Blurred description */
+.blurred-block {
+  margin: 0 0 28px;
+  position: relative;
+  text-align: left;
+  padding: 20px 24px;
+  border: 1px solid rgba(180,140,255,0.1);
+  background: rgba(124,58,237,0.04);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.blurred-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+}
+.blurred-text .open-line {
+  display: block;
+  margin-bottom: 8px;
+}
+.blurred-text .blur-line {
+  display: block;
+  filter: blur(4px);
+  user-select: none;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+.blurred-cta {
+  display: block;
+  margin-top: 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.8;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding-top: 12px;
+  transition: opacity 0.2s;
+}
+.blurred-cta:hover { opacity: 1; }
+
 /* Animations */
 @keyframes fadeUp {
 from { opacity: 0; transform: translateY(24px); }
@@ -535,6 +640,11 @@ const results = {
     name: "Frequency Twins",
     tension: "5% tension · the rarest bond",
     description: "The rarest resonance — two souls vibrating at the same fundamental frequency.",
+    socialProof: "Frequency Twins — found in 5% of all connections · the rarest bond in the system",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Polarisian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Centaurian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Arcturian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Anunnaki</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Tau Cetian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Zeta Reticulan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Atlantean</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Nibiruan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Egyptian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Hyperborean</a></div>`,
+    blurOpen: "When Frequency Twins meet, there is often an immediate recognition that bypasses the usual process of getting to know someone.",
+    blurLine1: "You do not need to translate yourself. This creates a quality of rest that is rare and deeply nourishing — a resonance at the deepest level of being.",
+    blurLine2: "The invitation of this connection is to use this profound recognition in service of something larger — to let the resonance between you amplify your individual gifts.",
     truth: "When Frequency Twins meet, there is often an immediate recognition that bypasses the usual process of getting to know someone. You may feel as if you have always known this person — not because you have met before, but because you are, in some essential way, made of the same substance.\n\nThis is not similarity of personality or shared interests. It is a resonance at the deepest level of being, as if two instruments tuned to the same note are played simultaneously and the sound that emerges is something neither could produce alone.\n\nIn the presence of your Frequency Twin, the usual effort of self-explanation falls away. You do not need to translate yourself. This creates a quality of rest that is rare and deeply nourishing.\n\nThe invitation of this connection is to use this profound recognition in service of something larger — to let the resonance between you amplify your individual gifts rather than creating a closed circuit that excludes the world."
   },
   result_er: {
@@ -542,6 +652,11 @@ const results = {
     name: "Eternal Reflection",
     tension: "0% tension · complete recognition",
     description: "Perfect recognition — two souls that are, in essence, the same.",
+    socialProof: "Eternal Reflection — the same soul type meeting itself · 24 unique pairs",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Siriusian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Pleiadian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lemurian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Arcturian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Orion</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Andromedan</a></div>`,
+    blurOpen: "This is not a relationship between two different souls — it is the same soul type meeting itself.",
+    blurLine1: "Every strength mirrors the same strength. Every shadow mirrors the same shadow. The recognition is total and immediate, like looking into a mirror and seeing not your reflection but your self.",
+    blurLine2: "Evolution requires difference — and Eternal Reflection offers none. The invitation is to let the recognition be a foundation for expansion, not a substitute for it.",
     truth: "This is not a relationship between two different souls — it is the same soul type meeting itself. Every strength mirrors the same strength. Every shadow mirrors the same shadow. There is no complementarity because there is nothing to complement.\n\nThe recognition is total and immediate, like looking into a mirror and seeing not your reflection but your self. There is nowhere to hide in this connection — and nowhere you would want to hide.\n\nThe relationship can be deeply comforting or deeply stagnating depending on where both souls are in their development. The comfort is absolute. The expansion is not.\n\nEvolution requires difference — and Eternal Reflection offers none. The invitation is to let the recognition be a foundation for expansion, not a substitute for it. The danger is a hall of mirrors that reflects endlessly without admitting new light."
   },
   result_ts: {
@@ -549,6 +664,11 @@ const results = {
     name: "Twin Stars",
     tension: "15% tension · deep complementarity",
     description: "Two luminous beings orbiting a shared center of gravity.",
+    socialProof: "Twin Stars — found in 15% of all connections · 12 unique pairs",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Arcturian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Anunnaki</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Polarisian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Centaurian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Nibiruan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Zeta Reticulan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Tau Cetian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Atlantean</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Hyperborean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Egyptian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div>`,
+    blurOpen: "Twin Stars are two souls who, though distinct in their nature, are drawn into a shared orbit by a gravitational pull that neither fully understands.",
+    blurLine1: "This connection has a quality of inevitability — a sense that the meeting was written into the fabric of your respective journeys long before it occurred.",
+    blurLine2: "Your Twin Star sees you clearly and also calls you toward a version of yourself that you could not have reached alone. The relationship is both mirror and doorway.",
     truth: "Twin Stars are two souls who, though distinct in their nature, are drawn into a shared orbit by a gravitational pull that neither fully understands. Like binary stars in the cosmos, each maintains its own light while being fundamentally shaped by the presence of the other.\n\nThis connection has a quality of inevitability — a sense that the meeting was written into the fabric of your respective journeys long before it occurred. There is deep recognition here, though it is accompanied by the awareness that you are genuinely different from each other.\n\nYour Twin Star sees you clearly and also calls you toward a version of yourself that you could not have reached alone. The relationship is both mirror and doorway. You feel both met and known.\n\nThe most luminous Twin Star connections are those where each person's individual light is amplified, not diminished, by the connection. The gravitational pull is real — but so is the distinct nature of each star."
   },
   result_cf: {
@@ -556,6 +676,11 @@ const results = {
     name: "Cosmic Flow",
     tension: "25% tension · natural current",
     description: "A connection that moves like water — finding its way through every terrain.",
+    socialProof: "Cosmic Flow — found in 25% of all connections · 36 unique pairs",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Procyonian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Cassiopeian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Atlantean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Zeta Reticulan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Nibiruan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Egyptian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Anunnaki</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Mayan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Tau Cetian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div>`,
+    blurOpen: "There is a lightness to Cosmic Flow connections that can be mistaken for superficiality. In fact, the ease is a sign of genuine compatibility.",
+    blurLine1: "Neither soul needs to work hard to connect. They generate for each other without realizing it — a sustainable current rather than a dramatic charge.",
+    blurLine2: "In a culture that often equates difficulty with depth, Cosmic Flow connections can be undervalued. The invitation is to recognize that harmony is not the absence of growth.",
     truth: "There is a lightness to Cosmic Flow connections that can be mistaken for superficiality. In fact, the ease is a sign of genuine compatibility — the absence of friction does not mean the absence of depth. It means that the two frequencies are naturally harmonious.\n\nNeither soul needs to work hard to connect. They generate for each other without realizing it. They speak a similar language and tend to bring out each other's ease rather than their edges. A sustainable current rather than a dramatic charge.\n\nThe gift is the experience of love without struggle. This does not mean the relationship is without challenge — life brings challenges to all connections. But the challenges are met with a shared orientation, a natural tendency to move together rather than against each other.\n\nIn a culture that often equates difficulty with depth, Cosmic Flow connections can be undervalued. The invitation is to recognize that harmony is not the absence of growth — it is its most natural expression."
   },
   result_cm: {
@@ -563,6 +688,11 @@ const results = {
     name: "Celestial Mentor",
     tension: "50% tension · growth through difference",
     description: "One soul carries what the other is learning to become.",
+    socialProof: "Celestial Mentor — found in 50% of all connections · the most common teaching bond",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Orion</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Arcturian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Zeta Reticulan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Nibiruan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Andromedan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Hyperborean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Epsilon Eridan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Atlantean</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div>`,
+    blurOpen: "Celestial Mentor describes a connection in which there is a natural asymmetry of experience or wisdom — one soul has walked a path that the other is beginning.",
+    blurLine1: "The connection is characterized by a quality of transmission — something passes from one person to the other that cannot be fully articulated. It is not merely information; it is a frequency.",
+    blurLine2: "The mentor carries the destination; the student carries the fresh eyes that remind the mentor why the journey matters. Not all connections are meant to be equal.",
     truth: "Celestial Mentor describes a connection in which there is a natural asymmetry of experience or wisdom in a particular domain — one soul has walked a path that the other is beginning. This asymmetry is not permanent or absolute; it is specific to a particular dimension of growth.\n\nThe connection is characterized by a quality of transmission — something passes from one person to the other that cannot be fully articulated. It is not merely information or advice; it is a frequency, a way of being, that the student absorbs through proximity.\n\nThe mentor carries the destination; the student carries the fresh eyes that remind the mentor why the journey matters. What feels like inequality is actually the mechanism of expansion. Not all connections are meant to be equal.\n\nThe invitation is to hold the asymmetry lightly — to recognize that the roles of teacher and student are not fixed, and that the student often teaches the teacher things that could not be learned any other way."
   },
   result_mp: {
@@ -570,6 +700,11 @@ const results = {
     name: "Mirror Portals",
     tension: "35% tension · beautiful disorientation",
     description: "Each reflects what the other cannot yet see in themselves.",
+    socialProof: "Mirror Portals — found in 35% of all connections · 36 unique pairs",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Atlantean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Andromedan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Arcturian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Zeta Reticulan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Egyptian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Nibiruan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Nibiruan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div>`,
+    blurOpen: "Mirror Portals describes a connection in which each person serves as a precise reflection of the other — showing them aspects of themselves that they cannot perceive directly.",
+    blurLine1: "The attraction is real. The confusion is also real. You cannot fully understand each other — and cannot fully leave.",
+    blurLine2: "What you see in your Mirror Portal that frustrates or disturbs you is often a reflection of something within yourself that is asking for attention.",
     truth: "Mirror Portals describes a connection in which each person serves as a precise reflection of the other — showing them aspects of themselves that they cannot perceive directly. This is not always comfortable, but it is always illuminating.\n\nThe attraction is real. The confusion is also real. One layer of your souls meets in ideal complementarity; another meets in complete indifference. You cannot fully understand each other — and cannot fully leave.\n\nWhat you see in your Mirror Portal that frustrates, confuses, or disturbs you is often a reflection of something within yourself that is asking for attention. The mirror does not judge — it simply reflects.\n\nThis connection is most valuable when both people are committed to using what they see in service of their own growth. The portal is open. Whether you step through it consciously is the only question that matters."
   },
   result_sa: {
@@ -577,6 +712,11 @@ const results = {
     name: "Star Alchemy",
     tension: "95% tension · maximum transformation",
     description: "Two forces that cannot merge — and in their collision, create something new.",
+    socialProof: "Star Alchemy — found in 95% tension · the most transformative collision in the system",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Orion</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Nibiruan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Egyptian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Anunnaki</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Zeta Reticulan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Andromedan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Epsilon Eridan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Blue Avian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Tau Cetian</a></div>`,
+    blurOpen: "Star Alchemy describes a connection of profound creative tension — two frequencies that are fundamentally different in their nature, and whose meeting generates an alchemical reaction.",
+    blurLine1: "Each person's deepest certainty meets the other's deepest insecurity — and this happens in both directions simultaneously.",
+    blurLine2: "The result is either extraordinary transformation or extraordinary damage. There is no neutral outcome here. What you do with this connection is everything.",
     truth: "Star Alchemy describes a connection of profound creative tension — two frequencies that are fundamentally different in their nature, and whose meeting generates an alchemical reaction. Like stars that collide in the cosmos, the encounter releases extraordinary energy.\n\nThe connection is characterized by intensity, friction, and a quality of creative electricity. The tension between the two frequencies does not resolve into harmony; instead, it generates something new — ideas, transformation, understanding — that neither could have produced alone.\n\nEach person's deepest certainty meets the other's deepest insecurity — and this happens in both directions simultaneously. The result is either extraordinary transformation or extraordinary damage. There is no neutral outcome here.\n\nStar Alchemy requires both people to be strong enough to hold the tension without collapsing it — to let the friction generate light rather than heat. What you do with this connection is everything."
   },
   result_sc: {
@@ -584,6 +724,11 @@ const results = {
     name: "Shadow Contracts",
     tension: "70% tension · shadow activation",
     description: "A meeting in the dark — both souls carrying what the other needs to face.",
+    socialProof: "Shadow Contracts — found in 70% tension · 48 unique pairs in the system",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lemurian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Zeta Reticulan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Procyonian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Atlantean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Polarisian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Nibiruan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Egyptian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Blue Avian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Hyperborean</a></div>`,
+    blurOpen: "Shadow Contracts describes a connection in which both people carry complementary shadows — aspects of themselves that they have not yet integrated.",
+    blurLine1: "Something in their presence activates your shadow — and something in yours activates theirs. This is not random. It is structural.",
+    blurLine2: "The shadow that is brought into the light loses its power to drive behavior unconsciously. The invitation is to resist making the other person the problem.",
     truth: "Shadow Contracts describes a connection in which both people carry complementary shadows — aspects of themselves that they have not yet integrated. The connection creates the conditions in which these shadows become visible, often through conflict, projection, or intense attraction.\n\nSomething in their presence activates your shadow — and something in yours activates theirs. This is not random. It is structural. Shadow Contract connections often feel fated — as if you were meant to meet this person, though the meeting may not feel comfortable.\n\nThe discomfort is not a sign that the connection is wrong. It is a sign that it is doing its work. The shadow that is brought into the light loses its power to drive behavior unconsciously.\n\nThe invitation is to resist the temptation to make the other person the problem. The shadow that you see in them is pointing to something in yourself. This is not about blame — it is about the precise mechanics of how consciousness uses relationship to know itself."
   },
   result_bh: {
@@ -591,6 +736,11 @@ const results = {
     name: "Black Holes",
     tension: "80% tension · intense and consuming",
     description: "A gravitational pull that transforms everything it touches.",
+    socialProof: "Black Holes — found in 80% tension · 36 unique pairs · the most consuming bond",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lemurian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Procyonian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Cassiopeian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Vegan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lyran</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Orion</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Orion</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Zeta Reticulan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Atlantean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Epsilon Eridan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Hyperborean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Blue Avian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Nibiruan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div>`,
+    blurOpen: "Black Holes describes a connection of extraordinary gravitational intensity — a pull so powerful that it can feel as if your entire life is being reorganized around it.",
+    blurLine1: "The Black Hole connection is not inherently destructive, though it can feel that way. What it destroys are the structures — beliefs, identities, patterns — that are no longer serving your evolution.",
+    blurLine2: "If you are willing to surrender to the process, you will emerge fundamentally different — not diminished, but distilled. What remains after the transformation is what is most essentially you.",
     truth: "Black Holes describes a connection of extraordinary gravitational intensity — a pull so powerful that it can feel as if your entire life is being reorganized around it. Neither soul is indifferent to the other. Neither ever will be.\n\nThe Black Hole connection is not inherently destructive, though it can feel that way. What it destroys are the structures — beliefs, identities, patterns — that are no longer serving your evolution. The destruction is in service of a transformation that could not occur any other way.\n\nThe pull is intense precisely because the need activation is so strong. These often become the most significant relationships in a person's life — not because they nourish, but because they activate everything that has been waiting to be seen.\n\nIf you are willing to surrender to the process, you will emerge from a Black Hole connection fundamentally different — not diminished, but distilled. What remains after the transformation is what is most essentially you."
   },
   result_kb: {
@@ -598,6 +748,11 @@ const results = {
     name: "Karmic Bonds",
     tension: "60% tension · something unfinished",
     description: "Ancient unfinished business, returning for completion.",
+    socialProof: "Karmic Bonds — found in 60% tension · 24 unique pairs · magnetic and unresolved",
+    pairsHtml: `<div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Pleiadian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Siriusian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Lemurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Cassiopeian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Arcturian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Orion</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Vegan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Epsilon Eridan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Andromedan</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Polarisian</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Egyptian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Mayan</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Tau Cetian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Aldebaran</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Centaurian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Herculean</a></div><div class="pair-row"><a href="flipbook.html" target="_blank">Pleiadian</a><span class="pair-separator">+</span><a href="flipbook.html" target="_blank">Lyran</a></div>`,
+    blurOpen: "Karmic Bonds describes a connection that carries the weight of unresolved patterns — something between you that was not completed, not said, not resolved.",
+    blurLine1: "The pull can feel irresistible — as if you are drawn to this person by a force that bypasses your rational mind. The intensity is proportional to the significance of what is asking to be resolved.",
+    blurLine2: "The pattern will repeat until it is seen clearly. This bond asks for resolution, not repetition. The question is whether you can tell the difference.",
     truth: "Karmic Bonds describes a connection that carries the weight of unresolved patterns — something between you that was not completed, not said, not resolved. There is an intensity to this connection that can feel both compelling and destabilizing.\n\nThe pull can feel irresistible — as if you are drawn to this person by a force that bypasses your rational mind. This is not an accident. The intensity is proportional to the significance of what is asking to be resolved.\n\nWhen a Karmic Bond reaches completion, both people are freed in ways that ripple through their entire lives. The pattern will repeat until it is seen clearly. Seeing it clearly is the first step toward completing it.\n\nThe invitation is to approach the intensity with consciousness rather than being swept away by it. This bond asks for resolution, not repetition. The question is whether you can tell the difference."
   }
 };
@@ -626,10 +781,26 @@ function render(key, animate = true) {
       <div class="result-card">
         <span class="result-emoji">${r.emoji}</span>
         <div class="result-label">Your Soul Connection</div>
-        <div class="result-name">${r.name}</div>
+        <a href="https://twinfrequency.io/library.html" target="_blank" class="result-name" style="text-decoration:underline;text-decoration-color:rgba(201,168,76,0.4);text-underline-offset:4px;color:var(--text);cursor:pointer;">${r.name}</a>
         <div class="result-tension">${r.tension}</div>
         <div class="result-divider"></div>
         <p class="result-description">"${r.description}"</p>
+
+        <div class="social-proof">${r.socialProof}</div>
+
+        <div class="pairs-block">
+          <div class="pairs-block-title">Known Soul Pairs in this Connection</div>
+          <div class="pairs-list">${r.pairsHtml}</div>
+        </div>
+
+        <div class="blurred-block">
+          <div class="blurred-text">
+            <span class="open-line">${r.blurOpen}</span>
+            <span class="blur-line">${r.blurLine1}</span>
+            <span class="blur-line">${r.blurLine2}</span>
+          </div>
+          <a href="https://twinfrequency.io/library.html" target="_blank" class="blurred-cta">Read full description in Twin Frequency Library ✦</a>
+        </div>
 
         <div id="email-capture-section" style="margin-top:28px;">
           <p style="font-size:14px;letter-spacing:0.08em;color:var(--gold);opacity:0.9;margin-bottom:16px;font-family:'Cinzel',serif;text-align:center;">Receive the full reading for ${r.name}</p>
