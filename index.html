@@ -288,6 +288,55 @@ font-family:Georgia,serif; font-size:13px; letter-spacing:3px; text-transform:up
 text-decoration:none; border-radius:2px; transition:all 0.2s;
 }
 .btn-pink:hover { background:rgba(204,102,187,0.08); }
+
+/* PORTAL SECTION CARD */
+#portal {
+  min-height:100vh; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  border-top:1px solid var(--border);
+}
+#portal-canvas {
+  position:absolute; top:0; left:0; width:100%; height:100%; z-index:0;
+}
+.section-card {
+  position:relative; z-index:1; text-align:center;
+  max-width:520px; width:90%;
+  background:rgba(12,7,24,0.88); border:1px solid rgba(201,169,110,0.12);
+  padding:clamp(40px,5vw,72px);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.card-label {
+  font-size:10px; letter-spacing:4px; color:rgba(201,169,110,0.45);
+  text-transform:uppercase; margin-bottom:28px;
+}
+.section-card h2 {
+  font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
+  font-size:clamp(28px,4vw,42px); letter-spacing:6px;
+  color:var(--text); text-transform:uppercase; margin-bottom:20px; line-height:1.15;
+}
+.card-meta {
+  font-size:11px; letter-spacing:3px; color:rgba(201,169,110,0.35);
+  text-transform:uppercase; margin-bottom:32px;
+}
+.section-card p {
+  font-size:13px; line-height:1.85; letter-spacing:0.5px;
+  color:var(--text3); margin-bottom:32px;
+}
+.card-price { font-size:30px; color:var(--gold); letter-spacing:3px; margin-bottom:4px; }
+.card-price-note { font-size:12px; color:var(--text4); font-style:italic; margin-bottom:32px; }
+.card-btn {
+  display:inline-block; font-family:'Inter',-apple-system,sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:4px; text-transform:uppercase;
+  color:#0a0a0a; background:var(--gold); border:none;
+  padding:15px 52px; transition:all 0.5s ease; text-decoration:none; cursor:pointer;
+}
+.card-btn:hover { background:var(--gold2); box-shadow:0 0 40px rgba(201,169,110,0.15); color:#0a0a0a; }
+.card-btn-outline {
+  background:transparent; color:var(--gold2);
+  border:1px solid rgba(201,169,110,0.25); margin-top:12px;
+}
+.card-btn-outline:hover { background:rgba(201,169,110,0.08); border-color:var(--gold); color:var(--gold2); }
 </style>
 
 </head>
@@ -362,31 +411,17 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
 
 <!-- PORTAL 11.11 — QUIZ -->
 
-<section class="product-block" id="portal">
-  <div class="pb-inner">
-    <div class="pb-visual" style="position:relative;overflow:hidden;padding:0;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-  <img src="portal.jpg" alt="Portal" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7;">
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,5,15,0.55) 0%,rgba(7,5,15,0.75) 100%);"></div>
-  <div style="position:relative;z-index:1;text-align:center;padding:40px 32px;">
-    <div class="pb-visual-label">Portal Price</div>
-    <div class="pb-visual-num">11.11</div>
-    <div class="pb-visual-desc">The moment the soul sees itself completely</div>
-  </div>
-</div>
-    <div>
-      <div class="pb-label">Portal 11.11 · Main Gateway</div>
-      <div class="pb-title">Discover Your Starseed Soul Origin</div>
-      <div class="pb-body">
-        The main gateway into the StarSeedSoul system. Take the intuitive portal and discover which of the 24 Origins matches your frequency.
-      </div>
-      <div class="pb-body">
-        Your result reveals your Core Frequency, your Creative Force, and your Growth Edge — and opens the deeper layers of the system.
-      </div>
-      <div class="pb-price">$11.11</div>
-      <div class="pb-price-note">Portal price · Instant access · Your Soul Blueprint delivered</div>
-      <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="btn-gold">Enter the Portal</a>
-      <a href="crystal.html" class="btn-ghost">Explore Soul Crystals</a>
-    </div>
+<section id="portal">
+  <canvas id="portal-canvas"></canvas>
+  <div class="section-card reveal">
+    <div class="card-label">Portal 11.11 · Main Gateway</div>
+    <h2>Discover Your Origin</h2>
+    <div class="card-meta">intuitive scan · 24 origins · soul blueprint</div>
+    <p>The main gateway into the StarSeedSoul system. Discover which of the 24 Origins matches your frequency — your Core Frequency, Creative Force, and Growth Edge.</p>
+    <div class="card-price">$11.11</div>
+    <div class="card-price-note">Portal price · Instant access · Your Soul Blueprint delivered</div>
+    <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="card-btn">Enter the Portal</a><br>
+    <a href="crystal.html" class="card-btn card-btn-outline">Explore Soul Crystals</a>
   </div>
 </section>
 
@@ -701,10 +736,51 @@ function resizeHero() {
 resizeHero();
 window.addEventListener('resize', resizeHero);
 
+// ── PORTAL OCTAHEDRON ──
+const portalCanvas = document.getElementById('portal-canvas');
+const portalRenderer = new THREE.WebGLRenderer({ canvas: portalCanvas, antialias: true, alpha: true });
+portalRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+portalRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+const portalScene = new THREE.Scene();
+const portalCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+portalCamera.position.set(0, 0, 5);
+
+const portalGroup = new THREE.Group();
+
+const octGeo = new THREE.OctahedronGeometry(0.8, 0);
+const octMat = new THREE.MeshPhysicalMaterial({
+  color: 0x1a1a1a, metalness: 0.9, roughness: 0.05,
+  clearcoat: 1.0, clearcoatRoughness: 0.05,
+});
+portalGroup.add(new THREE.Mesh(octGeo, octMat));
+portalGroup.add(new THREE.LineSegments(
+  new THREE.EdgesGeometry(octGeo),
+  new THREE.LineBasicMaterial({ color: 0xC9A96E, transparent: true, opacity: 0.25 })
+));
+
+portalScene.add(portalGroup);
+const portalLight = new THREE.DirectionalLight(0xC9A96E, 1.0);
+portalLight.position.set(2, 3, 5);
+portalScene.add(portalLight);
+portalScene.add(new THREE.AmbientLight(0xffffff, 0.05));
+
+function resizePortal() {
+  const w = portalCanvas.parentElement.clientWidth;
+  const h = portalCanvas.parentElement.clientHeight;
+  portalRenderer.setSize(w, h);
+  portalCamera.aspect = w / h;
+  portalCamera.updateProjectionMatrix();
+}
+resizePortal();
+window.addEventListener('resize', resizePortal);
+
+// ── ANIMATE ──
 const clock = new THREE.Clock();
 (function animate() {
   requestAnimationFrame(animate);
   const t = clock.getElapsedTime();
+
   heroGroup.rotation.y = t * 0.08 + mouseX * 0.15;
   heroGroup.rotation.x = Math.sin(t * 0.05) * 0.1 + mouseY * 0.1;
   shellMesh.rotation.y = -t * 0.04;
@@ -713,6 +789,10 @@ const clock = new THREE.Clock();
   ring2Mesh.rotation.x = Math.PI / 2 + t * 0.03;
   beam.material.opacity = 0.12 + Math.sin(t * 0.5) * 0.06;
   heroRenderer.render(heroScene, heroCamera);
+
+  portalGroup.rotation.y = t * 0.06;
+  portalGroup.rotation.x = Math.sin(t * 0.04) * 0.15;
+  portalRenderer.render(portalScene, portalCamera);
 })();
 </script>
 </body>
