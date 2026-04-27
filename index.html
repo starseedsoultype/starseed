@@ -23,6 +23,8 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StarSeedSoul — Discover Your Origin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300&display=swap">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 :root {
@@ -78,52 +80,48 @@ text-transform:uppercase; text-decoration:none; border-radius:2px; transition:al
 @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
 @keyframes glow { 0%,100%{text-shadow:0 0 20px rgba(212,168,67,0.3)} 50%{text-shadow:0 0 40px rgba(212,168,67,0.6),0 0 80px rgba(212,168,67,0.2)} }
 
+@keyframes fadeIn { to { opacity:1; } }
+
 /* HERO */
 #hero {
-min-height:100vh; position:relative; z-index:1;
-display:flex; flex-direction:column; align-items:center; justify-content:center;
-text-align:center; padding:120px 24px 100px;
-background-image:url('hero.jpg');
-background-size:cover;
-background-position:center;
+  min-height:100vh; position:relative; overflow:hidden; background:var(--bg);
 }
-.hero-eyebrow {
-font-size:12px; letter-spacing:6px; color:var(--text4); text-transform:uppercase;
-margin-bottom:20px; opacity:0; animation:fadeUp 0.8s ease 0.2s both;
+#hero-canvas {
+  position:absolute; top:0; left:0; width:100%; height:100%; z-index:0;
 }
-.hero-brand {
-font-size:clamp(48px,10vw,96px); color:var(--text); font-weight:normal;
-letter-spacing:6px; font-style:italic; margin-bottom:4px;
-opacity:0; animation:fadeUp 0.8s ease 0.3s both, glow 4s ease 1s infinite;
+.hero-content {
+  position:relative; z-index:1; height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; pointer-events:none;
 }
-.hero-brand span { color:var(--gold); }
-.hero-sub-brand {
-font-size:12px; letter-spacing:8px; color:var(--text4); text-transform:uppercase;
-margin-bottom:32px; opacity:0; animation:fadeUp 0.8s ease 0.45s both;
+.hero-title {
+  font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
+  font-size:clamp(42px,7vw,96px); letter-spacing:clamp(10px,2vw,28px);
+  color:#E8E4DF; text-transform:uppercase; line-height:1.1; margin-bottom:20px;
+  opacity:0; transform:translateY(20px); animation:fadeUp 1.8s ease 0.5s forwards;
 }
-.hero-tagline {
-font-size:clamp(15px,2.2vw,18px); color:var(--text3); line-height:1.9;
-max-width:540px; margin:0 auto 32px;
-opacity:0; animation:fadeUp 0.8s ease 0.55s both;
+.hero-subtitle {
+  font-family:'Inter',-apple-system,sans-serif; font-weight:200;
+  font-size:13px; letter-spacing:5px; color:#7A7672; text-transform:uppercase;
+  margin-bottom:60px; opacity:0; animation:fadeUp 1.8s ease 0.9s forwards;
 }
-.hero-portal-note {
-font-size:13px; letter-spacing:5px; color:var(--gold2); text-transform:uppercase;
-margin-bottom:48px; opacity:0; animation:fadeUp 0.8s ease 0.65s both;
+.light-line {
+  width:1px; height:80px;
+  background:linear-gradient(to bottom,transparent,#C9A96E,transparent);
+  margin-bottom:50px; opacity:0; animation:fadeIn 2s ease 1.4s forwards;
 }
-.hero-cta {
-display:inline-block; padding:18px 60px;
-border:1px solid var(--gold); background:transparent; color:var(--gold2);
-font-family:Georgia,serif; font-size:13px; letter-spacing:4px; text-transform:uppercase;
-text-decoration:none; border-radius:2px; transition:all 0.3s;
-opacity:0; animation:fadeUp 0.8s ease 0.75s both;
+.hero-btn {
+  pointer-events:all; font-family:'Inter',-apple-system,sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#C9A96E;
+  background:transparent; border:1px solid rgba(201,169,110,0.25);
+  padding:16px 48px; transition:all 0.5s ease;
+  opacity:0; animation:fadeUp 1.8s ease 1.6s forwards;
+  text-decoration:none; display:inline-block;
 }
-.hero-cta:hover { background:rgba(212,168,67,0.08); border-color:var(--gold2); }
-.hero-scroll {
-position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
-opacity:0; animation:fadeUp 0.8s ease 1s both; text-align:center;
+.hero-btn:hover {
+  background:rgba(201,169,110,0.08); border-color:#C9A96E;
+  box-shadow:0 0 40px rgba(201,169,110,0.08); color:#C9A96E;
 }
-.hero-scroll span { font-size:12px; letter-spacing:3px; color:var(--border2); text-transform:uppercase; }
-.hero-scroll-line { width:1px; height:32px; background:linear-gradient(180deg,var(--border2),transparent); margin:8px auto 0; animation:pulse 2.5s ease infinite; }
 
 /* SECTIONS */
 section { position:relative; z-index:1; }
@@ -302,21 +300,15 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
   <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="nav-btn">Enter Portal 11.11</a>
 </nav>
 
-<!-- HERO — Starseed + Twin Flame united -->
-
+<!-- HERO -->
 <section id="hero">
-  <div style="position:absolute;inset:0;background:rgba(7,5,15,0.75);z-index:0;"></div>
-  <div class="hero-eyebrow">Origin · Frequency · Connection</div>
-  <div class="hero-brand">Star<span>Seed</span>Soul</div>
-  <div class="hero-sub-brand">by Olesya Popova</div>
-  <div class="hero-tagline">
-    Discover your Origin. Decode your deepest connections.<br>
-    Your soul frequency shapes who you are — and who you are drawn to.<br>
-    Starseed Origins. Twin Flame frequencies. One system.
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <h1 class="hero-title">StarseedSoul</h1>
+    <p class="hero-subtitle">Discover your origin</p>
+    <div class="light-line"></div>
+    <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="hero-btn">Enter the Portal</a>
   </div>
-  <div class="hero-portal-note">You are entering a PORTAL 11.11</div>
-  <a href="https://starseedsoultype.github.io/starseed/quiz.html" class="hero-cta">Enter the Portal</a>
- 
 </section>
 
 <!-- SYSTEM INTRO -->
@@ -627,5 +619,101 @@ text-decoration:none; border-radius:2px; transition:all 0.2s;
   </div>
 </footer>
 
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const heroCanvas = document.getElementById('hero-canvas');
+const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+heroRenderer.toneMappingExposure = 1.0;
+
+const heroScene = new THREE.Scene();
+const heroCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+heroCamera.position.set(0, 0, 5);
+
+const heroGroup = new THREE.Group();
+
+const coreGeo = new THREE.IcosahedronGeometry(0.65, 0);
+const coreMat = new THREE.MeshPhysicalMaterial({
+  color: 0x1a1a1a, metalness: 0.95, roughness: 0.1,
+  clearcoat: 1.0, clearcoatRoughness: 0.05, reflectivity: 1.0, envMapIntensity: 0.5,
+});
+heroGroup.add(new THREE.Mesh(coreGeo, coreMat));
+
+const shellGeo = new THREE.IcosahedronGeometry(1.0, 1);
+const shellMat = new THREE.MeshPhysicalMaterial({
+  color: 0x222222, metalness: 0.1, roughness: 0.0,
+  transmission: 0.85, thickness: 0.5, clearcoat: 1.0, clearcoatRoughness: 0.0,
+  ior: 1.5, transparent: true, opacity: 0.4, envMapIntensity: 0.3,
+});
+const shellMesh = new THREE.Mesh(shellGeo, shellMat);
+heroGroup.add(shellMesh);
+
+const ringGeo = new THREE.TorusGeometry(1.35, 0.008, 16, 64);
+const ringMat = new THREE.MeshStandardMaterial({ color: 0xC9A96E, metalness: 1, roughness: 0.3, emissive: 0xC9A96E, emissiveIntensity: 0.1 });
+const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+ringMesh.rotation.x = Math.PI / 2;
+heroGroup.add(ringMesh);
+
+const ring2Mesh = new THREE.Mesh(ringGeo, ringMat);
+ring2Mesh.rotation.x = Math.PI / 2;
+ring2Mesh.rotation.y = Math.PI / 3;
+heroGroup.add(ring2Mesh);
+
+heroGroup.add(new THREE.LineSegments(
+  new THREE.EdgesGeometry(shellGeo),
+  new THREE.LineBasicMaterial({ color: 0xC9A96E, transparent: true, opacity: 0.12 })
+));
+
+heroScene.add(heroGroup);
+heroScene.add(new THREE.AmbientLight(0xffffff, 0.08));
+
+const heroDir = new THREE.DirectionalLight(0xC9A96E, 1.2);
+heroDir.position.set(3, 4, 5);
+heroScene.add(heroDir);
+
+const heroDir2 = new THREE.DirectionalLight(0x8A7444, 0.4);
+heroDir2.position.set(-4, -2, 3);
+heroScene.add(heroDir2);
+
+const beamMat = new THREE.MeshBasicMaterial({ color: 0xC9A96E, transparent: true, opacity: 0.2, side: THREE.DoubleSide });
+const beam = new THREE.Mesh(new THREE.PlaneGeometry(0.004, 6), beamMat);
+heroScene.add(beam);
+
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+function resizeHero() {
+  const w = heroCanvas.parentElement.clientWidth;
+  const h = heroCanvas.parentElement.clientHeight;
+  heroRenderer.setSize(w, h);
+  heroCamera.aspect = w / h;
+  heroCamera.updateProjectionMatrix();
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+const clock = new THREE.Clock();
+(function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  heroGroup.rotation.y = t * 0.08 + mouseX * 0.15;
+  heroGroup.rotation.x = Math.sin(t * 0.05) * 0.1 + mouseY * 0.1;
+  shellMesh.rotation.y = -t * 0.04;
+  ringMesh.rotation.z = t * 0.06;
+  ring2Mesh.rotation.z = -t * 0.04;
+  ring2Mesh.rotation.x = Math.PI / 2 + t * 0.03;
+  beam.material.opacity = 0.12 + Math.sin(t * 0.5) * 0.06;
+  heroRenderer.render(heroScene, heroCamera);
+})();
+</script>
 </body>
 </html>
