@@ -24,148 +24,214 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Discover the frequency between two StarSeedSoul Origins. Explore your bond pattern and understand the dynamic behind your connection.">
 <title>Soul Bond Calculator — StarSeedSoul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0A0A0A;
+  --bg2: #111111;
+  --gold: #C9A96E;
+  --gold2: #E8D5A8;
+  --text: #E8E4DF;
+  --text2: #C9C1B8;
+  --muted: #5F5A55;
+  --border: rgba(201,169,110,0.08);
+  --border2: rgba(201,169,110,0.18);
+}
+
 body {
-  background: #07050f;
-  color: #e0d8f0;
-  font-family: 'Georgia', serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
   min-height: 100vh;
-  padding: 30px 16px;
+  padding: 48px 20px 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── HEADER ── */
-.eyebrow { font-size: 10px; letter-spacing: 5px; color: #7766aa; text-transform: uppercase; text-align: center; margin-bottom: 6px; }
-h1 { font-size: 24px; color: #f0eaff; letter-spacing: 2px; text-align: center; font-weight: normal; margin-bottom: 4px; }
-.subtitle { font-size: 10px; letter-spacing: 3px; color: #9988bb; text-transform: uppercase; text-align: center; margin-bottom: 32px; }
+.eyebrow {
+  font-size: 10px; letter-spacing: 5px; color: var(--muted);
+  text-transform: uppercase; text-align: center; margin-bottom: 16px;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 38px; color: var(--text); letter-spacing: 4px;
+  text-align: center; font-weight: 300; margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; text-align: center; margin-bottom: 40px;
+}
 
 /* ── SELECTORS ── */
 .selectors {
-display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center;
 }
 .selector-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.selector-label { font-size: 10px; letter-spacing: 3px; color: #aa99cc; text-transform: uppercase; font-weight: bold; }
-select {
-background: #130d22; border: 1px solid #553377; color: #eeddff;
-font-family: Georgia, serif; font-size: 13px; padding: 10px 16px;
-cursor: pointer; outline: none; border-radius: 2px; min-width: 180px;
-appearance: none; text-align: center;
+.selector-label {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
 }
-select:focus { border-color: #9966cc; }
-.vs { font-size: 22px; color: #775599; align-self: flex-end; padding-bottom: 12px; }
+select {
+  background: var(--bg2); border: 1px solid var(--border2); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 12px; padding: 10px 16px; cursor: pointer; outline: none;
+  min-width: 200px; appearance: none; text-align: center; letter-spacing: 1px;
+}
+select:focus { border-color: var(--gold); }
+
+.vs {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 24px; color: var(--muted); align-self: flex-end; padding-bottom: 10px;
+}
 
 .calc-btn {
-padding: 12px 40px; border: 1px solid #8855cc; background: #1a0a2a;
-color: #eeddff; font-family: Georgia, serif; font-size: 12px; letter-spacing: 3px;
-text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 2px;
-margin-bottom: 40px;
+  padding: 14px 48px; border: 1px solid var(--border2); background: transparent;
+  color: var(--gold); font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300; font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  margin-bottom: 40px;
 }
-.calc-btn:hover { background: #2a1040; border-color: #bb88ff; }
+.calc-btn:hover { background: rgba(201,169,110,0.06); border-color: var(--gold); }
 
 /* ── RESULT AREA ── */
 #result { width: 100%; max-width: 860px; display: none; flex-direction: column; align-items: center; }
 
-/* Bond type banner */
+/* Bond banner */
 .bond-banner {
-width: 100%; text-align: center; padding: 20px;
-border-top: 1px solid #331144; border-bottom: 1px solid #331144;
-margin-bottom: 32px;
+  width: 100%; text-align: center; padding: 28px 20px;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
 }
-.bond-symbol { font-size: 36px; margin-bottom: 8px; }
-.bond-name { font-size: 22px; letter-spacing: 3px; margin-bottom: 6px; font-weight: bold; }
-.bond-tension { font-size: 11px; color: #bb99dd; letter-spacing: 3px; text-transform: uppercase; }
+.bond-symbol { font-size: 30px; margin-bottom: 10px; }
+.bond-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 28px; letter-spacing: 4px; margin-bottom: 8px; font-weight: 300;
+}
+.bond-tension {
+  font-size: 10px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase;
+}
 
 /* ── MERGED CRYSTAL ── */
 .merged-wrap {
-display: flex; flex-direction: column; align-items: center;
-gap: 12px; margin-bottom: 32px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; margin-bottom: 32px; width: 100%;
 }
 .merged-labels {
-display: flex; justify-content: space-between; width: 100%; max-width: 420px;
-padding: 0 8px;
+  display: flex; justify-content: space-between; width: 100%; max-width: 420px;
+  padding: 0 8px;
 }
 .merged-label { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.crystal-name { font-size: 11px; letter-spacing: 2px; color: #ddccff; text-transform: uppercase; font-weight: bold; }
-.crystal-tagline { font-size: 9px; color: #9988aa; text-align: center; max-width: 140px; line-height: 1.5; }
+.crystal-name {
+  font-size: 10px; letter-spacing: 3px; color: var(--text2); text-transform: uppercase;
+}
+.crystal-tagline {
+  font-size: 9px; color: var(--muted); text-align: center; max-width: 140px; line-height: 1.5;
+}
 
 /* ── FUNCTION GRID ── */
 .func-grid {
-width: 100%; display: grid; grid-template-columns: repeat(2, 1fr);
-gap: 10px; margin-bottom: 32px;
+  width: 100%; display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; margin-bottom: 32px;
 }
 @media (min-width: 600px) {
-.func-grid { grid-template-columns: repeat(4, 1fr); }
+  .func-grid { grid-template-columns: repeat(4, 1fr); }
 }
 .func-cell {
-background: #0e0820; border: 1px solid #221133; padding: 14px 10px;
-border-radius: 3px; text-align: center;
+  background: var(--bg2); border: 1px solid var(--border); padding: 16px 12px;
+  text-align: center;
 }
-.func-cell .func-sym { font-size: 16px; margin-bottom: 4px; }
-.func-cell .func-name { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; color: #ccbbee; }
-.func-cell .pair-quality { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; font-weight: bold; }
-.func-cell .pair-desc { font-size: 8px; color: #9988aa; line-height: 1.5; }
+.func-cell .func-sym { font-size: 16px; margin-bottom: 6px; }
+.func-cell .func-name {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px; color: var(--text2);
+}
+.func-cell .pair-quality {
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 6px; font-weight: 300;
+}
+.func-cell .pair-desc { font-size: 9px; color: var(--muted); line-height: 1.6; }
 
-/* quality colors — all high contrast */
-.q-ideal     { color: #44ff88 !important; border-color: #114422 !important; background: #040e08 !important; }
-.q-harmonic  { color: #44ccff !important; border-color: #082233 !important; background: #030c14 !important; }
-.q-tandem    { color: #cc88ff !important; border-color: #331155 !important; background: #090414 !important; }
-.q-mirror    { color: #cccccc !important; border-color: #222222 !important; background: #0a0a0a !important; }
-.q-mismatch  { color: #ffbb44 !important; border-color: #442200 !important; background: #100800 !important; }
-.q-trap      { color: #ff8844 !important; border-color: #441100 !important; background: #100400 !important; }
-.q-conflict  { color: #ff4444 !important; border-color: #550000 !important; background: #120000 !important; }
+/* quality tones */
+.q-ideal    { color: #88ccaa !important; border-color: rgba(136,204,170,0.15) !important; }
+.q-harmonic { color: #88b8cc !important; border-color: rgba(136,184,204,0.15) !important; }
+.q-tandem   { color: var(--gold2) !important; border-color: var(--border2) !important; }
+.q-mirror   { color: var(--text2) !important; border-color: var(--border) !important; }
+.q-mismatch { color: var(--gold) !important; border-color: var(--border2) !important; }
+.q-trap     { color: #cc9966 !important; border-color: rgba(204,153,102,0.15) !important; }
+.q-conflict { color: #cc7766 !important; border-color: rgba(204,119,102,0.15) !important; }
 
 /* ── BOND DESCRIPTION ── */
 .bond-desc {
-width: 100%; background: #0e0820; border: 1px solid #221133;
-padding: 24px; border-radius: 3px; margin-bottom: 32px;
+  width: 100%; background: var(--bg2); border: 1px solid var(--border);
+  padding: 32px 28px; margin-bottom: 32px;
 }
-.bond-desc h3 { font-size: 10px; letter-spacing: 3px; color: #aa99cc; text-transform: uppercase; margin-bottom: 14px; }
-.bond-desc p { font-size: 13px; color: #ccbbdd; line-height: 1.8; margin-bottom: 12px; }
+.bond-desc h3 {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.bond-desc p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px; color: var(--text); line-height: 1.9;
+  margin-bottom: 16px; font-weight: 300;
+}
 .bond-desc p.blurred {
-filter: blur(5px); user-select: none; -webkit-user-select: none;
-pointer-events: none; color: #c0b8d8;
+  filter: blur(5px); user-select: none; -webkit-user-select: none;
+  pointer-events: none; color: var(--text2);
 }
 .bond-unlock {
-display: block; margin-top: 16px; padding: 13px 24px; text-align: center;
-background: linear-gradient(135deg,#4a2a88,#6a3aaa);
-color: #fff; font-family: Georgia,serif; font-size: 12px;
-letter-spacing: 3px; text-transform: uppercase; text-decoration: none;
-border-radius: 3px; transition: all 0.2s;
+  display: block; margin-top: 20px; padding: 14px 24px; text-align: center;
+  background: var(--gold); color: #0A0A0A;
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase; text-decoration: none;
+  transition: opacity 0.2s;
 }
-.bond-unlock:hover { background: linear-gradient(135deg,#5a3a98,#7a4abb); }
+.bond-unlock:hover { opacity: 0.85; }
 
 /* ── TENSION BAR ── */
 .tension-wrap { width: 100%; margin-bottom: 32px; }
-.tension-label { font-size: 10px; letter-spacing: 3px; color: #aa99cc; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
-.tension-bar-bg { width: 100%; height: 6px; background: #130d22; border-radius: 3px; overflow: hidden; border: 1px solid #221133; }
-.tension-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
-.tension-pct { font-size: 11px; color: #aa99cc; text-align: center; margin-top: 6px; }
+.tension-label {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 10px; text-align: center;
+}
+.tension-bar-bg {
+  width: 100%; height: 2px; background: var(--bg2);
+  overflow: hidden; border-top: 1px solid var(--border);
+}
+.tension-bar-fill { height: 100%; transition: width 0.8s ease; }
+.tension-pct {
+  font-size: 10px; color: var(--muted); text-align: center;
+  margin-top: 8px; letter-spacing: 2px;
+}
 
 /* ── FOOTER ── */
-.result-footer { font-size: 9px; color: #443355; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; }
+.result-footer {
+  font-size: 9px; color: var(--muted); letter-spacing: 4px;
+  text-transform: uppercase; margin-top: 8px;
+}
 
 /* ── NAV BUTTONS ── */
-.nav-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; width:100%; max-width:520px; margin-top:32px; }
+.nav-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 520px; margin-top: 32px; }
 .btn-gold {
-flex:1; min-width:180px; padding:14px 20px; text-align:center;
-background:transparent; border:1px solid #aa8822; color:#d4a843;
-font-family:Georgia,serif; font-size:12px; letter-spacing:2px; text-transform:uppercase;
-text-decoration:none; border-radius:3px; transition:all 0.2s;
+  flex: 1; min-width: 180px; padding: 16px 20px; text-align: center;
+  background: transparent; border: 1px solid var(--border2); color: var(--gold);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
 }
-.btn-gold:hover { background:rgba(212,168,67,0.08); border-color:#d4a843; }
+.btn-gold:hover { background: rgba(201,169,110,0.06); }
 
-@media(max-width:520px) {
-h1 { font-size:22px; }
-.bond-desc p { font-size:15px; }
-.func-cell .pair-desc { font-size:11px; }
-.func-cell .pair-quality { font-size:11px; }
-.func-cell .func-name { font-size:12px; }
-select { font-size:14px; min-width:150px; }
-.crystal-tagline { font-size:12px; }
-.crystal-name { font-size:12px; }
+@media(max-width: 520px) {
+  h1 { font-size: 30px; }
+  .bond-desc p { font-size: 16px; }
+  select { min-width: 160px; }
 }
 </style>
 
@@ -301,16 +367,16 @@ const QUALITY_DESC = {
 };
 
 const BONDS = {
-  "Frequency Twins":   { sym:"⚡", tension:5,  color:"#cc99ff" },
-  "Twin Stars":        { sym:"🌟", tension:15, color:"#bbddff" },
-  "Cosmic Flow":       { sym:"✨", tension:25, color:"#aaccff" },
-  "Mirror Portals":    { sym:"🪞", tension:35, color:"#ccbbff" },
-  "Celestial Mentor":  { sym:"📚", tension:50, color:"#ddddaa" },
-  "Karmic Bonds":      { sym:"🔗", tension:60, color:"#ffcc88" },
-  "Shadow Contracts":  { sym:"🌓", tension:70, color:"#ffaa66" },
-  "Black Holes":       { sym:"🕳", tension:80, color:"#ff7755" },
-  "Star Alchemy":      { sym:"⚖️", tension:95, color:"#ff5544" },
-  "Eternal Reflection":{ sym:"♾", tension:0,  color:"#aaaaaa" },
+  "Frequency Twins":   { sym:"⚡", tension:5,  color:"#E8D5A8" },
+  "Twin Stars":        { sym:"🌟", tension:15, color:"#E8D5A8" },
+  "Cosmic Flow":       { sym:"✨", tension:25, color:"#C9A96E" },
+  "Mirror Portals":    { sym:"🪞", tension:35, color:"#C9A96E" },
+  "Celestial Mentor":  { sym:"📚", tension:50, color:"#C9A96E" },
+  "Karmic Bonds":      { sym:"🔗", tension:60, color:"#cc9966" },
+  "Shadow Contracts":  { sym:"🌓", tension:70, color:"#cc8855" },
+  "Black Holes":       { sym:"🕳", tension:80, color:"#cc7766" },
+  "Star Alchemy":      { sym:"⚖️", tension:95, color:"#bb6655" },
+  "Eternal Reflection":{ sym:"♾", tension:0,  color:"#C9C1B8" },
 };
 
 const BOND_WHY = {
@@ -395,7 +461,7 @@ function drawMergedCrystals(t1, t2, bondName) {
   const cx = W/2, cy = H/2;
 
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle = '#07050f';
+  ctx.fillStyle = '#0A0A0A';
   ctx.fillRect(0,0,W,H);
 
   const blend1 = blendColors(t1.funcs);
@@ -536,7 +602,7 @@ function calculate() {
   // Tension bar
   const fill = document.getElementById('tensionFill');
   const pct = bondData.tension;
-  const barColor = pct <= 25 ? '#44cc88' : pct <= 50 ? '#ccaa44' : pct <= 75 ? '#ff8844' : '#ff4444';
+  const barColor = pct <= 25 ? '#88ccaa' : pct <= 50 ? '#C9A96E' : pct <= 75 ? '#cc9966' : '#cc7766';
   fill.style.width = pct + '%';
   fill.style.background = `linear-gradient(90deg, ${barColor}88, ${barColor})`;
   document.getElementById('tensionPct').textContent = `${pct}% tension`;
@@ -556,10 +622,9 @@ function calculate() {
     const fc = FUNC_COLORS[f];
     const cell = document.createElement('div');
     cell.className = `func-cell ${QUALITY_CSS[q]}`;
-    cell.style.borderColor = `rgba(${fc.r},${fc.g},${fc.b},0.2)`;
     cell.innerHTML = `
       <div class="func-sym">${fc.sym}</div>
-      <div class="func-name" style="color:${fc.hex}">${fc.element}</div>
+      <div class="func-name">${fc.element}</div>
       <div class="pair-quality ${QUALITY_CSS[q]}">${QUALITY_LABEL[q]}</div>
       <div class="pair-desc">${QUALITY_DESC[q]}</div>
     `;
