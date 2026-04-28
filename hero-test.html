@@ -18,11 +18,18 @@
 <script>
 const canvas=document.getElementById('magnetic');const ctx=canvas.getContext('2d');let W,H,DPR,links=[];
 function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);buildLinks()}window.addEventListener('resize',resize);
-function pointOnLeft(){const y=H*(.33+Math.random()*.28);const curve=Math.sin((y-H*.33)/(H*.28)*Math.PI);return{x:W*(.47-curve*.035)+(Math.random()-.5)*14,y:y+(Math.random()-.5)*18}}
-function pointOnRight(){const y=H*(.33+Math.random()*.28);const curve=Math.sin((y-H*.33)/(H*.28)*Math.PI);return{x:W*(.53+curve*.035)+(Math.random()-.5)*14,y:y+(Math.random()-.5)*18}}
-function buildLinks(){links=[];for(let i=0;i<92;i++){const a=pointOnLeft(),b=pointOnRight();links.push({a,b,age:Math.random(),speed:.002+Math.random()*.004,life:.45+Math.random()*.55,delay:Math.random(),jitter:Math.random()*8})}}
-function resetLink(l){l.a=pointOnLeft();l.b=pointOnRight();l.age=0;l.life=.45+Math.random()*.55;l.speed=.002+Math.random()*.004;l.jitter=Math.random()*8}
-function draw(ms){const t=ms*.001;ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';links.forEach((l,i)=>{l.age+=l.speed;let p=l.age/l.life;if(p>=1){resetLink(l);p=0}const fade=p<.18?p/.18:p>.78?(1-p)/.22:1;const ax=l.a.x+Math.sin(t*1.2+i)*l.jitter;const ay=l.a.y+Math.cos(t*.9+i)*l.jitter*.35;const bx=l.b.x+Math.cos(t*1.1+i)*l.jitter;const by=l.b.y+Math.sin(t*.8+i)*l.jitter*.35;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${.05+fade*.22})`;ctx.lineWidth=.35+fade*.45;ctx.stroke();if(i%4===0){const t1=.35+Math.sin(t+i)*.15;const mx=ax+(bx-ax)*t1,my=ay+(by-ay)*t1;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(mx+(Math.random()-.5)*10,my+(Math.random()-.5)*10);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${fade*.06})`;ctx.lineWidth=.32;ctx.stroke()}});requestAnimationFrame(draw)}resize();requestAnimationFrame(draw);
+function randomFacePoint(side){
+  const y=H*(.23+Math.random()*.48);
+  const local=(y-H*.23)/(H*.48);
+  const bulge=Math.sin(local*Math.PI);
+  if(side==='left'){
+    return {x:W*(.31+Math.random()*.18+bulge*.045)+(Math.random()-.5)*18,y:y+(Math.random()-.5)*20};
+  }
+  return {x:W*(.51+Math.random()*.18-bulge*.045)+(Math.random()-.5)*18,y:y+(Math.random()-.5)*20};
+}
+function buildLinks(){links=[];for(let i=0;i<58;i++){const a=randomFacePoint('left'),b=randomFacePoint('right');links.push({a,b,age:Math.random(),speed:.0016+Math.random()*.003,life:.65+Math.random()*.85,jitter:Math.random()*6})}}
+function resetLink(l){l.a=randomFacePoint('left');l.b=randomFacePoint('right');l.age=0;l.life=.65+Math.random()*.85;l.speed=.0016+Math.random()*.003;l.jitter=Math.random()*6}
+function draw(ms){const t=ms*.001;ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';links.forEach((l,i)=>{l.age+=l.speed;let p=l.age/l.life;if(p>=1){resetLink(l);p=0}const fade=p<.22?p/.22:p>.74?(1-p)/.26:1;const ax=l.a.x+Math.sin(t*.9+i)*l.jitter;const ay=l.a.y+Math.cos(t*.75+i)*l.jitter*.45;const bx=l.b.x+Math.cos(t*.85+i)*l.jitter;const by=l.b.y+Math.sin(t*.7+i)*l.jitter*.45;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${.025+fade*.105})`;ctx.lineWidth=.28+fade*.32;ctx.stroke();if(i%6===0){const t1=.25+Math.sin(t+i)*.25;const mx=ax+(bx-ax)*t1,my=ay+(by-ay)*t1;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(mx+(Math.random()-.5)*14,my+(Math.random()-.5)*14);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${fade*.035})`;ctx.lineWidth=.25;ctx.stroke()}});requestAnimationFrame(draw)}resize();requestAnimationFrame(draw);
 </script>
 </body>
 </html>
