@@ -22,26 +22,34 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Twin Frequency — Your Origin</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --gold: #c9a96e;
-    --gold-soft: #e8d5b0;
-    --deep: #04030a;
-    --mid: #0d0b18;
-    --text: #e8e0d5;
-    --muted: #6b6478;
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --gold: #C9A96E;
+    --gold-soft: #E8D5A8;
+    --deep: #0A0A0A;
+    --mid: #111111;
+    --text: #E8E4DF;
+    --text2: #C9C1B8;
+    --muted: #5F5A55;
+    --border: rgba(201,169,110,0.08);
+    --border2: rgba(201,169,110,0.18);
   }
 
   html, body {
     min-height: 100%;
-    background: var(--deep);
+    background: var(--bg);
     color: var(--text);
-    font-family: 'Jost', sans-serif;
-    font-weight: 200;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
   }
 
   canvas#stars {
@@ -51,23 +59,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     pointer-events: none;
   }
 
-  .nebula {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .nebula-1 {
-    width: 500px; height: 500px;
-    top: -100px; left: -100px;
-    background: radial-gradient(circle, rgba(80,40,120,0.2) 0%, transparent 70%);
-  }
-  .nebula-2 {
-    width: 400px; height: 400px;
-    bottom: -50px; right: -50px;
-    background: radial-gradient(circle, rgba(40,60,120,0.15) 0%, transparent 70%);
-  }
+  .nebula { display: none; }
 
   .container {
     position: relative;
@@ -225,13 +217,12 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   input[type="text"],
   input[type="number"] {
     width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 2px;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
     padding: 14px 16px;
     color: var(--text);
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 13px;
     font-weight: 300;
     letter-spacing: 0.05em;
     outline: none;
@@ -255,47 +246,45 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 
   .gender-btn {
     padding: 14px 8px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(201,169,110,0.15);
-    border-radius: 2px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
     color: var(--muted);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 10px;
     font-weight: 300;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
     text-align: center;
   }
 
   .gender-btn.selected {
-    border-color: rgba(201,169,110,0.6);
+    border-color: var(--gold);
     color: var(--gold-soft);
-    background: rgba(201,169,110,0.08);
+    background: rgba(201,169,110,0.06);
   }
 
   /* BUTTON */
   .btn-next {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.08));
-    border: 1px solid rgba(201,169,110,0.4);
-    border-radius: 2px;
-    color: var(--gold-soft);
-    font-family: 'Jost', sans-serif;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--gold);
+    font-family: 'Inter', -apple-system, sans-serif;
     font-size: 11px;
     font-weight: 300;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
     margin-top: 8px;
   }
 
   .btn-next:hover {
-    background: linear-gradient(135deg, rgba(201,169,110,0.25), rgba(201,169,110,0.15));
-    border-color: rgba(201,169,110,0.7);
+    background: rgba(201,169,110,0.06);
+    border-color: var(--gold);
   }
 
   .btn-next:disabled {
@@ -309,17 +298,17 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     background: none;
     border: none;
     color: var(--muted);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 10px;
     font-weight: 300;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     cursor: pointer;
     margin-top: 8px;
-    transition: color 0.3s;
+    transition: color 0.2s;
   }
 
-  .btn-skip:hover { color: var(--text); }
+  .btn-skip:hover { color: var(--text2); }
 
   .message {
     margin-top: 14px;
@@ -349,7 +338,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: var(--deep);
+    background: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -458,39 +447,39 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     <p class="step-sub">Choose your soul type</p>
 
     <div class="input-group">
-      <select id="origin-select" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,169,110,0.2);border-radius:2px;padding:14px 16px;color:var(--text);font-family:'Jost',sans-serif;font-size:13px;font-weight:300;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;">
-        <option value="" style="background:#0d0b18">Select your Origin...</option>
-        <optgroup label="── Group I: Relationships ──" style="background:#0d0b18">
-          <option value="Siriusian" style="background:#0d0b18">Siriusian</option>
-          <option value="Pleiadian" style="background:#0d0b18">Pleiadian</option>
-          <option value="Lemurian" style="background:#0d0b18">Lemurian</option>
-          <option value="Cassiopeian" style="background:#0d0b18">Cassiopeian</option>
-          <option value="Procyonian" style="background:#0d0b18">Procyonian</option>
-          <option value="Lyran" style="background:#0d0b18">Lyran</option>
+      <select id="origin-select" style="width:100%;background:#111111;border:1px solid rgba(201,169,110,0.18);padding:14px 16px;color:#E8E4DF;font-family:'Inter',-apple-system,sans-serif;font-size:12px;font-weight:300;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;letter-spacing:0.05em;">
+        <option value="" style="background:#111111">Select your Origin...</option>
+        <optgroup label="── Group I: Relationships ──" style="background:#111111">
+          <option value="Siriusian" style="background:#111111">Siriusian</option>
+          <option value="Pleiadian" style="background:#111111">Pleiadian</option>
+          <option value="Lemurian" style="background:#111111">Lemurian</option>
+          <option value="Cassiopeian" style="background:#111111">Cassiopeian</option>
+          <option value="Procyonian" style="background:#111111">Procyonian</option>
+          <option value="Lyran" style="background:#111111">Lyran</option>
         </optgroup>
-        <optgroup label="── Group II: Logic ──" style="background:#0d0b18">
-          <option value="Arcturian" style="background:#0d0b18">Arcturian</option>
-          <option value="Orion" style="background:#0d0b18">Orion</option>
-          <option value="Vegan" style="background:#0d0b18">Vegan</option>
-          <option value="Zeta Reticulan" style="background:#0d0b18">Zeta Reticulan</option>
-          <option value="Epsilon Eridan" style="background:#0d0b18">Epsilon Eridan</option>
-          <option value="Atlantean" style="background:#0d0b18">Atlantean</option>
+        <optgroup label="── Group II: Logic ──" style="background:#111111">
+          <option value="Arcturian" style="background:#111111">Arcturian</option>
+          <option value="Orion" style="background:#111111">Orion</option>
+          <option value="Vegan" style="background:#111111">Vegan</option>
+          <option value="Zeta Reticulan" style="background:#111111">Zeta Reticulan</option>
+          <option value="Epsilon Eridan" style="background:#111111">Epsilon Eridan</option>
+          <option value="Atlantean" style="background:#111111">Atlantean</option>
         </optgroup>
-        <optgroup label="── Group III: Energy ──" style="background:#0d0b18">
-          <option value="Andromedan" style="background:#0d0b18">Andromedan</option>
-          <option value="Polarisian" style="background:#0d0b18">Polarisian</option>
-          <option value="Nibiruan" style="background:#0d0b18">Nibiruan</option>
-          <option value="Egyptian" style="background:#0d0b18">Egyptian</option>
-          <option value="Titan" style="background:#0d0b18">Titan</option>
-          <option value="Blue Avian" style="background:#0d0b18">Blue Avian</option>
+        <optgroup label="── Group III: Energy ──" style="background:#111111">
+          <option value="Andromedan" style="background:#111111">Andromedan</option>
+          <option value="Polarisian" style="background:#111111">Polarisian</option>
+          <option value="Nibiruan" style="background:#111111">Nibiruan</option>
+          <option value="Egyptian" style="background:#111111">Egyptian</option>
+          <option value="Titan" style="background:#111111">Titan</option>
+          <option value="Blue Avian" style="background:#111111">Blue Avian</option>
         </optgroup>
-        <optgroup label="── Group IV: Matter ──" style="background:#0d0b18">
-          <option value="Tau Cetian" style="background:#0d0b18">Tau Cetian</option>
-          <option value="Aldebaran" style="background:#0d0b18">Aldebaran</option>
-          <option value="Centaurian" style="background:#0d0b18">Centaurian</option>
-          <option value="Herculean" style="background:#0d0b18">Herculean</option>
-          <option value="Anunnaki" style="background:#0d0b18">Anunnaki</option>
-          <option value="Hyperborean" style="background:#0d0b18">Hyperborean</option>
+        <optgroup label="── Group IV: Matter ──" style="background:#111111">
+          <option value="Tau Cetian" style="background:#111111">Tau Cetian</option>
+          <option value="Aldebaran" style="background:#111111">Aldebaran</option>
+          <option value="Centaurian" style="background:#111111">Centaurian</option>
+          <option value="Herculean" style="background:#111111">Herculean</option>
+          <option value="Anunnaki" style="background:#111111">Anunnaki</option>
+          <option value="Hyperborean" style="background:#111111">Hyperborean</option>
         </optgroup>
       </select>
     </div>
