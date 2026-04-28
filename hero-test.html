@@ -10,7 +10,7 @@
 </head>
 <body>
 <section class="hero">
-<img id="heroRef" class="hero-ref" src="hero-reference.png" alt="wireframe faces reference" />
+<img id="heroRef" class="hero-ref" src="hero-reference.png" alt="faces reference" />
 <canvas id="magnetic"></canvas>
 <div class="shade"></div>
 <div class="copy"><h1>Звёздная душа</h1><p>Узнай себя</p></div>
@@ -25,7 +25,7 @@ function farPoint(side,origin){const angle=(side==='left'?Math.PI:0)+(Math.rando
 function nearPoint(side,origin){const angle=(side==='left'?0:Math.PI)+(Math.random()-.5)*1.9;const len=Math.min(W,H)*(.07+Math.random()*.22);return{x:origin.x+Math.cos(angle)*len,y:origin.y+Math.sin(angle)*len}}
 function oppositePoint(side){return facePoint(side==='left'?'right':'left')}
 function makeNeedle(delay){const from=Math.random()<.5?'left':'right';const a=facePoint(from);const r=Math.random();let b,type;if(r<.22){b=farPoint(from,a);type='long'}else if(r<.62){b=nearPoint(from,a);type='short'}else{b=oppositePoint(from);type='bridge'}return{from,a,b,type,delay,life:(type==='long'?8.5:type==='short'?4.6:6.8)+Math.random()*(type==='long'?4.8:3.6),jitter:1.2+Math.random()*3.8,randomPower:(type==='long'?.50:.72)+Math.random()*.38}}
-function buildNeedles(){needles=[];let delay=0;for(let i=0;i<95;i++){delay+=.015+Math.random()*.09;if(Math.random()<.32){let burst=2+Math.floor(Math.random()*4);for(let b=0;b<burst;b++)needles.push(makeNeedle(delay+b*(.03+Math.random()*.06)));}else needles.push(makeNeedle(delay));}}
+function buildNeedles(){needles=[];let delay=0;for(let i=0;i<76;i++){delay+=.015+Math.random()*.09;if(Math.random()<.32){let burst=2+Math.floor(Math.random()*4);for(let b=0;b<burst;b++)needles.push(makeNeedle(delay+b*(.03+Math.random()*.06)));}else needles.push(makeNeedle(delay));}}
 function opacityCurve(p){if(p<0||p>1)return 0;return Math.sin(Math.PI*p)}
 function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
 function recycle(n,now){Object.assign(n,makeNeedle(now+.15+Math.random()*2.2))}
