@@ -286,6 +286,7 @@ const EDGE_DEFS = [['E','R'],['R','M'],['M','L'],['L','E']];
 const EDGE_SEG  = 48;
 let pulseLines   = [];
 let tipPositions = {};
+let orbitGroup   = null;
 
 function initThree() {
   const stage  = document.querySelector('.stage');
@@ -393,6 +394,36 @@ function buildCrystal(idx) {
     new THREE.MeshStandardMaterial({ color: GOLD2, metalness: 1, roughness: 0.2, emissive: GOLD, emissiveIntensity: 0.6 })
   )));
 
+  // ── elliptical orbits connecting opposing vertices ──
+  orbitGroup = new THREE.Group();
+
+  // E↔M orbit: ellipse in XY plane, major axis along Y
+  const rEM = (R3D[ch.E] + R3D[ch.M]) * 0.58;
+  const emMinor = (R3D[ch.R] + R3D[ch.L]) * 0.22;
+  const emPts = [];
+  for (let i = 0; i <= 128; i++) {
+    const a = (i / 128) * Math.PI * 2;
+    emPts.push(new THREE.Vector3(Math.cos(a) * emMinor, Math.sin(a) * rEM, 0));
+  }
+  orbitGroup.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(emPts),
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.38, depthTest: false })
+  ));
+
+  // R↔L orbit: ellipse in XZ plane, major axis along X
+  const rRL = (R3D[ch.R] + R3D[ch.L]) * 0.58;
+  const rlMinor = (R3D[ch.E] + R3D[ch.M]) * 0.22;
+  const rlPts = [];
+  for (let i = 0; i <= 128; i++) {
+    const a = (i / 128) * Math.PI * 2;
+    rlPts.push(new THREE.Vector3(Math.sin(a) * rRL, 0, Math.cos(a) * rlMinor));
+  }
+  orbitGroup.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(rlPts),
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.38, depthTest: false })
+  ));
+
+  crystalGroup.add(orbitGroup);
   scene.add(crystalGroup);
 }
 
@@ -407,6 +438,15 @@ function startLoop() {
       crystalGroup.rotation.y = t * 0.08 + targetRY * 0.3;
       crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.05;
     }
+    // orbits: slow counter-rotation + mouse tilt
+    if (orbitGroup) {
+      orbitGroup.rotation.z = t * 0.05;
+      orbitGroup.children[0].rotation.z = t * 0.05;
+      orbitGroup.children[1].rotation.y = -t * 0.04;
+      orbitGroup.rotation.x += (targetRX * 0.6 - orbitGroup.rotation.x) * 0.06;
+      orbitGroup.rotation.z += (targetRY * 0.6 - orbitGroup.rotation.z) * 0.06;
+    }
+
     // energy pulse: illuminate the edge itself
     pulseLines.forEach(({ colorAttr, speed, phase }) => {
       const N    = EDGE_SEG;
