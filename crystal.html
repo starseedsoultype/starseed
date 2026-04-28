@@ -409,7 +409,7 @@ function buildCrystal(idx) {
   const emPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    emPts.push(new THREE.Vector3(Math.cos(a) * emMinor, emCy + Math.sin(a) * emMajor, 0));
+    emPts.push(new THREE.Vector3(0, emCy + Math.sin(a) * emMajor, Math.cos(a) * emMinor));
   }
   orbitGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(emPts),
@@ -424,15 +424,15 @@ function buildCrystal(idx) {
   const rlPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, Math.sin(a) * rlMinor, 0));
+    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, 0, Math.sin(a) * rlMinor));
   }
   orbitGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(rlPts),
     new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
+  crystalGroup.add(orbitGroup);
   scene.add(crystalGroup);
-  scene.add(orbitGroup);
 }
 
 const goldC   = new THREE.Color(GOLD);
@@ -446,11 +446,7 @@ function startLoop() {
       crystalGroup.rotation.y = t * 0.07 + targetRY * 0.25;
       crystalGroup.rotation.x += (targetRX * 0.3 - crystalGroup.rotation.x) * 0.05;
     }
-    // exact anti-phase: when crystal edge-on (y=π/2), orbits face-on (y=0)
-    if (orbitGroup) {
-      orbitGroup.rotation.y = -t * 0.07 + Math.PI * 0.5;
-      orbitGroup.rotation.x += (targetRX * 0.3 - orbitGroup.rotation.x) * 0.05;
-    }
+
 
     // energy pulse: illuminate the edge itself
     pulseLines.forEach(({ colorAttr, speed, phase }) => {
