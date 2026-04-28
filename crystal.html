@@ -24,82 +24,119 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Explore the StarSeedSoul Origin Crystal — a visual map of your soul frequency across all 24 Origins.">
 <title>Soul Crystal — StarSeedSoul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg: #0A0A0A;
+  --bg2: #111111;
+  --gold: #C9A96E;
+  --gold2: #E8D5A8;
+  --text: #E8E4DF;
+  --text2: #C9C1B8;
+  --muted: #5F5A55;
+  --border: rgba(201,169,110,0.08);
+  --border2: rgba(201,169,110,0.18);
+}
+
 body {
-  background:#04020a;
-  display:flex; flex-direction:column; align-items:center;
-  min-height:100vh; font-family:'Georgia',serif; padding:48px 20px 60px;
-  color:#f0eaff;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
+  padding: 48px 20px 60px;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
-.header { text-align:center; margin-bottom:20px; }
+
+.header { text-align: center; margin-bottom: 20px; }
+
 .eyebrow {
-  font-size:11px; letter-spacing:5px; text-transform:uppercase;
-  color:#7755aa; margin-bottom:16px; max-width:520px; width:100%;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px; max-width: 520px; width: 100%;
 }
-.type-name { font-size:38px; font-weight:normal; color:#ffffff; letter-spacing:2px; margin-bottom:4px; }
-.type-sub { font-size:13px; letter-spacing:3px; text-transform:uppercase; color:#aa88cc; }
+
+.type-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 38px; font-weight: 300; color: var(--text); letter-spacing: 4px; margin-bottom: 4px;
+}
+
+.type-sub {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted);
+}
 
 .selector {
-display:flex; gap:6px; flex-wrap:wrap; justify-content:center;
-margin-bottom:32px; max-width:600px; width:100%;
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 32px; max-width: 600px; width: 100%;
 }
-.type-btn {
-padding:6px 12px; border:1px solid #2a1540; background:transparent;
-color:#9977bb; cursor:pointer; font-family:Georgia,serif;
-font-size:11px; letter-spacing:0.5px; transition:all 0.2s; border-radius:2px;
-}
-.type-btn:hover { border-color:#7744aa; color:#ddbbff; }
-.type-btn.active { border-color:#aa66ee; background:#160830; color:#ffffff; }
 
-.stage { position:relative; width:480px; height:480px; max-width:100%; }
-canvas { width:100%; height:100%; }
-.caption { text-align:center; margin:20px 0 20px; max-width:520px; width:100%; }
+.type-btn {
+  padding: 6px 12px; border: 1px solid var(--border); background: transparent;
+  color: var(--muted); cursor: pointer;
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 10px; letter-spacing: 1px; transition: all 0.2s;
+}
+.type-btn:hover { border-color: var(--border2); color: var(--text2); }
+.type-btn.active { border-color: var(--gold); background: #161616; color: var(--text); }
+
+.stage { position: relative; width: 480px; height: 480px; max-width: 100%; }
+canvas { width: 100%; height: 100%; }
+.caption { text-align: center; margin: 20px 0 20px; max-width: 520px; width: 100%; }
 
 .desc-unlock-btn {
-display:block; margin-top:20px; padding:14px 24px; text-align:center;
-background:linear-gradient(135deg,#4a2a88,#6a3aaa);
-color:#fff; font-family:Georgia,serif; font-size:13px;
-letter-spacing:3px; text-transform:uppercase; text-decoration:none;
-border-radius:3px; transition:all 0.2s;
+  display: block; margin-top: 20px; padding: 14px 24px; text-align: center;
+  background: var(--gold); color: #0A0A0A;
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase; text-decoration: none;
+  transition: opacity 0.2s;
 }
-.desc-unlock-btn:hover { background:linear-gradient(135deg,#5a3a98,#7a4abb); }
+.desc-unlock-btn:hover { opacity: 0.85; }
 
 .description-wrap {
-max-width:520px; width:100%;
-border:1px solid #1e1030; background:#07040e;
-border-radius:4px; padding:32px 28px; margin-bottom:40px;
+  max-width: 520px; width: 100%;
+  border: 1px solid var(--border); background: var(--bg2);
+  padding: 32px 28px; margin-bottom: 40px;
 }
-.desc-section { margin-bottom:28px; padding-bottom:28px; border-bottom:1px solid #1e1030; }
-.desc-section:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
-.desc-text { font-size:17px; color:#e8e0f8; line-height:1.9; }
+.desc-section { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.desc-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.desc-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px; font-weight: 300; color: var(--text); line-height: 1.9;
+}
 .desc-text.blurred {
-filter:blur(5px); user-select:none; -webkit-user-select:none;
-pointer-events:none; color:#c0b8d8;
+  filter: blur(5px); user-select: none; -webkit-user-select: none;
+  pointer-events: none; color: var(--text2);
 }
 
-.btn-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:520px; width:100%; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; max-width: 520px; width: 100%; }
 .btn-gold {
-flex:1; min-width:180px; padding:16px 20px; text-align:center;
-background:transparent; border:1px solid #aa8822; color:#d4a843;
-font-family:Georgia,serif; font-size:13px; letter-spacing:2px; text-transform:uppercase;
-text-decoration:none; border-radius:3px; transition:all 0.2s;
+  flex: 1; min-width: 180px; padding: 16px 20px; text-align: center;
+  background: transparent; border: 1px solid var(--border2); color: var(--gold);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
 }
-.btn-gold:hover { background:rgba(212,168,67,0.08); border-color:#d4a843; }
+.btn-gold:hover { background: rgba(201,169,110,0.06); }
 .btn-purple {
-flex:1; min-width:180px; padding:16px 20px; text-align:center;
-background:linear-gradient(135deg,#4a2a88,#6a3aaa);
-border:none; color:#fff; font-family:Georgia,serif;
-font-size:13px; letter-spacing:2px; text-transform:uppercase;
-text-decoration:none; border-radius:3px; transition:all 0.2s;
+  flex: 1; min-width: 180px; padding: 16px 20px; text-align: center;
+  background: var(--gold); border: none; color: #0A0A0A;
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; transition: opacity 0.2s;
 }
-.btn-purple:hover { background:linear-gradient(135deg,#5a3a98,#7a4abb); }
+.btn-purple:hover { opacity: 0.85; }
 
 @media(max-width:520px) {
-.stage { width:340px; height:340px; }
-.type-name { font-size:30px; }
-.desc-text { font-size:17px; }
-.description-wrap { padding:26px 20px; }
+  .stage { width: 340px; height: 340px; }
+  .type-name { font-size: 30px; }
+  .desc-text { font-size: 16px; }
+  .description-wrap { padding: 26px 20px; }
 }
 </style>
 
@@ -269,7 +306,7 @@ function draw(idx){
   // bg glow
   const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,200);
   bg.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},0.07)`);
-  bg.addColorStop(1,'rgba(4,2,10,0)');
+  bg.addColorStop(1,'rgba(10,10,10,0)');
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
   const tE=tips.E,tM=tips.M,tR=tips.R,tL=tips.L;
@@ -309,7 +346,7 @@ function draw(idx){
   const core=ctx.createRadialGradient(cx,cy,0,cx,cy,50);
   core.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},.6)`);
   core.addColorStop(.5,`rgba(${bl.r},${bl.g},${bl.b},.2)`);
-  core.addColorStop(1,'rgba(4,2,10,0)');
+  core.addColorStop(1,'rgba(10,10,10,0)');
   ctx.fillStyle=core;ctx.fillRect(0,0,W,H);
 
   // tips + glows
@@ -351,7 +388,7 @@ function draw(idx){
   const star=ctx.createRadialGradient(cx,cy,0,cx,cy,15);
   star.addColorStop(0,'rgba(255,255,255,.95)');
   star.addColorStop(.4,`rgba(${bl.r+80},${bl.g+80},${bl.b+80},.5)`);
-  star.addColorStop(1,'rgba(4,2,10,0)');
+  star.addColorStop(1,'rgba(10,10,10,0)');
   ctx.fillStyle=star;ctx.beginPath();ctx.arc(cx,cy,15,0,Math.PI*2);ctx.fill();
 
   // update header
