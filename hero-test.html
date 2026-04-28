@@ -3,23 +3,54 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>StarSeedSoul Hero Static Face Test</title>
+<title>StarSeedSoul Hero SVG Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#030303;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:radial-gradient(circle at center,#111 0%,#050505 55%,#000 100%)}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.copy{position:absolute;left:0;right:0;bottom:9vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 24px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#020202;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:radial-gradient(circle at center,#101010 0%,#050505 54%,#000 100%)}svg{position:absolute;inset:0;width:100%;height:100%;display:block}.copy{position:absolute;left:0;right:0;bottom:8vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 28px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}.line{fill:none;stroke:#e8d5a8;stroke-linecap:round;stroke-linejoin:round}.soft{stroke-opacity:.22;stroke-width:.7}.mid{stroke-opacity:.42;stroke-width:1}.bright{stroke-opacity:.78;stroke-width:1.35}.plane{fill:#e8d5a8;fill-opacity:.055;stroke:#e8d5a8;stroke-opacity:.18;stroke-width:.55}
 </style>
 </head>
 <body>
-<section class="hero"><canvas id="heroCanvas"></canvas><div class="copy"><h1>StarSeedSoul</h1><p>Recognize your origin</p></div></section>
-<script>
-const canvas=document.getElementById('heroCanvas');const ctx=canvas.getContext('2d');let W,H,dpr;
-function resize(){dpr=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight;draw()}addEventListener('resize',resize);
-function T(p,cx,cy,sc,s){return{x:cx+s*p[0]*sc,y:cy+p[1]*sc}}
-function drawPolyline(points,cx,cy,sc,s,width=1.1,alpha=.72){ctx.beginPath();points.forEach((p,i)=>{let q=T(p,cx,cy,sc,s);if(i)ctx.lineTo(q.x,q.y);else ctx.moveTo(q.x,q.y)});ctx.strokeStyle=`rgba(232,213,168,${alpha})`;ctx.lineWidth=width;ctx.stroke()}
-function drawMesh(cx,cy,sc,s,masc){const contour=[[-.42,-.48],[-.20,-.58],[.08,-.55],[.25,-.44],[.31,-.32],[.43,-.23],[.29,-.16],[.38,-.08],[.22,-.03],[.28,.08],[.12,.17],[.05,.31],[-.10,.45],[-.31,.50],[-.48,.35],[-.56,.10],[-.54,-.18],[-.42,-.48]];drawPolyline(contour,cx,cy,sc,s,1.45,.78);const featureLines=[[[.02,-.25],[.18,-.22],[.30,-.16]],[[.19,-.02],[.35,-.08]],[[.12,.13],[.27,.10]],[[.02,.27],[.16,.24]],[[-.33,-.04],[-.43,.04],[-.33,.13],[-.25,.04],[-.33,-.04]],[[-.34,-.42],[-.18,-.30],[.04,-.25]],[[-.34,.34],[-.12,.24],[.06,.18]]];featureLines.forEach(l=>drawPolyline(l,cx,cy,sc,s,.9,.55));let nodes=[];function addGrid(x1,x2,y1,y2,cols,rows){for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){let x=x1+(x2-x1)*c/(cols-1)+(Math.random()-.5)*.035;let y=y1+(y2-y1)*r/(rows-1)+(Math.random()-.5)*.035;let taper=1-Math.abs(y+.02)*.6;if(Math.random()<taper)nodes.push([x,y])}}}addGrid(-.40,.22,-.40,.37,9,12);nodes.push([.30,-.16],[.36,-.08],[.24,.04],[.18,.14],[.06,.30],[-.31,.46],[-.48,.20],[-.48,-.15],[-.22,-.52]);let pts=nodes.map(p=>T(p,cx,cy,sc,s));for(let i=0;i<pts.length;i++){let nearest=[];for(let j=0;j<pts.length;j++){if(i===j)continue;let d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);if(d<sc*.19)nearest.push({j,d})}nearest.sort((a,b)=>a.d-b.d);nearest.slice(0,4).forEach(n=>{if(n.j>i){let a=pts[i],b=pts[n.j];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(232,213,168,${.16+(1-n.d/(sc*.19))*.30})`;ctx.lineWidth=.62;ctx.stroke()}})}
-for(let i=0;i<18;i++){let base=pts[Math.floor(Math.random()*pts.length)];let len=sc*(.18+Math.random()*.28);let ang=(s<0?Math.PI:0)+(Math.random()-.5)*1.6;ctx.beginPath();ctx.moveTo(base.x,base.y);ctx.lineTo(base.x+Math.cos(ang)*len,base.y+Math.sin(ang)*len);ctx.strokeStyle='rgba(232,213,168,.20)';ctx.lineWidth=.55;ctx.stroke()}
-}
-function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#030303';ctx.fillRect(0,0,W,H);let sc=Math.min(W,H)*.66;let cy=H*.38;let leftCx=W*.5-W*.125;let rightCx=W*.5+W*.125;drawMesh(leftCx,cy,sc,-1,true);drawMesh(rightCx,cy,sc,1,false);ctx.lineWidth=.55;for(let i=0;i<42;i++){let y=cy-sc*.28+i*sc*.013;ctx.beginPath();ctx.moveTo(W*.5-sc*.055,y);ctx.lineTo(W*.5+sc*.055,y+(Math.random()-.5)*18);ctx.strokeStyle='rgba(232,213,168,.18)';ctx.stroke()} }
-resize();
-</script>
+<section class="hero">
+<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <g transform="translate(0,-10)">
+    <path class="line bright" d="M690 140 L570 122 L455 150 L360 205 L315 285 L265 330 L310 365 L284 415 L330 455 L356 515 L420 605 L520 670 L610 632 L662 540 L642 455 L690 360 L720 250 Z"/>
+    <path class="line bright" d="M910 140 L1030 122 L1145 150 L1240 205 L1285 285 L1335 330 L1290 365 L1316 415 L1270 455 L1244 515 L1180 605 L1080 670 L990 632 L938 540 L958 455 L910 360 L880 250 Z"/>
+
+    <path class="line bright" d="M690 250 L735 300 L704 338 L744 373 L694 398 L724 440 L682 462 L650 536 L610 632"/>
+    <path class="line bright" d="M910 250 L865 300 L896 338 L856 373 L906 398 L876 440 L918 462 L950 536 L990 632"/>
+
+    <path class="line mid" d="M590 308 L656 286 L704 338"/><path class="line mid" d="M1010 308 L944 286 L896 338"/>
+    <path class="line mid" d="M620 405 L694 398 L650 425"/><path class="line mid" d="M980 405 L906 398 L950 425"/>
+    <path class="line mid" d="M570 505 L682 462 L610 632"/><path class="line mid" d="M1030 505 L918 462 L990 632"/>
+    <path class="line mid" d="M455 360 L390 420 L430 505 L520 500 L570 405 L540 300 Z"/>
+    <path class="line mid" d="M1145 360 L1210 420 L1170 505 L1080 500 L1030 405 L1060 300 Z"/>
+
+    <polygon class="plane" points="455,150 570,122 540,300"/><polygon class="plane" points="1145,150 1030,122 1060,300"/>
+    <polygon class="plane" points="315,285 455,360 390,420"/><polygon class="plane" points="1285,285 1145,360 1210,420"/>
+    <polygon class="plane" points="610,632 682,462 724,440"/><polygon class="plane" points="990,632 918,462 876,440"/>
+
+    <g class="line soft">
+      <path d="M455 150 L540 300 L590 308 L690 250 L570 122 L455 150 L360 205 L455 360 L570 405 L620 405 L650 536 L520 670 L420 605 L330 455 L390 420 L310 365"/>
+      <path d="M1145 150 L1060 300 L1010 308 L910 250 L1030 122 L1145 150 L1240 205 L1145 360 L1030 405 L980 405 L950 536 L1080 670 L1180 605 L1270 455 L1210 420 L1290 365"/>
+      <path d="M360 205 L540 300 L704 338 L570 405 L455 360 L330 455 L520 500 L650 536 L610 632"/>
+      <path d="M1240 205 L1060 300 L896 338 L1030 405 L1145 360 L1270 455 L1080 500 L950 536 L990 632"/>
+      <path d="M570 122 L656 286 L642 455 L682 462 L520 670"/>
+      <path d="M1030 122 L944 286 L958 455 L918 462 L1080 670"/>
+      <path d="M265 330 L180 275 L95 330 L185 395 L284 415"/>
+      <path d="M1335 330 L1420 275 L1505 330 L1415 395 L1316 415"/>
+      <path d="M360 205 L250 120 L110 80 L95 330"/>
+      <path d="M1240 205 L1350 120 L1490 80 L1505 330"/>
+      <path d="M420 605 L290 720 L145 650 L330 455"/>
+      <path d="M1180 605 L1310 720 L1455 650 L1270 455"/>
+      <path d="M735 300 L865 300 M704 338 L896 338 M694 398 L906 398 M682 462 L918 462 M650 536 L950 536"/>
+    </g>
+
+    <g class="line mid">
+      <path d="M735 300 C772 278 828 278 865 300"/><path d="M704 338 C755 322 845 322 896 338"/><path d="M694 398 C752 386 848 386 906 398"/>
+      <path d="M682 462 C750 448 850 448 918 462"/><path d="M650 536 C744 520 856 520 950 536"/>
+    </g>
+  </g>
+</svg>
+<div class="copy"><h1>StarSeedSoul</h1><p>Recognize your origin</p></div>
+</section>
 </body>
 </html>
