@@ -5,32 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>StarSeedSoul Hero Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#050505;overflow:hidden;font-family:Arial,sans-serif}.hero{position:relative;width:100vw;height:100vh;background:radial-gradient(circle at center,#111 0%,#050505 58%,#000 100%)}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.copy{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{margin-top:44vh;font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 22px rgba(0,0,0,.8)}.copy p{margin-top:18px;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#050505;overflow:hidden;font-family:Arial,sans-serif}.hero{position:relative;width:100vw;height:100vh;background:radial-gradient(circle at center,#101010 0%,#050505 58%,#000 100%)}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.copy{position:absolute;left:0;right:0;bottom:12vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 24px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}
 </style>
 </head>
 <body>
 <section class="hero"><canvas id="heroCanvas"></canvas><div class="copy"><h1>StarSeedSoul</h1><p>Recognize your origin</p></div></section>
 <script>
-const canvas=document.getElementById('heroCanvas');const ctx=canvas.getContext('2d');let dpr=1,W=0,H=0,pts=[],edges=[];let mouse={x:0,y:0,active:false};
-function resize(){dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.floor(innerWidth*dpr);canvas.height=Math.floor(innerHeight*dpr);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight;build();}
-addEventListener('resize',resize);addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;mouse.active=true});
-function addLine(arr,a,b,n,j=0){for(let i=0;i<=n;i++){let t=i/n;arr.push({x:a.x+(b.x-a.x)*t+(Math.random()-.5)*j,y:a.y+(b.y-a.y)*t+(Math.random()-.5)*j,kind:a.kind||'edge'});}}
-function makeFace(side){let s=side==='left'?-1:1;let cx=W*.5+s*W*.145,cy=H*.39,sc=Math.min(W,H)*.54;let contour=[{x:-.36,y:-.48},{x:-.18,y:-.56},{x:.04,y:-.52},{x:.18,y:-.42},{x:.24,y:-.28},{x:.34,y:-.18},{x:.21,y:-.12},{x:.29,y:-.04},{x:.15,y:.00},{x:.20,y:.09},{x:.06,y:.16},{x:.01,y:.30},{x:-.12,y:.43},{x:-.30,y:.47},{x:-.43,y:.34},{x:-.50,y:.10},{x:-.48,y:-.18}];
-if(side==='left')contour=contour.map(p=>({x:-p.x,y:p.y}));
-let arr=[];for(let i=0;i<contour.length-1;i++){let a={x:cx+contour[i].x*sc,y:cy+contour[i].y*sc,kind:'edge'},b={x:cx+contour[i+1].x*sc,y:cy+contour[i+1].y*sc,kind:'edge'};addLine(arr,a,b,8,3)}
-let eye={x:cx+s*.115*sc,y:cy-.105*sc,kind:'feature'},mouth={x:cx+s*.16*sc,y:cy+.14*sc,kind:'feature'},nose={x:cx+s*.29*sc,y:cy-.055*sc,kind:'feature'},chin={x:cx+s*.08*sc,y:cy+.31*sc,kind:'feature'},brow={x:cx+s*.05*sc,y:cy-.22*sc,kind:'feature'},ear={x:cx-s*.34*sc,y:cy-.04*sc,kind:'feature'};
-for(let i=0;i<85;i++){let a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*.44*sc;let x=cx+Math.cos(a)*r*.78-s*.08*sc,y=cy+Math.sin(a)*r;arr.push({x,y,kind:'inner'})}
-[eye,mouth,nose,chin,brow,ear].forEach(f=>{for(let i=0;i<16;i++)arr.push({x:f.x+(Math.random()-.5)*28,y:f.y+(Math.random()-.5)*18,kind:'feature'})});
-for(let i=0;i<50;i++){arr.push({x:cx-s*(.34+Math.random()*.42)*sc,y:cy+(.55-Math.random()*1.08)*sc,kind:'outer'})}
-return arr;}
-function build(){let targets=[...makeFace('left'),...makeFace('right')];pts=targets.map((t,i)=>({tx:t.x,ty:t.y,kind:t.kind,x:W*.5+(Math.random()-.5)*W*.9,y:H*.42+(Math.random()-.5)*H*.6,vx:0,vy:0,seed:Math.random()*999}));}
-function loop(ms){let t=ms*.001;ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(0,0,0,.24)';ctx.fillRect(0,0,W,H);let cycle=(Math.sin(t*.2-Math.PI/2)+1)/2;let form=Math.pow(cycle,1.35);let pull=mouse.active?Math.max(0,1-Math.hypot(mouse.x-W/2,mouse.y-H*.38)/(W*.45)):0;let k=Math.min(1,form+pull*.22);
-pts.forEach(p=>{let driftX=W*.5+Math.sin(t*.13+p.seed)*W*.34,driftY=H*.4+Math.cos(t*.11+p.seed)*H*.26;let gx=driftX*(1-k)+(p.tx+Math.sin(t*.7+p.seed)*5)*k,gy=driftY*(1-k)+(p.ty+Math.cos(t*.6+p.seed)*5)*k;p.vx+=(gx-p.x)*.02;p.vy+=(gy-p.y)*.02;p.vx*=.86;p.vy*=.86;p.x+=p.vx;p.y+=p.vy});
-let md=72;ctx.lineWidth=.72;for(let i=0;i<pts.length;i++){let links=0;for(let j=i+1;j<pts.length;j++){let a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);if(d<md&&links<9){let feature=(a.kind==='feature'||b.kind==='feature')?1.4:1;let alpha=(1-d/md)*(.05+k*.38)*feature;ctx.strokeStyle=`rgba(232,213,168,${alpha})`;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();links++;}}}
-ctx.lineWidth=1.35;pts.forEach((p,i)=>{if(p.kind==='edge'||p.kind==='feature'){ctx.fillStyle=`rgba(232,213,168,${.10+k*.22})`;ctx.fillRect(p.x-.55,p.y-.55,1.1,1.1)}});
-let bridge=Math.max(0,k-.55);ctx.lineWidth=.55;ctx.strokeStyle=`rgba(232,213,168,${bridge*.45})`;for(let i=0;i<32;i++){let y=H*.25+i*H*.011+Math.sin(t+i)*7;ctx.beginPath();ctx.moveTo(W*.5-W*.035,y);ctx.lineTo(W*.5+W*.035,y+Math.sin(t*.8+i)*8);ctx.stroke()}
-requestAnimationFrame(loop)}
-resize();requestAnimationFrame(loop);
+const canvas=document.getElementById('heroCanvas'),ctx=canvas.getContext('2d');let W,H,dpr,pts=[];let mouse={x:0,y:0,active:false};
+addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;mouse.active=true});addEventListener('resize',resize);
+function resize(){dpr=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight;build()}
+function line(arr,a,b,n,j=0){for(let i=0;i<=n;i++){let t=i/n;arr.push({x:a.x+(b.x-a.x)*t+(Math.random()-.5)*j,y:a.y+(b.y-a.y)*t+(Math.random()-.5)*j,k:a.k||'edge'})}}
+function face(side){let s=side==='left'?-1:1,cx=W*.5+s*W*.12,cy=H*.37,sc=Math.min(W,H)*.62;let c=[[-.40,-.50],[-.18,-.58],[.08,-.54],[.22,-.43],[.27,-.31],[.39,-.22],[.24,-.15],[.33,-.07],[.17,-.02],[.23,.08],[.08,.17],[.02,.32],[-.14,.47],[-.34,.50],[-.49,.34],[-.55,.08],[-.53,-.20]];if(side==='left')c=c.map(p=>[-p[0],p[1]]);let arr=[];for(let i=0;i<c.length-1;i++)line(arr,{x:cx+c[i][0]*sc,y:cy+c[i][1]*sc,k:'edge'},{x:cx+c[i+1][0]*sc,y:cy+c[i+1][1]*sc,k:'edge'},10,2);
+let features=[[s*.13,-.13,'eye'],[s*.21,.13,'mouth'],[s*.36,-.07,'nose'],[s*.07,.33,'chin'],[s*.04,-.24,'brow'],[-s*.36,-.03,'ear']];features.forEach(f=>{for(let i=0;i<22;i++)arr.push({x:cx+f[0]*sc+(Math.random()-.5)*26,y:cy+f[1]*sc+(Math.random()-.5)*18,k:'feature'})});
+for(let i=0;i<125;i++){let a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*.42*sc;arr.push({x:cx+Math.cos(a)*r*.78-s*.08*sc,y:cy+Math.sin(a)*r,k:'inner'})}
+for(let i=0;i<85;i++)arr.push({x:cx-s*(.32+Math.random()*.55)*sc,y:cy+(.60-Math.random()*1.15)*sc,k:'outer'});
+return arr}
+function build(){let target=[...face('left'),...face('right')];pts=target.map(p=>({tx:p.x,ty:p.y,k:p.k,x:p.x+(Math.random()-.5)*28,y:p.y+(Math.random()-.5)*28,vx:0,vy:0,seed:Math.random()*999}))}
+function draw(ms){let t=ms*.001;ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(0,0,W,H);let breathe=(Math.sin(t*.45)+1)/2;let dissolve=.18+.22*breathe;let pull=mouse.active?Math.max(0,1-Math.hypot(mouse.x-W/2,mouse.y-H*.36)/(W*.42)):0;let form=.76+pull*.2-dissolve*.18;
+pts.forEach(p=>{let driftX=W*.5+Math.sin(t*.11+p.seed)*W*.34,driftY=H*.37+Math.cos(t*.1+p.seed)*H*.28;let gx=p.tx*form+driftX*(1-form)+Math.sin(t*.8+p.seed)*5;let gy=p.ty*form+driftY*(1-form)+Math.cos(t*.7+p.seed)*5;p.vx+=(gx-p.x)*.028;p.vy+=(gy-p.y)*.028;p.vx*=.84;p.vy*=.84;p.x+=p.vx;p.y+=p.vy});
+let maxD=70;ctx.lineWidth=.72;for(let i=0;i<pts.length;i++){let links=0;for(let j=i+1;j<pts.length;j++){let a=pts[i],b=pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<maxD&&links<12){let f=(a.k==='edge'||b.k==='edge'||a.k==='feature'||b.k==='feature')?1.55:1;let alpha=(1-d/maxD)*(.18+pull*.18)*f;ctx.strokeStyle=`rgba(232,213,168,${alpha})`;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();links++}}}
+ctx.lineWidth=.6;ctx.strokeStyle=`rgba(232,213,168,${.12+pull*.28})`;for(let i=0;i<44;i++){let y=H*.22+i*H*.012+Math.sin(t+i)*7;ctx.beginPath();ctx.moveTo(W*.5-W*.045,y);ctx.lineTo(W*.5+W*.045,y+Math.sin(t*.9+i)*9);ctx.stroke()}
+requestAnimationFrame(draw)}resize();requestAnimationFrame(draw);
 </script>
 </body>
 </html>
