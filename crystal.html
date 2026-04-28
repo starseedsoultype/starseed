@@ -139,7 +139,7 @@ canvas { width: 100%; height: 100%; }
   .description-wrap { padding: 26px 20px; }
 }
 </style>
-
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js"}}</script>
 </head>
 <body>
 
@@ -181,7 +181,9 @@ canvas { width: 100%; height: 100%; }
   <a href="quiz.html" class="btn-purple">Find Your Origin</a>
 </div>
 
-<script>
+<script type="module">
+import * as THREE from 'three';
+
 const TYPES = [
   {name:"Siriusian",      funcs:["R","E","M","L"]},
   {name:"Pleiadian",      funcs:["R","M","L","E"]},
@@ -199,7 +201,7 @@ const TYPES = [
   {name:"Polarisian",     funcs:["E","L","M","R"]},
   {name:"Nibiruan",       funcs:["E","M","R","L"]},
   {name:"Egyptian",       funcs:["E","L","R","M"]},
-  {name:"Titanian",          funcs:["E","M","L","R"]},
+  {name:"Titanian",       funcs:["E","M","L","R"]},
   {name:"Blue Avian",     funcs:["E","R","M","L"]},
   {name:"Tau Cetian",     funcs:["M","R","E","L"]},
   {name:"Aldebaran",      funcs:["M","L","R","E"]},
@@ -209,16 +211,9 @@ const TYPES = [
   {name:"Hyperborean",    funcs:["M","R","L","E"]},
 ];
 
-const FC = {
-  E:{r:255,g:185,b:0,   hex:"#ffb900",name:"Energy",   element:"Fire"},
-  M:{r:220,g:40, b:40,  hex:"#dc2828",name:"Matter",   element:"Earth"},
-  R:{r:40, g:190,b:80,  hex:"#28be50",name:"Relationships", element:"Water"},
-  L:{r:60, g:130,b:255, hex:"#3c82ff",name:"Logic",    element:"Air"},
-};
-
-const AXIS={E:-Math.PI/2, M:Math.PI/2, R:0, L:Math.PI};
-const RADII=[0,155,108,66,32];
-const WEIGHTS=[0,0.60,0.25,0.12,0.03];
+const FC_HEX = { E:'#ffb900', M:'#dc2828', R:'#28be50', L:'#3c82ff' };
+const WEIGHTS = [0, 0.60, 0.25, 0.12, 0.03];
+const R3D     = [0, 1.35,  0.95, 0.60, 0.32];
 
 const PREVIEWS={
   R:{
@@ -274,161 +269,233 @@ const GUMROAD_LINKS = {
   "Hyperborean":     "https://starseedsoul.gumroad.com/l/soul-12",
 };
 
-let current=12;
+let current = 12;
 
-function getChannels(idx){
-  const ch={};
-  TYPES[idx].funcs.forEach((f,i)=>{ch[f]=i+1;});
+function getChannels(idx) {
+  const ch = {};
+  TYPES[idx].funcs.forEach((f, i) => { ch[f] = i + 1; });
   return ch;
 }
 
-function blend(ch){
-  let r=0,g=0,b=0;
-  for(const[f,c]of Object.entries(ch)){const w=WEIGHTS[c],fc=FC[f];r+=fc.r*w;g+=fc.g*w;b+=fc.b*w;}
-  return{r:Math.round(r),g:Math.round(g),b:Math.round(b)};
-}
+// ── THREE.JS STATE ──────────────────────────────────────────────
+let scene, camera, renderer, crystalGroup;
+let targetRX = 0, targetRY = 0;
 
-function draw(idx){
-  const canvas=document.getElementById('crystalCanvas');
-  const ctx=canvas.getContext('2d');
-  const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2;
-  ctx.clearRect(0,0,W,H);
+// Per-edge pulse state: t ∈ [0,1) along the edge
+const EDGE_DEFS = [['E','R'],['R','M'],['M','L'],['L','E']]; // outer ring
+const pulses = EDGE_DEFS.map((_, i) => ({ t: i * 0.25 }));  // stagger starts
 
-  const ch=getChannels(idx);
-  const bl=blend(ch);
+function initThree() {
+  const stage  = document.querySelector('.stage');
+  const canvas = document.getElementById('crystalCanvas');
+  const S = stage.offsetWidth;
 
-  // tips
-  const tips={};
-  for(const[f,c]of Object.entries(ch)){
-    tips[f]={x:cx+Math.cos(AXIS[f])*RADII[c],y:cy+Math.sin(AXIS[f])*RADII[c]};
-  }
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(S, S);
 
-  // bg glow
-  const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,200);
-  bg.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},0.07)`);
-  bg.addColorStop(1,'rgba(10,10,10,0)');
-  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  scene  = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(44, 1, 0.1, 50);
+  camera.position.set(0, 0.2, 4.2);
+  camera.lookAt(0, 0, 0);
 
-  const tE=tips.E,tM=tips.M,tR=tips.R,tL=tips.L;
+  scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+  const key = new THREE.DirectionalLight(0xE8D5A8, 1.4);
+  key.position.set(2, 3, 3); scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.3);
+  fill.position.set(-3, -1, -2); scene.add(fill);
+  const rim = new THREE.PointLight(0xC9A96E, 0.6, 12);
+  rim.position.set(0, 2, -3); scene.add(rim);
 
-  // faces — screen blend for vivid colors
-  ctx.save(); ctx.globalCompositeOperation='screen';
-  [{pts:[cx,cy,tE.x,tE.y,tR.x,tR.y],f1:'E',f2:'R',b:.85},
-   {pts:[cx,cy,tE.x,tE.y,tL.x,tL.y],f1:'E',f2:'L',b:.65},
-   {pts:[cx,cy,tM.x,tM.y,tR.x,tR.y],f1:'M',f2:'R',b:.55},
-   {pts:[cx,cy,tM.x,tM.y,tL.x,tL.y],f1:'M',f2:'L',b:.38}
-  ].forEach(({pts,f1,f2,b})=>{
-    const c1=FC[f1],c2=FC[f2];
-    const bf={r:Math.round((c1.r+c2.r)/2),g:Math.round((c1.g+c2.g)/2),b:Math.round((c1.b+c2.b)/2)};
-    const a=0.22+b*0.30;
-    const g=ctx.createLinearGradient(pts[0],pts[1],pts[4],pts[5]);
-    g.addColorStop(0,`rgba(${bf.r},${bf.g},${bf.b},${a+.1})`);
-    g.addColorStop(1,`rgba(${Math.round(bl.r*.5)},${Math.round(bl.g*.5)},${Math.round(bl.b*.5)},${a*.35})`);
-    ctx.beginPath();ctx.moveTo(pts[0],pts[1]);ctx.lineTo(pts[2],pts[3]);ctx.lineTo(pts[4],pts[5]);
-    ctx.closePath();ctx.fillStyle=g;ctx.fill();
-    ctx.strokeStyle=`rgba(${bf.r+80},${bf.g+80},${bf.b+80},.5)`;ctx.lineWidth=.9;ctx.stroke();
-  });
-  ctx.restore();
-
-  // outer edge
-  ctx.beginPath();ctx.moveTo(tE.x,tE.y);ctx.lineTo(tR.x,tR.y);
-  ctx.lineTo(tM.x,tM.y);ctx.lineTo(tL.x,tL.y);ctx.closePath();
-  ctx.strokeStyle=`rgba(${bl.r+100},${bl.g+100},${bl.b+100},.65)`;ctx.lineWidth=1.5;ctx.stroke();
-
-  // axis dashes
-  [[tE,tM],[tR,tL]].forEach(([a,b])=>{
-    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-    ctx.strokeStyle='rgba(220,200,255,.1)';ctx.lineWidth=.5;
-    ctx.setLineDash([3,8]);ctx.stroke();ctx.setLineDash([]);
+  document.addEventListener('mousemove', e => {
+    targetRX = (e.clientY / window.innerHeight - 0.5) * 0.55;
+    targetRY = (e.clientX / window.innerWidth  - 0.5) * 0.55;
   });
 
-  // core glow
-  const core=ctx.createRadialGradient(cx,cy,0,cx,cy,50);
-  core.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},.6)`);
-  core.addColorStop(.5,`rgba(${bl.r},${bl.g},${bl.b},.2)`);
-  core.addColorStop(1,'rgba(10,10,10,0)');
-  ctx.fillStyle=core;ctx.fillRect(0,0,W,H);
-
-  // tips + glows
-  ctx.save();ctx.globalCompositeOperation='screen';
-  for(const[f,c]of Object.entries(ch)){
-    const t=tips[f],fc=FC[f];
-    const sz=[0,12,8.5,6,4][c];
-    const gr=[0,34,22,14,9][c];
-    const al=[0,.6,.42,.27,.16][c];
-    const gw=ctx.createRadialGradient(t.x,t.y,0,t.x,t.y,gr);
-    gw.addColorStop(0,`rgba(${fc.r},${fc.g},${fc.b},${al})`);
-    gw.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=gw;ctx.beginPath();ctx.arc(t.x,t.y,gr,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(t.x,t.y,sz,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${fc.r},${fc.g},${fc.b},.95)`;ctx.fill();
-    ctx.beginPath();ctx.arc(t.x-sz*.3,t.y-sz*.3,sz*.4,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,255,255,${.55-c*.1})`;ctx.fill();
-  }
-  ctx.restore();
-
-  // labels — element names, italic, same size for all
-  for(const[f,c]of Object.entries(ch)){
-    const t=tips[f],fc=FC[f],angle=AXIS[f];
-    const off=[0,40,30,24,18][c];
-    const lx=t.x+Math.cos(angle)*off;
-    const ly=t.y+Math.sin(angle)*off;
-    ctx.save();
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,0.95)';
-    ctx.shadowBlur=10;
-    ctx.font='italic 22px Georgia';
-    ctx.fillStyle='#ffffff';
-    ctx.globalAlpha=[0,1,.85,.68,.48][c];
-    ctx.fillText(fc.element,lx,ly);
-    ctx.restore();
-  }
-
-  // center star
-  const star=ctx.createRadialGradient(cx,cy,0,cx,cy,15);
-  star.addColorStop(0,'rgba(255,255,255,.95)');
-  star.addColorStop(.4,`rgba(${bl.r+80},${bl.g+80},${bl.b+80},.5)`);
-  star.addColorStop(1,'rgba(10,10,10,0)');
-  ctx.fillStyle=star;ctx.beginPath();ctx.arc(cx,cy,15,0,Math.PI*2);ctx.fill();
-
-  // update header
-  const typeName = TYPES[idx].name;
-  document.getElementById('typeName').textContent = typeName;
-  document.getElementById('readingEyebrow').textContent = `Soul Reading · ${typeName}`;
-  document.title = `${typeName} Soul Crystal — StarSeedSoul`;
-
-  // update unlock button link
-  const unlockBtn = document.getElementById('unlockBtn');
-  const gumroadUrl = GUMROAD_LINKS[typeName];
-  if (gumroadUrl && gumroadUrl.includes('REPLACE')) {
-    unlockBtn.href = 'quiz.html';
-  } else {
-    unlockBtn.href = gumroadUrl;
-  }
-
-  // update descriptions
-  const funcs=TYPES[idx].funcs;
-  [0,1,2,3].forEach(i=>{
-    const f=funcs[i];
-    document.getElementById(`desc${i+1}text`).textContent=PREVIEWS[f][i+1];
+  window.addEventListener('resize', () => {
+    const S2 = stage.offsetWidth;
+    renderer.setSize(S2, S2);
   });
 }
 
-// build selector
-const sel=document.getElementById('typeSelector');
-TYPES.forEach((t,i)=>{
-  const btn=document.createElement('button');
-  btn.className='type-btn'+(i===current?' active':'');
-  btn.textContent=t.name;
-  btn.onclick=()=>{
-    document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+// ── BUILD CRYSTAL ───────────────────────────────────────────────
+let tipPositions = {};   // world positions of E/M/R/L tips
+let pulseMeshes  = [];   // one glowing sphere per edge
+
+function buildCrystal(idx) {
+  if (crystalGroup) {
+    crystalGroup.traverse(o => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) o.material.dispose();
+    });
+    scene.remove(crystalGroup);
+  }
+  crystalGroup = new THREE.Group();
+  pulseMeshes  = [];
+
+  const ch = getChannels(idx);
+  const C  = k => new THREE.Color(FC_HEX[k]);
+
+  // 4 tip positions — same axes as 2D original
+  const rE = R3D[ch.E], rM = R3D[ch.M], rR = R3D[ch.R], rL = R3D[ch.L];
+  tipPositions = {
+    E: new THREE.Vector3(0,  rE, 0),
+    M: new THREE.Vector3(0, -rM, 0),
+    R: new THREE.Vector3( rR, 0, 0),
+    L: new THREE.Vector3(-rL, 0, 0),
+  };
+
+  // ── faces (4 triangles through center, DoubleSide) ──
+  const faceList = [['E','R'],['R','M'],['M','L'],['L','E']];
+  const O = new THREE.Vector3(0, 0, 0);
+
+  for (const [a, b] of faceList) {
+    const ca = C(a), cb = C(b);
+    const mid = ca.clone().lerp(cb, 0.5);
+    const pos = [
+      ...O.toArray(),
+      ...tipPositions[a].toArray(),
+      ...tipPositions[b].toArray(),
+    ];
+    const col = [
+      mid.r, mid.g, mid.b,
+      ca.r,  ca.g,  ca.b,
+      cb.r,  cb.g,  cb.b,
+    ];
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('color',    new THREE.Float32BufferAttribute(col, 3));
+    geo.computeVertexNormals();
+    crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.22,
+      roughness: 0.05,
+      metalness: 0.0,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    })));
+  }
+
+  // ── outer edges (dim gold lines) ──
+  const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
+  const lineGeo  = new THREE.BufferGeometry().setFromPoints(outerPts);
+  crystalGroup.add(new THREE.Line(lineGeo, new THREE.LineBasicMaterial({
+    color: 0xC9A96E, transparent: true, opacity: 0.25,
+  })));
+
+  // ── axis lines E↔M, R↔L (even dimmer) ──
+  for (const [a, b] of [['E','M'],['R','L']]) {
+    const ag = new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]);
+    crystalGroup.add(new THREE.Line(ag, new THREE.LineBasicMaterial({
+      color: 0x888888, transparent: true, opacity: 0.1,
+    })));
+  }
+
+  // ── tip dots ──
+  for (const [f, pos] of Object.entries(tipPositions)) {
+    const c  = ch[f];
+    const r  = [0, 0.065, 0.048, 0.034, 0.022][c];
+    const dot = new THREE.Mesh(
+      new THREE.SphereGeometry(r, 16, 16),
+      new THREE.MeshBasicMaterial({ color: C(f) })
+    );
+    dot.position.copy(pos);
+    crystalGroup.add(dot);
+  }
+
+  // ── center core ──
+  const blendC = new THREE.Color(0, 0, 0);
+  Object.entries(ch).forEach(([f, c]) => {
+    const w = WEIGHTS[c], fc = C(f);
+    blendC.r += fc.r * w; blendC.g += fc.g * w; blendC.b += fc.b * w;
+  });
+  const core = new THREE.Mesh(
+    new THREE.SphereGeometry(0.06, 16, 16),
+    new THREE.MeshBasicMaterial({ color: blendC })
+  );
+  crystalGroup.add(core);
+
+  // ── pulse spheres — one per outer edge ──
+  EDGE_DEFS.forEach(([a, b], i) => {
+    const ca = C(a), cb = C(b);
+    const pulseColor = ca.clone().lerp(cb, 0.5);
+    // speed inversely proportional to sum of positions (dominant = faster)
+    const speed = 0.28 / ((ch[a] + ch[b]) * 0.5);
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.038, 12, 12),
+      new THREE.MeshBasicMaterial({ color: pulseColor })
+    );
+    pulses[i].speed = speed;
+    pulseMeshes.push(mesh);
+    crystalGroup.add(mesh);
+  });
+
+  scene.add(crystalGroup);
+}
+
+// ── ANIMATION LOOP ──────────────────────────────────────────────
+function startLoop() {
+  (function loop() {
+    requestAnimationFrame(loop);
+
+    // crystal rotation
+    if (crystalGroup) {
+      crystalGroup.rotation.y += 0.004;
+      crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.04;
+    }
+
+    // pulse travel: move each sphere along its edge
+    EDGE_DEFS.forEach(([a, b], i) => {
+      const p = pulses[i];
+      p.t = (p.t + p.speed * 0.016) % 1;
+      const from = tipPositions[a], to = tipPositions[b];
+      if (from && to && pulseMeshes[i]) {
+        pulseMeshes[i].position.lerpVectors(from, to, p.t);
+        // brightness pulses with a sinusoidal envelope around the head
+        const glow = Math.pow(Math.sin(p.t * Math.PI), 1.8);
+        pulseMeshes[i].material.opacity = 0.3 + glow * 0.7;
+        pulseMeshes[i].scale.setScalar(0.5 + glow * 0.8);
+      }
+    });
+
+    renderer.render(scene, camera);
+  })();
+}
+
+// ── TEXT UPDATE ─────────────────────────────────────────────────
+function updateText(idx) {
+  const name = TYPES[idx].name;
+  document.getElementById('typeName').textContent       = name;
+  document.getElementById('readingEyebrow').textContent = `Soul Reading · ${name}`;
+  document.title = `${name} Soul Crystal — StarSeedSoul`;
+  const btn = document.getElementById('unlockBtn');
+  const url = GUMROAD_LINKS[name];
+  btn.href  = (url && !url.includes('REPLACE')) ? url : 'quiz.html';
+  TYPES[idx].funcs.forEach((f, i) => {
+    document.getElementById(`desc${i+1}text`).textContent = PREVIEWS[f][i+1];
+  });
+}
+
+function draw(idx) { buildCrystal(idx); updateText(idx); }
+
+// ── SELECTOR ────────────────────────────────────────────────────
+const sel = document.getElementById('typeSelector');
+TYPES.forEach((t, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'type-btn' + (i === current ? ' active' : '');
+  btn.textContent = t.name;
+  btn.onclick = () => {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    current=i;draw(i);
+    current = i; draw(i);
   };
   sel.appendChild(btn);
 });
 
+initThree();
 draw(current);
+startLoop();
 </script>
 
 </body>
