@@ -211,9 +211,10 @@ const TYPES = [
   {name:"Hyperborean",    funcs:["M","R","L","E"]},
 ];
 
-const FC_HEX = { E:'#ffb900', M:'#dc2828', R:'#28be50', L:'#3c82ff' };
 const WEIGHTS = [0, 0.60, 0.25, 0.12, 0.03];
 const R3D     = [0, 1.35,  0.95, 0.60, 0.32];
+const GOLD    = 0xC9A96E;
+const GOLD2   = 0xE8D5A8;
 
 const PREVIEWS={
   R:{
@@ -277,213 +278,151 @@ function getChannels(idx) {
   return ch;
 }
 
-// ── THREE.JS STATE ──────────────────────────────────────────────
-let scene, camera, renderer, crystalGroup;
+// ── THREE.JS ────────────────────────────────────────────────────
+let scene, camera, renderer, crystalGroup, clock;
 let targetRX = 0, targetRY = 0;
 
-// Per-edge pulse state: t ∈ [0,1) along the edge
-const EDGE_DEFS = [['E','R'],['R','M'],['M','L'],['L','E']]; // outer ring
-const pulses = EDGE_DEFS.map((_, i) => ({ t: i * 0.25 }));  // stagger starts
+const EDGE_DEFS = [['E','R'],['R','M'],['M','L'],['L','E']];
+const EDGE_SEG  = 48;
+let pulseLines   = [];
+let tipPositions = {};
 
 function initThree() {
   const stage  = document.querySelector('.stage');
   const canvas = document.getElementById('crystalCanvas');
   const S = stage.offsetWidth;
-
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
   renderer.setSize(S, S);
-
+  clock  = new THREE.Clock();
   scene  = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(44, 1, 0.1, 50);
-  camera.position.set(0, 0.2, 4.2);
-  camera.lookAt(0, 0, 0);
-
-  scene.add(new THREE.AmbientLight(0xffffff, 0.3));
-  const key = new THREE.DirectionalLight(0xE8D5A8, 1.4);
-  key.position.set(2, 3, 3); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.3);
-  fill.position.set(-3, -1, -2); scene.add(fill);
-  const rim = new THREE.PointLight(0xC9A96E, 0.6, 12);
-  rim.position.set(0, 2, -3); scene.add(rim);
-
+  camera.position.set(0, 0, 4.5);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.08));
+  const key = new THREE.DirectionalLight(GOLD, 1.2);
+  key.position.set(3, 4, 5); scene.add(key);
+  const fill = new THREE.DirectionalLight(0x8A7444, 0.4);
+  fill.position.set(-4, -2, 3); scene.add(fill);
   document.addEventListener('mousemove', e => {
-    targetRX = (e.clientY / window.innerHeight - 0.5) * 0.55;
-    targetRY = (e.clientX / window.innerWidth  - 0.5) * 0.55;
+    targetRX = (e.clientY / window.innerHeight - 0.5) * 0.3;
+    targetRY = (e.clientX / window.innerWidth  - 0.5) * 0.3;
   });
-
-  window.addEventListener('resize', () => {
-    const S2 = stage.offsetWidth;
-    renderer.setSize(S2, S2);
-  });
+  window.addEventListener('resize', () => { renderer.setSize(stage.offsetWidth, stage.offsetWidth); });
 }
-
-// ── BUILD CRYSTAL ───────────────────────────────────────────────
-let tipPositions = {};   // world positions of E/M/R/L tips
-let pulseMeshes  = [];   // one glowing sphere per edge
 
 function buildCrystal(idx) {
   if (crystalGroup) {
-    crystalGroup.traverse(o => {
-      if (o.geometry) o.geometry.dispose();
-      if (o.material) o.material.dispose();
-    });
+    crystalGroup.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
     scene.remove(crystalGroup);
   }
   crystalGroup = new THREE.Group();
-  pulseMeshes  = [];
+  pulseLines   = [];
 
   const ch = getChannels(idx);
-  const C  = k => new THREE.Color(FC_HEX[k]);
-
-  // 4 tip positions — same axes as 2D original
-  const rE = R3D[ch.E], rM = R3D[ch.M], rR = R3D[ch.R], rL = R3D[ch.L];
   tipPositions = {
-    E: new THREE.Vector3(0,  rE, 0),
-    M: new THREE.Vector3(0, -rM, 0),
-    R: new THREE.Vector3( rR, 0, 0),
-    L: new THREE.Vector3(-rL, 0, 0),
+    E: new THREE.Vector3(0,           R3D[ch.E],  0),
+    M: new THREE.Vector3(0,          -R3D[ch.M],  0),
+    R: new THREE.Vector3( R3D[ch.R],  0,           0),
+    L: new THREE.Vector3(-R3D[ch.L],  0,           0),
   };
 
-  // ── faces (4 triangles through center, DoubleSide) ──
-  const faceList = [['E','R'],['R','M'],['M','L'],['L','E']];
   const O = new THREE.Vector3(0, 0, 0);
 
-  for (const [a, b] of faceList) {
-    const ca = C(a), cb = C(b);
-    const mid = ca.clone().lerp(cb, 0.5);
-    const pos = [
-      ...O.toArray(),
-      ...tipPositions[a].toArray(),
-      ...tipPositions[b].toArray(),
-    ];
-    const col = [
-      mid.r, mid.g, mid.b,
-      ca.r,  ca.g,  ca.b,
-      cb.r,  cb.g,  cb.b,
-    ];
+  // dark metallic faces
+  for (const [a, b] of EDGE_DEFS) {
+    const pos = [...O.toArray(), ...tipPositions[a].toArray(), ...tipPositions[b].toArray()];
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    geo.setAttribute('color',    new THREE.Float32BufferAttribute(col, 3));
     geo.computeVertexNormals();
-    crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.55,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide,
-      depthWrite: false,
+    crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
+      color: 0x1a1a1a, metalness: 0.9, roughness: 0.1,
+      clearcoat: 1.0, clearcoatRoughness: 0.05,
+      side: THREE.DoubleSide, transparent: true, opacity: 0.9,
     })));
   }
 
-  // ── outer edges (dim gold lines) ──
+  // dim static gold outline
   const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
-  const lineGeo  = new THREE.BufferGeometry().setFromPoints(outerPts);
-  crystalGroup.add(new THREE.Line(lineGeo, new THREE.LineBasicMaterial({
-    color: 0xC9A96E, transparent: true, opacity: 0.5,
-    blending: THREE.AdditiveBlending,
-  })));
-
-  // ── axis lines E↔M, R↔L ──
+  crystalGroup.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(outerPts),
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.2 })
+  ));
   for (const [a, b] of [['E','M'],['R','L']]) {
-    const ag = new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]);
-    crystalGroup.add(new THREE.Line(ag, new THREE.LineBasicMaterial({
-      color: 0x444444, transparent: true, opacity: 0.4,
-      blending: THREE.AdditiveBlending,
-    })));
+    crystalGroup.add(new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]),
+      new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.07 })
+    ));
   }
 
-  // ── tip dots — bright core + soft halo ──
+  // animated pulse lines — the edge itself lights up
+  EDGE_DEFS.forEach(([a, b], i) => {
+    const N   = EDGE_SEG;
+    const pts = [];
+    for (let j = 0; j < N; j++)
+      pts.push(new THREE.Vector3().lerpVectors(tipPositions[a], tipPositions[b], j / (N - 1)));
+    const geo      = new THREE.BufferGeometry().setFromPoints(pts);
+    const colBuf   = new Float32Array(N * 3);
+    const colorAttr = new THREE.BufferAttribute(colBuf, 3);
+    geo.setAttribute('color', colorAttr);
+    const line = new THREE.Line(geo, new THREE.LineBasicMaterial({
+      vertexColors: true, transparent: true,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    }));
+    crystalGroup.add(line);
+    const speed = 0.38 / ((ch[a] + ch[b]) * 0.5);
+    pulseLines.push({ colorAttr, speed, phase: i * 0.25 });
+  });
+
+  // gold tip dots
   for (const [f, pos] of Object.entries(tipPositions)) {
-    const c = ch[f];
-    const r = [0, 0.07, 0.052, 0.037, 0.024][c];
-    // halo
-    const halo = new THREE.Mesh(
-      new THREE.SphereGeometry(r * 3.5, 16, 16),
-      new THREE.MeshBasicMaterial({ color: C(f), transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false })
-    );
-    halo.position.copy(pos);
-    crystalGroup.add(halo);
-    // core
+    const r = [0, 0.055, 0.04, 0.028, 0.018][ch[f]];
     const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(r, 16, 16),
-      new THREE.MeshBasicMaterial({ color: C(f), blending: THREE.AdditiveBlending, depthWrite: false })
+      new THREE.SphereGeometry(r, 12, 12),
+      new THREE.MeshStandardMaterial({ color: GOLD, metalness: 1, roughness: 0.3, emissive: GOLD, emissiveIntensity: 0.5 })
     );
     dot.position.copy(pos);
     crystalGroup.add(dot);
   }
 
-  // ── center core ──
-  const blendC = new THREE.Color(0, 0, 0);
-  Object.entries(ch).forEach(([f, c]) => {
-    const w = WEIGHTS[c], fc = C(f);
-    blendC.r += fc.r * w; blendC.g += fc.g * w; blendC.b += fc.b * w;
-  });
-  // center halo
-  crystalGroup.add(new THREE.Mesh(
-    new THREE.SphereGeometry(0.22, 16, 16),
-    new THREE.MeshBasicMaterial({ color: blendC, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false })
-  ));
-  crystalGroup.add(new THREE.Mesh(
-    new THREE.SphereGeometry(0.07, 16, 16),
-    new THREE.MeshBasicMaterial({ color: blendC, blending: THREE.AdditiveBlending, depthWrite: false })
-  ));
-
-  // ── pulse — one impulse per outer edge ──
-  EDGE_DEFS.forEach(([a, b], i) => {
-    const pulseColor = C(a).clone().lerp(C(b), 0.5);
-    const speed = 0.30 / ((ch[a] + ch[b]) * 0.5);
-    // glow halo behind the head
-    const halo = new THREE.Mesh(
-      new THREE.SphereGeometry(0.10, 12, 12),
-      new THREE.MeshBasicMaterial({ color: pulseColor, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, depthWrite: false })
-    );
-    // bright head
-    const head = new THREE.Mesh(
-      new THREE.SphereGeometry(0.038, 12, 12),
-      new THREE.MeshBasicMaterial({ color: pulseColor, blending: THREE.AdditiveBlending, depthWrite: false })
-    );
-    pulses[i].speed = speed;
-    pulseMeshes.push({ head, halo });
-    crystalGroup.add(halo);
-    crystalGroup.add(head);
-  });
+  // center
+  crystalGroup.add(Object.assign(new THREE.Mesh(
+    new THREE.SphereGeometry(0.05, 16, 16),
+    new THREE.MeshStandardMaterial({ color: GOLD2, metalness: 1, roughness: 0.2, emissive: GOLD, emissiveIntensity: 0.6 })
+  )));
 
   scene.add(crystalGroup);
 }
 
-// ── ANIMATION LOOP ──────────────────────────────────────────────
+const goldC   = new THREE.Color(GOLD);
+const brightC = new THREE.Color(GOLD2);
+
 function startLoop() {
   (function loop() {
     requestAnimationFrame(loop);
-
-    // crystal rotation
+    const t = clock.getElapsedTime();
     if (crystalGroup) {
-      crystalGroup.rotation.y += 0.004;
-      crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.04;
+      crystalGroup.rotation.y = t * 0.08 + targetRY * 0.3;
+      crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.05;
     }
-
-    // pulse travel along each outer edge
-    EDGE_DEFS.forEach(([a, b], i) => {
-      const p = pulses[i];
-      p.t = (p.t + p.speed * 0.016) % 1;
-      const from = tipPositions[a], to = tipPositions[b];
-      if (!from || !to || !pulseMeshes[i]) return;
-      const { head, halo } = pulseMeshes[i];
-      head.position.lerpVectors(from, to, p.t);
-      halo.position.copy(head.position);
-      // envelope: bright in middle, fades at vertices
-      const env = Math.pow(Math.sin(p.t * Math.PI), 1.6);
-      head.scale.setScalar(0.6 + env * 1.0);
-      halo.scale.setScalar(0.5 + env * 1.4);
-      halo.material.opacity = 0.05 + env * 0.22;
+    // energy pulse: illuminate the edge itself
+    pulseLines.forEach(({ colorAttr, speed, phase }) => {
+      const N    = EDGE_SEG;
+      const head = (t * speed + phase) % 1;
+      for (let j = 0; j < N; j++) {
+        const pos  = j / (N - 1);
+        const d    = Math.min(Math.abs(pos - head), 1 - Math.abs(pos - head));
+        const b    = Math.exp(-d * d * 90) + Math.exp(-d * d * 14) * 0.3;
+        const c    = goldC.clone().lerp(brightC, Math.min(b, 1));
+        colorAttr.setXYZ(j, c.r * b, c.g * b, c.b * b);
+      }
+      colorAttr.needsUpdate = true;
     });
-
     renderer.render(scene, camera);
   })();
 }
 
-// ── TEXT UPDATE ─────────────────────────────────────────────────
 function updateText(idx) {
   const name = TYPES[idx].name;
   document.getElementById('typeName').textContent       = name;
@@ -499,7 +438,6 @@ function updateText(idx) {
 
 function draw(idx) { buildCrystal(idx); updateText(idx); }
 
-// ── SELECTOR ────────────────────────────────────────────────────
 const sel = document.getElementById('typeSelector');
 TYPES.forEach((t, i) => {
   const btn = document.createElement('button');
