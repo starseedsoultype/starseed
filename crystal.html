@@ -366,12 +366,11 @@ function buildCrystal(idx) {
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     geo.setAttribute('color',    new THREE.Float32BufferAttribute(col, 3));
     geo.computeVertexNormals();
-    crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
+    crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: 0.22,
-      roughness: 0.05,
-      metalness: 0.0,
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending,
       side: THREE.DoubleSide,
       depthWrite: false,
     })));
@@ -381,24 +380,34 @@ function buildCrystal(idx) {
   const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
   const lineGeo  = new THREE.BufferGeometry().setFromPoints(outerPts);
   crystalGroup.add(new THREE.Line(lineGeo, new THREE.LineBasicMaterial({
-    color: 0xC9A96E, transparent: true, opacity: 0.25,
+    color: 0xC9A96E, transparent: true, opacity: 0.5,
+    blending: THREE.AdditiveBlending,
   })));
 
-  // ── axis lines E↔M, R↔L (even dimmer) ──
+  // ── axis lines E↔M, R↔L ──
   for (const [a, b] of [['E','M'],['R','L']]) {
     const ag = new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]);
     crystalGroup.add(new THREE.Line(ag, new THREE.LineBasicMaterial({
-      color: 0x888888, transparent: true, opacity: 0.1,
+      color: 0x444444, transparent: true, opacity: 0.4,
+      blending: THREE.AdditiveBlending,
     })));
   }
 
-  // ── tip dots ──
+  // ── tip dots — bright core + soft halo ──
   for (const [f, pos] of Object.entries(tipPositions)) {
-    const c  = ch[f];
-    const r  = [0, 0.065, 0.048, 0.034, 0.022][c];
+    const c = ch[f];
+    const r = [0, 0.07, 0.052, 0.037, 0.024][c];
+    // halo
+    const halo = new THREE.Mesh(
+      new THREE.SphereGeometry(r * 3.5, 16, 16),
+      new THREE.MeshBasicMaterial({ color: C(f), transparent: true, opacity: 0.12, blending: THREE.AdditiveBlending, depthWrite: false })
+    );
+    halo.position.copy(pos);
+    crystalGroup.add(halo);
+    // core
     const dot = new THREE.Mesh(
       new THREE.SphereGeometry(r, 16, 16),
-      new THREE.MeshBasicMaterial({ color: C(f) })
+      new THREE.MeshBasicMaterial({ color: C(f), blending: THREE.AdditiveBlending, depthWrite: false })
     );
     dot.position.copy(pos);
     crystalGroup.add(dot);
@@ -410,25 +419,34 @@ function buildCrystal(idx) {
     const w = WEIGHTS[c], fc = C(f);
     blendC.r += fc.r * w; blendC.g += fc.g * w; blendC.b += fc.b * w;
   });
-  const core = new THREE.Mesh(
-    new THREE.SphereGeometry(0.06, 16, 16),
-    new THREE.MeshBasicMaterial({ color: blendC })
-  );
-  crystalGroup.add(core);
+  // center halo
+  crystalGroup.add(new THREE.Mesh(
+    new THREE.SphereGeometry(0.22, 16, 16),
+    new THREE.MeshBasicMaterial({ color: blendC, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false })
+  ));
+  crystalGroup.add(new THREE.Mesh(
+    new THREE.SphereGeometry(0.07, 16, 16),
+    new THREE.MeshBasicMaterial({ color: blendC, blending: THREE.AdditiveBlending, depthWrite: false })
+  ));
 
-  // ── pulse spheres — one per outer edge ──
+  // ── pulse — one impulse per outer edge ──
   EDGE_DEFS.forEach(([a, b], i) => {
-    const ca = C(a), cb = C(b);
-    const pulseColor = ca.clone().lerp(cb, 0.5);
-    // speed inversely proportional to sum of positions (dominant = faster)
-    const speed = 0.28 / ((ch[a] + ch[b]) * 0.5);
-    const mesh = new THREE.Mesh(
+    const pulseColor = C(a).clone().lerp(C(b), 0.5);
+    const speed = 0.30 / ((ch[a] + ch[b]) * 0.5);
+    // glow halo behind the head
+    const halo = new THREE.Mesh(
+      new THREE.SphereGeometry(0.10, 12, 12),
+      new THREE.MeshBasicMaterial({ color: pulseColor, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, depthWrite: false })
+    );
+    // bright head
+    const head = new THREE.Mesh(
       new THREE.SphereGeometry(0.038, 12, 12),
-      new THREE.MeshBasicMaterial({ color: pulseColor })
+      new THREE.MeshBasicMaterial({ color: pulseColor, blending: THREE.AdditiveBlending, depthWrite: false })
     );
     pulses[i].speed = speed;
-    pulseMeshes.push(mesh);
-    crystalGroup.add(mesh);
+    pulseMeshes.push({ head, halo });
+    crystalGroup.add(halo);
+    crystalGroup.add(head);
   });
 
   scene.add(crystalGroup);
@@ -445,18 +463,20 @@ function startLoop() {
       crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.04;
     }
 
-    // pulse travel: move each sphere along its edge
+    // pulse travel along each outer edge
     EDGE_DEFS.forEach(([a, b], i) => {
       const p = pulses[i];
       p.t = (p.t + p.speed * 0.016) % 1;
       const from = tipPositions[a], to = tipPositions[b];
-      if (from && to && pulseMeshes[i]) {
-        pulseMeshes[i].position.lerpVectors(from, to, p.t);
-        // brightness pulses with a sinusoidal envelope around the head
-        const glow = Math.pow(Math.sin(p.t * Math.PI), 1.8);
-        pulseMeshes[i].material.opacity = 0.3 + glow * 0.7;
-        pulseMeshes[i].scale.setScalar(0.5 + glow * 0.8);
-      }
+      if (!from || !to || !pulseMeshes[i]) return;
+      const { head, halo } = pulseMeshes[i];
+      head.position.lerpVectors(from, to, p.t);
+      halo.position.copy(head.position);
+      // envelope: bright in middle, fades at vertices
+      const env = Math.pow(Math.sin(p.t * Math.PI), 1.6);
+      head.scale.setScalar(0.6 + env * 1.0);
+      halo.scale.setScalar(0.5 + env * 1.4);
+      halo.material.opacity = 0.05 + env * 0.22;
     });
 
     renderer.render(scene, camera);
