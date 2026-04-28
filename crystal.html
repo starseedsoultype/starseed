@@ -442,13 +442,10 @@ function startLoop() {
       crystalGroup.rotation.y = t * 0.08 + targetRY * 0.3;
       crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.05;
     }
-    // orbits: slow counter-rotation + mouse tilt
+    // orbits stay fixed to crystal, only tilt with mouse for 3D feel
     if (orbitGroup) {
-      orbitGroup.rotation.z = t * 0.05;
-      orbitGroup.children[0].rotation.z = t * 0.05;
-      orbitGroup.children[1].rotation.y = -t * 0.04;
-      orbitGroup.rotation.x += (targetRX * 0.6 - orbitGroup.rotation.x) * 0.06;
-      orbitGroup.rotation.z += (targetRY * 0.6 - orbitGroup.rotation.z) * 0.06;
+      orbitGroup.rotation.x += (targetRX * 0.25 - orbitGroup.rotation.x) * 0.05;
+      orbitGroup.rotation.z += (-targetRY * 0.25 - orbitGroup.rotation.z) * 0.05;
     }
 
     // energy pulse: illuminate the edge itself
