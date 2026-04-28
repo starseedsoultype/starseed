@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>StarSeedSoul Hero Magnetic Test</title>
+<title>Звёздная душа · Hero Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#020202;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:#020202}.hero-ref{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:brightness(.72) contrast(1.18)}.shade{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,0) 0%,rgba(0,0,0,.08) 56%,rgba(0,0,0,.46) 100%)}#magnetic{position:absolute;inset:0;width:100%;height:100%;z-index:2;mix-blend-mode:screen;pointer-events:none}.copy{position:absolute;left:0;right:0;bottom:8vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 28px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#e8d5a8;opacity:.54}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#020202;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:#020202}.hero-ref{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:brightness(.72) contrast(1.18)}.shade{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,0) 0%,rgba(0,0,0,.08) 56%,rgba(0,0,0,.46) 100%)}#magnetic{position:absolute;inset:0;width:100%;height:100%;z-index:2;mix-blend-mode:screen;pointer-events:none}.copy{position:absolute;left:0;right:0;bottom:8vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(6px,1.5vw,18px);text-transform:uppercase;text-shadow:0 0 28px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#e8d5a8;opacity:.54}
 </style>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <img id="heroRef" class="hero-ref" src="hero-reference.png" alt="wireframe faces reference" />
 <canvas id="magnetic"></canvas>
 <div class="shade"></div>
-<div class="copy"><h1>StarSeedSoul</h1><p>Recognize your origin</p></div>
+<div class="copy"><h1>Звёздная душа</h1><p>Узнай себя</p></div>
 </section>
 <script>
 const canvas=document.getElementById('magnetic');const ctx=canvas.getContext('2d');const heroRef=document.getElementById('heroRef');let W,H,DPR,needles=[];let start=performance.now();
@@ -25,7 +25,7 @@ function farPoint(side,origin){const angle=(side==='left'?Math.PI:0)+(Math.rando
 function nearPoint(side,origin){const angle=(side==='left'?0:Math.PI)+(Math.random()-.5)*1.9;const len=Math.min(W,H)*(.07+Math.random()*.22);return{x:origin.x+Math.cos(angle)*len,y:origin.y+Math.sin(angle)*len}}
 function oppositePoint(side){return facePoint(side==='left'?'right':'left')}
 function makeNeedle(delay){const from=Math.random()<.5?'left':'right';const a=facePoint(from);const r=Math.random();let b,type;if(r<.22){b=farPoint(from,a);type='long'}else if(r<.62){b=nearPoint(from,a);type='short'}else{b=oppositePoint(from);type='bridge'}return{from,a,b,type,delay,life:(type==='long'?8.5:type==='short'?4.6:6.8)+Math.random()*(type==='long'?4.8:3.6),jitter:1.2+Math.random()*3.8,randomPower:(type==='long'?.50:.72)+Math.random()*.38}}
-function buildNeedles(){needles=[];let delay=0;for(let i=0;i<112;i++){delay+=.015+Math.random()*.09;if(Math.random()<.32){let burst=2+Math.floor(Math.random()*4);for(let b=0;b<burst;b++)needles.push(makeNeedle(delay+b*(.03+Math.random()*.06)));}else needles.push(makeNeedle(delay));}}
+function buildNeedles(){needles=[];let delay=0;for(let i=0;i<95;i++){delay+=.015+Math.random()*.09;if(Math.random()<.32){let burst=2+Math.floor(Math.random()*4);for(let b=0;b<burst;b++)needles.push(makeNeedle(delay+b*(.03+Math.random()*.06)));}else needles.push(makeNeedle(delay));}}
 function opacityCurve(p){if(p<0||p>1)return 0;return Math.sin(Math.PI*p)}
 function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
 function recycle(n,now){Object.assign(n,makeNeedle(now+.15+Math.random()*2.2))}
