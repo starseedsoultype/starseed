@@ -394,33 +394,37 @@ function buildCrystal(idx) {
     new THREE.MeshStandardMaterial({ color: GOLD2, metalness: 1, roughness: 0.2, emissive: GOLD, emissiveIntensity: 0.6 })
   )));
 
-  // ── elliptical orbits connecting opposing vertices ──
+  // ── elliptical orbits passing exactly through opposing vertices ──
   orbitGroup = new THREE.Group();
 
-  // E↔M orbit: ellipse in XY plane, major axis along Y
-  const rEM = (R3D[ch.E] + R3D[ch.M]) * 0.58;
-  const emMinor = (R3D[ch.R] + R3D[ch.L]) * 0.22;
+  // E↔M orbit: passes through E(0,rE,0) and M(0,-rM,0)
+  // center offset = (rE-rM)/2, semi-major = (rE+rM)/2
+  const emCy    = (R3D[ch.E] - R3D[ch.M]) / 2;
+  const emMajor = (R3D[ch.E] + R3D[ch.M]) / 2;
+  const emMinor = Math.max(R3D[ch.R], R3D[ch.L]) * 0.55;
   const emPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    emPts.push(new THREE.Vector3(Math.cos(a) * emMinor, Math.sin(a) * rEM, 0));
+    emPts.push(new THREE.Vector3(Math.cos(a) * emMinor, emCy + Math.sin(a) * emMajor, 0));
   }
   orbitGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(emPts),
-    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.38, depthTest: false })
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
-  // R↔L orbit: ellipse in XZ plane, major axis along X
-  const rRL = (R3D[ch.R] + R3D[ch.L]) * 0.58;
-  const rlMinor = (R3D[ch.E] + R3D[ch.M]) * 0.22;
+  // R↔L orbit: passes through R(rR,0,0) and L(-rL,0,0)
+  // center offset = (rR-rL)/2, semi-major = (rR+rL)/2
+  const rlCx    = (R3D[ch.R] - R3D[ch.L]) / 2;
+  const rlMajor = (R3D[ch.R] + R3D[ch.L]) / 2;
+  const rlMinor = Math.max(R3D[ch.E], R3D[ch.M]) * 0.55;
   const rlPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    rlPts.push(new THREE.Vector3(Math.sin(a) * rRL, 0, Math.cos(a) * rlMinor));
+    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, 0, Math.sin(a) * rlMinor));
   }
   orbitGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(rlPts),
-    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.38, depthTest: false })
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
   crystalGroup.add(orbitGroup);
