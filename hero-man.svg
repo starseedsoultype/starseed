@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900">
+  <defs>
+    <style>
+      .line{fill:none;stroke:#e8d5a8;stroke-linecap:round;stroke-linejoin:round}
+      .bright{stroke-opacity:.82;stroke-width:1.6}
+      .mid{stroke-opacity:.42;stroke-width:.95}
+      .soft{stroke-opacity:.22;stroke-width:.7}
+      .plane{fill:#e8d5a8;fill-opacity:.055;stroke:#e8d5a8;stroke-opacity:.18;stroke-width:.6}
+    </style>
+  </defs>
+  <g transform="translate(18,-4)">
+    <path class="line bright" d="M675 130 L535 110 L398 145 L280 220 L226 315 L162 370 L220 415 L188 470 L248 515 L285 588 L368 690 L500 760 L616 705 L690 592 L663 482 L722 365 L752 235 Z"/>
+    <path class="line bright" d="M675 235 L740 300 L700 345 L752 382 L690 410 L728 468 L675 495 L632 590 L616 705"/>
+    <path class="line mid" d="M535 110 L590 275 L740 300 L663 482 L675 495 L500 760"/>
+    <path class="line mid" d="M398 145 L520 296 L625 314 L700 345"/>
+    <path class="line mid" d="M280 220 L520 296 L690 410 L535 455 L398 405"/>
+    <path class="line mid" d="M162 370 L88 310 L24 368 L96 438 L188 470"/>
+    <path class="line mid" d="M280 220 L150 115 L28 80 L24 368"/>
+    <path class="line mid" d="M368 690 L228 812 L55 730 L248 515"/>
+    <path class="line mid" d="M580 360 L690 410 L632 590 L500 760 L535 455"/>
+    <path class="line mid" d="M585 456 L690 410 L632 444"/>
+    <path class="line mid" d="M530 565 L675 495 L616 705"/>
+    <path class="line mid" d="M470 340 L590 275 L625 314"/>
+    <path class="line mid" d="M396 425 L470 340 L535 455"/>
+    <path class="line mid" d="M398 405 L322 486 L368 590 L500 580 L585 456"/>
+    <polygon class="plane" points="398,145 535,110 520,296"/>
+    <polygon class="plane" points="226,315 398,405 322,486"/>
+    <polygon class="plane" points="616,705 675,495 728,468"/>
+    <polygon class="plane" points="500,760 632,590 616,705"/>
+    <g class="line soft">
+      <path d="M535 110 L625 314 L722 365 L590 275 L535 110 L398 145 L280 220 L398 405 L535 455 L585 456 L632 590 L500 760 L368 690 L248 515 L322 486 L220 415"/>
+      <path d="M280 220 L520 296 L700 345 L535 455 L398 405 L248 515 L500 580 L632 590"/>
+      <path d="M535 110 L690 410 L500 760"/>
+      <path d="M150 115 L-40 40 M88 310 L-70 275 M96 438 L-55 510 M228 812 L70 880"/>
+      <path d="M24 368 L-90 420 L-30 520 L188 470"/>
+      <path d="M280 220 L52 160 L-28 80"/>
+      <path d="M368 690 L130 705 L55 730"/>
+    </g>
+  </g>
+</svg>
