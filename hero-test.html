@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>StarSeedSoul Hero Magnetic Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#020202;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:#020202}.hero-ref{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:brightness(.78) contrast(1.14);opacity:.98}.shade{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,0) 0%,rgba(0,0,0,.10) 56%,rgba(0,0,0,.48) 100%)}#magnetic{position:absolute;inset:0;width:100%;height:100%;z-index:2;mix-blend-mode:screen;pointer-events:none}.copy{position:absolute;left:0;right:0;bottom:8vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 28px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#020202;overflow:hidden}.hero{position:relative;width:100vw;height:100vh;background:#020202}.hero-ref{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;filter:brightness(.72) contrast(1.18);opacity:.96}.shade{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,0,0,0) 0%,rgba(0,0,0,.08) 56%,rgba(0,0,0,.46) 100%)}#magnetic{position:absolute;inset:0;width:100%;height:100%;z-index:2;mix-blend-mode:screen;pointer-events:none}.copy{position:absolute;left:0;right:0;bottom:8vh;z-index:3;text-align:center;pointer-events:none;color:#e8e4df}.copy h1{font-family:Georgia,serif;font-weight:300;font-size:clamp(42px,7vw,92px);letter-spacing:clamp(10px,2vw,28px);text-transform:uppercase;text-shadow:0 0 28px rgba(0,0,0,.95)}.copy p{margin-top:18px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:#8e867c}
 </style>
 </head>
 <body>
@@ -16,20 +16,13 @@
 <div class="copy"><h1>StarSeedSoul</h1><p>Recognize your origin</p></div>
 </section>
 <script>
-const canvas=document.getElementById('magnetic');const ctx=canvas.getContext('2d');let W,H,DPR,links=[];
-function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);buildLinks()}window.addEventListener('resize',resize);
-function randomFacePoint(side){
-  const y=H*(.23+Math.random()*.48);
-  const local=(y-H*.23)/(H*.48);
-  const bulge=Math.sin(local*Math.PI);
-  if(side==='left'){
-    return {x:W*(.31+Math.random()*.18+bulge*.045)+(Math.random()-.5)*18,y:y+(Math.random()-.5)*20};
-  }
-  return {x:W*(.51+Math.random()*.18-bulge*.045)+(Math.random()-.5)*18,y:y+(Math.random()-.5)*20};
-}
-function buildLinks(){links=[];for(let i=0;i<58;i++){const a=randomFacePoint('left'),b=randomFacePoint('right');links.push({a,b,age:Math.random(),speed:.0016+Math.random()*.003,life:.65+Math.random()*.85,jitter:Math.random()*6})}}
-function resetLink(l){l.a=randomFacePoint('left');l.b=randomFacePoint('right');l.age=0;l.life=.65+Math.random()*.85;l.speed=.0016+Math.random()*.003;l.jitter=Math.random()*6}
-function draw(ms){const t=ms*.001;ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';links.forEach((l,i)=>{l.age+=l.speed;let p=l.age/l.life;if(p>=1){resetLink(l);p=0}const fade=p<.22?p/.22:p>.74?(1-p)/.26:1;const ax=l.a.x+Math.sin(t*.9+i)*l.jitter;const ay=l.a.y+Math.cos(t*.75+i)*l.jitter*.45;const bx=l.b.x+Math.cos(t*.85+i)*l.jitter;const by=l.b.y+Math.sin(t*.7+i)*l.jitter*.45;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${.025+fade*.105})`;ctx.lineWidth=.28+fade*.32;ctx.stroke();if(i%6===0){const t1=.25+Math.sin(t+i)*.25;const mx=ax+(bx-ax)*t1,my=ay+(by-ay)*t1;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(mx+(Math.random()-.5)*14,my+(Math.random()-.5)*14);ctx.lineTo(bx,by);ctx.strokeStyle=`rgba(232,213,168,${fade*.035})`;ctx.lineWidth=.25;ctx.stroke()}});requestAnimationFrame(draw)}resize();requestAnimationFrame(draw);
+const canvas=document.getElementById('magnetic');const ctx=canvas.getContext('2d');let W,H,DPR,needles=[];
+function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);buildNeedles()}window.addEventListener('resize',resize);
+function facePoint(side){const y=H*(.24+Math.random()*.47);const local=(y-H*.24)/(H*.47);const bulge=Math.sin(local*Math.PI);if(side==='left')return{x:W*(.31+Math.random()*.18+bulge*.045)+(Math.random()-.5)*22,y:y+(Math.random()-.5)*24};return{x:W*(.51+Math.random()*.18-bulge*.045)+(Math.random()-.5)*22,y:y+(Math.random()-.5)*24}}
+function buildNeedles(){needles=[];for(let i=0;i<42;i++){const from=Math.random()<.5?'left':'right';const a=facePoint(from);const b=facePoint(from==='left'?'right':'left');needles.push({from,a,b,age:Math.random(),life:.9+Math.random()*1.3,speed:.006+Math.random()*.006,hold:.18+Math.random()*.18,jitter:2+Math.random()*5})}}
+function reset(n){n.from=Math.random()<.5?'left':'right';n.a=facePoint(n.from);n.b=facePoint(n.from==='left'?'right':'left');n.age=0;n.life=.9+Math.random()*1.3;n.speed=.006+Math.random()*.006;n.hold=.18+Math.random()*.18;n.jitter=2+Math.random()*5}
+function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+function draw(ms){const t=ms*.001;ctx.clearRect(0,0,W,H);ctx.globalCompositeOperation='lighter';needles.forEach((n,i)=>{n.age+=n.speed;if(n.age>=1)reset(n);let p=n.age;let grow=p<.58?ease(p/.58):1;let fade=p<.12?p/.12:p>.82?(1-p)/.18:1;let pull=p<.58?grow:1-(p-.58)*.18;let ax=n.a.x+Math.sin(t*1.1+i)*n.jitter;let ay=n.a.y+Math.cos(t*.9+i)*n.jitter*.45;let endX=ax+(n.b.x-ax)*pull;let endY=ay+(n.b.y-ay)*pull;let glow=.18+fade*.44;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(endX,endY);ctx.strokeStyle=`rgba(232,213,168,${glow})`;ctx.lineWidth=1.05+fade*.85;ctx.stroke();ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(endX,endY);ctx.strokeStyle=`rgba(255,236,190,${fade*.16})`;ctx.lineWidth=3.2;ctx.stroke();const tip=3.2+fade*2.2;ctx.beginPath();ctx.arc(endX,endY,tip,0,Math.PI*2);ctx.fillStyle=`rgba(232,213,168,${.20+fade*.34})`;ctx.fill();if(i%3===0&&grow>.45){let q=.35+Math.sin(t+i)*.2;let mx=ax+(endX-ax)*q,my=ay+(endY-ay)*q;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(mx+(Math.random()-.5)*18,my+(Math.random()-.5)*18);ctx.lineTo(endX,endY);ctx.strokeStyle=`rgba(232,213,168,${fade*.10})`;ctx.lineWidth=.65;ctx.stroke()}});requestAnimationFrame(draw)}resize();requestAnimationFrame(draw);
 </script>
 </body>
 </html>
