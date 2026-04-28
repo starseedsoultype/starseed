@@ -446,9 +446,9 @@ function startLoop() {
       crystalGroup.rotation.y = t * 0.07 + targetRY * 0.25;
       crystalGroup.rotation.x += (targetRX * 0.3 - crystalGroup.rotation.x) * 0.05;
     }
-    // orbits counter-rotate with offset — face-on when crystal is edge-on
+    // exact anti-phase: when crystal edge-on (y=π/2), orbits face-on (y=0)
     if (orbitGroup) {
-      orbitGroup.rotation.y = -t * 0.05 + Math.PI * 0.5;
+      orbitGroup.rotation.y = -t * 0.07 + Math.PI * 0.5;
       orbitGroup.rotation.x += (targetRX * 0.3 - orbitGroup.rotation.x) * 0.05;
     }
 
