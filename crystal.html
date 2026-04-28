@@ -318,6 +318,10 @@ function buildCrystal(idx) {
     crystalGroup.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
     scene.remove(crystalGroup);
   }
+  if (orbitGroup) {
+    orbitGroup.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
+    scene.remove(orbitGroup);
+  }
   crystalGroup = new THREE.Group();
   pulseLines   = [];
 
