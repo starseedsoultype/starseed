@@ -309,9 +309,9 @@ function initThree() {
   renderer.setSize(W, H);
   clock  = new THREE.Clock();
   scene  = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(44, W / H, 0.1, 50);
-  camera.position.set(0, 0.15, 3.2);
-  camera.lookAt(0, 0.15, 0);
+  camera = new THREE.PerspectiveCamera(36, W / H, 0.1, 50);
+  camera.position.set(0, 0, 4.5);
+  camera.lookAt(0, 0.2, 0);
   scene.add(new THREE.AmbientLight(0xffffff, 0.08));
   const key = new THREE.DirectionalLight(GOLD, 1.2);
   key.position.set(3, 4, 5); scene.add(key);
