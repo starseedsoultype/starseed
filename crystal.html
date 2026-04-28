@@ -337,9 +337,10 @@ function buildCrystal(idx) {
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     geo.computeVertexNormals();
     crystalGroup.add(new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
-      color: 0x1a1a1a, metalness: 0.9, roughness: 0.1,
+      color: 0x111111, metalness: 0.7, roughness: 0.1,
       clearcoat: 1.0, clearcoatRoughness: 0.05,
-      side: THREE.DoubleSide, transparent: true, opacity: 0.9,
+      transmission: 0.6, thickness: 0.3,
+      side: THREE.DoubleSide, transparent: true, opacity: 0.25, depthWrite: false,
     })));
   }
 
@@ -347,12 +348,12 @@ function buildCrystal(idx) {
   const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
   crystalGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(outerPts),
-    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.2 })
+    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.45, depthTest: false })
   ));
   for (const [a, b] of [['E','M'],['R','L']]) {
     crystalGroup.add(new THREE.Line(
       new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]),
-      new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.07 })
+      new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.18, depthTest: false })
     ));
   }
 
@@ -368,7 +369,7 @@ function buildCrystal(idx) {
     geo.setAttribute('color', colorAttr);
     const line = new THREE.Line(geo, new THREE.LineBasicMaterial({
       vertexColors: true, transparent: true,
-      blending: THREE.AdditiveBlending, depthWrite: false,
+      blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false,
     }));
     crystalGroup.add(line);
     const speed = 0.38 / ((ch[a] + ch[b]) * 0.5);
