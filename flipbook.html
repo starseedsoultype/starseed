@@ -26,18 +26,19 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   <title>StarSeed Soul Typology — Interactive Flipbook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07091e;
-      --gold: #d4af37;
-      --gold-dim: rgba(212,175,55,0.22);
-      --violet: #a855f7;
-      --violet-dim: rgba(168,85,247,0.15);
-      --text: #e8e8f0;
-      --muted: #8888a0;
+      --bg: #0A0A0A;
+      --gold: #C9A96E;
+      --gold-dim: rgba(201,169,110,0.15);
+      --text: #E8E4DF;
+      --text2: #C9C1B8;
+      --muted: #5F5A55;
+      --border: rgba(201,169,110,0.08);
+      --border2: rgba(201,169,110,0.18);
       --nav-h: 64px;
     }
 
@@ -47,31 +48,13 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       height: 100%;
       height: -webkit-fill-available;
       min-height: 100dvh;
-      background: radial-gradient(ellipse at 50% 0%, #1a1050 0%, var(--bg) 65%);
+      background: var(--bg);
       color: var(--text);
       font-family: 'Cormorant Garamond', Georgia, serif;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-    }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 80px 150px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 110px 40px, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1.5px 1.5px at 150px 90px, rgba(255,255,255,0.85), transparent),
-        radial-gradient(1px 1px at 170px 20px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 60px 120px, rgba(212,175,55,0.5), transparent),
-        radial-gradient(1px 1px at 190px 140px, rgba(255,255,255,0.7), transparent);
-      background-repeat: repeat;
-      background-size: 200px 180px;
-      opacity: 0.2;
-      z-index: 0;
-      pointer-events: none;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── HINT ── */
@@ -80,13 +63,14 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       z-index: 10;
       text-align: center;
       padding: 7px 16px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 300;
       font-size: 9px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--muted);
-      background: rgba(7,9,30,0.7);
-      border-bottom: 1px solid rgba(212,175,55,0.08);
+      background: rgba(10,10,10,0.85);
+      border-bottom: 1px solid var(--border);
     }
 
     /* ── STAGE ── */
@@ -126,7 +110,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     .page-num {
       position: absolute;
       top: 14px; right: 20px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 10px;
       letter-spacing: 2px;
       color: var(--gold);
@@ -141,7 +125,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     }
 
     .page-title {
-      font-family: 'Cinzel', serif;
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(1.2rem, 4.5vw, 2rem);
       font-weight: 600;
       color: var(--gold);
@@ -155,7 +139,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(0.85rem, 2.2vw, 1rem);
       font-style: italic;
-      color: var(--violet);
+      color: var(--text2);
       letter-spacing: 1px;
       margin-bottom: 10px;
     }
@@ -203,7 +187,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     }
 
     .section-label {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 9px;
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -242,10 +226,9 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       display: inline-block;
       padding: 12px 32px;
       border: 1px solid var(--gold);
-      border-radius: 40px;
       color: var(--gold);
       text-decoration: none;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 11px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
@@ -263,7 +246,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       gap: 12px;
       height: var(--nav-h);
       padding: 0 16px env(safe-area-inset-bottom, 0px);
-      background: rgba(7,9,30,0.88);
+      background: rgba(10,10,10,0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid rgba(212,175,55,0.1);
@@ -273,7 +256,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       width: 44px; height: 44px;
       border-radius: 50%;
       border: 1.5px solid var(--gold);
-      background: rgba(107,70,193,0.2);
+      background: transparent;
       color: var(--gold);
       font-size: 24px;
       cursor: pointer;
@@ -292,7 +275,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     .nav-btn:disabled { opacity: 0.2; cursor: default; }
 
     .nav-counter {
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 11px;
       letter-spacing: 2px;
       color: var(--gold);
@@ -369,7 +352,7 @@ const PAGES = [
     html: `
       <p class="intro">Discover your cosmic blueprint.<br>Remember who you are.</p>
       <p class="intro" style="font-style:italic; opacity:0.7; font-size:0.95em;">Each soul carries a unique frequency — a pattern of gifts, shadows, and activations encoded before birth. This flipbook is your map.</p>
-      <p class="intro" style="opacity:0.55; font-size:0.85em; letter-spacing:1px; font-family:'Raleway',sans-serif; font-size:10px; text-transform:uppercase;">Swipe or tap the arrows to explore all 24 soul types</p>
+      <p class="intro" style="opacity:0.55; font-size:0.85em; letter-spacing:1px; font-family:'Inter',sans-serif; font-size:10px; text-transform:uppercase;">Swipe or tap the arrows to explore all 24 soul types</p>
     `
   },
   {
@@ -1067,12 +1050,12 @@ if (tocListEl) {
       cursor:pointer; transition: color 0.2s;
     ">
       <span style="color: var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.5px;">${p.title.replace(' Souls','')}</span>
-      <span style="color: rgba(232,232,240,0.4); font-size:0.8rem; font-family:'Raleway',sans-serif; letter-spacing:1px;">${num}</span>
+      <span style="color: rgba(232,232,240,0.4); font-size:0.8rem; font-family:'Inter',sans-serif; letter-spacing:1px;">${num}</span>
     </div>`;
   }).join('');
 
   tocListEl.innerHTML = `
-    <div style="font-size:0.75rem; letter-spacing:2px; color:rgba(232,232,240,0.4); font-family:'Raleway',sans-serif; text-transform:uppercase; margin-bottom:12px;">Tap a name to jump directly</div>
+    <div style="font-size:0.75rem; letter-spacing:2px; color:rgba(232,232,240,0.4); font-family:'Inter',sans-serif; text-transform:uppercase; margin-bottom:12px;">Tap a name to jump directly</div>
     ${tocHTML}
   `;
 }
