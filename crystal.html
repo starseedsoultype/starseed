@@ -424,7 +424,7 @@ function buildCrystal(idx) {
   const rlPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, 0, Math.sin(a) * rlMinor));
+    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, Math.sin(a) * rlMinor, 0));
   }
   orbitGroup.add(new THREE.Line(
     new THREE.BufferGeometry().setFromPoints(rlPts),
