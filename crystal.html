@@ -427,8 +427,8 @@ function buildCrystal(idx) {
     new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
-  crystalGroup.add(orbitGroup);
   scene.add(crystalGroup);
+  scene.add(orbitGroup);
 }
 
 const goldC   = new THREE.Color(GOLD);
@@ -439,13 +439,13 @@ function startLoop() {
     requestAnimationFrame(loop);
     const t = clock.getElapsedTime();
     if (crystalGroup) {
-      crystalGroup.rotation.y = t * 0.08 + targetRY * 0.3;
-      crystalGroup.rotation.x += (targetRX - crystalGroup.rotation.x) * 0.05;
+      crystalGroup.rotation.y = t * 0.07 + targetRY * 0.25;
+      crystalGroup.rotation.x += (targetRX * 0.3 - crystalGroup.rotation.x) * 0.05;
     }
-    // orbits stay fixed to crystal, only tilt with mouse for 3D feel
+    // orbits counter-rotate with offset — face-on when crystal is edge-on
     if (orbitGroup) {
-      orbitGroup.rotation.x += (targetRX * 0.25 - orbitGroup.rotation.x) * 0.05;
-      orbitGroup.rotation.z += (-targetRY * 0.25 - orbitGroup.rotation.z) * 0.05;
+      orbitGroup.rotation.y = -t * 0.05 + Math.PI * 0.5;
+      orbitGroup.rotation.x += (targetRX * 0.3 - orbitGroup.rotation.x) * 0.05;
     }
 
     // energy pulse: illuminate the edge itself
