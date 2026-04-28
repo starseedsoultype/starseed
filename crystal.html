@@ -139,7 +139,7 @@ canvas { width: 100%; height: 100%; }
   .description-wrap { padding: 26px 20px; }
 }
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"}}</script>
 </head>
 <body>
 
@@ -183,6 +183,9 @@ canvas { width: 100%; height: 100%; }
 
 <script type="module">
 import * as THREE from 'three';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 
 const TYPES = [
   {name:"Siriusian",      funcs:["R","E","M","L"]},
@@ -215,6 +218,13 @@ const WEIGHTS = [0, 0.60, 0.25, 0.12, 0.03];
 const R3D     = [0, 1.35,  0.95, 0.60, 0.32];
 const GOLD    = 0xC9A96E;
 const GOLD2   = 0xE8D5A8;
+
+function makeLine2(pts, color, width, opacity=1) {
+  const geo = new LineGeometry();
+  geo.setPositions(pts.flatMap(p => [p.x, p.y, p.z]));
+  const mat = new LineMaterial({ color, linewidth: width, transparent: opacity < 1, opacity, depthTest: false, resolution: new THREE.Vector2(window.innerWidth, window.innerHeight) });
+  return new Line2(geo, mat);
+}
 
 const PREVIEWS={
   R:{
@@ -345,21 +355,15 @@ function buildCrystal(idx) {
       color: 0x111111, metalness: 0.7, roughness: 0.1,
       clearcoat: 1.0, clearcoatRoughness: 0.05,
       transmission: 0.6, thickness: 0.3,
-      side: THREE.DoubleSide, transparent: true, opacity: 0.25, depthWrite: false,
+      side: THREE.DoubleSide, transparent: true, opacity: 0.75, depthWrite: false,
     })));
   }
 
   // dim static gold outline
   const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
-  crystalGroup.add(new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints(outerPts),
-    new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.45, depthTest: false })
-  ));
+  crystalGroup.add(makeLine2(outerPts, GOLD, 2.5, 0.55));
   for (const [a, b] of [['E','M'],['R','L']]) {
-    crystalGroup.add(new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints([tipPositions[a], tipPositions[b]]),
-      new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.18, depthTest: false })
-    ));
+    crystalGroup.add(makeLine2([tipPositions[a], tipPositions[b]], GOLD, 1.5, 0.22));
   }
 
   // animated pulse lines — the edge itself lights up
