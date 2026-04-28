@@ -85,9 +85,9 @@ body {
 .type-btn:hover { border-color: var(--border2); color: var(--text2); }
 .type-btn.active { border-color: var(--gold); background: #161616; color: var(--text); }
 
-.stage { position: relative; width: 480px; height: 480px; max-width: 100%; }
+.stage { position: relative; width: 480px; height: 340px; max-width: 100%; }
 canvas { display: block; width: 100%; height: 100%; }
-.caption { text-align: center; margin: 4px 0 16px; max-width: 520px; width: 100%; }
+.caption { text-align: center; margin: 0 0 16px; max-width: 520px; width: 100%; }
 
 .desc-unlock-btn {
   display: block; margin-top: 20px; padding: 14px 24px; text-align: center;
@@ -133,7 +133,7 @@ canvas { display: block; width: 100%; height: 100%; }
 .btn-purple:hover { opacity: 0.85; }
 
 @media(max-width:520px) {
-  .stage { width: 340px; height: 340px; }
+  .stage { width: 340px; height: 240px; }
   .type-name { font-size: 30px; }
   .desc-text { font-size: 16px; }
   .description-wrap { padding: 26px 20px; }
@@ -301,15 +301,15 @@ let orbitGroup   = null;
 function initThree() {
   const stage  = document.querySelector('.stage');
   const canvas = document.getElementById('crystalCanvas');
-  const S = stage.offsetWidth;
+  const W = stage.offsetWidth, H = stage.offsetHeight;
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
-  renderer.setSize(S, S);
+  renderer.setSize(W, H);
   clock  = new THREE.Clock();
   scene  = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(44, 1, 0.1, 50);
+  camera = new THREE.PerspectiveCamera(44, W / H, 0.1, 50);
   camera.position.set(0, 0, 4.5);
   scene.add(new THREE.AmbientLight(0xffffff, 0.08));
   const key = new THREE.DirectionalLight(GOLD, 1.2);
@@ -320,7 +320,7 @@ function initThree() {
     targetRX = (e.clientY / window.innerHeight - 0.5) * 0.3;
     targetRY = (e.clientX / window.innerWidth  - 0.5) * 0.3;
   });
-  window.addEventListener('resize', () => { renderer.setSize(stage.offsetWidth, stage.offsetWidth); });
+  window.addEventListener('resize', () => { const W=stage.offsetWidth,H=stage.offsetHeight; renderer.setSize(W,H); camera.aspect=W/H; camera.updateProjectionMatrix(); });
 }
 
 function buildCrystal(idx) {
