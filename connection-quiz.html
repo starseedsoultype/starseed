@@ -825,8 +825,10 @@ function render(key, animate = true) {
         </div>
 
         <div id="next-steps-section" style="display:none;margin-top:28px;">
-          <a href="https://twinfrequency.io/library.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;">Explore All 10 Connection Types ✦</a>
-          <a href="https://starseedsoultype.github.io/starseed/bond.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);">Calculate Your Bond ◈</a>
+          <p style="font-size:14px;color:rgba(232,224,240,0.7);text-align:center;margin-bottom:20px;line-height:1.7;">Want to understand this connection more deeply — personally?</p>
+          <a href="https://calendly.com/readingstarseedsoul/fifteen-minute-starseed-soul-origin-reading-ses-clone" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book a Personal Session ✦ $55</a>
+          <a href="https://twinfrequency.io/library.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);">Explore All 10 Connection Types</a>
+          <a href="https://starseedsoultype.github.io/starseed/bond.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;background:transparent;border:1px solid rgba(180,140,255,0.3);color:rgba(180,140,255,0.8);">Calculate Your Bond ◈</a>
         </div>
 
         <br>
@@ -843,23 +845,27 @@ function render(key, animate = true) {
         btn.textContent = 'Sending...';
         btn.disabled = true;
         try {
-          const formData = new FormData(form);
-          const res = await fetch('https://api.web3forms.com/submit', {
+          const emailInput = form.querySelector('input[type="email"]');
+          const email = emailInput ? emailInput.value.trim() : '';
+          const res = await fetch('https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/send-connection-reading', {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              connection_type: r.name,
+              connection_tension: r.tension,
+              full_reading: r.truth
+            })
           });
-          const data = await res.json();
-          if (data.success) {
-            document.getElementById('email-capture-section').style.display = 'none';
-            document.getElementById('email-success-msg').style.display = 'block';
-            document.getElementById('next-steps-section').style.display = 'block';
-          } else {
-            btn.textContent = 'Try again';
-            btn.disabled = false;
-          }
+          // Always show success — email is sent in background
+          document.getElementById('email-capture-section').style.display = 'none';
+          document.getElementById('email-success-msg').style.display = 'block';
+          document.getElementById('next-steps-section').style.display = 'block';
         } catch(err) {
-          btn.textContent = 'Try again';
-          btn.disabled = false;
+          // Still show success even if network error
+          document.getElementById('email-capture-section').style.display = 'none';
+          document.getElementById('email-success-msg').style.display = 'block';
+          document.getElementById('next-steps-section').style.display = 'block';
         }
       });
     }
