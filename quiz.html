@@ -330,6 +330,13 @@ body {
 <div id="result"></div>
 
 <script>
+function mcEvent(eventName) {
+  if (window.fbq) window.fbq('trackCustom', eventName, { page: window.location.pathname });
+  if (window.MC_PIXEL && typeof window.MC_PIXEL.fireLogConversionEvent === 'function') {
+    window.MC_PIXEL.fireLogConversionEvent(eventName);
+  }
+}
+
 const TYPES = [
   { name:"Siriusian",       funcs:["R","E","M","L"], group:"I" },
   { name:"Pleiadian",       funcs:["R","M","L","E"], group:"I" },
@@ -492,6 +499,7 @@ const TIEBREAKERS = {
 
 let current=0, answers={}, tbQueue=[], inTiebreaker=false;
 let scores={R:0,E:0,M:0,L:0};
+let _halfwayFired=false;
 
 function scoreQuestion(q,ans){
   if(q.type==="force4"){scores[q.opts[ans].f]+=(q.pts||1);}
@@ -534,6 +542,7 @@ function startQuiz(){
   document.getElementById('quiz').style.display='block';
   document.getElementById('progressWrap').style.display='block';
   current=0;renderQuestion();
+  mcEvent('ss_origin_quiz_started');
 }
 
 function updateProgress(){
@@ -554,6 +563,7 @@ function renderQuestion(){
   if(current>=QUESTIONS.length){calculateResult();return;}
   const q=QUESTIONS[current];
   updateProgress();
+  if(current===3&&!_halfwayFired){_halfwayFired=true;mcEvent('ss_origin_quiz_halfway');}
   let html=`<div class="q-block"><div class="q-num">Question ${current+1} of ${QUESTIONS.length}</div><div class="q-text">${q.text}</div>`;
   if(q.type==="force4"){
     html+=`<div class="opts-force4">`;
@@ -609,6 +619,7 @@ function renderTiebreaker(tb){
 
 function selectF4(qId,idx){
   answers[qId]=idx;
+  if(qId===1) mcEvent('ss_origin_quiz_q1_answered');
   const q=QUESTIONS.find(q=>q.id===qId);
   if(q&&q.teaser){
     document.getElementById('quiz').innerHTML=`<div class="teaser-block"><div class="teaser-line">${q.teaser}</div></div>`;
@@ -656,6 +667,8 @@ function showEmailCapture(){
   document.getElementById('progressWrap').style.display='none';
   document.getElementById('email-capture').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
+  mcEvent('ss_origin_quiz_completed');
+  mcEvent('ss_origin_email_step_viewed');
   const t=getType();
   document.getElementById('ecSoulType').value=t.name;
   document.getElementById('ecSoulGroup').value=t.group;
@@ -670,6 +683,7 @@ function showEmailCapture(){
     err.style.display='none';
     const btn=nf.querySelector('.ec-btn');btn.textContent='Opening portal...';btn.disabled=true;
     try{await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(nf)});}catch(e){}
+    mcEvent('ss_origin_email_submitted');
     document.getElementById('email-capture').style.display='none';
     showResult();
   });
@@ -677,6 +691,7 @@ function showEmailCapture(){
 
 function showResult(){
   if(typeof fbq!=='undefined')fbq('track','Lead');
+  mcEvent('ss_origin_result_viewed');
   document.getElementById('quiz').style.display='none';
   document.getElementById('progressWrap').style.display='none';
   document.getElementById('result').style.display='block';
@@ -735,7 +750,7 @@ function showResult(){
       </div>
       <div class="price">$11.11</div>
       <div class="price-note">One-time · Instant access · Yours forever</div>
-      <a href="${GUMROAD_LINKS[type.name]}" target="_blank" class="unlock-btn">Complete the Portal</a>
+      <a href="${GUMROAD_LINKS[type.name]}" target="_blank" class="unlock-btn" onclick="mcEvent('ss_origin_clicked_gumroad')">Complete the Portal</a>
     </div>
     <div class="app-entry-box">
       <div class="app-entry-label">Already inside Twin Frequency?</div>
@@ -763,7 +778,8 @@ function downloadShareCard(typeName){
 }
 
 function retake(){
-  current=0;answers={};tbQueue=[];inTiebreaker=false;scores={R:0,E:0,M:0,L:0};
+  mcEvent('ss_origin_retake_clicked');
+  current=0;answers={};tbQueue=[];inTiebreaker=false;scores={R:0,E:0,M:0,L:0};_halfwayFired=false;
   document.getElementById('result').style.display='none';
   document.getElementById('progressWrap').style.display='none';
   document.getElementById('intro').style.display='block';
