@@ -21,7 +21,7 @@
       var href = target.getAttribute('href') || '';
       var text = (target.innerText || target.value || '').trim();
       var combined = text + ' ' + href;
-      if (/gumroad|unlock|reading|checkout|purchase|buy/i.test(combined)) { mcEvent('ss_clicked_buy'); }
+      if (/gumroad|unlock|reading|checkout|purchase|buy/i.test(combined)) { mcEvent('ss_clicked_buy'); if (path.indexOf('quiz') !== -1) mcEvent('ss_origin_clicked_gumroad'); }
       if (/telegram|t\.me/i.test(combined)) { mcEvent('ss_clicked_telegram'); }
     }, true);
   });
