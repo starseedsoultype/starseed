@@ -337,6 +337,23 @@ function mcEvent(eventName) {
   }
 }
 
+function originToSlug(name){
+  return String(name||'').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
+}
+function findOriginBySlug(slug){
+  var n=String(slug||'').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
+  return TYPES.find(function(t){return originToSlug(t.name)===n;});
+}
+function saveOriginResult(origin){
+  if(!origin||!origin.name)return;
+  localStorage.setItem('starseedsoul_origin',origin.name);
+  history.replaceState(null,'',window.location.pathname+'?origin='+encodeURIComponent(originToSlug(origin.name)));
+}
+function clearSavedOriginResult(){
+  localStorage.removeItem('starseedsoul_origin');
+  history.replaceState(null,'',window.location.pathname);
+}
+
 const TYPES = [
   { name:"Siriusian",       funcs:["R","E","M","L"], group:"I" },
   { name:"Pleiadian",       funcs:["R","M","L","E"], group:"I" },
@@ -689,13 +706,12 @@ function showEmailCapture(){
   });
 }
 
-function showResult(){
-  if(typeof fbq!=='undefined')fbq('track','Lead');
-  mcEvent('ss_origin_result_viewed');
+function showResultForOrigin(origin,options){
+  options=options||{};
   document.getElementById('quiz').style.display='none';
   document.getElementById('progressWrap').style.display='none';
   document.getElementById('result').style.display='block';
-  const type=getType();
+  const type=origin;
   const[ch1,ch2,ch3]=type.funcs;
   const SOUL_RESONANCE={
     "I":"You have spent your life translating the unspoken spaces between people. Your sensitivity is not a burden to be managed\u2014it is the exact instrument you were sent here to use.",
@@ -761,7 +777,15 @@ function showResult(){
   `;
   window.scrollTo({top:0,behavior:'smooth'});
   setTimeout(()=>drawCrystal(type),100);
-  track('quiz_complete',type.name.toLowerCase().replace(/\s+/g,'_'));
+  if(!options.restored)track('quiz_complete',type.name.toLowerCase().replace(/\s+/g,'_'));
+}
+
+function showResult(){
+  if(typeof fbq!=='undefined')fbq('track','Lead');
+  mcEvent('ss_origin_result_viewed');
+  const type=getType();
+  saveOriginResult(type);
+  showResultForOrigin(type,{restored:false});
 }
 
 const SHARE_CARD_NAMES={'Siriusian':'siriusian','Pleiadian':'pleiadian','Lemurian':'lemurian','Cassiopeian':'cassiopeian','Procyonian':'procyonian','Lyran':'lyran','Arcturian':'arcturian','Orion':'orion','Vegan':'vegan','Zeta Reticulan':'zeta-reticulan','Epsilon Eridan':'epsilon-eridan','Atlantean':'atlantean','Andromedan':'andromedan','Polarisian':'polarisian','Nibiruan':'nibiruan','Egyptian':'egyptian','Titanian':'titanian','Blue Avian':'blue-avian','Tau Cetian':'tau-cetian','Aldebaran':'aldebaran','Centaurian':'centaurian','Herculean':'herculean','Anunnaki':'anunnaki','Hyperborean':'hyperborean'};
@@ -778,6 +802,7 @@ function downloadShareCard(typeName){
 }
 
 function retake(){
+  clearSavedOriginResult();
   mcEvent('ss_origin_retake_clicked');
   current=0;answers={};tbQueue=[];inTiebreaker=false;scores={R:0,E:0,M:0,L:0};_halfwayFired=false;
   document.getElementById('result').style.display='none';
@@ -832,6 +857,27 @@ const _sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
 function track(event,resultKey){
   try{fetch(_SB_URL+'/rest/v1/quiz_analytics',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:event,result_key:resultKey||null,session_id:_sid,quiz_type:'origin_scan'})});}catch(e){}
 }
+function restoreResultOnLoad(){
+  var params=new URLSearchParams(window.location.search);
+  var originParam=params.get('origin');
+  var origin=null;
+  if(originParam)origin=findOriginBySlug(originParam);
+  if(!origin){
+    var saved=localStorage.getItem('starseedsoul_origin');
+    if(saved)origin=TYPES.find(function(t){return t.name===saved;});
+  }
+  if(!origin)return false;
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('email-capture').style.display='none';
+  document.getElementById('progressWrap').style.display='none';
+  showResultForOrigin(origin,{restored:true});
+  mcEvent('ss_origin_result_restored');
+  return true;
+}
+document.addEventListener('DOMContentLoaded',function(){
+  restoreResultOnLoad();
+});
 track('quiz_open');
 </script>
 </body>
