@@ -337,6 +337,11 @@ function mcEvent(eventName) {
   }
 }
 
+function openGumroadTracked(url){
+  try{mcEvent('ss_origin_clicked_gumroad');}catch(e){}
+  setTimeout(function(){window.location.href=url;},600);
+}
+
 function originToSlug(name){
   return String(name||'').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
 }
@@ -766,7 +771,7 @@ function showResultForOrigin(origin,options){
       </div>
       <div class="price">$11.11</div>
       <div class="price-note">One-time · Instant access · Yours forever</div>
-      <a href="${GUMROAD_LINKS[type.name]}" target="_blank" class="unlock-btn" onclick="mcEvent('ss_origin_clicked_gumroad')">Complete the Portal</a>
+      <a href="${GUMROAD_LINKS[type.name]}" class="unlock-btn" onclick="event.preventDefault(); openGumroadTracked(this.href);">Complete the Portal</a>
     </div>
     <div class="app-entry-box">
       <div class="app-entry-label">Already inside Twin Frequency?</div>
