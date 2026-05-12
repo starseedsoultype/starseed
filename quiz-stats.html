@@ -248,6 +248,92 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     transition: color 0.2s;
   }
   .back-link:hover { color: var(--gold); }
+
+  .funnel-wrap {
+    max-width: 700px;
+    margin: 0 auto 48px;
+  }
+
+  .funnel-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .funnel-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 16px 12px;
+    text-align: right;
+    font-weight: 400;
+  }
+
+  .funnel-table th:first-child { text-align: left; }
+
+  .funnel-table td {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    text-align: right;
+    vertical-align: middle;
+  }
+
+  .funnel-table td:first-child {
+    text-align: left;
+  }
+
+  .funnel-step-label {
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0.03em;
+  }
+
+  .funnel-note {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .funnel-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .funnel-pct {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .funnel-drop {
+    font-size: 12px;
+    color: #b94040;
+  }
+
+  .funnel-bar-wrap {
+    width: 80px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .funnel-bar-bg {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .funnel-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--violet), var(--gold));
+    border-radius: 2px;
+    transition: width 1s ease;
+    width: 0%;
+  }
 </style>
 
 <!-- ManyChat Pixel and StarSeed Funnel Tracking -->
@@ -278,6 +364,24 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     <div class="stat-value" id="conversion">—</div>
     <div class="stat-label">Conversion</div>
   </div>
+</div>
+
+<div class="section-title">Conversion Funnel</div>
+
+<div class="funnel-wrap">
+  <table class="funnel-table">
+    <thead>
+      <tr>
+        <th>Step</th>
+        <th>Users</th>
+        <th>From prev</th>
+        <th>From total</th>
+      </tr>
+    </thead>
+    <tbody id="funnel-body">
+      <tr><td colspan="4" class="loading">Reading the frequency...</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="section-title">Results Distribution</div>
@@ -361,23 +465,85 @@ async function fetchResultCounts() {
   return counts;
 }
 
+const FUNNEL_STEPS = [
+  { key: 'quiz_open',        label: 'Page Visited' },
+  { key: 'quiz_started',     label: 'Quiz Started' },
+  { key: 'q1_answered',      label: 'Q1 Answered' },
+  { key: 'q2_answered',      label: 'Q2 Answered' },
+  { key: 'q3_answered',      label: 'Q3 Answered', note: 'q2a path only' },
+  { key: 'quiz_complete',    label: 'Result Viewed' },
+  { key: 'email_submitted',  label: 'Email Submitted' },
+  { key: 'calendly_clicked', label: 'Calendly Clicked' },
+  { key: 'library_clicked',  label: 'Library Clicked' },
+];
+
+function renderFunnel(steps) {
+  const total = steps[0].count || 1;
+  const tbody = document.getElementById('funnel-body');
+  tbody.innerHTML = steps.map((step, i) => {
+    const prev = i > 0 ? steps[i - 1].count : null;
+    const fromPrev = prev !== null && prev > 0
+      ? Math.round((step.count / prev) * 100) + '%'
+      : '—';
+    const fromTotal = total > 0
+      ? Math.round((step.count / total) * 100) + '%'
+      : '—';
+    const barPct = total > 0 ? Math.round((step.count / total) * 100) : 0;
+    const dropped = prev !== null && prev > 0
+      ? prev - step.count
+      : null;
+    return `
+      <tr>
+        <td>
+          <span class="funnel-step-label">${step.label}</span>
+          ${step.note ? `<span class="funnel-note">${step.note}</span>` : ''}
+        </td>
+        <td>
+          <span class="funnel-count">${step.count.toLocaleString()}</span>
+        </td>
+        <td>
+          <span class="${dropped !== null && dropped > 0 ? 'funnel-drop' : 'funnel-pct'}">${fromPrev}</span>
+          ${dropped !== null && dropped > 0 ? `<span class="funnel-note">−${dropped.toLocaleString()}</span>` : ''}
+        </td>
+        <td>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar-bg">
+              <div class="funnel-bar-fill" data-pct="${barPct}"></div>
+            </div>
+          </div>
+          <span class="funnel-pct" style="margin-left:8px;">${fromTotal}</span>
+        </td>
+      </tr>
+    `;
+  }).join('');
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.funnel-bar-fill').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  });
+}
+
 async function loadStats() {
   document.getElementById('total-opens').textContent = '…';
   document.getElementById('total-completes').textContent = '…';
   document.getElementById('conversion').textContent = '…';
   document.getElementById('results-list').innerHTML = '<div class="loading">Reading the frequency...</div>';
+  document.getElementById('funnel-body').innerHTML = '<tr><td colspan="4" class="loading">Reading the frequency...</td></tr>';
 
   try {
-    const [opens, completes, resultCounts] = await Promise.all([
+    const [opens, completes, resultCounts, funnelCounts] = await Promise.all([
       fetchCount('quiz_open'),
       fetchCount('quiz_complete'),
-      fetchResultCounts()
+      fetchResultCounts(),
+      Promise.all(FUNNEL_STEPS.map(s => fetchCount(s.key)))
     ]);
 
     document.getElementById('total-opens').textContent = opens.toLocaleString();
     document.getElementById('total-completes').textContent = completes.toLocaleString();
     const pct = opens > 0 ? Math.round((completes / opens) * 100) : 0;
     document.getElementById('conversion').textContent = pct + '%';
+
+    renderFunnel(FUNNEL_STEPS.map((s, i) => ({ ...s, count: funnelCounts[i] })));
 
     // Build results list sorted by count desc
     const sorted = Object.entries(RESULTS).map(([key, info]) => ({

@@ -586,7 +586,7 @@ function mcEvent(eventName) {
     window.MC_PIXEL.fireLogConversionEvent(eventName);
   }
 }
-let _startedFired = false, _q2Fired = false, _resultFired = false;
+let _startedFired = false, _q1Fired = false, _q2Fired = false, _q3Fired = false, _resultFired = false;
 
 const questions = {
   q1: {
@@ -847,7 +847,7 @@ function render(key, animate = true) {
 
         <div id="next-steps-section" style="display:none;margin-top:28px;">
           <p style="font-size:14px;color:rgba(232,224,240,0.7);text-align:center;margin-bottom:20px;line-height:1.7;">Want to understand this connection more deeply — personally?</p>
-          <a href="https://calendly.com/readingstarseedsoul/fifteen-minute-starseed-soul-origin-reading-ses-clone" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="if(typeof fbq!=='undefined')fbq('track','Schedule'); mcEvent('ss_connection_clicked_calendly');">Book a Personal Session ✦ $55</a>
+          <a href="https://calendly.com/readingstarseedsoul/fifteen-minute-starseed-soul-origin-reading-ses-clone" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="if(typeof fbq!=='undefined')fbq('track','Schedule'); mcEvent('ss_connection_clicked_calendly'); track('calendly_clicked');">Book a Personal Session ✦ $55</a>
           <a href="https://twinfrequency.io/library.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);">Explore All 10 Connection Types</a>
           <a href="https://starseedsoultype.github.io/starseed/bond.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;background:transparent;border:1px solid rgba(180,140,255,0.3);color:rgba(180,140,255,0.8);">Calculate Your Bond ◈</a>
         </div>
@@ -866,6 +866,7 @@ function render(key, animate = true) {
         btn.textContent = 'Sending...';
         btn.disabled = true;
         mcEvent('ss_connection_email_submitted');
+        track('email_submitted');
         try {
           const emailInput = form.querySelector('input[type="email"]');
           const email = emailInput ? emailInput.value.trim() : '';
@@ -934,7 +935,7 @@ function choose(nextKey) {
 
 function restart() {
   mcEvent('ss_connection_retake_clicked');
-  _startedFired = false; _q2Fired = false; _resultFired = false;
+  _startedFired = false; _q1Fired = false; _q2Fired = false; _q3Fired = false; _resultFired = false;
   const area = document.getElementById('quiz-area');
   const card = area.querySelector('.result-card');
   if (card) {
@@ -967,6 +968,7 @@ function track(event, resultKey) {
 // Track page visit on load
 track('quiz_open');
 mcEvent('ss_connection_quiz_page_visited');
+mcEvent('ss_connection_page_visited');
 
 // Library link tracking (delegate)
 document.getElementById('quiz-area').addEventListener('click', function(e) {
@@ -976,14 +978,33 @@ document.getElementById('quiz-area').addEventListener('click', function(e) {
   var text = (a.innerText || '').trim();
   if (href.indexOf('flipbook.html') !== -1 || href.indexOf('library.html') !== -1 || /Read full description/i.test(text)) {
     mcEvent('ss_connection_clicked_library');
+    track('library_clicked');
   }
 }, true);
 
 // Patch choose() to track completion
 const _origChoose = choose;
 window.choose = function(nextKey) {
-  if (currentQ === 'q1' && !_startedFired) { _startedFired = true; mcEvent('ss_connection_quiz_started'); }
-  if ((currentQ === 'q2a' || currentQ === 'q3' || currentQ === 'q4') && !_q2Fired) { _q2Fired = true; mcEvent('ss_connection_quiz_q2_answered'); }
+  if (currentQ === 'q1' && !_startedFired) {
+    _startedFired = true;
+    mcEvent('ss_connection_quiz_started');
+    track('quiz_started');
+  }
+  if (currentQ === 'q1' && !_q1Fired) {
+    _q1Fired = true;
+    mcEvent('ss_connection_q1_answered');
+    track('q1_answered');
+  }
+  if ((currentQ === 'q2a' || currentQ === 'q3' || currentQ === 'q4') && !_q2Fired) {
+    _q2Fired = true;
+    mcEvent('ss_connection_quiz_q2_answered');
+    track('q2_answered');
+  }
+  if ((currentQ === 'q2b' || currentQ === 'q2c') && !_q3Fired) {
+    _q3Fired = true;
+    mcEvent('ss_connection_q3_answered');
+    track('q3_answered');
+  }
   if (nextKey.startsWith('result_')) { track('quiz_complete', nextKey); }
   _origChoose(nextKey);
 };
