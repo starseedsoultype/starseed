@@ -426,9 +426,10 @@ async function query(sql) {
   return res.json();
 }
 
-async function fetchCount(event) {
+async function fetchCount(event, quizType = 'soul_connection') {
+  const qtFilter = quizType ? '&quiz_type=eq.' + quizType : '';
   const res = await fetch(
-    SB_URL + '/rest/v1/quiz_analytics?event=eq.' + event + '&select=id',
+    SB_URL + '/rest/v1/quiz_analytics?event=eq.' + event + qtFilter + '&select=id',
     {
       headers: {
         'apikey': SB_KEY,
@@ -448,7 +449,7 @@ async function fetchCount(event) {
 
 async function fetchResultCounts() {
   const res = await fetch(
-    SB_URL + '/rest/v1/quiz_analytics?event=eq.quiz_complete&select=result_key',
+    SB_URL + '/rest/v1/quiz_analytics?event=eq.quiz_complete&quiz_type=eq.soul_connection&select=result_key',
     {
       headers: {
         'apikey': SB_KEY,
@@ -538,6 +539,7 @@ async function loadStats() {
       Promise.all(FUNNEL_STEPS.map(s => fetchCount(s.key)))
     ]);
 
+    const now = new Date();
     document.getElementById('total-opens').textContent = opens.toLocaleString();
     document.getElementById('total-completes').textContent = completes.toLocaleString();
     const pct = opens > 0 ? Math.round((completes / opens) * 100) : 0;
@@ -582,7 +584,6 @@ async function loadStats() {
       });
     }
 
-    const now = new Date();
     document.getElementById('last-updated').textContent =
       'Updated ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
