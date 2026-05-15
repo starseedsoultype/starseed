@@ -705,6 +705,7 @@ function showEmailCapture(){
     err.style.display='none';
     const btn=nf.querySelector('.ec-btn');btn.textContent='Opening portal...';btn.disabled=true;
     try{await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(nf)});}catch(e){}
+    try{fetch(_SB_URL+'/rest/v1/api_leads',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({email:email,source:'portal',interest:nf.querySelector('[name="soul_type"]')?.value||null,session_id:_sid})});}catch(e){}
     mcEvent('ss_origin_email_submitted');
     document.getElementById('email-capture').style.display='none';
     showResult();
