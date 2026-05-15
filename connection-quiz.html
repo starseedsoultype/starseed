@@ -880,6 +880,7 @@ function render(key, animate = true) {
               full_reading: r.truth
             })
           });
+          try{fetch(_SB_URL+'/rest/v1/api_leads',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({email:email,source:'portal',interest:'connection:'+r.name,session_id:_sessionId})});}catch(e){}
           // Always show success — email is sent in background
           document.getElementById('email-capture-section').style.display = 'none';
           document.getElementById('email-success-msg').style.display = 'block';
