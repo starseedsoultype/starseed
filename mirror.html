@@ -793,10 +793,9 @@ async function submitSelf(answers) {
     document.getElementById('btn-copy').textContent = 'Скопировано ✓';
   };
   document.getElementById('btn-share-tg').onclick = () => {
-    const tg = window.Telegram?.WebApp;
-    if (tg) tg.switchInlineQuery(data.share_url, ['users', 'groups']);
-    else window.open(`https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне, займёт 2 минуты')}`, '_blank');
-  };
+  const shareLink = `https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне, займёт 2 минуты')}`;
+  window.open(shareLink, '_blank');
+};
 
   show('screen-waiting');
 }
