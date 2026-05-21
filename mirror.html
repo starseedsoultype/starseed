@@ -367,6 +367,12 @@
   <div class="question-text" id="self-q-text"></div>
   <div class="options" id="self-options"></div>
 </div>
+ <div class="screen" id="screen-loading">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">◈</span>
+  <h1>Собираем твоё зеркало</h1>
+  <p>Мы сохраняем твои ответы и готовим ссылку для друзей. Это может занять несколько секунд.</p>
+</div>
 
 <div class="screen" id="screen-waiting">
   <div class="logo">StarSeedSoul · Зеркало</div>
@@ -771,6 +777,8 @@ document.getElementById('btn-start').onclick = async () => {
 };
 
 async function submitSelf(answers) {
+  show('screen-loading');
+
   const scores = calcScores(answers);
   const data = await apiFetch('mirror-submit', {
     initData: state.initData,
