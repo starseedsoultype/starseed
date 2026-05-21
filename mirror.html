@@ -710,6 +710,17 @@ async function dbFetch(table, params) {
   });
   return res.json();
 }
+ function getFriendResponseToken(sessionCode) {
+  const key = `mirror_friend_token_${sessionCode}`;
+  let token = localStorage.getItem(key);
+
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem(key, token);
+  }
+
+  return token;
+}
 
 function renderQuestion(questions, progressId, numId, textId, optionsId, answers, onDone) {
   const i = state.currentQ;
@@ -810,10 +821,11 @@ document.getElementById('btn-friend-start').onclick = () => {
 async function submitFriend(answers) {
   const scores = calcScores(answers);
   const data = await apiFetch('mirror-friend-submit', {
-    session_code: state.sessionCode,
-    friend_name: state.friendName,
-    scores,
-  });
+  session_code: state.sessionCode,
+  friend_name: state.friendName,
+  scores,
+  response_token: getFriendResponseToken(state.sessionCode),
+});
 
   if (data.error === 'Session not found') {
     show('screen-error');
