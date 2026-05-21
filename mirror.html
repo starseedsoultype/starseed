@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Зеркало · StarSeedSoul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300&display=swap">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --card: #111111;
+    --border: rgba(201,169,110,0.10);
+    --border2: rgba(201,169,110,0.20);
+    --gold: #C9A96E;
+    --gold2: #E8D5A8;
+    --text: #E8E4DF;
+    --text2: #C9C1B8;
+    --muted: #7A7672;
+    --muted2: #5F5A55;
+    --r: #C9A96E;
+    --e: #B8997A;
+    --m: #A8B8A0;
+    --l: #8FA8B8;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .screen {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 32px 24px 48px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .screen.active { display: flex; }
+
+  .logo {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  p {
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.85;
+  }
+
+  .spacer { flex: 1; }
+
+  input[type="text"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border2);
+    padding: 12px 0;
+    color: var(--text);
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    outline: none;
+    margin-bottom: 24px;
+    transition: border-color 0.3s;
+    border-radius: 0;
+  }
+  input[type="text"]:focus { border-bottom-color: var(--gold); }
+  input[type="text"]::placeholder { color: var(--muted2); }
+
+  .btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--gold);
+    padding: 15px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  .btn:hover, .btn:active { background: rgba(201,169,110,0.06); border-color: var(--gold); }
+  .btn:disabled { opacity: 0.3; cursor: default; }
+  .btn-solid {
+    background: var(--gold);
+    color: #0A0A0A;
+    border-color: var(--gold);
+  }
+  .btn-solid:hover { background: var(--gold2); border-color: var(--gold2); color: #0A0A0A; }
+  .btn-outline {
+    border-color: rgba(201,169,110,0.12);
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .btn-outline:hover { border-color: rgba(201,169,110,0.25); color: var(--text2); background: transparent; }
+
+  /* Questions */
+  .progress-bar {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .question-num {
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .question-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 28px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 2px; }
+
+  .option {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--text2);
+    transition: color 0.2s, padding-left 0.2s;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .option:hover { color: var(--gold); padding-left: 8px; }
+  .option:last-child { border-bottom: none; }
+
+  /* Waiting screen */
+  .share-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .share-url {
+    font-size: 12px;
+    color: var(--muted);
+    word-break: break-all;
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+  .friend-count {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border2);
+    transition: background 0.4s;
+  }
+  .dot.filled { background: var(--gold); }
+
+  /* Result */
+  .freq-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .freq-label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    width: 90px;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .freq-track {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    overflow: visible;
+    position: relative;
+  }
+  .freq-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 1px;
+    transition: width 0.8s ease;
+  }
+  .freq-count {
+    font-size: 12px;
+    color: var(--muted2);
+    width: 16px;
+    text-align: right;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  .card {
+    border-top: 1px solid var(--border);
+    padding: 18px 0;
+    margin-bottom: 0;
+  }
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+  .card p { color: var(--text2); margin-bottom: 0; font-size: 13px; font-weight: 300; }
+
+  .mirror-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-bottom: 16px;
+    background: var(--border);
+  }
+  .mirror-side {
+    background: var(--bg);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .mirror-side-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+  .mirror-freq {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  .mirror-freq-name {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .match-badge {
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .match { border-color: rgba(168,184,160,0.3); color: #A8B8A0; }
+  .gap { border-color: rgba(201,169,110,0.25); color: var(--gold2); }
+
+  .cta-box {
+    border: 1px solid var(--border2);
+    padding: 28px 24px;
+    margin-top: 16px;
+    text-align: center;
+    background: var(--card);
+  }
+  .cta-box p { color: var(--muted); margin-bottom: 20px; font-size: 13px; }
+
+  .symbol {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 36px;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 20px;
+    display: block;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin: 28px 0 14px;
+    font-weight: 300;
+  }
+
+  .error-msg {
+    border: 1px solid rgba(180,80,80,0.2);
+    padding: 14px 16px;
+    color: #c87878;
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- SCREEN: Intro (self flow) -->
+<div class="screen" id="screen-intro">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">✦</span>
+  <h1>Как тебя видят другие?</h1>
+  <p>Ответь на 5 вопросов о себе. Поделись ссылкой с тремя людьми, которые тебя знают. Узнай, совпадает ли то, как ты себя видишь, с тем, как тебя видят они.</p>
+  <div class="spacer"></div>
+  <div id="intro-error" class="error-msg"></div>
+  <input type="text" id="self-name" placeholder="Твоё имя" maxlength="30">
+  <button class="btn btn-solid" id="btn-start">Начать</button>
+</div>
+
+<!-- SCREEN: Self Questions -->
+<div class="screen" id="screen-self-questions">
+  <div class="progress-bar"><div class="progress-fill" id="self-progress"></div></div>
+  <div class="question-num" id="self-q-num">Вопрос 1 из 5</div>
+  <div class="question-text" id="self-q-text"></div>
+  <div class="options" id="self-options"></div>
+</div>
+
+<!-- SCREEN: Waiting -->
+<div class="screen" id="screen-waiting">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">◈</span>
+  <h1>Ждём друзей</h1>
+  <p>Отправь эту ссылку трём людям, которые тебя знают. Когда третий ответит — ты получишь уведомление в Telegram.</p>
+  <div class="friend-count" id="friend-dots">
+    <div class="dot" id="dot-1"></div>
+    <div class="dot" id="dot-2"></div>
+    <div class="dot" id="dot-3"></div>
+  </div>
+  <div class="share-box">
+    <p class="share-url" id="share-url-text"></p>
+  </div>
+  <button class="btn btn-solid" id="btn-copy">Скопировать ссылку</button>
+  <button class="btn btn-outline" id="btn-share-tg">Поделиться в Telegram</button>
+</div>
+
+<!-- SCREEN: Friend Intro -->
+<div class="screen" id="screen-friend-intro">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">✦</span>
+  <h1 id="friend-intro-title">Ответь об Ане</h1>
+  <p id="friend-intro-desc">Это займёт 2 минуты. Ты помогаешь человеку увидеть себя глазами другого.</p>
+  <div class="spacer"></div>
+  <div id="friend-error" class="error-msg"></div>
+  <input type="text" id="friend-name" placeholder="Твоё имя" maxlength="30">
+  <button class="btn btn-solid" id="btn-friend-start">Ответить</button>
+</div>
+
+<!-- SCREEN: Friend Questions -->
+<div class="screen" id="screen-friend-questions">
+  <div class="progress-bar"><div class="progress-fill" id="friend-progress"></div></div>
+  <div class="question-num" id="friend-q-num">Вопрос 1 из 5</div>
+  <div class="question-text" id="friend-q-text"></div>
+  <div class="options" id="friend-options"></div>
+</div>
+
+<!-- SCREEN: Friend Thanks -->
+<div class="screen" id="screen-friend-thanks">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">✦</span>
+  <h1>Спасибо</h1>
+  <p>Твой ответ отправлен. Ты помог человеку увидеть себя немного яснее.</p>
+  <div class="spacer"></div>
+  <p>Хочешь узнать, как тебя видят другие?</p>
+  <button class="btn btn-outline" id="btn-try-self">Пройти зеркало о себе</button>
+</div>
+
+<!-- SCREEN: Result -->
+<div class="screen" id="screen-result">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <h1 id="result-title"></h1>
+  <p id="result-core"></p>
+
+  <div class="section-title">Твои ответы</div>
+  <div id="self-bars"></div>
+
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-label">Как это выглядит</div>
+    <p id="result-looks"></p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Как тебя переживают другие</div>
+    <p id="result-others"></p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Слепое пятно</div>
+    <p id="result-blind"></p>
+  </div>
+
+  <div id="mirror-section" style="display:none">
+    <div class="divider"></div>
+    <div class="section-title">Зеркало</div>
+    <div class="mirror-compare">
+      <div class="mirror-side">
+        <div class="mirror-side-label">Ты о себе</div>
+        <div class="mirror-freq" id="self-dominant-freq"></div>
+        <div class="mirror-freq-name" id="self-dominant-name"></div>
+      </div>
+      <div class="mirror-side">
+        <div class="mirror-side-label">Друзья о тебе</div>
+        <div class="mirror-freq" id="friend-dominant-freq"></div>
+        <div class="mirror-freq-name" id="friend-dominant-name"></div>
+      </div>
+    </div>
+    <div class="match-badge" id="match-badge"></div>
+    <div class="card" id="gap-card" style="display:none">
+      <div class="card-label">Что это значит</div>
+      <p id="gap-text"></p>
+    </div>
+    <div class="section-title">Ответы друзей</div>
+    <div id="friend-bars"></div>
+  </div>
+
+  <div id="waiting-section" style="display:none">
+    <div class="divider"></div>
+    <div class="section-title">Зеркало</div>
+    <p>Пока недостаточно ответов. Поделись ссылкой с друзьями — результат появится после трёх.</p>
+    <div class="share-box">
+      <p class="share-url" id="result-share-url"></p>
+    </div>
+    <button class="btn btn-solid" id="btn-result-copy">Скопировать ссылку</button>
+  </div>
+
+  <div class="cta-box">
+    <p>Это только первый слой. Твоя полная структура — 24 типа, четыре канала, твоё место в системе — в Portal 11.11.</p>
+    <a href="https://starseedsoultype.com/portal" target="_blank"><button class="btn btn-solid">Узнать полный тип</button></a>
+  </div>
+</div>
+
+<!-- SCREEN: Error -->
+<div class="screen" id="screen-error">
+  <div class="logo">StarSeedSoul · Зеркало</div>
+  <span class="symbol">◈</span>
+  <h1 id="error-title">Что-то пошло не так</h1>
+  <p id="error-desc"></p>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
+const FN_URL = `${SUPABASE_URL}/functions/v1`;
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+const FREQ = {
+  R: { label: 'Связи',      color: 'var(--r)' },
+  E: { label: 'Импульс',    color: 'var(--e)' },
+  M: { label: 'Структура',  color: 'var(--m)' },
+  L: { label: 'Понимание',  color: 'var(--l)' },
+};
+
+const QUESTIONS_SELF = [
+  {
+    text: 'Когда тебе нужно принять важное решение, ты в первую очередь…',
+    options: [
+      { text: 'Советуешься с теми, кому доверяешь', freq: 'R' },
+      { text: 'Чувствуешь внутренний импульс и действуешь', freq: 'E' },
+      { text: 'Собираешь факты и составляешь план', freq: 'M' },
+      { text: 'Думаешь, пока не поймёшь суть', freq: 'L' },
+    ]
+  },
+  {
+    text: 'В незнакомой обстановке ты прежде всего обращаешь внимание на…',
+    options: [
+      { text: 'Людей вокруг, их настроение и отношения', freq: 'R' },
+      { text: 'Атмосферу и заряд места', freq: 'E' },
+      { text: 'Пространство, детали, как всё устроено', freq: 'M' },
+      { text: 'Смысл происходящего — зачем всё это', freq: 'L' },
+    ]
+  },
+  {
+    text: 'Когда что-то идёт не так, ты…',
+    options: [
+      { text: 'Ищешь поддержку или кого-то, с кем поговорить', freq: 'R' },
+      { text: 'Чувствуешь прилив энергии изменить это прямо сейчас', freq: 'E' },
+      { text: 'Разбираешь по шагам, что конкретно пошло не так', freq: 'M' },
+      { text: 'Уходишь в себя, чтобы понять причины', freq: 'L' },
+    ]
+  },
+  {
+    text: 'Когда всё хорошо и ты в ресурсе, ты обычно…',
+    options: [
+      { text: 'Тянешься к близким, хочешь делиться', freq: 'R' },
+      { text: 'Заряжаешь других своей энергией', freq: 'E' },
+      { text: 'Берёшься за дела, которые давно откладывал', freq: 'M' },
+      { text: 'Читаешь, изучаешь, углубляешься во что-то интересное', freq: 'L' },
+    ]
+  },
+  {
+    text: 'Другие чаще всего ценят тебя за…',
+    options: [
+      { text: 'Умение слышать и быть рядом', freq: 'R' },
+      { text: 'Энергию и живость, которую ты приносишь', freq: 'E' },
+      { text: 'Надёжность — на тебя можно положиться', freq: 'M' },
+      { text: 'Глубину и нестандартный взгляд на вещи', freq: 'L' },
+    ]
+  },
+];
+
+function makeFriendQuestions(name) {
+  const n = name || 'этого человека';
+  return [
+    {
+      text: `Когда ${n} нужно принять важное решение, ${n} в первую очередь…`,
+      options: [
+        { text: 'Советуется с теми, кому доверяет', freq: 'R' },
+        { text: 'Чувствует внутренний импульс и действует', freq: 'E' },
+        { text: 'Собирает факты и составляет план', freq: 'M' },
+        { text: 'Думает, пока не поймёт суть', freq: 'L' },
+      ]
+    },
+    {
+      text: `В незнакомой обстановке ${n} прежде всего обращает внимание на…`,
+      options: [
+        { text: 'Людей вокруг, их настроение и отношения', freq: 'R' },
+        { text: 'Атмосферу и заряд места', freq: 'E' },
+        { text: 'Пространство, детали, как всё устроено', freq: 'M' },
+        { text: 'Смысл происходящего — зачем всё это', freq: 'L' },
+      ]
+    },
+    {
+      text: `Когда что-то идёт не так, ${n}…`,
+      options: [
+        { text: 'Ищет поддержку или кого-то, с кем поговорить', freq: 'R' },
+        { text: 'Чувствует прилив энергии изменить это прямо сейчас', freq: 'E' },
+        { text: 'Разбирает по шагам, что конкретно пошло не так', freq: 'M' },
+        { text: 'Уходит в себя, чтобы понять причины', freq: 'L' },
+      ]
+    },
+    {
+      text: `Когда всё хорошо и ${n} в ресурсе, ${n} обычно…`,
+      options: [
+        { text: 'Тянется к близким, хочет делиться', freq: 'R' },
+        { text: 'Заряжает других своей энергией', freq: 'E' },
+        { text: 'Берётся за дела, которые давно откладывал', freq: 'M' },
+        { text: 'Читает, изучает, углубляется во что-то интересное', freq: 'L' },
+      ]
+    },
+    {
+      text: `Другие чаще всего ценят ${n} за…`,
+      options: [
+        { text: 'Умение слышать и быть рядом', freq: 'R' },
+        { text: 'Энергию и живость, которую приносит', freq: 'E' },
+        { text: 'Надёжность — на него/неё можно положиться', freq: 'M' },
+        { text: 'Глубину и нестандартный взгляд на вещи', freq: 'L' },
+      ]
+    },
+  ];
+}
+
+const CONTENT = {
+  R: {
+    title: 'Связи',
+    core: 'Ты ориентируешься через отношения.',
+    looks: 'Ты воспринимаешь мир через людей. Для тебя важно, кто рядом, как они себя чувствуют, что между вами происходит. Ты принимаешь решения, когда есть доверие — и именно через доверие ты открываешься.',
+    others: 'Люди чувствуют себя услышанными рядом с тобой. Ты создаёшь пространство, в котором можно быть собой — без объяснений и оправданий.',
+    blind: 'Иногда ты берёшь чужое состояние как своё — и перестаёшь слышать, что нужно тебе самому.',
+  },
+  E: {
+    title: 'Импульс',
+    core: 'Ты ориентируешься через заряд.',
+    looks: 'Ты живёшь в движении. Тебя тянет туда, где есть энергия. Ты принимаешь решения быстро — и часто они оказываются верными, хотя объяснить логику ты можешь не сразу.',
+    others: 'Ты меняешь атмосферу одним появлением. Рядом с тобой люди чувствуют, что что-то возможно — что движение реально.',
+    blind: 'Когда заряд падает — ты как будто исчезаешь. Даже для себя.',
+  },
+  M: {
+    title: 'Структура',
+    core: 'Ты ориентируешься через форму.',
+    looks: 'Ты видишь, как устроено. Замечаешь детали, которые другие пропускают. Тебе важно, чтобы всё было на своём месте — не из тревоги, а потому что порядок даёт тебе устойчивость.',
+    others: 'На тебя полагаются. Ты из тех, кто делает, а не только говорит. Люди знают — если ты взялся, будет сделано.',
+    blind: 'Ты можешь так хорошо держать форму, что никто не видит, что внутри.',
+  },
+  L: {
+    title: 'Понимание',
+    core: 'Ты ориентируешься через смысл.',
+    looks: 'Тебе нужно понять, прежде чем двигаться. Ты задаёшь вопросы там, где другие уже пошли. Глубина для тебя — не роскошь, это необходимость.',
+    others: 'Люди приходят к тебе за перспективой. Ты видишь то, что другие не замечают — и умеешь это сформулировать.',
+    blind: 'Иногда ты так долго обрабатываешь, что момент уходит. Или молчишь — а люди думают, что тебе всё равно.',
+  },
+};
+
+const GAP_TEXT = {
+  'RE': 'Внутри ты ищешь связь. Снаружи — транслируешь заряд. Ты вдохновляешь людей, но редко показываешь, как сам нуждаешься в опоре.',
+  'RM': 'Внутри всё строится на доверии. Снаружи ты выглядишь как человек, который держит всё под контролем. Люди видят твою надёжность — и редко догадываются, как много для тебя значат сами отношения.',
+  'RL': 'Внутри ты живёшь сердцем. Снаружи кажешься глубоким и думающим. Твоя забота о людях читается как интерес к смыслам.',
+  'ER': 'Внутри ты — импульс. Снаружи люди чувствуют твою теплоту и внимание. Твоя энергия воспринимается как близость.',
+  'EM': 'Внутри — движение и заряд. Снаружи — надёжность и конкретность. Ты создаёшь результаты, которые люди видят, но не чувствуют твоей скорости изнутри.',
+  'EL': 'Внутри ты действуешь на импульсе. Снаружи кажешься вдумчивым и зрелым. Твоя скорость воспринимается как глубина.',
+  'MR': 'Внутри — порядок и структура. Снаружи люди чувствуют твою теплоту и поддержку. Ты заботишься через действия, а люди считывают это как близость.',
+  'ME': 'Внутри ты строишь и держишь. Снаружи излучаешь энергию. Твоя устойчивость воспринимается как драйв.',
+  'ML': 'Внутри ты про форму и конкретику. Снаружи — про смысл и глубину. Люди видят в тебе мыслителя, хотя ты сам думаешь руками.',
+  'LR': 'Внутри ты ищешь понимания. Снаружи люди чувствуют твою близость и тепло. Твои вопросы читаются как забота.',
+  'LE': 'Внутри — анализ и глубина. Снаружи — энергия и движение. Ты кажешься более лёгким и заряженным, чем ощущаешь себя сам.',
+  'LM': 'Внутри ты ищешь смысл. Снаружи выглядишь как человек дела. Твоя вдумчивость воспринимается как методичность.',
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let state = {
+  mode: null, // 'self' | 'friend' | 'result'
+  selfName: '',
+  friendName: '',
+  ownerName: '',
+  sessionCode: null,
+  selfAnswers: [],
+  friendAnswers: [],
+  currentQ: 0,
+  shareUrl: '',
+  initData: '',
+};
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function calcDominant(scores) {
+  return ['R','E','M','L'].reduce((a, b) => scores[a] >= scores[b] ? a : b);
+}
+
+function calcScores(answers) {
+  const s = { R:0, E:0, M:0, L:0 };
+  answers.forEach(f => s[f]++);
+  return s;
+}
+
+function renderBars(containerId, scores) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  const total = Object.values(scores).reduce((a,b) => a+b, 0) || 1;
+  ['R','E','M','L'].forEach(f => {
+    const pct = Math.round(scores[f] / total * 100);
+    el.innerHTML += `
+      <div class="freq-bar-row">
+        <span class="freq-label" style="color:${FREQ[f].color}">${FREQ[f].label}</span>
+        <div class="freq-track"><div class="freq-fill" style="width:${pct}%;background:${FREQ[f].color}"></div></div>
+        <span class="freq-count">${scores[f]}</span>
+      </div>`;
+  });
+}
+
+async function apiFetch(path, body) {
+  const res = await fetch(`${FN_URL}/${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+async function dbFetch(table, params) {
+  const qs = new URLSearchParams(params).toString();
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${qs}`, {
+    headers: {
+      'apikey': SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+    }
+  });
+  return res.json();
+}
+
+// ── Questions logic ───────────────────────────────────────────────────────────
+
+function renderQuestion(questions, progressId, numId, textId, optionsId, answers, onDone) {
+  const i = state.currentQ;
+  const q = questions[i];
+  const total = questions.length;
+
+  document.getElementById(progressId).style.width = `${(i / total) * 100}%`;
+  document.getElementById(numId).textContent = `Вопрос ${i + 1} из ${total}`;
+  document.getElementById(textId).textContent = q.text;
+
+  const optEl = document.getElementById(optionsId);
+  optEl.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt.text;
+    btn.onclick = () => {
+      answers.push(opt.freq);
+      state.currentQ++;
+      if (state.currentQ < total) {
+        renderQuestion(questions, progressId, numId, textId, optionsId, answers, onDone);
+      } else {
+        onDone(answers);
+      }
+    };
+    optEl.appendChild(btn);
+  });
+}
+
+// ── Self flow ─────────────────────────────────────────────────────────────────
+
+document.getElementById('btn-start').onclick = async () => {
+  const name = document.getElementById('self-name').value.trim();
+  if (!name) { showError('intro-error', 'Введи своё имя'); return; }
+  state.selfName = name;
+
+  const btn = document.getElementById('btn-start');
+  btn.disabled = true;
+  btn.textContent = 'Загружаем…';
+
+  state.currentQ = 0;
+  state.selfAnswers = [];
+  show('screen-self-questions');
+  renderQuestion(
+    QUESTIONS_SELF,
+    'self-progress', 'self-q-num', 'self-q-text', 'self-options',
+    state.selfAnswers,
+    submitSelf
+  );
+};
+
+async function submitSelf(answers) {
+  const scores = calcScores(answers);
+  const data = await apiFetch('mirror-submit', {
+    initData: state.initData,
+    name: state.selfName,
+    scores,
+  });
+
+  if (data.error) {
+    show('screen-error');
+    document.getElementById('error-desc').textContent = data.error;
+    return;
+  }
+
+  state.sessionCode = data.code;
+  state.shareUrl = data.share_url;
+
+  document.getElementById('share-url-text').textContent = data.share_url;
+  document.getElementById('btn-copy').onclick = () => {
+    navigator.clipboard.writeText(data.share_url).catch(() => {});
+    document.getElementById('btn-copy').textContent = 'Скопировано ✓';
+  };
+  document.getElementById('btn-share-tg').onclick = () => {
+    const tg = window.Telegram?.WebApp;
+    if (tg) tg.switchInlineQuery(data.share_url, ['users', 'groups']);
+    else window.open(`https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне — займёт 2 минуты')}`, '_blank');
+  };
+
+  show('screen-waiting');
+}
+
+// ── Friend flow ───────────────────────────────────────────────────────────────
+
+document.getElementById('btn-friend-start').onclick = () => {
+  const name = document.getElementById('friend-name').value.trim();
+  if (!name) { showError('friend-error', 'Введи своё имя'); return; }
+  state.friendName = name;
+
+  state.currentQ = 0;
+  state.friendAnswers = [];
+  const questions = makeFriendQuestions(state.ownerName);
+  show('screen-friend-questions');
+  renderQuestion(
+    questions,
+    'friend-progress', 'friend-q-num', 'friend-q-text', 'friend-options',
+    state.friendAnswers,
+    submitFriend
+  );
+};
+
+async function submitFriend(answers) {
+  const scores = calcScores(answers);
+  const data = await apiFetch('mirror-friend-submit', {
+    session_code: state.sessionCode,
+    friend_name: state.friendName,
+    scores,
+  });
+
+  if (data.error === 'Session not found') {
+    show('screen-error');
+    document.getElementById('error-title').textContent = 'Ссылка не найдена';
+    document.getElementById('error-desc').textContent = 'Возможно, ссылка устарела или была введена неверно.';
+    return;
+  }
+  if (data.error === 'Session expired') {
+    show('screen-error');
+    document.getElementById('error-title').textContent = 'Ссылка истекла';
+    document.getElementById('error-desc').textContent = 'Эта ссылка действовала 7 дней. Попроси новую.';
+    return;
+  }
+
+  document.getElementById('btn-try-self').onclick = () => {
+    window.location.href = 'https://starseedsoultype.com/mirror.html';
+  };
+  show('screen-friend-thanks');
+}
+
+// ── Result flow ───────────────────────────────────────────────────────────────
+
+async function loadResult(code) {
+  const [sessions, friends] = await Promise.all([
+    dbFetch('mirror_sessions', { code: `eq.${code}`, select: '*' }),
+    dbFetch('mirror_friend_responses', { session_code: `eq.${code}`, select: 'scores' }),
+  ]);
+
+  if (!sessions || sessions.length === 0) {
+    show('screen-error');
+    document.getElementById('error-title').textContent = 'Результат не найден';
+    document.getElementById('error-desc').textContent = 'Убедись, что ссылка правильная.';
+    return;
+  }
+
+  const session = sessions[0];
+  const selfScores = session.self_scores;
+  const selfDom = calcDominant(selfScores);
+  const c = CONTENT[selfDom];
+
+  document.getElementById('result-title').textContent = c.title;
+  document.getElementById('result-core').textContent = c.core;
+  document.getElementById('result-looks').textContent = c.looks;
+  document.getElementById('result-others').textContent = c.others;
+  document.getElementById('result-blind').textContent = c.blind;
+  renderBars('self-bars', selfScores);
+
+  if (session.result_unlocked && friends && friends.length >= 3) {
+    const aggScores = { R:0, E:0, M:0, L:0 };
+    friends.forEach(f => {
+      const s = f.scores;
+      aggScores.R += s.R || 0;
+      aggScores.E += s.E || 0;
+      aggScores.M += s.M || 0;
+      aggScores.L += s.L || 0;
+    });
+    const friendDom = calcDominant(aggScores);
+
+    document.getElementById('self-dominant-freq').textContent = selfDom;
+    document.getElementById('self-dominant-freq').style.color = FREQ[selfDom].color;
+    document.getElementById('self-dominant-name').textContent = FREQ[selfDom].label;
+
+    document.getElementById('friend-dominant-freq').textContent = friendDom;
+    document.getElementById('friend-dominant-freq').style.color = FREQ[friendDom].color;
+    document.getElementById('friend-dominant-name').textContent = FREQ[friendDom].label;
+
+    const badge = document.getElementById('match-badge');
+    if (selfDom === friendDom) {
+      badge.className = 'match-badge match';
+      badge.textContent = 'Совпадение — ты транслируешь то, что чувствуешь внутри';
+      document.getElementById('gap-card').style.display = 'none';
+    } else {
+      badge.className = 'match-badge gap';
+      badge.textContent = `Ты несёшь ${FREQ[selfDom].label.toLowerCase()}, но миру показываешь ${FREQ[friendDom].label.toLowerCase()}`;
+      const gapKey = selfDom + friendDom;
+      document.getElementById('gap-text').textContent = GAP_TEXT[gapKey] || '';
+      document.getElementById('gap-card').style.display = 'block';
+    }
+
+    renderBars('friend-bars', aggScores);
+    document.getElementById('mirror-section').style.display = 'block';
+    document.getElementById('waiting-section').style.display = 'none';
+  } else {
+    const shareUrl = `https://starseedsoultype.com/mirror.html?code=${code}&name=${encodeURIComponent(session.owner_name || '')}`;
+    document.getElementById('result-share-url').textContent = shareUrl;
+    document.getElementById('btn-result-copy').onclick = () => {
+      navigator.clipboard.writeText(shareUrl).catch(() => {});
+      document.getElementById('btn-result-copy').textContent = 'Скопировано ✓';
+    };
+    document.getElementById('mirror-section').style.display = 'none';
+    document.getElementById('waiting-section').style.display = 'block';
+  }
+
+  show('screen-result');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+(function init() {
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    state.initData = tg.initData || '';
+    const tgUser = tg.initDataUnsafe?.user;
+    if (tgUser?.first_name) {
+      document.getElementById('self-name').value = tgUser.first_name;
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const name = params.get('name');
+  const result = params.get('result');
+
+  if (result) {
+    state.mode = 'result';
+    state.sessionCode = result;
+    show('screen-error');
+    document.getElementById('error-title').textContent = 'Загружаем…';
+    document.getElementById('error-desc').textContent = '';
+    loadResult(result);
+    return;
+  }
+
+  if (code && name) {
+    state.mode = 'friend';
+    state.sessionCode = code;
+    state.ownerName = decodeURIComponent(name);
+    document.getElementById('friend-intro-title').textContent = `Ответь об ${state.ownerName}`;
+    document.getElementById('friend-intro-desc').textContent =
+      `${state.ownerName} хочет узнать, как её/его видят другие. Это займёт 2 минуты.`;
+    show('screen-friend-intro');
+    return;
+  }
+
+  state.mode = 'self';
+  show('screen-intro');
+})();
+</script>
+</body>
+</html>
