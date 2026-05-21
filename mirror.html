@@ -648,6 +648,7 @@ const GAP_TEXT = {
   'LM': 'Внутри ты живёшь через понимание, а снаружи люди чаще видят твою структуру. Это место, где твоя внутренняя правда и внешний образ расходятся. Именно здесь Зеркало становится особенно ценным.',
 };
 
+ let submittingSelf = false;
 let state = {
   mode: null,
   selfName: '',
@@ -777,35 +778,48 @@ document.getElementById('btn-start').onclick = async () => {
 };
 
 async function submitSelf(answers) {
+  if (submittingSelf) return;
+  submittingSelf = true;
+
   show('screen-loading');
 
   const scores = calcScores(answers);
-  const data = await apiFetch('mirror-submit', {
-    initData: state.initData,
-    name: state.selfName,
-    scores,
-  });
 
-  if (data.error) {
+  try {
+    const data = await apiFetch('mirror-submit', {
+      initData: state.initData,
+      name: state.selfName,
+      scores,
+    });
+
+    if (data.error) {
+      show('screen-error');
+      document.getElementById('error-desc').textContent = data.error;
+      submittingSelf = false;
+      return;
+    }
+
+    state.sessionCode = data.code;
+    state.shareUrl = data.share_url;
+
+    document.getElementById('share-url-text').textContent = data.share_url;
+
+    document.getElementById('btn-copy').onclick = () => {
+      navigator.clipboard.writeText(data.share_url).catch(() => {});
+      document.getElementById('btn-copy').textContent = 'Скопировано ✓';
+    };
+
+    document.getElementById('btn-share-tg').onclick = () => {
+      const shareLink = `https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне, займёт 2 минуты')}`;
+      window.open(shareLink, '_blank');
+    };
+
+    show('screen-waiting');
+  } catch (e) {
     show('screen-error');
-    document.getElementById('error-desc').textContent = data.error;
-    return;
+    document.getElementById('error-desc').textContent = 'Ошибка соединения';
+    submittingSelf = false;
   }
-
-  state.sessionCode = data.code;
-  state.shareUrl = data.share_url;
-
-  document.getElementById('share-url-text').textContent = data.share_url;
-  document.getElementById('btn-copy').onclick = () => {
-    navigator.clipboard.writeText(data.share_url).catch(() => {});
-    document.getElementById('btn-copy').textContent = 'Скопировано ✓';
-  };
-  document.getElementById('btn-share-tg').onclick = () => {
-  const shareLink = `https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне, займёт 2 минуты')}`;
-  window.open(shareLink, '_blank');
-};
-
-  show('screen-waiting');
 }
 
 document.getElementById('btn-friend-start').onclick = () => {
@@ -878,7 +892,7 @@ async function loadResult(code) {
   document.getElementById('result-blind').textContent = c.blind;
   renderBars('self-bars', selfScores);
 
-  if (session.result_unlocked && friends && friends.length >= 3) {
+  if (session.result_unlocked) {
     const aggScores = { R:0, E:0, M:0, L:0 };
     friends.forEach(f => {
       const s = f.scores;
