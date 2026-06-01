@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Зеркало · StarSeedSoul</title>
+<title>Mirror · StarSeedSoul</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300&display=swap">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -48,14 +48,41 @@
   }
   .screen.active { display: flex; }
 
+  .screen-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
   .logo {
     font-size: 10px;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--muted2);
-    margin-bottom: 40px;
     font-weight: 300;
   }
+
+  .lang-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border2);
+  }
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted2);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .lang-btn.active { background: rgba(201,169,110,0.1); color: var(--gold); }
+  .lang-btn:hover { color: var(--gold2); }
 
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -349,36 +376,51 @@
 </head>
 <body>
 
+<!-- SCREEN: INTRO (self) -->
 <div class="screen" id="screen-intro">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-intro">StarSeedSoul · Зеркало</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-ru" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
   <span class="symbol">✦</span>
-  <h1>Узнай, кем ты становишься в глазах других</h1>
-  <p>Ответь на пять вопросов о себе. Затем отправь Зеркало трём людям, которые знают тебя в жизни. Когда их ответы соберутся вместе, ты увидишь два слоя: то, как ты ощущаешь себя изнутри, и то, как тебя читают со стороны.</p>
+  <h1 id="intro-title">Узнай, кем ты становишься в глазах других</h1>
+  <p id="intro-desc">Ответь на пять вопросов о себе. Затем отправь Зеркало трём людям, которые знают тебя в жизни. Когда их ответы соберутся вместе, ты увидишь два слоя: то, как ты ощущаешь себя изнутри, и то, как тебя читают со стороны.</p>
   <div class="spacer"></div>
   <div id="intro-error" class="error-msg"></div>
   <input type="text" id="self-name" placeholder="Твоё имя" maxlength="30">
   <button class="btn btn-solid" id="btn-start">Открыть зеркало</button>
-  <p style="font-size:11px;text-align:center;margin-top:12px;color:#5F5A55;">Твои друзья увидят только вопросы о тебе. Их личные ответы растворятся в общем результате. Нажимая, ты соглашаешься с <a href="https://starseedsoultype.com/privacy.html" target="_blank" style="color:#7A7672;">обработкой данных</a></p>
+  <p id="intro-legal" style="font-size:11px;text-align:center;margin-top:12px;color:#5F5A55;">Твои друзья увидят только вопросы о тебе. Их личные ответы растворятся в общем результате. Нажимая, ты соглашаешься с <a href="https://starseedsoultype.com/privacy.html" target="_blank" style="color:#7A7672;">обработкой данных</a></p>
 </div>
 
+<!-- SCREEN: SELF QUESTIONS -->
 <div class="screen" id="screen-self-questions">
   <div class="progress-bar"><div class="progress-fill" id="self-progress"></div></div>
   <div class="question-num" id="self-q-num">Вопрос 1 из 5</div>
   <div class="question-text" id="self-q-text"></div>
   <div class="options" id="self-options"></div>
 </div>
- <div class="screen" id="screen-loading">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+
+<!-- SCREEN: LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="screen-top">
+    <div class="logo" id="logo-loading">StarSeedSoul · Зеркало</div>
+  </div>
   <span class="symbol">◈</span>
-  <h1>Собираем твоё зеркало</h1>
-  <p>Мы сохраняем твои ответы и создаём твоё Зеркало. Это займёт пару секунд.</p>
+  <h1 id="loading-title">Собираем твоё зеркало</h1>
+  <p id="loading-desc">Мы сохраняем твои ответы и создаём твоё Зеркало. Это займёт пару секунд.</p>
 </div>
 
+<!-- SCREEN: WAITING (share link) -->
 <div class="screen" id="screen-waiting">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-waiting">StarSeedSoul · Зеркало</div>
+  </div>
   <span class="symbol">◈</span>
-  <h1>Твоё зеркало почти собрано</h1>
-  <p>Отправь ссылку трём людям, рядом с которыми ты бываешь разным: близкому, другу, коллеге. Тем, кто видит тебя со стороны. Как только третий человек ответит, ты получишь уведомление и твоё Зеркало откроется.</p>
+  <h1 id="waiting-title">Твоё зеркало почти собрано</h1>
+  <p id="waiting-desc">Отправь ссылку трём людям, рядом с которыми ты бываешь разным: близкому, другу, коллеге. Тем, кто видит тебя со стороны. Как только третий человек ответит, ты получишь уведомление и твоё Зеркало откроется.</p>
   <div class="friend-count" id="friend-dots">
     <div class="dot" id="dot-1"></div>
     <div class="dot" id="dot-2"></div>
@@ -391,8 +433,15 @@
   <button class="btn btn-outline" id="btn-share-tg">Отправить в Telegram</button>
 </div>
 
+<!-- SCREEN: FRIEND INTRO -->
 <div class="screen" id="screen-friend-intro">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-friend-intro">StarSeedSoul · Зеркало</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-ru-fi" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" id="lang-en-fi" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
   <span class="symbol">✦</span>
   <h1 id="friend-intro-title">Как ты видишь: Аня?</h1>
   <p id="friend-intro-desc">Тебя пригласили стать частью Зеркала. Ответь на пять вопросов о том, как ты ощущаешь этого человека в жизни. Это займёт всего пару минут и поможет ему увидеть себя яснее.</p>
@@ -402,6 +451,7 @@
   <button class="btn btn-solid" id="btn-friend-start">Ответить</button>
 </div>
 
+<!-- SCREEN: FRIEND QUESTIONS -->
 <div class="screen" id="screen-friend-questions">
   <div class="progress-bar"><div class="progress-fill" id="friend-progress"></div></div>
   <div class="question-num" id="friend-q-num">Вопрос 1 из 5</div>
@@ -409,69 +459,75 @@
   <div class="options" id="friend-options"></div>
 </div>
 
+<!-- SCREEN: FRIEND THANKS -->
 <div class="screen" id="screen-friend-thanks">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-friend-thanks">StarSeedSoul · Зеркало</div>
+  </div>
   <span class="symbol">✦</span>
-  <h1>Твой ответ стал частью Зеркала</h1>
-  <p>Ты помог человеку увидеть себя объёмнее. Когда соберутся три ответа, его Зеркало откроется.</p>
+  <h1 id="friend-thanks-title">Твой ответ стал частью Зеркала</h1>
+  <p id="friend-thanks-desc">Ты помог человеку увидеть себя объёмнее. Когда соберутся три ответа, его Зеркало откроется.</p>
   <div class="spacer"></div>
-  <p>Хочешь увидеть, как тебя воспринимают другие?</p>
+  <p id="friend-thanks-cta">Хочешь увидеть, как тебя воспринимают другие?</p>
   <button class="btn btn-outline" id="btn-try-self">Создать своё зеркало</button>
 </div>
 
+<!-- SCREEN: RESULT -->
 <div class="screen" id="screen-result">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-result">StarSeedSoul · Зеркало</div>
+  </div>
   <h1 id="result-title"></h1>
   <p id="result-core"></p>
 
-  <div class="section-title">Твои ответы</div>
+  <div class="section-title" id="label-your-answers">Твои ответы</div>
   <div id="self-bars"></div>
 
   <div class="divider"></div>
 
   <div class="card">
-    <div class="card-label">Как это выглядит</div>
+    <div class="card-label" id="label-looks">Как это выглядит</div>
     <p id="result-looks"></p>
   </div>
 
   <div class="card">
-    <div class="card-label">Как тебя переживают другие</div>
+    <div class="card-label" id="label-others">Как тебя переживают другие</div>
     <p id="result-others"></p>
   </div>
 
   <div class="card">
-    <div class="card-label">Слепое пятно</div>
+    <div class="card-label" id="label-blind">Слепое пятно</div>
     <p id="result-blind"></p>
   </div>
 
   <div id="mirror-section" style="display:none">
     <div class="divider"></div>
-    <div class="section-title">Зеркало</div>
+    <div class="section-title" id="label-mirror">Зеркало</div>
     <div class="mirror-compare">
       <div class="mirror-side">
-        <div class="mirror-side-label">Ты о себе</div>
+        <div class="mirror-side-label" id="label-self-side">Ты о себе</div>
         <div class="mirror-freq" id="self-dominant-freq"></div>
         <div class="mirror-freq-name" id="self-dominant-name"></div>
       </div>
       <div class="mirror-side">
-        <div class="mirror-side-label">Друзья о тебе</div>
+        <div class="mirror-side-label" id="label-friend-side">Друзья о тебе</div>
         <div class="mirror-freq" id="friend-dominant-freq"></div>
         <div class="mirror-freq-name" id="friend-dominant-name"></div>
       </div>
     </div>
     <div class="match-badge" id="match-badge"></div>
     <div class="card" id="gap-card" style="display:none">
-      <div class="card-label">Что это значит</div>
+      <div class="card-label" id="label-gap">Что это значит</div>
       <p id="gap-text"></p>
     </div>
-    <div class="section-title">Ответы друзей</div>
+    <div class="section-title" id="label-friend-answers">Ответы друзей</div>
     <div id="friend-bars"></div>
   </div>
 
   <div id="waiting-section" style="display:none">
     <div class="divider"></div>
-    <div class="section-title">Зеркало</div>
-    <p>Пока недостаточно ответов. Поделись ссылкой с друзьями, результат появится после трёх.</p>
+    <div class="section-title" id="label-mirror-waiting">Зеркало</div>
+    <p id="waiting-not-enough">Пока недостаточно ответов. Поделись ссылкой с друзьями, результат появится после трёх.</p>
     <div class="share-box">
       <p class="share-url" id="result-share-url"></p>
     </div>
@@ -479,13 +535,16 @@
   </div>
 
   <div class="cta-box">
-    <p>Зеркало — это лишь первый слой твоего StarSeedSoul портрета. Полная расшифровка раскроет твой глубинный Origin, личный архетип, скрытые силы, теневые паттерны и путь внутренней эволюции.</p>
-    <a href="https://starseedsoultype.com/portal" target="_blank"><button class="btn btn-solid">Узнать свой StarSeedSoul Origin</button></a>
+    <p id="cta-text">Зеркало — это лишь первый слой твоего StarSeedSoul портрета. Полная расшифровка раскроет твой глубинный Origin, личный архетип, скрытые силы, теневые паттерны и путь внутренней эволюции.</p>
+    <a href="https://starseedsoultype.com/portal" target="_blank"><button class="btn btn-solid" id="cta-btn">Узнать свой StarSeedSoul Origin</button></a>
   </div>
 </div>
 
+<!-- SCREEN: ERROR -->
 <div class="screen" id="screen-error">
-  <div class="logo">StarSeedSoul · Зеркало</div>
+  <div class="screen-top">
+    <div class="logo" id="logo-error">StarSeedSoul · Зеркало</div>
+  </div>
   <span class="symbol">◈</span>
   <h1 id="error-title">Что-то пошло не так</h1>
   <p id="error-desc"></p>
@@ -496,63 +555,310 @@ const SUPABASE_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
 const FN_URL = `${SUPABASE_URL}/functions/v1`;
 
-const FREQ = {
-  R: { label: 'Связи',      color: 'var(--r)' },
-  E: { label: 'Импульс',    color: 'var(--e)' },
-  M: { label: 'Структура',  color: 'var(--m)' },
-  L: { label: 'Понимание',  color: 'var(--l)' },
+// ─── LANGUAGE STRINGS ───────────────────────────────────────────────────────
+
+const STRINGS = {
+  ru: {
+    // UI labels
+    logoText: 'StarSeedSoul · Зеркало',
+    namePlaceholderSelf: 'Твоё имя',
+    namePlaceholderFriend: 'Твоё имя',
+    btnStart: 'Открыть зеркало',
+    btnFriendStart: 'Ответить',
+    btnCopy: 'Скопировать ссылку',
+    btnCopied: 'Скопировано ✓',
+    btnShareTg: 'Отправить в Telegram',
+    btnTrySelf: 'Создать своё зеркало',
+    btnResultCopy: 'Скопировать ссылку',
+    btnResultCopied: 'Скопировано ✓',
+    btnCta: 'Узнать свой StarSeedSoul Origin',
+    questionOf: (i, total) => `Вопрос ${i} из ${total}`,
+    // Screens
+    introTitle: 'Узнай, кем ты становишься в глазах других',
+    introDesc: 'Ответь на пять вопросов о себе. Затем отправь Зеркало трём людям, которые знают тебя в жизни. Когда их ответы соберутся вместе, ты увидишь два слоя: то, как ты ощущаешь себя изнутри, и то, как тебя читают со стороны.',
+    introLegal: 'Твои друзья увидят только вопросы о тебе. Их личные ответы растворятся в общем результате. Нажимая, ты соглашаешься с <a href="https://starseedsoultype.com/privacy.html" target="_blank" style="color:#7A7672;">обработкой данных</a>',
+    loadingTitle: 'Собираем твоё зеркало',
+    loadingDesc: 'Мы сохраняем твои ответы и создаём твоё Зеркало. Это займёт пару секунд.',
+    waitingTitle: 'Твоё зеркало почти собрано',
+    waitingDesc: 'Отправь ссылку трём людям, рядом с которыми ты бываешь разным: близкому, другу, коллеге. Тем, кто видит тебя со стороны. Как только третий человек ответит, ты получишь уведомление и твоё Зеркало откроется.',
+    friendIntroDesc: (name) => `Тебя пригласили стать частью Зеркала. Ответь на пять вопросов о том, как ты ощущаешь ${name} в жизни. Это займёт всего пару минут и поможет увидеть себя яснее.`,
+    friendIntroTitle: (name) => `Как ты видишь: ${name}?`,
+    friendThanksTitle: 'Твой ответ стал частью Зеркала',
+    friendThanksDesc: 'Ты помог человеку увидеть себя объёмнее. Когда соберутся три ответа, его Зеркало откроется.',
+    friendThanksCta: 'Хочешь увидеть, как тебя воспринимают другие?',
+    // Result labels
+    labelYourAnswers: 'Твои ответы',
+    labelLooks: 'Как это выглядит',
+    labelOthers: 'Как тебя переживают другие',
+    labelBlind: 'Слепое пятно',
+    labelMirror: 'Зеркало',
+    labelSelfSide: 'Ты о себе',
+    labelFriendSide: 'Друзья о тебе',
+    labelGap: 'Что это значит',
+    labelFriendAnswers: 'Ответы друзей',
+    labelMirrorWaiting: 'Зеркало',
+    waitingNotEnough: 'Пока недостаточно ответов. Поделись ссылкой с друзьями, результат появится после трёх.',
+    ctaText: 'Зеркало — это лишь первый слой твоего StarSeedSoul портрета. Полная расшифровка раскроет твой глубинный Origin, личный архетип, скрытые силы, теневые паттерны и путь внутренней эволюции.',
+    // Errors
+    errNoName: 'Введи своё имя',
+    errLoading: 'Загружаем…',
+    errConnection: 'Ошибка соединения',
+    errNotFound: 'Результат не найден',
+    errNotFoundDesc: 'Убедись, что ссылка правильная.',
+    errLinkNotFound: 'Ссылка не найдена',
+    errLinkNotFoundDesc: 'Возможно, ссылка устарела или была введена неверно.',
+    errLinkExpired: 'Ссылка истекла',
+    errLinkExpiredDesc: 'Эта ссылка действовала 7 дней. Попроси новую.',
+    errSomethingWrong: 'Что-то пошло не так',
+    // Match badge
+    matchText: 'Синхронность. То, как ты ощущаешь себя внутри, ясно читается снаружи. Твоё внутреннее состояние и внешний образ звучат в унисон. Люди считывают именно ту частоту, через которую ты сам проживаешь жизнь.',
+    gapText: (selfLabel, friendLabel) => `Разрыв восприятия. Внутри ты живёшь через ${selfLabel.toLowerCase()}, а снаружи люди чаще видят ${friendLabel.toLowerCase()}.`,
+    gapFallback: 'Это место, где твоя внутренняя правда и внешний образ расходятся. Именно здесь Зеркало становится особенно ценным.',
+    // Telegram share text
+    tgShareText: 'Ответь обо мне, займёт 2 минуты',
+    // btn-start loading state
+    btnStartLoading: 'Загружаем…',
+  },
+  en: {
+    logoText: 'StarSeedSoul · Mirror',
+    namePlaceholderSelf: 'Your name',
+    namePlaceholderFriend: 'Your name',
+    btnStart: 'Open the Mirror',
+    btnFriendStart: 'Answer',
+    btnCopy: 'Copy link',
+    btnCopied: 'Copied ✓',
+    btnShareTg: 'Share via Telegram',
+    btnTrySelf: 'Create your own Mirror',
+    btnResultCopy: 'Copy link',
+    btnResultCopied: 'Copied ✓',
+    btnCta: 'Discover your StarSeedSoul Origin',
+    questionOf: (i, total) => `Question ${i} of ${total}`,
+    introTitle: 'See who you become in the eyes of others',
+    introDesc: 'Answer five questions about yourself. Then send the Mirror to three people who know you in real life. When their answers come together, you will see two layers side by side: how you experience yourself from within, and how others read you from the outside.',
+    introLegal: 'Your friends will only see questions about you. Their individual answers dissolve into a combined result. By continuing, you agree to the <a href="https://starseedsoultype.com/privacy.html" target="_blank" style="color:#7A7672;">privacy policy</a>.',
+    loadingTitle: 'Building your Mirror',
+    loadingDesc: 'We are saving your answers and creating your Mirror. This will take just a moment.',
+    waitingTitle: 'Your Mirror is almost ready',
+    waitingDesc: 'Send the link to three people who know you in different contexts: someone close, a friend, a colleague. Once the third person answers, your Mirror will open.',
+    friendIntroDesc: (name) => `You have been invited to be part of ${name}'s Mirror. Answer five questions about how you experience this person in life. It takes just a couple of minutes and will help them see themselves more clearly.`,
+    friendIntroTitle: (name) => `How do you see: ${name}?`,
+    friendThanksTitle: 'Your answer is now part of the Mirror',
+    friendThanksDesc: 'You helped someone see themselves more fully. Once three answers are collected, their Mirror will open.',
+    friendThanksCta: 'Want to see how others experience you?',
+    labelYourAnswers: 'Your answers',
+    labelLooks: 'How it looks from within',
+    labelOthers: 'How others experience you',
+    labelBlind: 'Blind spot',
+    labelMirror: 'Mirror',
+    labelSelfSide: 'You about yourself',
+    labelFriendSide: 'Friends about you',
+    labelGap: 'What this means',
+    labelFriendAnswers: 'Friends\' answers',
+    labelMirrorWaiting: 'Mirror',
+    waitingNotEnough: 'Not enough answers yet. Share the link with friends — the result will appear after three responses.',
+    ctaText: 'The Mirror is only the first layer of your StarSeedSoul portrait. A full reading will reveal your deep Origin, personal archetype, hidden strengths, shadow patterns, and the path of your inner evolution.',
+    errNoName: 'Please enter your name',
+    errLoading: 'Loading…',
+    errConnection: 'Connection error',
+    errNotFound: 'Result not found',
+    errNotFoundDesc: 'Please make sure the link is correct.',
+    errLinkNotFound: 'Link not found',
+    errLinkNotFoundDesc: 'This link may have expired or been entered incorrectly.',
+    errLinkExpired: 'Link expired',
+    errLinkExpiredDesc: 'This link was valid for 7 days. Please request a new one.',
+    errSomethingWrong: 'Something went wrong',
+    matchText: 'Alignment. The way you experience yourself from within is clearly readable from the outside. Your inner state and outer image are in harmony — people pick up exactly the frequency you live through.',
+    gapText: (selfLabel, friendLabel) => `Perception gap. Inside, you live through ${selfLabel.toLowerCase()}, while others tend to see ${friendLabel.toLowerCase()} first.`,
+    gapFallback: 'This is the place where your inner truth and outer image diverge. It is precisely here that the Mirror becomes most valuable.',
+    tgShareText: 'Answer a few questions about me — takes 2 minutes',
+    btnStartLoading: 'Loading…',
+  }
 };
 
-const QUESTIONS_SELF = [
-  {
-    text: 'Когда нужно принять важное решение, ты прежде всего…',
-    options: [
-      { text: 'Идёшь за советом к тем, кому доверяешь', freq: 'R' },
-      { text: 'Ловишь внутренний импульс и действуешь', freq: 'E' },
-      { text: 'Собираешь факты и выстраиваешь план', freq: 'M' },
-      { text: 'Погружаешься в мысли, пока не нащупаешь суть', freq: 'L' },
-    ]
-  },
-  {
-    text: 'Оказавшись в новом месте, ты первым делом обращаешь внимание на…',
-    options: [
-      { text: 'Людей вокруг, их состояния и связи', freq: 'R' },
-      { text: 'Общую атмосферу и заряд пространства', freq: 'E' },
-      { text: 'Детали пространства и то, как всё устроено', freq: 'M' },
-      { text: 'Скрытый смысл и суть происходящего', freq: 'L' },
-    ]
-  },
-  {
-    text: 'Когда всё идёт не по плану, ты…',
-    options: [
-      { text: 'Ищешь поддержку и возможность поговорить', freq: 'R' },
-      { text: 'Чувствуешь резкий прилив сил всё изменить', freq: 'E' },
-      { text: 'Разбираешь ситуацию на шаги, чтобы найти сбой', freq: 'M' },
-      { text: 'Уходишь в себя, чтобы докопаться до причин', freq: 'L' },
-    ]
-  },
-  {
-    text: 'Когда всё складывается и ты в ресурсе, ты чаще всего…',
-    options: [
-      { text: 'Тянешься к своим, хочешь делиться состоянием', freq: 'R' },
-      { text: 'Заряжаешь пространство своей энергией', freq: 'E' },
-      { text: 'Берёшься за то, до чего давно не доходили руки', freq: 'M' },
-      { text: 'Углубляешься в изучение того, что тебе интересно', freq: 'L' },
-    ]
-  },
-  {
-    text: 'Люди чаще всего ценят в тебе…',
-    options: [
-      { text: 'Твоё умение слышать и просто быть рядом', freq: 'R' },
-      { text: 'Ту живую энергию, которую ты приносишь с собой', freq: 'E' },
-      { text: 'Твою надёжность — на тебя всегда можно опереться', freq: 'M' },
-      { text: 'Твою глубину и совершенно особый взгляд на вещи', freq: 'L' },
-    ]
-  },
-];
+// ─── FREQ LABELS ─────────────────────────────────────────────────────────────
 
-function makeFriendQuestions(name) {
-  const n = name || 'этого человека';
+const FREQ_LABELS = {
+  ru: {
+    R: 'Связи',
+    E: 'Импульс',
+    M: 'Структура',
+    L: 'Понимание',
+  },
+  en: {
+    R: 'Connection',
+    E: 'Impulse',
+    M: 'Structure',
+    L: 'Depth',
+  }
+};
+
+const FREQ_COLORS = {
+  R: 'var(--r)',
+  E: 'var(--e)',
+  M: 'var(--m)',
+  L: 'var(--l)',
+};
+
+function getFreq(lang) {
+  const labels = FREQ_LABELS[lang];
+  return {
+    R: { label: labels.R, color: FREQ_COLORS.R },
+    E: { label: labels.E, color: FREQ_COLORS.E },
+    M: { label: labels.M, color: FREQ_COLORS.M },
+    L: { label: labels.L, color: FREQ_COLORS.L },
+  };
+}
+
+// ─── QUESTIONS ───────────────────────────────────────────────────────────────
+
+const QUESTIONS_SELF = {
+  ru: [
+    {
+      text: 'Когда нужно принять важное решение, ты прежде всего…',
+      options: [
+        { text: 'Идёшь за советом к тем, кому доверяешь', freq: 'R' },
+        { text: 'Ловишь внутренний импульс и действуешь', freq: 'E' },
+        { text: 'Собираешь факты и выстраиваешь план', freq: 'M' },
+        { text: 'Погружаешься в мысли, пока не нащупаешь суть', freq: 'L' },
+      ]
+    },
+    {
+      text: 'Оказавшись в новом месте, ты первым делом обращаешь внимание на…',
+      options: [
+        { text: 'Людей вокруг, их состояния и связи', freq: 'R' },
+        { text: 'Общую атмосферу и заряд пространства', freq: 'E' },
+        { text: 'Детали пространства и то, как всё устроено', freq: 'M' },
+        { text: 'Скрытый смысл и суть происходящего', freq: 'L' },
+      ]
+    },
+    {
+      text: 'Когда всё идёт не по плану, ты…',
+      options: [
+        { text: 'Ищешь поддержку и возможность поговорить', freq: 'R' },
+        { text: 'Чувствуешь резкий прилив сил всё изменить', freq: 'E' },
+        { text: 'Разбираешь ситуацию на шаги, чтобы найти сбой', freq: 'M' },
+        { text: 'Уходишь в себя, чтобы докопаться до причин', freq: 'L' },
+      ]
+    },
+    {
+      text: 'Когда всё складывается и ты в ресурсе, ты чаще всего…',
+      options: [
+        { text: 'Тянешься к своим, хочешь делиться состоянием', freq: 'R' },
+        { text: 'Заряжаешь пространство своей энергией', freq: 'E' },
+        { text: 'Берёшься за то, до чего давно не доходили руки', freq: 'M' },
+        { text: 'Углубляешься в изучение того, что тебе интересно', freq: 'L' },
+      ]
+    },
+    {
+      text: 'Люди чаще всего ценят в тебе…',
+      options: [
+        { text: 'Твоё умение слышать и просто быть рядом', freq: 'R' },
+        { text: 'Ту живую энергию, которую ты приносишь с собой', freq: 'E' },
+        { text: 'Твою надёжность — на тебя всегда можно опереться', freq: 'M' },
+        { text: 'Твою глубину и совершенно особый взгляд на вещи', freq: 'L' },
+      ]
+    },
+  ],
+  en: [
+    {
+      text: 'When you need to make an important decision, you first…',
+      options: [
+        { text: 'Seek advice from people you trust', freq: 'R' },
+        { text: 'Catch an inner impulse and act on it', freq: 'E' },
+        { text: 'Gather facts and build a plan', freq: 'M' },
+        { text: 'Sit with your thoughts until you find the core', freq: 'L' },
+      ]
+    },
+    {
+      text: 'Arriving somewhere new, the first thing you notice is…',
+      options: [
+        { text: 'The people around you, their states and connections', freq: 'R' },
+        { text: 'The overall atmosphere and charge of the space', freq: 'E' },
+        { text: 'The details of the space and how everything is arranged', freq: 'M' },
+        { text: 'The hidden meaning and essence of what is happening', freq: 'L' },
+      ]
+    },
+    {
+      text: 'When things do not go as planned, you…',
+      options: [
+        { text: 'Look for support and someone to talk to', freq: 'R' },
+        { text: 'Feel a sudden surge of energy to change everything', freq: 'E' },
+        { text: 'Break the situation into steps to find where it went wrong', freq: 'M' },
+        { text: 'Go inward to understand the root causes', freq: 'L' },
+      ]
+    },
+    {
+      text: 'When everything is going well and you feel resourced, you tend to…',
+      options: [
+        { text: 'Reach out to the people you care about and share your state', freq: 'R' },
+        { text: 'Charge the space around you with your energy', freq: 'E' },
+        { text: 'Take on things you have been putting off for a while', freq: 'M' },
+        { text: 'Go deeper into something that genuinely interests you', freq: 'L' },
+      ]
+    },
+    {
+      text: 'People most often appreciate you for…',
+      options: [
+        { text: 'Your ability to listen and simply be present', freq: 'R' },
+        { text: 'The alive energy you bring into any space', freq: 'E' },
+        { text: 'Your reliability — people know they can count on you', freq: 'M' },
+        { text: 'Your depth and a completely unique way of seeing things', freq: 'L' },
+      ]
+    },
+  ]
+};
+
+function makeFriendQuestions(name, lang) {
+  const n = name || (lang === 'en' ? 'this person' : 'этого человека');
+  if (lang === 'en') {
+    return [
+      {
+        text: `When ${n} needs to make an important decision, they first…`,
+        options: [
+          { text: 'Seek advice from people they trust', freq: 'R' },
+          { text: 'Catch an inner impulse and act on it', freq: 'E' },
+          { text: 'Gather facts and build a plan', freq: 'M' },
+          { text: 'Sit with their thoughts until they find the core', freq: 'L' },
+        ]
+      },
+      {
+        text: `In an unfamiliar setting, ${n} first pays attention to…`,
+        options: [
+          { text: 'The people around, their states and connections', freq: 'R' },
+          { text: 'The overall atmosphere and charge of the space', freq: 'E' },
+          { text: 'The details of the space and how everything is arranged', freq: 'M' },
+          { text: 'The hidden meaning and essence of what is happening', freq: 'L' },
+        ]
+      },
+      {
+        text: `When things do not go as planned, ${n}…`,
+        options: [
+          { text: 'Looks for support or someone to talk to', freq: 'R' },
+          { text: 'Feels a surge of energy to change things right now', freq: 'E' },
+          { text: 'Breaks it down step by step to find what went wrong', freq: 'M' },
+          { text: 'Goes inward to understand the root causes', freq: 'L' },
+        ]
+      },
+      {
+        text: `When everything is going well and ${n} feels resourced, they usually…`,
+        options: [
+          { text: 'Reach out to people they care about and want to share', freq: 'R' },
+          { text: 'Charge others with their energy', freq: 'E' },
+          { text: 'Take on things they have been putting off', freq: 'M' },
+          { text: 'Read, study, go deeper into something interesting', freq: 'L' },
+        ]
+      },
+      {
+        text: `Others most often appreciate ${n} for…`,
+        options: [
+          { text: 'Their ability to listen and simply be present', freq: 'R' },
+          { text: 'The energy and aliveness they bring', freq: 'E' },
+          { text: 'Their reliability — you can always count on them', freq: 'M' },
+          { text: 'Their depth and a completely unique perspective', freq: 'L' },
+        ]
+      },
+    ];
+  }
   return [
     {
       text: `Когда ${n} нужно принять важное решение, ${n} в первую очередь…`,
@@ -593,62 +899,202 @@ function makeFriendQuestions(name) {
     {
       text: `Другие чаще всего ценят ${n} за…`,
       options: [
-        { text: 'Твоё умение слышать и просто быть рядом', freq: 'R' },
+        { text: 'Умение слышать и просто быть рядом', freq: 'R' },
         { text: 'Энергию и живость, которую приносит', freq: 'E' },
         { text: 'Надёжность, на него или неё можно положиться', freq: 'M' },
-        { text: 'Твою глубину и совершенно особый взгляд на вещи', freq: 'L' },
+        { text: 'Глубину и совершенно особый взгляд на вещи', freq: 'L' },
       ]
     },
   ];
 }
 
+// ─── CONTENT (result descriptions) ──────────────────────────────────────────
+
 const CONTENT = {
-  R: {
-    title: 'Твоя внутренняя опора: Связи',
-    core: 'Ты находишь свои ориентиры через живой контакт, доверие и невидимые нити между людьми.',
-    looks: 'Ты безошибочно считываешь то, что происходит между людьми. Для тебя имеют значение полутона, настроения, степень близости и всё то, что остаётся невысказанным. Ты по-настоящему раскрываешься только там, где чувствуешь подлинный контакт.',
-    others: 'Рядом с тобой люди обретают чувство, что их действительно слышат. Ты умеешь создавать такое пространство, в котором становится безопасно быть честнее, мягче и ближе к своей сути.',
-    blind: 'Иногда ты настолько тонко сонастраиваешься с другими, что твоё собственное состояние начинает звучать тише чужого.',
+  ru: {
+    R: {
+      title: 'Твоя внутренняя опора: Связи',
+      core: 'Ты находишь свои ориентиры через живой контакт, доверие и невидимые нити между людьми.',
+      looks: 'Ты безошибочно считываешь то, что происходит между людьми. Для тебя имеют значение полутона, настроения, степень близости и всё то, что остаётся невысказанным. Ты по-настоящему раскрываешься только там, где чувствуешь подлинный контакт.',
+      others: 'Рядом с тобой люди обретают чувство, что их действительно слышат. Ты умеешь создавать такое пространство, в котором становится безопасно быть честнее, мягче и ближе к своей сути.',
+      blind: 'Иногда ты настолько тонко сонастраиваешься с другими, что твоё собственное состояние начинает звучать тише чужого.',
+    },
+    E: {
+      title: 'Твоя внутренняя опора: Импульс',
+      core: 'Ты находишь свои ориентиры через внутренний заряд, постоянное движение и острое ощущение момента.',
+      looks: 'Ты по-настоящему оживаешь там, где есть динамика. Тебя ведёт чистый импульс, и часто ты принимаешь решения за долю секунды до того, как сможешь объяснить их словами. Твоя энергия — это катализатор перемен.',
+      others: 'Там, где появляешься ты, начинается движение. Ты способен менять плотность атмосферы одним своим присутствием, напоминая людям о том, что жизнь может быть пульсирующей и живой.',
+      blind: 'Иногда твой внутренний заряд меняет полюса быстрее, чем окружающие успевают осознать, где ты сейчас находишься.',
+    },
+    M: {
+      title: 'Твоя внутренняя опора: Структура',
+      core: 'Ты находишь свои ориентиры через форму, конкретные действия, порядок и всё то, чему можно придать вес в реальности.',
+      looks: 'Ты считываешь устройство жизни через её детали, механики и формы. Для тебя критически важно, чтобы любое ощущение обретало твёрдую опору, а намерение переплавлялось в конкретный шаг. Выстраивая порядок вокруг, ты возвращаешь устойчивость внутри.',
+      others: 'Рядом с тобой людям становится безопаснее опираться на реальность. Ты из тех редких людей, кто умеет держать форму, делать последовательные шаги и превращать абстрактные слова в осязаемый результат.',
+      blind: 'Иногда ты настолько безупречно держишь форму, что окружающие считывают твою силу задолго до того, как успевают заметить твою чувствительность.',
+    },
+    L: {
+      title: 'Твоя внутренняя опора: Понимание',
+      core: 'Ты находишь свои ориентиры через смыслы, глубокое понимание, наблюдение и саму суть происходящего.',
+      looks: 'Ты всегда ищешь корневую суть прежде, чем сделать следующий шаг. Тебе жизненно необходимо понимать, что происходит на самом деле, почему это имеет вес и куда всё движется. Твоя глубина позволяет тебе видеть целые миры там, где другие видят лишь поверхность.',
+      others: 'В твоём поле люди невольно начинают смотреть глубже. Ты подсвечиваешь смыслы, неочевидные связи и скрытые мотивы, мимо которых остальные прошли бы не заметив.',
+      blind: 'Иногда ты уходишь в такую глубокую внутреннюю обработку происходящего, что люди видят лишь твоё молчание там, где на самом деле разворачивается колоссальная работа.',
+    },
   },
-  E: {
-    title: 'Твоя внутренняя опора: Импульс',
-    core: 'Ты находишь свои ориентиры через внутренний заряд, постоянное движение и острое ощущение момента.',
-    looks: 'Ты по-настоящему оживаешь там, где есть динамика. Тебя ведёт чистый импульс, и часто ты принимаешь решения за долю секунды до того, как сможешь объяснить их словами. Твоя энергия — это катализатор перемен.',
-    others: 'Там, где появляешься ты, начинается движение. Ты способен менять плотность атмосферы одним своим присутствием, напоминая людям о том, что жизнь может быть пульсирующей и живой.',
-    blind: 'Иногда твой внутренний заряд меняет полюса быстрее, чем окружающие успевают осознать, где ты сейчас находишься.',
-  },
-  M: {
-    title: 'Твоя внутренняя опора: Структура',
-    core: 'Ты находишь свои ориентиры через форму, конкретные действия, порядок и всё то, чему можно придать вес в реальности.',
-    looks: 'Ты считываешь устройство жизни через её детали, механики и формы. Для тебя критически важно, чтобы любое ощущение обретало твёрдую опору, а намерение переплавлялось в конкретный шаг. Выстраивая порядок вокруг, ты возвращаешь устойчивость внутри.',
-    others: 'Рядом с тобой людям становится безопаснее опираться на реальность. Ты из тех редких людей, кто умеет держать форму, делать последовательные шаги и превращать абстрактные слова в осязаемый результат.',
-    blind: 'Иногда ты настолько безупречно держишь форму, что окружающие считывают твою силу задолго до того, как успевают заметить твою чувствительность.',
-  },
-  L: {
-    title: 'Твоя внутренняя опора: Понимание',
-    core: 'Ты находишь свои ориентиры через смыслы, глубокое понимание, наблюдение и саму суть происходящего.',
-    looks: 'Ты всегда ищешь корневую суть прежде, чем сделать следующий шаг. Тебе жизненно необходимо понимать, что происходит на самом деле, почему это имеет вес и куда всё движется. Твоя глубина позволяет тебе видеть целые миры там, где другие видят лишь поверхность.',
-    others: 'В твоём поле люди невольно начинают смотреть глубже. Ты подсвечиваешь смыслы, неочевидные связи и скрытые мотивы, мимо которых остальные прошли бы не заметив.',
-    blind: 'Иногда ты уходишь в такую глубокую внутреннюю обработку происходящего, что люди видят лишь твоё молчание там, где на самом деле разворачивается колоссальная работа.',
-  },
+  en: {
+    R: {
+      title: 'Your inner anchor: Connection',
+      core: 'You find your bearings through living contact, trust, and the invisible threads between people.',
+      looks: 'You read what is happening between people with quiet precision. Nuance, mood, the degree of closeness, and everything left unspoken — these are the things that matter most to you. You open fully only where you feel genuine contact.',
+      others: 'In your presence, people feel genuinely heard. You create a space where it becomes safe to be more honest, more tender, and closer to one\'s own truth.',
+      blind: 'Sometimes you attune to others so finely that your own inner state begins to sound quieter than theirs.',
+    },
+    E: {
+      title: 'Your inner anchor: Impulse',
+      core: 'You find your bearings through inner charge, constant movement, and a sharp sense of the present moment.',
+      looks: 'You come fully alive where there is momentum. A clear impulse guides you, and you often make decisions a fraction of a second before you can explain them in words. Your energy is a catalyst for change.',
+      others: 'Wherever you appear, movement begins. You can shift the density of an atmosphere simply by being present, reminding people that life can be pulsing and alive.',
+      blind: 'Sometimes your inner charge shifts polarity faster than those around you can register where you are right now.',
+    },
+    M: {
+      title: 'Your inner anchor: Structure',
+      core: 'You find your bearings through form, concrete action, order, and everything that can be given weight in reality.',
+      looks: 'You read the workings of life through its details, mechanics, and forms. It is essential to you that any feeling finds a solid ground, and that intention is translated into a specific step. By building order around you, you restore steadiness within.',
+      others: 'In your presence, people feel safer leaning on reality. You are among the rare few who can hold form, take consistent steps, and turn abstract words into tangible results.',
+      blind: 'Sometimes you hold form so flawlessly that others read your strength long before they notice your sensitivity.',
+    },
+    L: {
+      title: 'Your inner anchor: Depth',
+      core: 'You find your bearings through meaning, deep understanding, observation, and the very essence of what is unfolding.',
+      looks: 'You always seek the root before taking the next step. Understanding what is truly happening, why it carries weight, and where everything is moving — this is not optional for you. Your depth lets you see entire worlds where others see only surface.',
+      others: 'In your field, people begin to look deeper without quite knowing why. You illuminate meanings, non-obvious connections, and hidden motives that others would walk past without noticing.',
+      blind: 'Sometimes you go into such deep internal processing that people see only your silence where an enormous amount of work is actually unfolding.',
+    },
+  }
 };
+
+// ─── GAP TEXT ────────────────────────────────────────────────────────────────
 
 const GAP_TEXT = {
-  'RE': 'Внутри тебя живут связи и глубокое чувство близости, а снаружи люди считывают прежде всего твою энергию и движение. Твоя теплота остаётся за кадром, и это расстояние между тем, кто ты есть, и тем, каким тебя видят, стоит исследовать.',
-  'RM': 'Внутри тебя живут связи и живой контакт с людьми, а снаружи люди считывают прежде всего твою собранность и надёжность. Твоя потребность в близости скрыта за образом человека, на которого можно положиться.',
-  'RL': 'Внутри тебя живут связи и тяга к близости, а снаружи люди считывают прежде всего твою глубину и аналитичность. Твоё сердце остаётся невидимым за образом мыслителя.',
-  'ER': 'Внутри тебя живёт импульс и заряженность моментом, а снаружи люди считывают прежде всего твою теплоту и умение выстраивать отношения. Твоя внутренняя динамика скрыта за образом человека, который всегда рядом.',
-  'EM': 'Внутри тебя живёт импульс и острое ощущение настоящего, а снаружи люди считывают прежде всего твою структурированность и системность. Твоя живость прячется за фасадом порядка.',
-  'EL': 'Внутри тебя живёт импульс и стремительное движение, а снаружи люди считывают прежде всего твою глубину и вдумчивость. Твоя энергия остаётся невидимой за образом человека, который всё осмысляет.',
-  'MR': 'Внутри тебя живёт структура и стремление к конкретному результату, а снаружи люди считывают прежде всего твою теплоту и открытость. Твоя внутренняя собранность скрыта за образом человека, который всегда рядом.',
-  'ME': 'Внутри тебя живёт структура и потребность в устойчивости, а снаружи люди считывают прежде всего твою энергию и живость. Твой внутренний порядок остаётся невидимым за образом человека в движении.',
-  'ML': 'Внутри тебя живёт структура и ориентация на действие, а снаружи люди считывают прежде всего твою глубину и склонность к размышлению. Твоя практичность скрыта за образом мыслителя.',
-  'LR': 'Внутри тебя живёт понимание и постоянный поиск смысла, а снаружи люди считывают прежде всего твою теплоту и способность выстраивать связи. Твоя глубина остаётся невидимой за образом человека, который умеет быть рядом.',
-  'LE': 'Внутри тебя живёт понимание и тихое наблюдение за миром, а снаружи люди считывают прежде всего твою энергию и динамику. Твой внутренний покой скрыт за образом человека в движении.',
-  'LM': 'Внутри тебя живёт понимание и стремление к сути, а снаружи люди считывают прежде всего твою надёжность и структурированность. Твоя глубина остаётся невидимой за образом человека, который держит всё под контролем.',
+  ru: {
+    'RE': 'Внутри тебя живут связи и глубокое чувство близости, а снаружи люди считывают прежде всего твою энергию и движение. Твоя теплота остаётся за кадром, и это расстояние между тем, кто ты есть, и тем, каким тебя видят, стоит исследовать.',
+    'RM': 'Внутри тебя живут связи и живой контакт с людьми, а снаружи люди считывают прежде всего твою собранность и надёжность. Твоя потребность в близости скрыта за образом человека, на которого можно положиться.',
+    'RL': 'Внутри тебя живут связи и тяга к близости, а снаружи люди считывают прежде всего твою глубину и аналитичность. Твоё сердце остаётся невидимым за образом мыслителя.',
+    'ER': 'Внутри тебя живёт импульс и заряженность моментом, а снаружи люди считывают прежде всего твою теплоту и умение выстраивать отношения. Твоя внутренняя динамика скрыта за образом человека, который всегда рядом.',
+    'EM': 'Внутри тебя живёт импульс и острое ощущение настоящего, а снаружи люди считывают прежде всего твою структурированность и системность. Твоя живость прячется за фасадом порядка.',
+    'EL': 'Внутри тебя живёт импульс и стремительное движение, а снаружи люди считывают прежде всего твою глубину и вдумчивость. Твоя энергия остаётся невидимой за образом человека, который всё осмысляет.',
+    'MR': 'Внутри тебя живёт структура и стремление к конкретному результату, а снаружи люди считывают прежде всего твою теплоту и открытость. Твоя внутренняя собранность скрыта за образом человека, который всегда рядом.',
+    'ME': 'Внутри тебя живёт структура и потребность в устойчивости, а снаружи люди считывают прежде всего твою энергию и живость. Твой внутренний порядок остаётся невидимым за образом человека в движении.',
+    'ML': 'Внутри тебя живёт структура и ориентация на действие, а снаружи люди считывают прежде всего твою глубину и склонность к размышлению. Твоя практичность скрыта за образом мыслителя.',
+    'LR': 'Внутри тебя живёт понимание и постоянный поиск смысла, а снаружи люди считывают прежде всего твою теплоту и способность выстраивать связи. Твоя глубина остаётся невидимой за образом человека, который умеет быть рядом.',
+    'LE': 'Внутри тебя живёт понимание и тихое наблюдение за миром, а снаружи люди считывают прежде всего твою энергию и динамику. Твой внутренний покой скрыт за образом человека в движении.',
+    'LM': 'Внутри тебя живёт понимание и стремление к сути, а снаружи люди считывают прежде всего твою надёжность и структурированность. Твоя глубина остаётся невидимой за образом человека, который держит всё под контролем.',
+  },
+  en: {
+    'RE': 'Inside you lives connection and a deep sense of closeness, while others primarily read your energy and movement. Your warmth stays offscreen, and this distance between who you are and how you are seen is worth exploring.',
+    'RM': 'Inside you lives connection and a desire for genuine contact, while others primarily read your composure and reliability. Your need for closeness is hidden behind the image of someone who can always be counted on.',
+    'RL': 'Inside you lives connection and a longing for closeness, while others primarily read your depth and analytical quality. Your heart stays invisible behind the image of a thinker.',
+    'ER': 'Inside you lives impulse and a charge of the present moment, while others primarily read your warmth and relational ease. Your inner dynamism is hidden behind the image of someone who is always there for others.',
+    'EM': 'Inside you lives impulse and a sharp sense of the now, while others primarily read your structure and systematic approach. Your aliveness hides behind a facade of order.',
+    'EL': 'Inside you lives impulse and rapid movement, while others primarily read your depth and thoughtfulness. Your energy stays invisible behind the image of someone who processes everything carefully.',
+    'MR': 'Inside you lives structure and a drive toward concrete results, while others primarily read your warmth and openness. Your inner composure is hidden behind the image of someone who is always present for others.',
+    'ME': 'Inside you lives structure and a need for stability, while others primarily read your energy and aliveness. Your inner order stays invisible behind the image of someone in constant motion.',
+    'ML': 'Inside you lives structure and an orientation toward action, while others primarily read your depth and reflective quality. Your practicality hides behind the image of a thinker.',
+    'LR': 'Inside you lives depth and a constant search for meaning, while others primarily read your warmth and ability to build connections. Your depth stays invisible behind the image of someone who knows how to be present.',
+    'LE': 'Inside you lives depth and quiet observation of the world, while others primarily read your energy and dynamism. Your inner stillness hides behind the image of someone in motion.',
+    'LM': 'Inside you lives depth and a drive toward essence, while others primarily read your reliability and structure. Your depth stays invisible behind the image of someone who keeps everything under control.',
+  }
 };
 
- let submittingSelf = false;
+// ─── LANGUAGE STATE ──────────────────────────────────────────────────────────
+
+let currentLang = 'ru';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  // Update all toggle buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.id.includes(lang));
+  });
+
+  applyLang(lang);
+}
+
+function applyLang(lang) {
+  const S = STRINGS[lang];
+
+  // All logo elements
+  document.querySelectorAll('[id^="logo-"]').forEach(el => {
+    el.textContent = S.logoText;
+  });
+
+  // Intro screen
+  document.getElementById('intro-title').textContent = S.introTitle;
+  document.getElementById('intro-desc').textContent = S.introDesc;
+  document.getElementById('intro-legal').innerHTML = S.introLegal;
+  document.getElementById('self-name').placeholder = S.namePlaceholderSelf;
+  document.getElementById('btn-start').textContent = S.btnStart;
+
+  // Loading screen
+  document.getElementById('loading-title').textContent = S.loadingTitle;
+  document.getElementById('loading-desc').textContent = S.loadingDesc;
+
+  // Waiting screen
+  document.getElementById('waiting-title').textContent = S.waitingTitle;
+  document.getElementById('waiting-desc').textContent = S.waitingDesc;
+  document.getElementById('btn-copy').textContent = S.btnCopy;
+  document.getElementById('btn-share-tg').textContent = S.btnShareTg;
+
+  // Friend intro screen
+  document.getElementById('friend-name').placeholder = S.namePlaceholderFriend;
+  document.getElementById('btn-friend-start').textContent = S.btnFriendStart;
+  // friend-intro-title and desc are set dynamically when code+name are known
+
+  // Friend thanks screen
+  document.getElementById('friend-thanks-title').textContent = S.friendThanksTitle;
+  document.getElementById('friend-thanks-desc').textContent = S.friendThanksDesc;
+  document.getElementById('friend-thanks-cta').textContent = S.friendThanksCta;
+  document.getElementById('btn-try-self').textContent = S.btnTrySelf;
+
+  // Result screen labels
+  document.getElementById('label-your-answers').textContent = S.labelYourAnswers;
+  document.getElementById('label-looks').textContent = S.labelLooks;
+  document.getElementById('label-others').textContent = S.labelOthers;
+  document.getElementById('label-blind').textContent = S.labelBlind;
+  document.getElementById('label-mirror').textContent = S.labelMirror;
+  document.getElementById('label-self-side').textContent = S.labelSelfSide;
+  document.getElementById('label-friend-side').textContent = S.labelFriendSide;
+  document.getElementById('label-gap').textContent = S.labelGap;
+  document.getElementById('label-friend-answers').textContent = S.labelFriendAnswers;
+  document.getElementById('label-mirror-waiting').textContent = S.labelMirrorWaiting;
+  document.getElementById('waiting-not-enough').textContent = S.waitingNotEnough;
+  document.getElementById('btn-result-copy').textContent = S.btnResultCopy;
+  document.getElementById('cta-text').textContent = S.ctaText;
+  document.getElementById('cta-btn').textContent = S.btnCta;
+
+  // Error screen
+  document.getElementById('error-title').textContent = S.errSomethingWrong;
+
+  // Re-render bars if result is already shown (freq labels change)
+  if (document.getElementById('screen-result').classList.contains('active')) {
+    // bars will re-render on next loadResult call; for now update freq names
+    const FREQ = getFreq(lang);
+    const selfFreqEl = document.getElementById('self-dominant-freq');
+    const friendFreqEl = document.getElementById('friend-dominant-freq');
+    if (selfFreqEl.dataset.freq) {
+      document.getElementById('self-dominant-name').textContent = FREQ[selfFreqEl.dataset.freq].label;
+    }
+    if (friendFreqEl.dataset.freq) {
+      document.getElementById('friend-dominant-name').textContent = FREQ[friendFreqEl.dataset.freq].label;
+    }
+  }
+}
+
+// ─── CORE LOGIC ──────────────────────────────────────────────────────────────
+
+let submittingSelf = false;
 let state = {
   mode: null,
   selfName: '',
@@ -684,6 +1130,7 @@ function calcScores(answers) {
 }
 
 function renderBars(containerId, scores) {
+  const FREQ = getFreq(currentLang);
   const el = document.getElementById(containerId);
   el.innerHTML = '';
   const total = Object.values(scores).reduce((a,b) => a+b, 0) || 1;
@@ -717,30 +1164,30 @@ async function dbFetch(table, params) {
   });
   return res.json();
 }
- function getFriendResponseToken(sessionCode) {
+
+function getFriendResponseToken(sessionCode) {
   const key = `mirror_friend_token_${sessionCode}`;
   let token = localStorage.getItem(key);
-
   if (!token) {
     token = crypto.randomUUID();
     localStorage.setItem(key, token);
   }
-
   return token;
 }
 
 function renderQuestion(questions, progressId, numId, textId, optionsId, answers, onDone) {
+  const S = STRINGS[currentLang];
   const i = state.currentQ;
   const q = questions[i];
   const total = questions.length;
 
   document.getElementById(progressId).style.width = `${(i / total) * 100}%`;
-  document.getElementById(numId).textContent = `Вопрос ${i + 1} из ${total}`;
+  document.getElementById(numId).textContent = S.questionOf(i + 1, total);
   document.getElementById(textId).textContent = q.text;
 
   const optEl = document.getElementById(optionsId);
   optEl.innerHTML = '';
-  q.options.forEach((opt, idx) => {
+  q.options.forEach((opt) => {
     const btn = document.createElement('button');
     btn.className = 'option';
     btn.textContent = opt.text;
@@ -758,19 +1205,20 @@ function renderQuestion(questions, progressId, numId, textId, optionsId, answers
 }
 
 document.getElementById('btn-start').onclick = async () => {
+  const S = STRINGS[currentLang];
   const name = document.getElementById('self-name').value.trim();
-  if (!name) { showError('intro-error', 'Введи своё имя'); return; }
+  if (!name) { showError('intro-error', S.errNoName); return; }
   state.selfName = name;
 
   const btn = document.getElementById('btn-start');
   btn.disabled = true;
-  btn.textContent = 'Загружаем…';
+  btn.textContent = S.btnStartLoading;
 
   state.currentQ = 0;
   state.selfAnswers = [];
   show('screen-self-questions');
   renderQuestion(
-    QUESTIONS_SELF,
+    QUESTIONS_SELF[currentLang],
     'self-progress', 'self-q-num', 'self-q-text', 'self-options',
     state.selfAnswers,
     submitSelf
@@ -778,6 +1226,7 @@ document.getElementById('btn-start').onclick = async () => {
 };
 
 async function submitSelf(answers) {
+  const S = STRINGS[currentLang];
   if (submittingSelf) return;
   submittingSelf = true;
 
@@ -806,30 +1255,31 @@ async function submitSelf(answers) {
 
     document.getElementById('btn-copy').onclick = () => {
       navigator.clipboard.writeText(data.share_url).catch(() => {});
-      document.getElementById('btn-copy').textContent = 'Скопировано ✓';
+      document.getElementById('btn-copy').textContent = S.btnCopied;
     };
 
     document.getElementById('btn-share-tg').onclick = () => {
-      const shareLink = `https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent('Ответь обо мне, займёт 2 минуты')}`;
+      const shareLink = `https://t.me/share/url?url=${encodeURIComponent(data.share_url)}&text=${encodeURIComponent(S.tgShareText)}`;
       window.open(shareLink, '_blank');
     };
 
     show('screen-waiting');
   } catch (e) {
     show('screen-error');
-    document.getElementById('error-desc').textContent = 'Ошибка соединения';
+    document.getElementById('error-desc').textContent = S.errConnection;
     submittingSelf = false;
   }
 }
 
 document.getElementById('btn-friend-start').onclick = () => {
+  const S = STRINGS[currentLang];
   const name = document.getElementById('friend-name').value.trim();
-  if (!name) { showError('friend-error', 'Введи своё имя'); return; }
+  if (!name) { showError('friend-error', S.errNoName); return; }
   state.friendName = name;
 
   state.currentQ = 0;
   state.friendAnswers = [];
-  const questions = makeFriendQuestions(state.ownerName);
+  const questions = makeFriendQuestions(state.ownerName, currentLang);
   show('screen-friend-questions');
   renderQuestion(
     questions,
@@ -840,24 +1290,25 @@ document.getElementById('btn-friend-start').onclick = () => {
 };
 
 async function submitFriend(answers) {
+  const S = STRINGS[currentLang];
   const scores = calcScores(answers);
   const data = await apiFetch('mirror-friend-submit', {
-  session_code: state.sessionCode,
-  friend_name: state.friendName,
-  scores,
-  response_token: getFriendResponseToken(state.sessionCode),
-});
+    session_code: state.sessionCode,
+    friend_name: state.friendName,
+    scores,
+    response_token: getFriendResponseToken(state.sessionCode),
+  });
 
   if (data.error === 'Session not found') {
     show('screen-error');
-    document.getElementById('error-title').textContent = 'Ссылка не найдена';
-    document.getElementById('error-desc').textContent = 'Возможно, ссылка устарела или была введена неверно.';
+    document.getElementById('error-title').textContent = S.errLinkNotFound;
+    document.getElementById('error-desc').textContent = S.errLinkNotFoundDesc;
     return;
   }
   if (data.error === 'Session expired') {
     show('screen-error');
-    document.getElementById('error-title').textContent = 'Ссылка истекла';
-    document.getElementById('error-desc').textContent = 'Эта ссылка действовала 7 дней. Попроси новую.';
+    document.getElementById('error-title').textContent = S.errLinkExpired;
+    document.getElementById('error-desc').textContent = S.errLinkExpiredDesc;
     return;
   }
 
@@ -868,6 +1319,9 @@ async function submitFriend(answers) {
 }
 
 async function loadResult(code) {
+  const S = STRINGS[currentLang];
+  const FREQ = getFreq(currentLang);
+
   const [sessions, friends] = await Promise.all([
     dbFetch('mirror_sessions', { code: `eq.${code}`, select: '*' }),
     dbFetch('mirror_friend_responses', { session_code: `eq.${code}`, select: 'scores' }),
@@ -875,15 +1329,15 @@ async function loadResult(code) {
 
   if (!sessions || sessions.length === 0) {
     show('screen-error');
-    document.getElementById('error-title').textContent = 'Результат не найден';
-    document.getElementById('error-desc').textContent = 'Убедись, что ссылка правильная.';
+    document.getElementById('error-title').textContent = S.errNotFound;
+    document.getElementById('error-desc').textContent = S.errNotFoundDesc;
     return;
   }
 
   const session = sessions[0];
   const selfScores = session.self_scores;
   const selfDom = calcDominant(selfScores);
-  const c = CONTENT[selfDom];
+  const c = CONTENT[currentLang][selfDom];
 
   document.getElementById('result-title').textContent = c.title;
   document.getElementById('result-core').textContent = c.core;
@@ -903,24 +1357,28 @@ async function loadResult(code) {
     });
     const friendDom = calcDominant(aggScores);
 
-    document.getElementById('self-dominant-freq').textContent = selfDom;
-    document.getElementById('self-dominant-freq').style.color = FREQ[selfDom].color;
+    const selfFreqEl = document.getElementById('self-dominant-freq');
+    selfFreqEl.textContent = selfDom;
+    selfFreqEl.style.color = FREQ[selfDom].color;
+    selfFreqEl.dataset.freq = selfDom;
     document.getElementById('self-dominant-name').textContent = FREQ[selfDom].label;
 
-    document.getElementById('friend-dominant-freq').textContent = friendDom;
-    document.getElementById('friend-dominant-freq').style.color = FREQ[friendDom].color;
+    const friendFreqEl = document.getElementById('friend-dominant-freq');
+    friendFreqEl.textContent = friendDom;
+    friendFreqEl.style.color = FREQ[friendDom].color;
+    friendFreqEl.dataset.freq = friendDom;
     document.getElementById('friend-dominant-name').textContent = FREQ[friendDom].label;
 
     const badge = document.getElementById('match-badge');
     if (selfDom === friendDom) {
       badge.className = 'match-badge match';
-      badge.textContent = 'Синхронность. То, как ты ощущаешь себя внутри, ясно читается снаружи. Твоё внутреннее состояние и внешний образ звучат в унисон. Люди считывают именно ту частоту, через которую ты сам проживаешь жизнь.';
+      badge.textContent = S.matchText;
       document.getElementById('gap-card').style.display = 'none';
     } else {
       badge.className = 'match-badge gap';
-      badge.textContent = `Разрыв восприятия. Внутри ты живёшь через ${FREQ[selfDom].label.toLowerCase()}, а снаружи люди чаще видят ${FREQ[friendDom].label.toLowerCase()}.`;
+      badge.textContent = S.gapText(FREQ[selfDom].label, FREQ[friendDom].label);
       const gapKey = selfDom + friendDom;
-      document.getElementById('gap-text').textContent = GAP_TEXT[gapKey] || 'Это место, где твоя внутренняя правда и внешний образ расходятся. Именно здесь Зеркало становится особенно ценным.';
+      document.getElementById('gap-text').textContent = GAP_TEXT[currentLang][gapKey] || S.gapFallback;
       document.getElementById('gap-card').style.display = 'block';
     }
 
@@ -932,7 +1390,7 @@ async function loadResult(code) {
     document.getElementById('result-share-url').textContent = shareUrl;
     document.getElementById('btn-result-copy').onclick = () => {
       navigator.clipboard.writeText(shareUrl).catch(() => {});
-      document.getElementById('btn-result-copy').textContent = 'Скопировано ✓';
+      document.getElementById('btn-result-copy').textContent = S.btnResultCopied;
     };
     document.getElementById('mirror-section').style.display = 'none';
     document.getElementById('waiting-section').style.display = 'block';
@@ -953,7 +1411,13 @@ async function loadResult(code) {
     }
   }
 
+  // Detect language from browser or URL param
   const params = new URLSearchParams(window.location.search);
+  const langParam = params.get('lang');
+  const browserLang = navigator.language || navigator.userLanguage || 'ru';
+  const detectedLang = langParam || (browserLang.startsWith('ru') ? 'ru' : 'en');
+  setLang(detectedLang);
+
   const code = params.get('code');
   const name = params.get('name');
   const result = params.get('result');
@@ -962,7 +1426,7 @@ async function loadResult(code) {
     state.mode = 'result';
     state.sessionCode = result;
     show('screen-error');
-    document.getElementById('error-title').textContent = 'Загружаем…';
+    document.getElementById('error-title').textContent = STRINGS[currentLang].errLoading;
     document.getElementById('error-desc').textContent = '';
     loadResult(result);
     return;
@@ -972,9 +1436,9 @@ async function loadResult(code) {
     state.mode = 'friend';
     state.sessionCode = code;
     state.ownerName = decodeURIComponent(name);
-    document.getElementById('friend-intro-title').textContent = `Как ты видишь: ${state.ownerName}?`;
-    document.getElementById('friend-intro-desc').textContent =
-      'Тебя пригласили стать частью Зеркала. Ответь на пять вопросов о том, как ты ощущаешь этого человека в жизни. Это займёт всего пару минут и поможет ему увидеть себя яснее.';
+    const S = STRINGS[currentLang];
+    document.getElementById('friend-intro-title').textContent = S.friendIntroTitle(state.ownerName);
+    document.getElementById('friend-intro-desc').textContent = S.friendIntroDesc(state.ownerName);
     show('screen-friend-intro');
     return;
   }
