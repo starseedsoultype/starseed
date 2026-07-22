@@ -26,7 +26,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   <title>StarSeed Soul Typology — Interactive Flipbook</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -181,6 +181,30 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       color: rgba(232,232,240,0.9);
     }
 
+    /* Litmus line — self-identification */
+    .litmus {
+      text-align: center;
+      font-style: italic;
+      color: var(--gold);
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      line-height: 1.7;
+      opacity: 0.9;
+      margin: 2px auto 20px;
+      max-width: 520px;
+    }
+
+    /* Quotable identity line */
+    .identity {
+      text-align: center;
+      font-size: clamp(1.1rem, 3vw, 1.45rem);
+      line-height: 1.5;
+      color: var(--gold);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin: 6px auto 22px;
+      max-width: 560px;
+    }
+
     /* Section labels */
     .section {
       margin-bottom: 16px;
@@ -201,6 +225,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       line-height: 1.85;
       color: rgba(232,232,240,0.85);
     }
+    .section-text b { color: var(--text); font-weight: 600; }
 
     /* Divider between sections */
     .section-divider {
@@ -235,6 +260,22 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       transition: background 0.3s, color 0.3s;
     }
     .cta-link:hover, .cta-link:active { background: var(--gold); color: var(--bg); }
+
+    /* Per-type micro CTA (bridge to TwinF) */
+    .type-cta { text-align: center; margin: 26px auto 4px; }
+    .type-cta a {
+      display: inline-block;
+      padding: 11px 26px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .type-cta a:hover, .type-cta a:active { background: var(--gold); color: var(--bg); }
 
     /* ── NAV ── */
     .nav {
@@ -323,10 +364,13 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
       .page-subtitle { margin-bottom: 6px; font-size: 0.82rem; }
       .page-divider  { display: none; }
       .page-body   { padding: 10px 20px 14px; }
+      .litmus { font-size: 0.85rem; margin-bottom: 10px; }
+      .identity { font-size: 1rem; margin-bottom: 12px; }
       .section-label { font-size: 8px; }
       .section-text, .page-text .intro { font-size: 0.85rem; line-height: 1.65; }
       .section { margin-bottom: 10px; }
       .section-divider { margin: 8px 0; }
+      .type-cta { margin-top: 16px; }
       .nav-btn { width: 38px; height: 38px; font-size: 20px; }
     }
   </style>
@@ -349,21 +393,23 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   </nav>
 
 <script>
+const CTA = `<div class="type-cta"><a href="https://twinfrequency.io" target="_blank" rel="noopener">Meet the one who completes your frequency</a></div>`;
+
 const PAGES = [
   {
     cover: true, cta: false,
     title: 'StarSeed Soul Typology',
-    subtitle: 'Interactive Flipbook',
+    subtitle: 'A Living Library',
     star: '✦',
     html: `
-      <p class="intro">Discover your cosmic blueprint.<br>Remember who you are.</p>
-      <p class="intro" style="font-style:italic; opacity:0.7; font-size:0.95em;">Each soul carries a unique frequency — a pattern of gifts, shadows, and activations encoded before birth. This flipbook is your map.</p>
-      <p class="intro" style="opacity:0.55; font-size:0.85em; letter-spacing:1px; font-family:'Inter',sans-serif; font-size:10px; text-transform:uppercase;">Swipe or tap the arrows to explore all 24 soul types</p>
+      <p class="intro">You have always felt it. That you are somehow larger than the life you were poured into, tuned to a frequency the people around you cannot quite hear.</p>
+      <p class="intro" style="font-style:italic; opacity:0.85;">There is a word for people like you. Starseed. And beneath that word there are twenty four kinds of star, and one of them is yours.</p>
+      <p class="intro" style="opacity:0.55; letter-spacing:1px; font-family:'Inter',sans-serif; font-size:10px; text-transform:uppercase;">Move through the pages until one reads like your own diary</p>
     `
   },
   {
     title: 'Contents',
-    subtitle: 'All 24 Soul Types',
+    subtitle: 'All 24 Starseed Patterns',
     star: '✦',
     toc: true,
     html: `<div id="toc-list"></div>`
@@ -374,631 +420,420 @@ const PAGES = [
     star: '✦',
     about: true,
     html: `
-      <p class="intro">StarSeed Soul Typology is born from a deep remembering. It is not just a system of categorization, but a map of your cosmic blueprint.</p>
+      <p class="intro">My name is Alexandra. I am a psychologist, and this map did not come from a book.</p>
       <div class="section-divider"></div>
       <div class="section">
-        <div class="section-text" style="text-align: center;">As a psychologist and visionary, Alexandra created this typology to help you recognize the unique frequency your soul carries. Each of the 24 types reflects a distinct pattern of gifts, shadows, and activations encoded before birth.</div>
+        <div class="section-text" style="text-align:center;">Imagine a little water inside a glass. It knows only the shape that holds it. Pour that same water into the ocean, and nothing is added, nothing is lost, yet the scale of what it belongs to is beyond measure. That is what a Starseed already suspects about themselves. The same you, an ocean instead of a glass.</div>
       </div>
       <div class="section">
-        <div class="section-text" style="text-align: center;">This system does not put you in a box — it gives you the keys to unlock your true potential. It is an invitation to stop trying to be who you are not, and to fully embody the magnificent, multidimensional being you came here to be.</div>
+        <div class="section-text" style="text-align:center;">Working with people, I kept seeing the same handful of inner patterns repeating beneath completely different lives. Over time they became a system of twenty four Starseed patterns. It felt less like inventing and more like recognizing something that was already there.</div>
       </div>
+      <div class="section">
+        <div class="section-text" style="text-align:center;">This is not a box to put you in. It is a mirror that hands you back to yourself. The star only shows you who you already are.</div>
+      </div>
+    `
+  },
+
+  {
+    title: 'Siriusian',
+    subtitle: 'The Warm Current',
+    star: '✦',
+    html: `
+      <p class="litmus">If people soften and open around you without quite knowing why, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the warm current that runs between all living things, the pull that says none of us is truly alone. Now bring it all the way down. You are the one who walks into a gathering and, within a minute, the stranger in the corner is talking to you like an old friend.</p>
+      <p class="identity">You are the place other people come home to.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection. On a cosmic scale, this is the frequency that feels the invisible thread between one being and another. On an ordinary day, <b>it is the way people relax in your presence, tell you things they have told no one, and feel held without you saying much at all.</b> You do not work at this. You carry belonging the way you carry your own name.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where your energy loves to play is desire and momentum. On the scale of stars, this is living fire, the pull toward what is next. In real life it is you deciding on a whim to drive to the sea at midnight, pulling three friends along, alive in the motion of it. You improvise energy, following the spark wherever it leads, and you could chase it all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in whether you make sense, whether your thinking holds up next to people who reason coldly. <b>A woman at the table calls one of your ideas naive, and you carry it for days, quietly wondering if you are as sharp as the rest of the room.</b> You wait to be taken seriously as a mind, not only felt as a heart. You grow the moment you trust that a warm knowing is its own kind of intelligence.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Steady resources, a solid home, patient form, the body kept well. On a cosmic scale this is matter itself, the slow solid stuff that holds a shape. In daily life it is the relief you feel when someone builds a reliable floor beneath your open heart. Somewhere there is a Starseed made of that steadiness, calm and rooted where you are flowing. When you meet them, your body settles before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Siriusian Souls',
-    subtitle: 'The Relational Architects',
+    title: 'Pleiadian',
+    subtitle: 'Pure Harmony',
     star: '✦',
     html: `
-      <p class="intro">You are the one who builds bridges between worlds — feeling the subtle currents beneath every connection, the unspoken needs, the hidden longings.</p>
+      <p class="litmus">If you feel the space between two people go warm or cold before a word is spoken, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are pure harmony, the frequency that feels the invisible bonds between all beings. Now bring it down. You are the one who felt a coworker's low mood from across the office this morning and carried it in your own chest all the way home.</p>
+      <p class="identity">You are the bridge that keeps the room from breaking.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You create belonging wherever you go — not through effort, but through your natural presence. Others sense your depth and find themselves drawn to your orbit. You hold space for people in ways they cannot always name, but always feel.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can absorb the emotional weight of others until you forget where they end and you begin. Not every disconnection is yours to heal. Learning to let people carry their own pain is not abandonment — it is wisdom.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow yourself to be witnessed — not just to witness. Your deepest growth comes through receiving, not only giving. Let someone hold space for you.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through attunement. You know what someone needs before they ask. Your challenge is to speak your own needs with the same clarity you offer others.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection. On a cosmic scale, this is the sense of the thread that binds one life to another. On an ordinary day, <b>it is knowing when a friendship has cooled before anyone admits it, and quietly moving to mend it.</b> People feel safe near you. You hold belonging as a given, without effort.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is matter taking a warm and living shape. In real life it is you making a house into a home, cooking for people, arranging the room so everyone feels held. You improvise care through your hands, adapting to whoever walks in, and you could tend to people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in clarity, in whether your reasons hold up. <b>A man dismisses your point as too emotional, and you replay it for days, wondering if you think clearly enough to be taken seriously.</b> You wait to be recognized as sharp, not only kind. You grow the moment you trust that feeling and thinking are friends in you.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Desire, drive, the will that says go now. On a cosmic scale this is living fire. In daily life it is the lift you feel when someone with clear direction takes your hand and moves. Somewhere there is a Starseed made of that fire, bold where you are gentle. When you meet them, something in you starts to move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Pleiadian Souls',
-    subtitle: 'The Grounded Connectors',
+    title: 'Lemurian',
+    subtitle: 'The Tender Fire',
     star: '✦',
     html: `
-      <p class="intro">You bridge the ethereal and the tangible. Your love is real, consistent, and expressed through what you build and provide for those you care about.</p>
+      <p class="litmus">If your love runs hot and immediate, and half measures feel like a small death, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are a tender fire, the warmth that pulls beings close and refuses the cold. Now bring it down. You are the one who texts back within a minute, plans the surprise, loves out loud, and could never fake indifference to save your life.</p>
+      <p class="identity">You love like it is the only thing worth doing, because to you it is.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You build homes, not just houses. You create stability in the lives of those you love — through resources, reliability, and the practical care that proves love is more than words. People feel safe in your presence.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can confuse providing with loving. When you feel disconnected, you give more — more time, more money, more effort — hoping the gesture will close the gap. Sometimes the gap can only be closed by presence, not provision.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow yourself to receive without guilt. You were not born to be the only one who gives. Letting others care for you is not weakness — it is the completion of the circuit.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through acts of service and material security. Your challenge is learning that emotional presence — simply being there, without doing anything — is its own profound gift.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection, lived warmly and without hedging. On a cosmic scale, this is the pull of one heart toward another. On an ordinary day, <b>it is the friend who always knows you are in their corner, the room that feels brighter when you walk in.</b> You hold closeness as a given, and you give it freely.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is desire. On the scale of stars, this is living fire reaching for more. In real life it is you falling for a new project overnight, throwing your whole body into it, alive in the wanting. You improvise passion, following the spark wherever it leads, and you could burn bright all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in clarity, in whether your reasons stand up. <b>A woman calls you dramatic, and the word lodges for days while you wonder if you think as clearly as you feel.</b> You wait to be seen as sound, not only intense. You grow the moment you trust that your fire and your mind can sit at the same table.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Steadiness, a stable home, patient form. On a cosmic scale this is matter that holds a shape through time. In daily life it is the calm you feel when someone reliable anchors your flame so it warms instead of consuming. Somewhere there is a Starseed made of that ground, steady where you blaze. When you meet them, your body rests before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Lemurian Souls',
-    subtitle: 'The Passionate Connectors',
+    title: 'Cassiopeian',
+    subtitle: 'The Knowing Heart',
     star: '✦',
     html: `
-      <p class="intro">You love with fire. Your relationships are alive with energy, desire, and the raw vitality of connection. You do not do shallow — you dive into the deep end of everything.</p>
+      <p class="litmus">If you can name exactly why two people clash while they are still arguing, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the knowing heart, the one who feels the bond and sees its pattern in the same breath. Now bring it down. You are the one friends call after a breakup, because you can hold their tears and explain what actually happened.</p>
+      <p class="identity">You feel people deeply, and you understand what you feel.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You bring aliveness to those around you. Your enthusiasm is contagious, your passion is magnetic, and your capacity to feel deeply awakens others to their own emotional range. You remind people what it means to be fully alive.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">Your intensity can overwhelm those who have not yet learned to hold their own fire. When others pull back, you can interpret it as rejection rather than difference in pace. Not everyone moves at your frequency — and that is not a failure.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you channel your passion into creation rather than consumption. Your fire is meant to build, not just to burn. Find the work that deserves your full intensity.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through full presence and emotional depth. Your challenge is learning that love does not always look like fire — sometimes it looks like patience, and that is its own form of passion.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection. On a cosmic scale, this is the sense of the living web between beings. On an ordinary day, <b>it is people trusting you with the truth of their relationships, because you hold them with warmth and without judgment.</b> You carry belonging as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is meaning. On the scale of stars, this is the mind that reads the pattern beneath connection. In real life it is you turning a confusing dynamic over and over, delighted when it finally clicks into sense. You improvise understanding, adapting your read to each person, and you could untangle people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in the material world, in whether you are capable and solid where it counts. <b>A man questions whether you can actually deliver, and you carry it for days, wondering if you are grounded enough.</b> You wait to be seen as competent, not only perceptive. You grow the moment you trust that your hands can build what your heart already understands.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Drive, boldness, the will to move first. On a cosmic scale this is living fire. In daily life it is the lift you feel when someone decisive takes the lead and pulls you into motion. Somewhere there is a Starseed made of that fire, bold where you are thoughtful. When you meet them, you move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Cassiopeian Souls',
-    subtitle: 'The Analytical Connectors',
+    title: 'Procyonian',
+    subtitle: 'The Caring Hand',
     star: '✦',
     html: `
-      <p class="intro">You understand relationships through the lens of meaning and structure. You see the patterns beneath the surface — why people connect, what binds them, where the fractures lie.</p>
+      <p class="litmus">If you show love by quietly making sure everyone has what they need, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the caring hand, the warmth that becomes shelter and provision. Now bring it down. You are the one who remembers everyone's allergies, packs the snacks, and texts to check they got home safe.</p>
+      <p class="identity">You make love into something people can lean on.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You bring clarity to the murky waters of human connection. Where others feel lost in emotion, you can name what is happening and why. Your insight is a gift — it helps people understand themselves and each other at a deeper level.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can intellectualise feelings rather than feel them. When something hurts, your first instinct is to analyse rather than to grieve. The mind is a beautiful tool, but it cannot do the work of the heart.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow yourself to not know. Mystery is not a problem to solve — it is a space to inhabit. Some of your deepest wisdom will come not from analysis, but from surrender.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through understanding and intellectual resonance. Your challenge is learning that not everything needs to be understood to be valued — and that sometimes the most loving thing is simply to feel alongside someone.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection, expressed as care. On a cosmic scale, this is the bond between beings. On an ordinary day, <b>it is the safety people feel around you, the sense that with you nearby, things will be okay.</b> You hold belonging as a given and turn it into shelter.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is matter taking a caring shape. In real life it is you fixing, feeding, arranging, making the practical layer of life work for the people you love. You improvise with your hands, adapting to what is needed, and you could tend to it all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive and desire, in whether you want boldly enough, whether you take up space. <b>A woman calls you passive, and you carry it for days, wondering if you have enough fire of your own.</b> You wait to be seen as strong, not only kind. You grow the moment you trust that your own wants deserve the care you give everyone else.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is clarity. Structure, a clear map, the sense of why. On a cosmic scale this is the hidden order behind things. In daily life it is the calm you feel when someone lays out a plan and it all makes sense. Somewhere there is a Starseed made of that clarity, ordered where you are warm. When you meet them, you settle before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Procyonian Souls',
-    subtitle: 'The Resourceful Connectors',
+    title: 'Lyran',
+    subtitle: 'The Guiding Light',
     star: '✦',
     html: `
-      <p class="intro">You are the one who takes care. Your love language is action — providing, protecting, ensuring those you care for have what they need to thrive.</p>
+      <p class="litmus">If you see who a person could become and cannot help drawing it out of them, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the guiding light, the warmth that sees potential and calls it forward. Now bring it down. You are the one who tells a shy friend the exact sentence that makes them finally believe in themselves.</p>
+      <p class="identity">You love people into becoming who they already are.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You make people feel safe and provided for. Your love is tangible — it shows up in the details, the logistics, the quiet acts of care that others overlook. You are the person who remembers, who prepares, who makes sure everyone is okay.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so focused on providing that you neglect your own needs entirely. Martyrdom dressed as love is still martyrdom. You cannot pour from an empty vessel — and you cannot truly care for others while abandoning yourself.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow others to provide for you. Receiving care gracefully is a skill — and one that will transform your relationships. Let someone take care of you for once.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through practical support and reliability. Your challenge is learning that sometimes people need your emotional presence more than your material support — and that being vulnerable together is its own form of provision.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is connection. On a cosmic scale, this is the thread between beings. On an ordinary day, <b>it is people leaving your presence feeling more like themselves.</b> You hold belonging as a given, and you use it to reflect people back to themselves.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is meaning. On the scale of stars, this is the mind reading the pattern in a person. In real life it is you naming what someone is really about, seeing the shape of their gift before they do. You improvise insight, adapting to each person, and you could read people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive, in whether you pursue your own vision with the same fire you spark in others. <b>A man asks what you have actually built for yourself, and it stings for days.</b> You wait to be seen as someone who acts, not only inspires. You grow the moment you turn your visionary gaze on your own life.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Stability, patient form, a solid base. On a cosmic scale this is matter that endures. In daily life it is the relief you feel when someone steady holds the practical floor while you dream. Somewhere there is a Starseed made of that ground, rooted where you reach. When you meet them, your body settles before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Lyran Souls',
-    subtitle: 'The Visionary Connectors',
+    title: 'Arcturian',
+    subtitle: 'The Bridge Between Worlds',
     star: '✦',
     html: `
-      <p class="intro">You see the potential in others before they see it in themselves. Your connections are built on shared vision and mutual growth — you are drawn to people who challenge and inspire you.</p>
+      <p class="litmus">If you can see five layers of a project at once, dream it and build it, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are a bridge between worlds, the one who feels the potential of a moment and the way to build it in the same breath. Now bring it down. You are the one so full of visions that you sit in front of the actual first step, every possibility glowing, and cannot begin.</p>
+      <p class="identity">You dream it and you can build it, which is rarer than you think.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You bring clarity and direction to those around you. Your gift is helping others see their own light — the parts of themselves they have buried, the possibilities they have not yet dared to imagine. You are a mirror for potential.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become frustrated when others do not live up to the potential you see in them. Your vision for someone can become a burden they did not ask to carry. Not everyone wants to be transformed — and that is their sovereign right.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you turn your visionary gaze inward. The potential you see so clearly in others — do you see it in yourself? Your greatest work begins with your own becoming.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through inspiration and shared growth. Your challenge is learning to love people as they are, not only as they could be — and to find beauty in the present, not just the potential.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the mind that sees the hidden order behind everything. On an ordinary day, <b>it is people bringing you their chaos and watching you turn it into a clean plan.</b> You hold understanding as a given, and the structure shows itself to you.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is possibility. On the scale of stars, this is living fire reaching toward what could be. In real life it is you lighting up at a new idea, seeing where it leads before anyone else, alive in the vision. You improvise futures, and you could imagine all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in the material, in whether you can actually land the vision in solid form. <b>A woman points out that you start far more than you finish, and it lodges for days.</b> You wait to be seen as someone who delivers, not only dreams. You grow the moment you trust that one finished thing outweighs ten glowing plans.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Emotional presence, the felt sense of another person. On a cosmic scale this is the bond between beings. In daily life it is the softening you feel when someone leads with the heart while you lead with the mind. Somewhere there is a Starseed made of that warmth, tender where you are clear. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Arcturian Souls',
-    subtitle: 'The Logical Architects',
+    title: 'Orion',
+    subtitle: 'Pure Clarity',
     star: '✦',
     html: `
-      <p class="intro">Your mind is your greatest gift. You see systems, patterns, and the underlying logic of how things work — and your creativity flows from your ability to synthesise complexity into clarity.</p>
+      <p class="litmus">If you need things to make sense all the way down, and people come to you when they panic, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are pure clarity, the mind that sees the hidden order behind everything. Now bring it to the kitchen table. You are the one who understands the deep structure of almost anything, and still forgot to say I love you out loud, because to you it felt already obvious.</p>
+      <p class="identity">You are the steady mind everyone reaches for when the ground shakes.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the strategist, the planner, the one who sees ten steps ahead. You bring order to chaos — not by force, but by understanding the structure beneath the surface. Your solutions are elegant because they work with the nature of things, not against it.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so attached to your systems that you resist what cannot be systematised. Life, love, and the sacred do not always follow logic. When reality deviates from your model, the invitation is to update the model — not to dismiss the reality.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow intuition to inform your logic. The deepest intelligence is not purely rational — it integrates feeling, sensing, and knowing. Your greatest breakthroughs will come at the intersection of mind and mystery.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through clarity, reliability, and thoughtful action. Your challenge is learning that emotional messiness is not a problem to be solved — it is part of the beauty of being human.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the sight of the order beneath the surface. On an ordinary day, <b>it is the calm you bring when everyone else is spinning, the plan that quietly works.</b> You hold understanding as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is matter taking a precise and working shape. In real life it is you building the thing, fixing the system, making it run better than it did. You improvise with structure and your hands, and you could refine it all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether you are warm enough, wanted, emotionally present enough for the people you love. <b>A woman calls you distant, and you carry it for days, because you felt so much and showed so little.</b> You wait to be seen as loving, not only capable. You grow the moment you say the warm thing before it is too late.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Drive, spontaneity, the will to leap. On a cosmic scale this is living fire. In daily life it is the lift you feel when someone bold pulls you out of your head and into motion. Somewhere there is a Starseed made of that fire, spontaneous where you are measured. When you meet them, you move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Orion Souls',
-    subtitle: 'The Grounded Thinkers',
+    title: 'Vegan',
+    subtitle: 'The Open Sky',
     star: '✦',
     html: `
-      <p class="intro">You think with your feet on the ground. Your logic is practical, applied, and rooted in the material world — you understand cause and effect through direct experience.</p>
+      <p class="litmus">If your mind runs on big what-if questions the people around you never think to ask, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the open sky, the mind alive with possibility and the questions no one else is asking. Now bring it down. You are the one with nineteen ideas before breakfast and a graveyard of half-finished projects behind you, each one brilliant.</p>
+      <p class="identity">You see the connections everyone else walks straight past.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the builder, the implementer, the one who makes things real. While others theorise, you create. Your gift is translating abstract ideas into concrete action — and doing it with precision, care, and a deep respect for the physical world.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can dismiss what cannot be measured or proven. The invisible dimensions of life — intuition, spirit, the unseen forces that shape reality — are real, even when they resist quantification. Closing the door to mystery limits your range.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow yourself to work with what you cannot fully understand. Trust, faith, and surrender are not weaknesses — they are advanced technologies that your practical mind has not yet fully explored.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through consistency and tangible commitment. Your challenge is learning to express the inner world you rarely show — and to trust that vulnerability will not undermine your strength.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the mind that sees the pattern behind things. On an ordinary day, <b>it is you connecting two ideas nobody thought belonged together, and being right.</b> You hold understanding as a given, and new angles come easily.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is possibility and momentum. On the scale of stars, this is living fire reaching for the new. In real life it is you starting the podcast, the business, the movement, electric at the beginning of things. You improvise ideas, and you could dream them up all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether people truly want you or only your ideas. <b>A man says you are hard to feel close to, and it lodges for days.</b> You wait to be seen as someone people love, not only find interesting. You grow the moment you trust that staying is its own kind of brilliance.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Stability, follow-through, patient form. On a cosmic scale this is matter that endures. In daily life it is the relief when someone steady helps you finish what you start. Somewhere there is a Starseed made of that ground, rooted where you fly. When you meet them, your body settles before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Vegan Souls',
-    subtitle: 'The Energetic Thinkers',
+    title: 'Zeta Reticulan',
+    subtitle: 'The Quiet Knowing',
     star: '✦',
     html: `
-      <p class="intro">Your mind is alive with possibility. You are drawn to big ideas, to the "what if" questions that others overlook — your thinking is expansive, creative, and often ahead of its time.</p>
+      <p class="litmus">If you read a room or a person with an accuracy that unsettles people, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the quiet knowing, the mind that sees through the surface to the truth beneath. Now bring it down. You are the one who met someone for five minutes and knew exactly who they were, and were right again.</p>
+      <p class="identity">You see what people try to hide, gently, and you rarely miss.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You see connections others miss. Your gift is bringing new perspectives and innovative solutions — you inspire others to think differently, to question assumptions, to imagine what has not yet been imagined. You are a catalyst for collective evolution.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become addicted to the energy of new ideas and lose interest before completion. Initiation is your strength — but completion is where transformation lives. The world needs not just your vision, but your follow-through.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you commit to one thing long enough to see it fully born. The discipline of completion is not a constraint on your creativity — it is the crucible in which your ideas become real.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through intellectual stimulation and shared exploration. Your challenge is learning that depth requires staying — and that the most interesting journey is often the one that begins after the novelty fades.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the sight of the truth behind appearances. On an ordinary day, <b>it is your uncanny read on a situation, the assessment people trust because it is rarely wrong.</b> You hold understanding as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is people. On the scale of stars, this is the mind moving through the web of connection. In real life it is you reading a person layer by layer, adjusting to them, drawing out what they never meant to show. You improvise with human nature, and you could study people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive, in whether you act boldly or only observe. <b>A woman asks why you always watch and never leap, and it stings for days.</b> You wait to be seen as someone who moves, not only sees. You grow the moment you act on your knowing before you can fully prove it.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Stability, patient form, a solid base. On a cosmic scale this is matter that holds through time. In daily life it is the calm you feel when someone steady anchors you in the physical world. Somewhere there is a Starseed made of that ground, rooted where you perceive. When you meet them, your body settles before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Zeta Reticulan Souls',
-    subtitle: 'The Intuitive Analysts',
+    title: 'Epsilon Eridan',
+    subtitle: 'The Elegant Build',
     star: '✦',
     html: `
-      <p class="intro">You blend logic with intuition in a way that feels almost supernatural. You know things without knowing how you know them — your analytical mind is guided by a deeper intelligence.</p>
+      <p class="litmus">If you turn complex problems into clean working solutions and quietly enjoy it, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the elegant build, the mind that bridges idea and matter, theory and thing. Now bring it down. You are the one who redesigned the kitchen workflow, the spreadsheet, the whole broken process, because you could not stand the inefficiency.</p>
+      <p class="identity">You make the impossible practical, which almost nobody can do.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the strategist with a sixth sense. Your gift is seeing through illusion to the truth beneath — you can read a situation, a person, or a system with uncanny accuracy. People trust your assessments because they are rarely wrong.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become paralysed when your intuition and your logic point in different directions. Learning to trust the knowing that precedes the evidence is one of your greatest challenges — and your greatest liberation.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you act on your intuition before you can fully explain it. The intelligence that moves through you is older and wiser than your rational mind. Let it lead sometimes.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through deep perception and honest insight. Your challenge is learning to share what you sense with gentleness — your clarity can cut, and not everyone is ready for the full truth at once.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the mind that sees the order beneath things. On an ordinary day, <b>it is you seeing the clean solution inside a messy problem.</b> You hold understanding as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is matter shaped with precision. In real life it is you building the system, the tool, the thing that works better than before, tinkering until it is right. You improvise with structure and matter, and you could build all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive, in whether you push boldly or wait for perfect conditions. <b>A man says you overthink and underact, and it lodges for days.</b> You wait to be seen as decisive, not only careful. You grow the moment you ship the imperfect thing and let it teach you.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Emotional presence, the felt life of another. On a cosmic scale this is the bond between beings. In daily life it is the softening when someone leads with feeling while you lead with logic. Somewhere there is a Starseed made of that warmth, tender where you are precise. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Epsilon Eridan Souls',
-    subtitle: 'The Practical Innovators',
+    title: 'Atlantean',
+    subtitle: 'The Humane Order',
     star: '✦',
     html: `
-      <p class="intro">You are the bridge between theory and practice. Your logic is grounded in material reality, but your mind reaches for new possibilities — you understand how to build systems that are both efficient and innovative.</p>
+      <p class="litmus">If you design how things should work but always ask how it will land on people, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the humane order, the mind that builds systems and never forgets the humans inside them. Now bring it down. You are the one who reorganized the whole team and made sure nobody felt smaller for it.</p>
+      <p class="identity">You build the kind of order people actually want to live inside.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the engineer, the architect, the one who makes the impossible possible. Your gift is creating practical solutions to complex problems — and doing it with a creativity that others rarely expect from someone so grounded.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so focused on optimisation that you lose sight of the human element. Efficiency is a means, not an end. The most elegant system is the one that serves life — not the one that runs most smoothly.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow imperfection into your process. The prototype that fails teaches more than the plan that never launches. Done is often more powerful than perfect.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through reliability and creative problem-solving. Your challenge is learning that relationships cannot be optimised — they must be lived, with all their beautiful inefficiency.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is clarity. On a cosmic scale, this is the sight of how things fit together. On an ordinary day, <b>it is you designing the structure, the plan, the clear way forward.</b> You hold understanding as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is people. On the scale of stars, this is the mind moving through the web of connection. In real life it is you sensing how a decision will feel to each person and shaping it so it fits them. You improvise with human nature, and you could tune the room all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in the material, in whether you can make it solid and real, not only well designed. <b>A woman questions whether you can actually execute, and it lodges for days.</b> You wait to be seen as someone who delivers, not only plans. You grow the moment you trust your hands to build what your mind maps.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Drive, boldness, the will to move first. On a cosmic scale this is living fire. In daily life it is the lift when someone decisive breaks the deadlock. Somewhere there is a Starseed made of that fire, bold where you are considered. When you meet them, you move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Atlantean Souls',
-    subtitle: 'The Relational Thinkers',
+    title: 'Andromedan',
+    subtitle: 'Pure Expansion',
     star: '✦',
     html: `
-      <p class="intro">Your logic is guided by your understanding of human nature. You think about how ideas affect people, how systems impact relationships — you are the strategist who never loses sight of the human element.</p>
+      <p class="litmus">If you feel where a room wants to go before anyone speaks, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are pure expansion, the force that breaks through a wall and opens a road where there was none. Now bring it all the way down. You carry enough energy to move a galaxy, inside a body that still has to answer emails, buy groceries, and remember where the keys are.</p>
+      <p class="identity">You are a galaxy learning to live on an ordinary Tuesday.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You create structures that serve people, not the other way around. Your gift is designing systems — organisations, communities, relationships — that honour both efficiency and humanity. You understand that the best structures are the ones people actually want to inhabit.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so focused on keeping everyone comfortable that you avoid necessary conflict. Sometimes the most loving thing is a clear boundary or an uncomfortable truth. Harmony is not always the highest value.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow logic to override compassion when necessary — and trust that clarity is its own form of care. Speaking truth is not a betrayal of your relational nature. It is its fullest expression.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through thoughtful consideration and relational intelligence. Your challenge is learning to prioritise your own needs without framing it as a failure of care for others.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion. On the scale of the cosmos, this is the energy that expands and makes new space where there was none. Now the small version. <b>You feel where a situation wants to go before you can put it into words.</b> You walk into a tired room and something in it wakes up. You carry this the way you carry your own name, quietly, as a given. Other people reach for certainty. You are already standing inside it.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where your energy loves to play is people. On a cosmic scale, this is the pull that reaches across the dark toward other living things. On an ordinary evening, it is you at the table, feeling the mood turn, leaning toward the quiet one, changing your rhythm to meet theirs. <b>You connect by improvising, live, in the moment.</b> You read the person in front of you and you meet them exactly there, again and again, and you could do it all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place, the one that measures itself in the dark. For you it lives in clarity, in whether things hold together and make sense. And the same moment keeps arriving in new clothes. <b>You explain something you can see whole, and the person across from you hears only your calm, and reads it as distance.</b> You replay it for three days, wondering if you were clear enough, understood. You wait, quietly, to be seen as someone whose mind holds. You grow the moment you trust that you are already enough, before the proof arrives.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Every Starseed has one place they were built to receive, and yours is the ground. Body, home, steady resources, patient form. On the scale of the cosmos, this is matter itself, the slow solid stuff that holds a shape. In daily life it is the relief you feel the moment you let yourself lean on something steady. <b>Somewhere there is a kind of Starseed built to be your ground, calm where you are vast. When you meet them, your body knows before your mind agrees.</b> That meeting is the missing half of your own frequency.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Andromedan Souls',
-    subtitle: 'The Vital Catalysts',
+    title: 'Polarisian',
+    subtitle: 'The Bright Spark',
     star: '✦',
     html: `
-      <p class="intro">You are alive with purpose and desire. Your energy is magnetic — people are drawn to your vitality and your sense of direction. You know what you want, and you pursue it with unwavering focus.</p>
+      <p class="litmus">If your ideas and your drive fire together, and you build things from nothing, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the bright spark, mind and will fused into one engine. Now bring it down. You are the one who had the idea at 11pm and registered the domain by midnight.</p>
+      <p class="identity">You do not wait for permission. You begin, and you figure it out on the way.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the initiator, the pioneer, the one who dares to want more. Your gift is awakening others to their own power and potential — your aliveness is contagious, and your courage to pursue what matters inspires others to do the same.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">Your intensity can be experienced as pressure by those who move at a different pace. Not everyone shares your fire — and that is not weakness, it is difference. Learning to honour other rhythms without losing your own is a profound act of leadership.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you channel your desire toward something larger than yourself. Your energy is most powerful when it serves a mission — not just a goal, but a calling that outlasts your personal ambition.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through presence, passion, and shared purpose. Your challenge is learning that stillness is not stagnation — and that the most powerful thing you can sometimes do is simply be, without agenda.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion. On a cosmic scale, this is the energy that makes new space where there was none. On an ordinary day, <b>it is you starting the thing everyone else is still discussing.</b> You hold drive as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is ideas. On the scale of stars, this is the mind lighting the way for your fire. In real life it is you strategizing on the fly, turning any problem into a plan mid-sprint. You improvise structure, and you could scheme all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in the material, in whether you can sustain and finish, not only ignite. <b>A man asks what happened to last year's big plan, and it lodges for days.</b> You wait to be seen as someone who lasts, not only launches. You grow the moment you build something that runs without you.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Emotional closeness, being known rather than admired. On a cosmic scale this is the bond between beings. In daily life it is the relief when someone loves the you behind the achievements. Somewhere there is a Starseed made of that warmth, tender where you are driven. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Polarisian Souls',
-    subtitle: 'The Brilliant Catalysts',
+    title: 'Nibiruan',
+    subtitle: 'The Living Forge',
     star: '✦',
     html: `
-      <p class="intro">Your mind and your will are perfectly aligned. You have ideas and the drive to execute them — you are the visionary entrepreneur, the one who builds from nothing.</p>
+      <p class="litmus">If your drive lives in your hands and your body, and you have to make the thing real, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the living forge, will pressed into matter, desire made physical. Now bring it down. You are the one who could not sit still with the idea and had to start building it in the garage that same night.</p>
+      <p class="identity">You turn wanting into something you can hold in your hands.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is turning vision into reality through sheer force of will and intelligence. You do not wait for permission or perfect conditions — you begin, and you figure it out as you go. Your confidence in your own capacity is your greatest asset.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can burn yourself out chasing the next horizon before the current one is fully realised. Sustainability is not a compromise of your ambition — it is what allows your ambition to compound over time. Rest is not surrender. It is strategy.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you build systems that work without you. Your greatest creation is not the thing you make — it is the structure that continues to create after you have moved on.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through inspiration and shared ambition. Your challenge is learning that vulnerability — not achievement — is what creates true intimacy. Let people know you, not just what you can do.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion. On a cosmic scale, this is the drive that opens roads. On an ordinary day, <b>it is the momentum you carry into a room, the sense that with you here, things get made.</b> You hold drive as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is fire shaping matter. In real life it is you making, crafting, building the thing with real precision and care. You improvise with your hands, and you could build all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether people feel you as warm or only as force. <b>A woman says you are hard to get close to, and it lodges for days.</b> You wait to be seen as tender, not only strong. You grow the moment you let someone in past the doing.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is clarity. Structure, a clear map, the sense of why. On a cosmic scale this is the hidden order. In daily life it is the calm when someone lays out the plan and it makes sense of your fire. Somewhere there is a Starseed made of that clarity, ordered where you are driven. When you meet them, you settle before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Nibiruan Souls',
-    subtitle: 'The Embodied Catalysts',
+    title: 'Egyptian',
+    subtitle: 'The Rising Flame',
     star: '✦',
     html: `
-      <p class="intro">Your energy is grounded in the physical world. You are driven to create, to build, to manifest your desires in material form — your will is expressed through your hands, your body, your tangible creations.</p>
+      <p class="litmus">If you are driven to build meaning and leave something that outlasts you, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the rising flame, will guided by wisdom, fire that wants to mean something. Now bring it down. You are the one who cannot just have a job, it has to be a mission, a legacy, a mark on the world.</p>
+      <p class="identity">You are here to build something that stays after you are gone.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the artist, the craftsperson, the one who brings beauty into being. Your gift is making the invisible visible — transforming inner vision into outer form with a precision and care that others find extraordinary.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so attached to the physical expression of your work that you lose connection to its source. When the creation becomes more important than the creator, something essential is lost. You are not your output.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you create from a place of overflow rather than depletion. The work that comes from joy, from fullness, from genuine desire — that is the work that lasts. Let your body lead you back to what is true.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through physical presence and tangible acts of beauty. Your challenge is learning that not all creation requires physical form — some of the most profound things you can offer live in the space between words.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion with purpose. On a cosmic scale, this is the drive that opens new roads. On an ordinary day, <b>it is the way people follow your sense of direction.</b> You hold drive as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is meaning. On the scale of stars, this is the mind lighting the path for your fire. In real life it is you finding the deeper why, teaching, framing, making people see the larger picture. You improvise wisdom, and you could illuminate all night.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether people love you or only respect you. <b>A man says you feel more like a mentor than a friend, and it lodges for days.</b> You wait to be seen as someone people are close to, not only look up to. You grow the moment you let yourself be an equal, not only a guide.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the ground. Stability, patient form, a solid base. On a cosmic scale this is matter that endures. In daily life it is the relief when someone steady handles the practical floor while you reach high. Somewhere there is a Starseed made of that ground, rooted where you rise. When you meet them, your body settles before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Egyptian Souls',
-    subtitle: 'The Wise Catalysts',
+    title: 'Titanian',
+    subtitle: 'The Standing Fire',
     star: '✦',
     html: `
-      <p class="intro">Your energy is guided by deep wisdom and understanding. You are driven to create meaning, to build systems of knowledge, to leave a legacy that outlasts your individual life.</p>
+      <p class="litmus">If you carry enough force to move mountains and build things meant to last, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the standing fire, immense will grounded deep in the physical world. Now bring it down. You are the one who takes on the project everyone said was too big, and simply starts moving it.</p>
+      <p class="identity">You build for eternity, one heavy stone at a time.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the sage, the guide, the keeper of wisdom. Your gift is illuminating the path for others — not by telling them what to do, but by holding a lantern while they find their own way. Your presence alone is a teaching.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become attached to being the one who knows. When your identity is built on wisdom, you can resist the humbling experience of not knowing — which is, paradoxically, where the deepest wisdom lives.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you become a student again. The teacher who cannot be taught has stopped growing. Your greatest wisdom will come from the places where you are most willing to be wrong.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through guidance and shared understanding. Your challenge is learning that sometimes people need a companion, not a teacher — and that walking beside someone is its own profound form of wisdom.</div>
-      </div>
-    `
-  },
-    {
-    title: 'Titanian Souls',
-    subtitle: 'The Monumental Builders',
-    star: '✦',
-    html: `
-      <p class="intro">You are a force of nature, possessing immense power and the capacity to shape reality on a massive scale. Your energy is boundless, grounded deeply in the physical world.</p>
-      <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the monumental builder. Your gift is creating structures and legacies that stand the test of time. You do not just build for today; you build for eternity, moving mountains with your sheer will and determination.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so focused on the magnitude of your creations that you forget the delicate, human scale of life. The weight of your own power can sometimes isolate you, making it hard to relate to those who move lightly.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you allow yourself to be gentle. True strength is not just in moving mountains, but in holding a fragile flower without crushing it. Embrace the softness within your colossal power.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love with a protective, overwhelming devotion. Your challenge is learning that your partner does not always need a fortress built around them; sometimes, they just need you to sit with them in the open field.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion, vast and steady. On a cosmic scale, this is force that reshapes the ground. On an ordinary day, <b>it is the way things get done when you decide they will.</b> You hold power as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is the material world. On the scale of stars, this is fire pressed into lasting form. In real life it is you building the structure, the business, the thing meant to outlast the season, with real strength. You improvise with matter, and you could build all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in clarity, in whether your thinking is as strong as your will. <b>A woman questions your logic in front of others, and it lodges for days.</b> You wait to be seen as sharp, not only powerful. You grow the moment you trust that asking a question is a form of strength.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Emotional closeness, gentleness received. On a cosmic scale this is the bond between beings. In daily life it is the relief when someone sits with you in the open field instead of admiring the fortress. Somewhere there is a Starseed made of that warmth, soft where you are strong. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Blue Avian Souls',
-    subtitle: 'The Compassionate Catalysts',
+    title: 'Blue Avian',
+    subtitle: 'The Open Heart',
     star: '✦',
     html: `
-      <p class="intro">Your energy is guided by compassion and connection. You are driven to create harmony, to heal, to bring people together — your will is expressed through service and care.</p>
+      <p class="litmus">If your drive is aimed at healing, harmony, and bringing people together, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the open heart, will moved by compassion, fire that wants to mend. Now bring it down. You are the one who organizes the fundraiser, checks on the friend nobody checks on, and carries everyone.</p>
+      <p class="identity">You lead with love, and people can feel it across a room.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">You are the healer, the peacemaker, the one who sees the good in everyone. Your gift is awakening others to their capacity for love — not by preaching it, but by embodying it so completely that others cannot help but feel it reflected back to them.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can give until there is nothing left, and then give more. Your compassion for others can become a way of avoiding your own pain. You cannot heal the world from a place of depletion — and the world needs you whole, not just giving.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you extend to yourself the same compassion you offer others. Self-care is not selfishness — it is the foundation of sustainable service. You must be the first recipient of your own love.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through unconditional acceptance and healing presence. Your challenge is learning to hold boundaries with the same love you use to hold others — and to trust that a clear "no" can be as loving as any "yes."</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is forward motion aimed at care. On a cosmic scale, this is the drive that opens roads toward harmony. On an ordinary day, <b>it is the way you rally people around what matters.</b> You hold drive as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is people. On the scale of stars, this is fire moving through the web of connection. In real life it is you bringing people together, warming the room, mending what is strained. You improvise closeness, and you could hold people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in the material, in whether you can hold your own ground while you give to everyone. <b>A man asks who takes care of you, and it lodges for days.</b> You wait to be seen as solid, not only giving. You grow the moment you fill your own cup first.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is clarity. Structure, discernment, a clear map. On a cosmic scale this is the hidden order. In daily life it is the calm when someone clear helps you see where to draw the line. Somewhere there is a Starseed made of that clarity, ordered where you are open. When you meet them, you settle before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Tau Cetian Souls',
-    subtitle: 'The Relational Manifestors',
+    title: 'Tau Cetian',
+    subtitle: 'The Living Ground',
     star: '✦',
     html: `
-      <p class="intro">You manifest through connection. Your material world is built on relationships and the resources that flow through them — you are the networker, the connector, the one who builds abundance through people.</p>
+      <p class="litmus">If you build abundance through people and trust, and everyone feels like your most important guest, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the living ground, matter warmed by connection, the soil where relationships grow into wealth. Now bring it down. You are the one who knows everyone, connects two friends who then start a business, and somehow it all flows back.</p>
+      <p class="identity">You turn trust into the most valuable currency there is.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is creating wealth through collaboration. You understand intuitively that the most valuable currency is trust — and you build it naturally, through genuine interest, consistent presence, and the rare ability to make everyone feel like the most important person in the room.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can blur the line between genuine connection and strategic networking. When relationships become primarily transactional, you lose the very thing that makes you powerful. The deepest abundance flows from love, not leverage.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you invest in relationships with no agenda — when you connect simply because you care, with no thought of what might come from it. This is where your most profound opportunities are born.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through generosity and genuine interest. Your challenge is learning to be fully known — not just well-liked — and to trust that intimacy requires more than charm.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world, held through people. On a cosmic scale, this is matter that holds and provides. On an ordinary day, <b>it is the solid, resourceful presence that makes others feel taken care of.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is people. On the scale of stars, this is matter reaching through the web of connection. In real life it is you building trust naturally, remembering the small detail, making everyone feel chosen. You improvise closeness, and you could connect people all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive, in whether you pursue boldly or wait to be chosen. <b>A woman asks why you never go after what you want directly, and it lodges for days.</b> You wait to be seen as someone with fire, not only warmth. You grow the moment you claim your own desire out loud.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is clarity. Structure, a clean map, the sense of why. On a cosmic scale this is the hidden order. In daily life it is the calm when someone lays out the strategy behind the relationships. Somewhere there is a Starseed made of that clarity, ordered where you are warm. When you meet them, you settle before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Aldebaran Souls',
-    subtitle: 'The Logical Manifestors',
+    title: 'Aldebaran',
+    subtitle: 'The Steady Architect',
     star: '✦',
     html: `
-      <p class="intro">You manifest through understanding. Your material world is built on systems, strategy, and clear thinking — you are the planner, the strategist, the one who builds through intelligence and precision.</p>
+      <p class="litmus">If you build real things through clear systems and thorough plans, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the steady architect, matter shaped by clear thinking. Now bring it down. You are the one whose plans actually work, whose numbers balance, who people trust with the thing that must not fail.</p>
+      <p class="identity">You make order out of chaos, and it stays made.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is creating order and efficiency. You understand how things work — and how to make them work better. Your plans are thorough, your systems are elegant, and your results are consistent. People trust you with their most important projects.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can become so attached to your plans that you resist the unexpected gifts that come from deviation. Life has its own intelligence — and sometimes the most valuable thing that happens is the thing you did not plan for.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you leave space in your plans for magic. Build the structure — and then release your attachment to exactly how it unfolds. The best outcomes often arrive through doors you did not know existed.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through reliability and thoughtful provision. Your challenge is learning that love cannot be optimised — and that the most meaningful moments are often the unplanned ones.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world. On a cosmic scale, this is matter that holds a shape through time. On an ordinary day, <b>it is the reliability people build their own plans around.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is structure. On the scale of stars, this is the mind ordering matter. In real life it is you designing the system, the plan, the process, refining it until it is elegant. You improvise order, and you could optimize all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether you are warm enough for the people you love. <b>A man calls you a little cold, and it lodges for days, because you felt so much behind the calm.</b> You wait to be seen as loving, not only dependable. You grow the moment you show the warmth you keep hidden.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Spontaneity, boldness, the will to leap. On a cosmic scale this is living fire. In daily life it is the lift when someone bold pulls you off the plan and into the unplanned. Somewhere there is a Starseed made of that fire, spontaneous where you are steady. When you meet them, you move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Centaurian Souls',
-    subtitle: 'The Energetic Manifestors',
+    title: 'Centaurian',
+    subtitle: 'The Sure Builder',
     star: '✦',
     html: `
-      <p class="intro">You manifest through will and desire. Your material world is built on your ability to want something and make it real — you are the entrepreneur, the builder, the one who creates through sheer determination.</p>
+      <p class="litmus">If you build relentlessly and clearly, and obstacles just look like the next task, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the sure builder, matter and mind driving toward the finished thing. Now bring it down. You are the one who kept going after everyone else quit, and quietly finished what they abandoned.</p>
+      <p class="identity">You finish. That alone puts you in rare company.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is turning dreams into reality. Where others see obstacles, you see challenges to overcome. Your determination is extraordinary, your resilience is legendary, and your capacity to keep moving when others stop is what sets you apart.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can mistake force for power. Not everything worth having comes through pushing harder — sometimes the most powerful thing you can do is stop, listen, and allow. Surrender is not defeat. It is a different kind of strength.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you learn to work with the current rather than against it. Your will is powerful — but it is most powerful when aligned with the natural flow of things. Effortless effort is your highest expression.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through passionate pursuit and unwavering loyalty. Your challenge is learning that the most enduring connections are built not through conquest, but through mutual surrender.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world. On a cosmic scale, this is matter that endures. On an ordinary day, <b>it is the sturdy, capable presence that gets things across the line.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is structure. On the scale of stars, this is the mind ordering matter. In real life it is you finding the efficient path, the plan that actually holds, and executing it cleanly. You improvise order, and you could refine the system all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in drive, in whether you push with fire or only grind with discipline. <b>A woman says you work hard but rarely go for the bold move, and it lodges for days.</b> You wait to be seen as daring, not only reliable. You grow the moment you trust that force and flow can serve the same goal.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Emotional closeness, gentleness received. On a cosmic scale this is the bond between beings. In daily life it is the relief when someone tender reaches past your competence to you. Somewhere there is a Starseed made of that warmth, soft where you are sturdy. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Herculean Souls',
-    subtitle: 'The Vital Builders',
+    title: 'Herculean',
+    subtitle: 'The Tireless Hand',
     star: '✦',
     html: `
-      <p class="intro">You are the one who builds through energy and action. Your material world is created through your willingness to work, to move, to do — you are the creator who makes things with their hands and their will.</p>
+      <p class="litmus">If you build through sheer sustained effort and finish what you start, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the tireless hand, matter driven by relentless energy. Now bring it down. You are the one still working when everyone else went to bed, who treats effort like a form of devotion.</p>
+      <p class="identity">You do not just start things. You carry them all the way home.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is bringing things into being. You have an extraordinary capacity for sustained effort — you do not just start things, you finish them. Your work ethic is a form of devotion, and the things you build carry the energy of that devotion.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">You can use work as a way to avoid the inner life. Busyness becomes armour. When you are always doing, you never have to feel what is underneath the doing. The deepest work sometimes happens in the stillness you most resist.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you honour rest as part of the creative cycle. The fallow period is not wasted time — it is when the roots deepen. What you build after genuine rest will be stronger than anything you have built through force.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through devoted action and physical presence. Your challenge is learning to be still with someone — to let connection happen without a project, without a purpose, without anything to show for it.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world. On a cosmic scale, this is matter that holds and endures. On an ordinary day, <b>it is the solid, capable presence people rely on.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is drive and effort. On the scale of stars, this is fire pressed into matter. In real life it is you throwing your whole body into the work, sustaining effort long past where others stop. You improvise through action, and you could work all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in closeness, in whether people feel you or only see what you produce. <b>A man asks when you last just sat with someone, and it lodges for days.</b> You wait to be seen as present, not only productive. You grow the moment you let connection happen with nothing to show for it.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is clarity. Structure, a clear map, the sense of why. On a cosmic scale this is the hidden order. In daily life it is the calm when someone shows you the plan so your effort lands where it counts. Somewhere there is a Starseed made of that clarity, ordered where you are driven. When you meet them, you settle before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Anunnaki Souls',
-    subtitle: 'The Powerful Manifestors',
+    title: 'Anunnaki',
+    subtitle: 'The Founding Stone',
     star: '✦',
     html: `
-      <p class="intro">You manifest through power and presence. Your material world is built on your ability to command respect and resources — you are the leader, the authority, the one who shapes reality through will and vision.</p>
+      <p class="litmus">If you carry a natural authority and shape reality through will and presence, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the founding stone, matter and will that others organize themselves around. Now bring it down. You are the one who walks into the meeting and, without a word, becomes the center of gravity.</p>
+      <p class="identity">You were born to hold things together, and people feel it.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is creating order and structure where there was none. You have a natural authority that others recognise and respond to — not because you demand it, but because you carry it in your bones. You were born to lead.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">Power without service becomes control. The shadow of your gift is the temptation to use your authority to protect yourself rather than to serve others. True power is not about dominance — it is about responsibility.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you use your power in service of something greater than yourself. The greatest leaders are those who measure their success by how many others they have lifted up. This is your highest calling.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through protection and provision. Your challenge is learning to be vulnerable — to let someone see the parts of you that are not powerful, not certain, not in control. This is where true intimacy lives.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world, held with authority. On a cosmic scale, this is matter that anchors. On an ordinary day, <b>it is the presence that makes people feel there is a floor under them.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is drive and command. On the scale of stars, this is fire pressed into form. In real life it is you taking charge, moving the resources, making the decisive call. You improvise leadership, and you could steer the ship all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in clarity, in whether your thinking earns the authority your presence commands. <b>A woman challenges your reasoning publicly, and it lodges for days.</b> You wait to be seen as sharp, not only strong. You grow the moment you let yourself be questioned without feeling threatened.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is warmth. Vulnerability, being known past the power. On a cosmic scale this is the bond between beings. In daily life it is the relief when someone reaches the uncertain human behind the authority. Somewhere there is a Starseed made of that warmth, tender where you are formidable. When you meet them, your heart opens before your mind agrees.</div></div>
+      ${CTA}
     `
   },
   {
-    title: 'Hyperborean Souls',
-    subtitle: 'The Grounded Architects',
+    title: 'Hyperborean',
+    subtitle: 'The Deep Foundation',
     star: '✦',
     html: `
-      <p class="intro">You are the one who builds lasting structures. Your material world is created through patience, planning, and deep understanding — you are the architect who creates with precision and care.</p>
+      <p class="litmus">If you build things meant to last, patiently and with real care, this page is yours.</p>
+      <p class="intro">On the scale of stars, you are the deep foundation, matter laid down to hold for generations. Now bring it down. You are the one who will not rush the thing, who does it properly or not at all, whose work quietly outlives the trend.</p>
+      <p class="identity">What you build is made to last, and it does.</p>
       <div class="section-divider"></div>
-      <div class="section">
-        <div class="section-label">Your Gift</div>
-        <div class="section-text">Your gift is building things that endure. You do not rush, you do not cut corners, and you do not compromise on quality. What you create is made to last — and it does. Your work is a form of integrity made visible.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Shadow</div>
-        <div class="section-text">Perfectionism can become a form of fear. When "not yet ready" becomes a permanent state, the work never reaches the world — and the world is poorer for it. Done and imperfect is almost always more valuable than perfect and withheld.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">Your Activation</div>
-        <div class="section-text">You activate when you release your work before it feels completely ready. The feedback from the world will teach you more than any amount of private refinement. Ship it. Learn. Iterate. This is how your best work is actually built.</div>
-      </div>
-      <div class="section">
-        <div class="section-label">In Relationships</div>
-        <div class="section-text">You love through steadiness and long-term commitment. Your challenge is learning that relationships, unlike buildings, are never finished — and that their beauty lies precisely in their ongoing becoming.</div>
-      </div>
+      <div class="section"><div class="section-label">Core Frequency</div><div class="section-text">Your home note is the material world. On a cosmic scale, this is matter that endures through time. On an ordinary day, <b>it is the quality people feel in everything you make.</b> You hold the ground as a given.</div></div>
+      <div class="section"><div class="section-label">Creative Force</div><div class="section-text">Where you love to play is people, warmly and patiently. On the scale of stars, this is matter reaching through connection. In real life it is you building trust slowly, the friendship that deepens over years, the loyalty that holds. You improvise closeness, and you could tend the bond all day.</div></div>
+      <div class="section"><div class="section-label">Growth Edge</div><div class="section-text">Here is the tender place. For you it lives in clarity, in whether you are quick and sharp enough, not only thorough. <b>A man calls you slow, and it lodges for days, because you know the difference between slow and careful.</b> You wait to be seen as sharp, not only steady. You grow the moment you release the work before it feels perfectly finished.</div></div>
+      <div class="section"><div class="section-label">Open Channel</div><div class="section-text">Yours is the spark. Spontaneity, boldness, the will to leap. On a cosmic scale this is living fire. In daily life it is the lift when someone bold pulls you out of caution into motion. Somewhere there is a Starseed made of that fire, spontaneous where you are patient. When you meet them, you move before your mind agrees.</div></div>
+      ${CTA}
     `
   },
+
   {
     cta: true,
     title: 'The Journey Continues',
-    subtitle: 'Remember Your Truth',
+    subtitle: 'Trust Your Frequency',
     star: '✦',
     html: `
-      <p class="intro">You have journeyed through the 24 cosmic blueprints. Each one carries a frequency, a gift, a shadow, an activation.</p>
-      <p class="intro">You are not just one type — you are a constellation of energies, a unique expression of the cosmos finding its way home.</p>
+      <p class="intro">You have moved through twenty four ways of being a Starseed. Somewhere in these pages you met yourself, and very likely you met the people closest to you too.</p>
+      <p class="intro">When you finally recognize which Starseed you are, life slowly stops feeling like a struggle to belong, and starts unfolding as a kind of remembering.</p>
       <div class="section-divider"></div>
       <div class="section">
         <div class="section-label">Your Next Step</div>
-        <div class="section-text">Take the quiz to discover your primary soul type. Then book a personal session to explore your full constellation — the gifts you carry, the shadows you are ready to integrate, and the activations that will unlock your next level of becoming.</div>
+        <div class="section-text">Discover your own Starseed frequency, and begin to see the one built to complete it. The star only shows you who you already are. What you do next is entirely yours.</div>
       </div>
       <div class="cta-wrap">
-        <a class="cta-link" href="https://starseedsoultype.github.io/starseed/quiz.html" target="_blank">Open the Portal</a>
+        <a class="cta-link" href="https://starseedsoultype.github.io/starseed/quiz.html" target="_blank" rel="noopener">Open the Portal</a>
       </div>
     `
   }
@@ -1043,7 +878,7 @@ PAGES.forEach((p, i) => {
 // Build TOC dynamically
 const tocListEl = document.getElementById('toc-list');
 if (tocListEl) {
-  // Find indices of soul type pages (skip cover, toc, about, cta)
+  // Find indices of Starseed type pages (skip cover, toc, about, cta)
   const soulTypes = PAGES
     .map((p, i) => ({ p, i }))
     .filter(({ p }) => !p.cover && !p.toc && !p.cta && !p.about);
@@ -1055,7 +890,7 @@ if (tocListEl) {
       padding: 7px 0; border-bottom: 1px solid rgba(255,215,0,0.1);
       cursor:pointer; transition: color 0.2s;
     ">
-      <span style="color: var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.5px;">${p.title.replace(' Souls','')}</span>
+      <span style="color: var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.5px;">${p.title}<span style="color:rgba(232,232,240,0.4); font-style:italic; font-size:0.85rem;"> &middot; ${p.subtitle}</span></span>
       <span style="color: rgba(232,232,240,0.4); font-size:0.8rem; font-family:'Inter',sans-serif; letter-spacing:1px;">${num}</span>
     </div>`;
   }).join('');
