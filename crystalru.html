@@ -115,11 +115,11 @@ text-decoration:none; border-radius:3px; transition:all 0.2s;
 </div>
 
 <div class="caption">
-<div class="type-name" id="typeName">Андромедан</div>
+<div class="type-name" id="typeName">Андромеда</div>
 <div class="type-sub">Кристалл Происхождения Души</div>
 </div>
 
-<div class="eyebrow" id="readingEyebrow">Чтение Души · Андромедан</div>
+<div class="eyebrow" id="readingEyebrow">Чтение Души · Андромеда</div>
 
 <div class="description-wrap">
 <div class="desc-section">
@@ -133,13 +133,13 @@ text-decoration:none; border-radius:3px; transition:all 0.2s;
 </div>
 <div class="desc-section">
 <div class="desc-text blurred" id="desc4text"></div>
-<a href="quiz.html" id="unlockBtn" class="desc-unlock-btn">✦ &nbsp; Открыть полное чтение &nbsp; ✦</a>
+<a href="quizru.html" id="unlockBtn" class="desc-unlock-btn">✦ &nbsp; Открыть полное чтение &nbsp; ✦</a>
 </div>
 </div>
 
 <div class="btn-row">
-<a href="index.html" class="btn-gold">← Система StarSeedSoul</a>
-<a href="quiz.html" class="btn-purple">Найди своё Происхождение</a>
+<a href="ru.html" class="btn-gold">← Система StarSeedSoul</a>
+<a href="quizru.html" class="btn-purple">Найди своё Происхождение</a>
 </div>
 
 <script>
@@ -153,11 +153,11 @@ const TYPES = [
   {name:"Арктур",           nameEn:"Arcturian",      funcs:["L","E","M","R"]},
   {name:"Орион",            nameEn:"Orion",          funcs:["L","M","R","E"]},
   {name:"Вега",             nameEn:"Vegan",          funcs:["L","E","R","M"]},
-  {name:"Зета Ретикул",     nameEn:"Zeta Reticulan", funcs:["L","R","E","M"]},
-  {name:"Эпсилон Эридан",   nameEn:"Epsilon Eridan", funcs:["L","M","E","R"]},
+  {name:"Зета Ретикули",     nameEn:"Zeta Reticulan", funcs:["L","R","E","M"]},
+  {name:"Эпсилон Эридана",   nameEn:"Epsilon Eridan", funcs:["L","M","E","R"]},
   {name:"Атлантида",        nameEn:"Atlantean",      funcs:["L","R","M","E"]},
   {name:"Андромеда",        nameEn:"Andromedan",     funcs:["E","R","L","M"]},
-  {name:"Полярная Звезда",  nameEn:"Polarisian",     funcs:["E","L","M","R"]},
+  {name:"Полярис",  nameEn:"Polarisian",     funcs:["E","L","M","R"]},
   {name:"Нибиру",           nameEn:"Nibiruan",       funcs:["E","M","R","L"]},
   {name:"Египет",           nameEn:"Egyptian",       funcs:["E","L","R","M"]},
   {name:"Титан",            nameEn:"Titanian",       funcs:["E","M","L","R"]},
@@ -218,11 +218,11 @@ const GUMROAD_LINKS = {
   "Арктур":          "https://starseedsoul.gumroad.com/l/soul-4",
   "Орион":           "https://starseedsoul.gumroad.com/l/soul-16",
   "Вега":            "https://starseedsoul.gumroad.com/l/soul-23",
-  "Зета Ретикул":    "https://starseedsoul.gumroad.com/l/soul-24",
-  "Эпсилон Эридан":  "https://starseedsoul.gumroad.com/l/soul-10",
+  "Зета Ретикули":    "https://starseedsoul.gumroad.com/l/soul-24",
+  "Эпсилон Эридана":  "https://starseedsoul.gumroad.com/l/soul-10",
   "Атлантида":       "https://starseedsoul.gumroad.com/l/soul-5",
   "Андромеда":       "https://starseedsoul.gumroad.com/l/soul-2",
-  "Полярная Звезда":  "https://starseedsoul.gumroad.com/l/soul-18",
+  "Полярис":  "https://starseedsoul.gumroad.com/l/soul-18",
   "Нибиру":          "https://starseedsoul.gumroad.com/l/soul-15",
   "Египет":          "https://starseedsoul.gumroad.com/l/soul-9",
   "Титан":           "https://starseedsoul.gumroad.com/l/soul-22",
@@ -355,7 +355,7 @@ function draw(idx){
   const unlockBtn = document.getElementById('unlockBtn');
   const gumroadUrl = GUMROAD_LINKS[typeName];
   if (gumroadUrl && gumroadUrl.includes('REPLACE')) {
-    unlockBtn.href = 'quiz.html';
+    unlockBtn.href = 'quizru.html';
   } else {
     unlockBtn.href = gumroadUrl;
   }
