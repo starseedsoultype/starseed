@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Типология Звёздных Душ — Живая библиотека</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --gold: #C9A96E;
+      --gold-dim: rgba(201,169,110,0.15);
+      --text: #E8E4DF;
+      --text2: #C9C1B8;
+      --muted: #5F5A55;
+      --border: rgba(201,169,110,0.08);
+      --border2: rgba(201,169,110,0.18);
+      --nav-h: 64px;
+    }
+
+    html { height: 100%; height: -webkit-fill-available; }
+
+    body {
+      height: 100%;
+      height: -webkit-fill-available;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HINT ── */
+    .hint {
+      flex-shrink: 0;
+      z-index: 10;
+      text-align: center;
+      padding: 7px 16px;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(10,10,10,0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── STAGE ── */
+    #stage {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── PAGE ── */
+    .page {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page.active { display: flex; animation: fadeIn 0.35s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(16px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 18px 24px 0;
+      position: relative;
+    }
+
+    .page-num {
+      position: absolute;
+      top: 14px; right: 20px;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.4;
+    }
+
+    .page-star {
+      font-size: 14px;
+      opacity: 0.55;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.2rem, 4.5vw, 2rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+
+    .page-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      font-style: italic;
+      color: var(--text2);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .page-divider {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── PAGE BODY ── */
+    .page-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 18px 28px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dim) transparent;
+    }
+    .page-body::-webkit-scrollbar { width: 3px; }
+    .page-body::-webkit-scrollbar-track { background: transparent; }
+    .page-body::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ── TEXT CONTENT ── */
+    .page-text {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    .page-text .intro {
+      text-align: center;
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      line-height: 1.9;
+      margin-bottom: 20px;
+      color: rgba(232,232,240,0.9);
+    }
+
+    /* Litmus line — self-identification */
+    .litmus {
+      text-align: center;
+      font-style: italic;
+      color: var(--gold);
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      line-height: 1.7;
+      opacity: 0.9;
+      margin: 2px auto 20px;
+      max-width: 520px;
+    }
+
+    /* Quotable identity line */
+    .identity {
+      text-align: center;
+      font-size: clamp(1.1rem, 3vw, 1.45rem);
+      line-height: 1.5;
+      color: var(--gold);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin: 6px auto 22px;
+      max-width: 560px;
+    }
+
+    /* Section labels */
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 5px;
+    }
+
+    .section-text {
+      font-size: clamp(0.88rem, 1.9vw, 1rem);
+      line-height: 1.85;
+      color: rgba(232,232,240,0.85);
+    }
+    .section-text b { color: var(--text); font-weight: 600; }
+
+    /* Divider between sections */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+      margin: 14px 0;
+    }
+
+    /* Cover page */
+    .page.cover .page-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .page.cover .page-title { font-size: clamp(1.5rem, 5.5vw, 2.6rem); }
+    .page.cover .page-text  { text-align: center; }
+    .page.cover .intro { font-size: clamp(1rem, 2.5vw, 1.2rem); }
+
+    /* CTA */
+    .cta-wrap { text-align: center; margin-top: 24px; }
+    .cta-link {
+      display: inline-block;
+      padding: 12px 32px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-link:hover, .cta-link:active { background: var(--gold); color: var(--bg); }
+
+    /* Per-type micro CTA (bridge to TwinF) */
+    .type-cta { text-align: center; margin: 26px auto 4px; }
+    .type-cta a {
+      display: inline-block;
+      padding: 11px 26px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .type-cta a:hover, .type-cta a:active { background: var(--gold); color: var(--bg); }
+
+    /* ── NAV ── */
+    .nav {
+      flex-shrink: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: var(--nav-h);
+      padding: 0 16px env(safe-area-inset-bottom, 0px);
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(212,175,55,0.1);
+    }
+
+    .nav-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      user-select: none;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .nav-btn:hover  { background: rgba(212,175,55,0.15); box-shadow: 0 0 16px rgba(212,175,55,0.3); }
+    .nav-btn:active { transform: scale(0.88); }
+    .nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+    .nav-counter {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.7;
+      min-width: 48px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 200px;
+    }
+    .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.3;
+      transition: background 0.3s, opacity 0.3s, transform 0.3s;
+      flex-shrink: 0;
+    }
+    .dot.active { background: var(--gold); opacity: 1; transform: scale(1.6); }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 600px) {
+      .page-header { padding: 24px 48px 0; }
+      .page-body   { padding: 20px 48px 24px; }
+      .page-title  { font-size: clamp(1.4rem, 3vw, 2.2rem); }
+    }
+    @media (min-width: 900px) {
+      .page-body { padding: 24px 100px 28px; }
+    }
+
+    /* ── LANDSCAPE MOBILE ── */
+    @media (max-height: 480px) {
+      .hint { display: none; }
+      :root { --nav-h: 52px; }
+      .page-header { padding: 10px 20px 0; }
+      .page-star   { display: none; }
+      .page-title  { font-size: clamp(1rem, 4vw, 1.4rem); margin-bottom: 3px; }
+      .page-subtitle { margin-bottom: 6px; font-size: 0.82rem; }
+      .page-divider  { display: none; }
+      .page-body   { padding: 10px 20px 14px; }
+      .litmus { font-size: 0.85rem; margin-bottom: 10px; }
+      .identity { font-size: 1rem; margin-bottom: 12px; }
+      .section-label { font-size: 8px; }
+      .section-text, .page-text .intro { font-size: 0.85rem; line-height: 1.65; }
+      .section { margin-bottom: 10px; }
+      .section-divider { margin: 8px 0; }
+      .type-cta { margin-top: 16px; }
+      .nav-btn { width: 38px; height: 38px; font-size: 20px; }
+    }
+  </style>
+
+<!-- ManyChat Pixel and StarSeed Funnel Tracking -->
+<script src="//widget.manychat.com/3703484_8c327.js" defer="defer"></script>
+<script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script>
+<script src="manychat-tracking.js"></script>
+<!-- End ManyChat Pixel and StarSeed Funnel Tracking -->
+</head>
+<body>
+
+  <div class="hint">← Листай свайпом или стрелками →</div>
+  <div id="stage"></div>
+  <nav class="nav">
+    <button class="nav-btn" id="prev-btn" aria-label="Назад" onclick="go(-1)">&#8249;</button>
+    <div class="dots" id="dots"></div>
+    <div class="nav-counter"><span id="cur">1</span>&thinsp;/&thinsp;<span id="tot"></span></div>
+    <button class="nav-btn" id="next-btn" aria-label="Вперёд" onclick="go(1)">&#8250;</button>
+  </nav>
+
+<script>
+const CTA = `<div class="type-cta"><a href="https://twinfrequency.io" target="_blank" rel="noopener">Найди того, кто дополняет твою частоту</a></div>`;
+
+const PAGES = [
+  {
+    cover: true, cta: false,
+    title: 'Типология Звёздных Душ',
+    subtitle: 'Живая библиотека',
+    star: '✦',
+    html: `
+      <p class="intro">Ты всегда это чувствуешь. Что ты больше той жизни, в которую тебя налили, и настроен на частоту, которую окружающие почему-то не слышат.</p>
+      <p class="intro" style="font-style:italic; opacity:0.85;">Для таких людей есть слово. Starseed. А под этим словом двадцать четыре разные звезды, и одна из них твоя.</p>
+      <p class="intro" style="opacity:0.55; letter-spacing:1px; font-family:'Inter',sans-serif; font-size:10px; text-transform:uppercase;">Листай, пока одна из страниц не начнёт читаться как твой дневник</p>
+    `
+  },
+  {
+    title: 'Оглавление',
+    subtitle: 'Все 24 типа',
+    star: '✦',
+    toc: true,
+    html: `<div id="toc-list"></div>`
+  },
+  {
+    title: 'Система',
+    subtitle: 'От Александры',
+    star: '✦',
+    about: true,
+    html: `
+      <p class="intro">Меня зовут Александра. Я психолог, и эта карта пришла не из учебника.</p>
+      <div class="section-divider"></div>
+      <div class="section">
+        <div class="section-text" style="text-align:center;">Представь воду в стакане. Она знает только ту форму, которая её держит. Вылей эту же воду в океан: ничего не прибавилось, ничего не убыло, а масштаб того, чему она принадлежит, стал несоизмеримым. Примерно это Starseed про себя и подозревает. Та же самая ты, только океан вместо стакана.</div>
+      </div>
+      <div class="section">
+        <div class="section-text" style="text-align:center;">Работая с людьми, я снова и снова видела, как под совершенно разными жизнями повторяется одна и та же горстка внутренних устройств. Со временем из них собралась система из двадцати четырёх. Это было похоже не на изобретение, а на узнавание того, что и так уже было.</div>
+      </div>
+      <div class="section">
+        <div class="section-text" style="text-align:center;">Это не коробка, в которую тебя кладут. Это зеркало, которое возвращает тебя себе. Звезда только показывает то, чем ты уже являешься.</div>
+      </div>
+    `
+  },
+
+  {
+    title: 'Сириус',
+    subtitle: 'Тёплое течение',
+    star: '✦',
+    html: `
+      <p class="litmus">Если рядом с тобой люди почему-то расслабляются и начинают рассказывать лишнее, эта страница про тебя.</p>
+      <p class="intro">Сириус самая яркая звезда ночного неба. До него восемь с половиной световых лет, и его узнают даже те, кто в звёздах не понимает ничего: выходишь зимой во двор, поднимаешь голову, и вот он, самый громкий.</p>
+      <p class="intro">Зум до конца. Ты входишь в компанию, и через минуту незнакомый человек из угла говорит с тобой как со старым приятелем.</p>
+      <p class="identity">Ты место, куда люди приходят греться.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Сириус светит так, что его видно из любой точки полушария, и никаких усилий на это не тратит. Зум. <b>Люди рядом с тобой выдыхают. Рассказывают то, о чём молчали годами. Уходят с ощущением, что их наконец кто-то услышал.</b> Механика простая: ты считываешь не слова, а то, что под ними, и успеваешь это раньше, чем начинаешь думать. Стараться тут нечего. Ты просто светишь.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в желании. Сириус мерцает и переливается у горизонта, потому что свет идёт сквозь толщу воздуха: он физически не умеет стоять смирно. Зум. <b>Ты решаешь среди ночи ехать к морю и поднимаешь троих.</b> Живёшь внутри самого движения, а не внутри плана. Желание приходит раньше расчёта и тянет за собой всех остальных. И так можешь хоть до утра.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. У Сириуса есть спутник, белый карлик: размером с Землю, весом с Солнце. Ложка такого вещества весит тонны. Рядом с ярким его почти не разглядеть, а систему держит именно он. Зум. <b>Тебя спрашивают, вытянешь ли ты этот план на самом деле, и дальше трое суток по кругу.</b> Механика простая: тепло тебе досталось даром, а плотность приходится доказывать. Тебе очень нужно, чтобы в тебе увидели вес, а не только свет. Признаваться в этом неловко. А отпускает в тот день, когда руки строят то, что сердце и так знало.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Свет Сириуса идёт к нам восемь лет по прямой, и вся его красота держится на очень простой геометрии. Зум. Кто-то раскладывает запутанное по пунктам, и узел распускается сам. <b>Где-то ходит тип, собранный ровно из этой ясности: ровный там, где ты течёшь. Когда вы встретитесь, шум сядет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Плеяды',
+    subtitle: 'Чистое созвучие',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты чувствуешь, что между двумя людьми похолодало, раньше, чем они сами это замечают, эта страница про тебя.</p>
+      <p class="intro">Плеяды это не звезда, а толпа. Глазом видно шесть, если повезёт, семь. В бинокль их сотни, а всего там около тысячи, и вся эта компания летит сквозь галактику вместе, одной стаей.</p>
+      <p class="intro">Зум до конца. Ты чувствуешь настроение коллеги через весь офис и несёшь его домой в собственной груди.</p>
+      <p class="identity">Ты то, чем компания держится вместе.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Плеяды держит гравитация: каждая звезда тянет остальных, и поэтому за сто миллионов лет стая ни разу не рассыпалась. Зум. <b>Ты знаешь, что дружба остыла, раньше, чем это признают вслух. И тихо идёшь чинить.</b> Рядом с тобой людям безопасно. Механика простая: расстояние между людьми ты читаешь так же, как другие читают текст.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. Прямо сейчас Плеяды проходят сквозь чужое пылевое облако, и вокруг них стоит голубая дымка. Пыль не их, они просто идут насквозь и делают её красивой. Зум. <b>Ты заходишь в пустую съёмную квартиру, и через час это дом.</b> Готовишь, переставляешь, вешаешь лампу, и всем внутри становится хорошо. Руками ты делаешь то, что другие делают словами. И можешь так весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Глазом видно шесть звёзд, а их тысяча. Остальные просто не проходят через зрачок, хотя светят точно так же. Зум. <b>Тебе говорят, что тут многовато эмоций и маловато логики, и дальше трое суток по кругу.</b> Механика простая: чувство у тебя быстрее мысли, и со стороны кажется, будто мысли нет вообще. Тебе очень нужно, чтобы в тебе увидели ум. А отпускает в тот день, когда чувство и мысль перестают спорить за место.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Плеядам сто миллионов лет, по звёздным меркам это подростки: горячие, быстрые, живущие коротко и ярко. Зум. Кто-то с ясным направлением берёт за руку и ведёт, и идти оказывается легко. <b>Где-то ходит тип, собранный ровно из этого огня: решительный там, где ты аккуратничаешь. Когда вы встретитесь, в тебе тронется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Лемурия',
+    subtitle: 'Связь до объяснения',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебя тянет к людям раньше, чем ты успеваешь решить, стоит ли, эта страница про тебя.</p>
+      <p class="intro">В 1864 году зоолог заметил странность: кости лемуров лежат и на Мадагаскаре, и в Индии, а между ними океан. Он предположил затонувший материк и назвал его Лемурией. Через сто лет выяснилось, что материки просто разъезжаются, и никакой Лемурии никогда не существовало.</p>
+      <p class="intro">Зато вопрос был поставлен верно. Связь действительно была, просто выглядела совсем иначе.</p>
+      <p class="identity">Ты чувствуешь связь раньше, чем находишь ей объяснение.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Между Мадагаскаром и Индией шесть тысяч километров воды, и всё равно там одни и те же кости: родство держится через океан. Зум. <b>Ты входишь в комнату и сразу знаешь, кто с кем в ссоре, кто кого любит и о чём тут молчат.</b> Механика простая: ты видишь родство там, где остальные видят только расстояние. Учиться этому не приходилось ни дня.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в желании. Материки двигаются на пару сантиметров в год, примерно со скоростью роста ногтей, и за миллионы лет это разносит целые океаны. Зум. <b>Ты влюбляешься в новое дело за одну ночь и уходишь в него целиком.</b> Огонь у тебя приходит первым, а объяснение подтягивается позже. И гореть так можешь хоть до утра.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Лемурия была красивой теорией, которая объясняла всё сразу. Она оказалась выдумкой, а настоящий ответ был скучнее и точнее: плиты просто едут. Зум. <b>Тебе говорят, что ты драматизируешь, и слово застревает на трое суток.</b> Механика простая: твоё чувство редко ошибается, а вот объяснение к нему ты придумываешь на ходу, и придумываешь красиво. Тебе очень нужно, чтобы тебя считали убедительным, а не только ярким. А отпускает в тот день, когда огонь и трезвость садятся за один стол.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Тектонику открыли, когда перестали фантазировать и начали измерять дно: скучная работа с приборами дала ответ, которого не дали сто лет красивых гипотез. Зум. Кто-то надёжный берёт на себя быт, деньги и расписание, и дышать становится легче. <b>Где-то ходит тип, собранный ровно из этой плотности: спокойный там, где ты полыхаешь. Когда вы встретитесь, тело успокоится раньше ума.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Кассиопея',
+    subtitle: 'Незаходящая',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебе доверяют правду о своих отношениях, эта страница про тебя.</p>
+      <p class="intro">Кассиопею в северном небе видно всегда: она не заходит за горизонт никогда, ни зимой, ни летом. Просто половину года висит вниз головой. По легенде это наказание за то, что царица слишком много говорила о себе.</p>
+      <p class="intro">Зум до конца. Ты остаёшься на связи с людьми годами, включая тех, кто давно исчез из жизни всех остальных.</p>
+      <p class="identity">Ты тот, кто остаётся, когда остальные расходятся.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Кассиопея из тех созвездий, что не садятся: по ней можно найти север в любую ночь года, потому что она всегда на месте. Зум. <b>Тебе рассказывают про свои отношения то, что стыдно рассказывать кому-то ещё.</b> Ты держишь это тепло и без приговора. Механика простая: ты не уходишь. Люди это чувствуют и приносят тебе самое стыдное.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в смысле. Кассиопея похожа на букву W, и именно поэтому её запоминают с первого раза: у хаоса из точек нашлась форма. Зум. <b>Ты крутишь чужую запутанную историю так и эдак, пока она вдруг не складывается, и вот тут ты счастлив по-настоящему.</b> Понимание ты собираешь на ходу, подстраивая ключ под каждого человека. И распутывать так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Кассиопея А это самый молодой взрыв сверхновой в нашей галактике: свет дошёл примерно к 1680 году, и почти никто его тогда не заметил. Огромное событие прошло мимо всех. Зум. <b>Тебя спрашивают, справишься ли ты на самом деле, и дальше трое суток по кругу.</b> Механика простая: понимать людей у тебя выходит само, а результат приходится предъявлять. Тебе очень нужно, чтобы в тебе увидели того, кто делает, а не только того, кто видит. А отпускает в тот день, когда руки строят то, что голова давно поняла.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Звезда взрывается, когда топливо кончилось и держать форму больше нечем: это конец, который выглядит как самое яркое событие в галактике. Зум. Кто-то решительный берёт направление на себя, и тебя наконец несёт. <b>Где-то ходит тип, собранный ровно из этого огня: быстрый там, где ты взвешиваешь. Когда вы встретитесь, ты сдвинешься раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Процион',
+    subtitle: 'Идущий первым',
+    star: '✦',
+    html: `
+      <p class="litmus">Если рядом с тобой людям становится спокойно и сытно, эта страница про тебя.</p>
+      <p class="intro">Процион переводится как «перед псом»: он восходит незадолго до Сириуса и как бы объявляет его выход. Восьмая по яркости звезда неба, до неё одиннадцать световых лет, и знают её в основном как ту, что идёт первой.</p>
+      <p class="intro">Зум до конца. Ты тот человек, у которого всегда есть еда, зарядка, плед и телефон нужного мастера.</p>
+      <p class="identity">Ты делаешь так, чтобы у людей всё было.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Процион и Сириус стоят рядом на небе и вместе держат зимний треугольник: конструкция работает, потому что они друг друга держат. Зум. <b>Люди рядом с тобой чувствуют, что о них позаботятся. Ты помнишь, кто чем болел, кто что любит и кому сейчас тяжело.</b> Механика простая: заботу ты читаешь как язык и говоришь на нём свободно.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. У Проциона есть спутник, белый карлик: маленький, плотный, невидимый глазу, и вся система вращается вокруг общего центра именно из-за него. Зум. <b>Ты чинишь, кормишь, устраиваешь, договариваешься, и практический слой жизни у твоих людей просто работает.</b> Руками ты делаешь то, что другие обещают словами. И так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Процион всю жизнь объявляет чужой выход. Он ярче большинства звёзд неба, а известен как тот, кто восходит перед кем-то другим. Зум. <b>Тебе говорят, что ты никогда прямо не идёшь за тем, чего хочешь, и слово застревает на трое суток.</b> Механика простая: чужое желание ты слышишь мгновенно, а собственное приходится откапывать. Тебе очень нужно, чтобы в тебе увидели силу, а не только доброту. А отпускает в тот день, когда собственное «хочу» произносится вслух и без извинений.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Расстояние до Проциона измерили по крошечному смещению на снимках, снятых в разные месяцы: чистая геометрия, никакой магии. Зум. Кто-то раскладывает стратегию, и становится видно, куда всё это время шли твои руки. <b>Где-то ходит тип, собранный ровно из этой ясности: ровный там, где ты тёплый. Когда вы встретитесь, в голове стихнет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Лира',
+    subtitle: 'Слух на глубину',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебя зовут, когда нужно, чтобы кто-то услышал по-настоящему, эта страница про тебя.</p>
+      <p class="intro">Лира это лира Орфея, того самого, что спустился в царство мёртвых за женой, разжалобил музыкой всех подряд, добился невозможного и потерял её, обернувшись на последнем шаге.</p>
+      <p class="intro">Зум до конца. Ты слышишь в чужом голосе то, что человек и сам про себя ещё не понял.</p>
+      <p class="identity">Ты слышишь людей на глубину, о которой они не просили.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это связь. Вся история Орфея держится на одном допущении: если сыграть достаточно верно, услышит даже тот, кто слушать не обязан. Зум. <b>С тобой говорят иначе, чем с другими. Тише, честнее, ближе к делу.</b> Механика простая: ты слышишь интонацию раньше содержания, и человек это чувствует мгновенно.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в смысле. В созвездии Лиры есть Кольцевая туманность: умирающая звезда сбросила оболочку, и получилось идеальное кольцо, которое мы разглядываем уже двести с лишним лет. Форма пережила того, кто её создал. Зум. <b>Ты берёшь чужую путаницу и находишь в ней структуру, а потом отдаёшь человеку словами, от которых у него распрямляется спина.</b> Понимание ты собираешь на ходу и подгоняешь под каждого. И объяснять так можешь всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Орфей прошёл весь путь и обернулся на последнем шаге, потому что не выдержал неизвестности. Дело было не в музыке, а в терпении. Зум. <b>Тебе говорят, что ты слишком много думаешь и мало делаешь, и дальше трое суток по кругу.</b> Механика простая: направление ты понимаешь раньше всех, а идти начинаешь позже всех. Тебе очень нужно, чтобы в тебе увидели того, кто решается. А отпускает в тот день, когда шаг делается до того, как всё стало понятно.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Кольцевая туманность огромна, а вещество внутри разрежено так, что по земным меркам это лучший вакуум: объёма много, плотности почти никакой. Зум. Кто-то надёжный берёт на себя быт и деньги, и голова наконец освобождается. <b>Где-то ходит тип, собранный ровно из этой плотности: устойчивый там, где ты паришь. Когда вы встретитесь, тело поймёт раньше ума.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Арктур',
+    subtitle: 'Взгляд снаружи',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты видишь конструкцию там, где остальные видят кашу, эта страница про тебя.</p>
+      <p class="intro">Арктур чужой в нашей галактике. Все звёзды диска идут по кругу примерно в одну сторону, как машины по кольцевой, а он летит поперёк, со скоростью больше ста километров в секунду. Считают, что он пришёл из маленькой галактики, которую Млечный Путь когда-то съел.</p>
+      <p class="intro">Зум до конца. Ты сидишь на совещании, где все давно согласны, и видишь, что вся конструкция стоит на одном неверном допущении.</p>
+      <p class="identity">Ты смотришь снаружи, даже когда сидишь внутри.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Арктур виден лучше многих именно потому, что идёт своим курсом и не растворяется в общем потоке. Зум. <b>Ты мгновенно чувствуешь, держится аргумент или проваливается, надёжен план или красиво написан.</b> Механика простая: ты видишь не предметы, а связи между ними, и делаешь это раньше, чем успеваешь подумать. Остальные учатся этому годами. Тебе это досталось до всяких усилий.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в желании. В 1718 году Галлей сравнил положение Арктура с античными записями и обнаружил, что звезда сдвинулась. До этого небо считали неподвижным. Зум. <b>Ты загораешься идеей и уходишь в неё целиком, а через месяц загораешься следующей.</b> Тяга у тебя приходит раньше плана и сама выбирает направление. И бежать так можешь хоть до утра.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Арктур это оранжевый гигант: топливо в ядре кончилось, звезда раздулась в десятки раз и светит ярче прежнего, хотя внутри уже идёт совсем другая история. Снаружи великолепие, внутри перестройка. Зум. <b>Тебя спрашивают, что стало с прошлогодним большим планом, и слово застревает на трое суток.</b> Механика простая: думать у тебя получается быстрее, чем доводить, и разрыв между этим ты замечаешь первым. Тебе очень нужно, чтобы в тебе увидели того, кто доводит. А отпускает в тот день, когда сделанное начинает работать без тебя.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. Арктур летит через диск в одиночку и ни к какой компании звёзд не принадлежит. Зум. Кто-то любит тебя за то, какой ты есть, а не за то, что ты понял и построил, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этого тепла: мягкий там, где ты точный. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Орион',
+    subtitle: 'Чертёж из хаоса',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты умеешь превратить хаос в понятную схему, а потом в готовую вещь, эта страница про тебя.</p>
+      <p class="intro">Орион самое узнаваемое созвездие неба: три звезды в ряд, ровно, почти без погрешности. Люди опознают этот пояс тысячи лет, на любом континенте и в любой культуре.</p>
+      <p class="intro">Зум до конца. Ты приходишь туда, где все спорят пятый час, рисуешь на салфетке три квадратика со стрелками, и спор заканчивается.</p>
+      <p class="identity">Ты превращаешь путаницу в чертёж.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Пояс Ориона стал главным ориентиром неба не потому, что там самые яркие звёзды, а потому что там есть форма: три точки в ряд глаз запоминает мгновенно. Зум. <b>Ты слушаешь длинный сбивчивый рассказ и выдаёшь три пункта, после которых всё встаёт на места.</b> Механика простая: ты видишь структуру раньше, чем детали, и поэтому не тонешь там, где тонут остальные.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. В мече Ориона висит туманность, где прямо сейчас рождаются звёзды: газ сжимается, зажигается, становится телом. Свет от неё идёт к нам больше тысячи трёхсот лет, то есть мы смотрим на стройку, которая шла при Карле Великом. Зум. <b>Ты не можешь просто обсудить идею, тебе надо в тот же вечер начать делать её руками.</b> Из мысли ты собираешь предмет. И строить так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Бетельгейзе, плечо Ориона, красный сверхгигант: если поставить его на место Солнца, он проглотил бы орбиту Юпитера. Огромный, заметный, и при этом уже нестабильный, пульсирует и меняет яркость. Зум. <b>Тебе говорят, что к тебе трудно подойти близко, и дальше трое суток по кругу.</b> Механика простая: дело ты держишь надёжно, а близость идёт через то же самое место, где у тебя стоит броня. Тебе очень нужно, чтобы в тебе увидели тёплого, а не только сильного. А отпускает в тот день, когда кого-то пускают внутрь без предварительного результата.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Звёзды в туманности Ориона зажигаются не сами по себе: их поджимает ударная волна от соседних, уже загоревшихся. Толчок всегда приходит снаружи. Зум. Кто-то заряженный тянет тебя в движение, и ты идёшь с удовольствием. <b>Где-то ходит тип, собранный ровно из этого огня: быстрый там, где ты выверяешь. Когда вы встретитесь, тебя сдвинет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Вега',
+    subtitle: 'Мера точности',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебе важно, чтобы было сделано правильно, а не просто сделано, эта страница про тебя.</p>
+      <p class="intro">Вега была эталоном. По ней калибровали шкалу звёздных величин: яркость всех остальных звёзд неба измеряли, сравнивая с ней. Её же первой в истории сфотографировали, в 1850 году.</p>
+      <p class="intro">Зум до конца. Ты тот человек, чью работу берут за образец и потом сверяются, а как там было сделано.</p>
+      <p class="identity">Ты та мера, по которой остальные проверяют себя.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Чтобы стать эталоном, достаточно быть предсказуемым: Вега светит ровно, стабильно и удобно расположена, поэтому её и выбрали точкой отсчёта. Зум. <b>Ты замечаешь неточность в чужой работе так же, как музыкант слышит фальшивую ноту: без усилия и сразу.</b> Механика простая: у тебя внутри есть эталон, с которым сверяется всё, что попадает в поле зрения.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в желании. Вега крутится вокруг оси с бешеной скоростью, больше двухсот километров в секунду, и от этого раздулась по экватору: она не шар, а сплюснутое яйцо. Ещё немного быстрее, и её разорвало бы. Зум. <b>Ты берёшься за новое так, что вокруг всё начинает вращаться.</b> Скорость у тебя рабочий инструмент, а не побочный эффект. И держать такой темп можешь хоть всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Из-за прецессии земной оси Вега была Полярной звездой примерно двенадцать тысяч лет назад и снова станет ею через сопоставимый срок. А сейчас она просто очень яркая звезда, мимо которой все смотрят на север. Зум. <b>Тебе говорят, что рядом с тобой холодновато, и слово застревает на трое суток.</b> Механика простая: точность у тебя выходит сама, а теплота требует отдельного усилия, и это заметно. Тебе очень нужно, чтобы тебя любили, а не только уважали. А отпускает в тот день, когда рядом оказываются без повода и без задачи.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Вокруг Веги висит диск из пыли и обломков: сырьё, из которого при других условиях получились бы планеты. Материал есть, форма не собралась. Зум. Кто-то надёжный берёт на себя быт, деньги и расписание, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этой плотности: устойчивый там, где ты стремительный. Когда вы встретитесь, тело успокоится раньше ума.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Зета Ретикули',
+    subtitle: 'Близость на расстоянии',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты понимаешь людей через устройство, а не через настроение, эта страница про тебя.</p>
+      <p class="intro">Зета Ретикули это две звезды, почти неотличимые друг от друга: обе как наше Солнце, обе на несколько миллиардов лет старше. Они родились вместе и вместе летят сквозь галактику, а расстояние между ними такое, что один оборот друг вокруг друга занимает больше ста тысяч лет.</p>
+      <p class="intro">Зум до конца. У тебя есть люди, с которыми вы не созваниваетесь годами, и при встрече продолжаете фразу с середины.</p>
+      <p class="identity">Ты умеешь быть близко, не стоя рядом.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Пару считают связанной, потому что они идут одним курсом с одинаковой скоростью: доказательство родства здесь не чувство, а измерение. Зум. <b>Ты понимаешь человека, когда видишь, как он устроен: что им движет, где у него слабое место, что он будет делать через шаг.</b> Механика простая: людей ты читаешь как систему, и система редко врёт.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. Обе звезды пары одиночные по всем внешним признакам, и связь между ними видно только по движению. Зум. <b>Ты собираешь вокруг себя очень разных людей и находишь для каждого точный язык.</b> Разговор ты ведёшь так, что человек напротив умнеет прямо по ходу. И делать так можешь весь вечер.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Обе звезды заметно старше Солнца: спокойные, ровные, без вспышек и драмы. Долгая стабильная жизнь без единого громкого события. Зум. <b>Тебя спрашивают, чего ты вообще хочешь, и вопрос застревает на трое суток.</b> Механика простая: чужое желание ты видишь насквозь, а собственное приходится откапывать, и там непривычно тихо. Тебе очень нужно, чтобы в тебе увидели живого, а не только точного. А отпускает в тот день, когда собственное «хочу» звучит без объяснительной записки.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Систему изучают уже полвека, и планет там до сих пор не подтвердили: пусто, чисто, никакого вещества под рукой. Зум. Кто-то берёт на себя дом, еду и деньги, и голова наконец освобождается. <b>Где-то ходит тип, собранный ровно из этой плотности: тёплый и телесный там, где ты в голове. Когда вы встретитесь, тело поймёт раньше ума.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Эпсилон Эридана',
+    subtitle: 'Вечная стройка',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты сначала строишь систему, а потом по ней строишь вещь, эта страница про тебя.</p>
+      <p class="intro">Эпсилон Эридана одна из ближайших к нам звёзд, похожих на Солнце: десять с половиной световых лет. И она очень молодая, ей меньше миллиарда лет, тогда как Солнцу почти пять.</p>
+      <p class="intro">Из-за молодости у неё дома до сих пор беспорядок: пылевые пояса, обломки, постоянные столкновения. Система ещё строится.</p>
+      <p class="identity">Ты всё время достраиваешь то, что уже работает.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Именно к этой звезде в 1960 году направили первую в истории антенну проекта по поиску сигнала: её выбрали потому, что она ближайшая, понятная и похожая на нашу. Зум. <b>Тебе дают задачу, и первое, что ты делаешь, это выясняешь, по каким правилам тут всё вообще работает.</b> Механика простая: без схемы ты не начинаешь, а со схемой не ошибаешься.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. Вокруг звезды пояса обломков и внешнее кольцо пыли: заготовки, из которых собираются планеты. Стройка идёт прямо сейчас. Зум. <b>Ты доводишь вещь до состояния, когда её можно взять в руки: не концепция, не презентация, а работающий предмет.</b> Руками ты доделываешь то, что головой уже понял. И строить так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Звезда молодая, и поэтому у неё сильное магнитное поле, пятна и вспышки: энергии много, распоряжаться ею она ещё не научилась. Зум. <b>Тебя спрашивают, чего ты хочешь на самом деле, помимо того, что надо, и дальше трое суток по кругу.</b> Механика простая: полезное ты отличаешь мгновенно, а желанное приходится нащупывать. Тебе очень нужно, чтобы в тебе увидели живое желание, а не только исправность. А отпускает в тот день, когда выбирается то, что хочется, без обоснования.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. Звезду выбрали для первого прослушивания потому, что рядом и похожа: искали не идеальную, а близкую. Зум. Кто-то оказывается рядом просто так, без задачи и без повода, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этого тепла: открытый там, где ты собранный. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Атлантида',
+    subtitle: 'Замысел целиком',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты держишь в голове целую систему, которой пока нигде нет, эта страница про тебя.</p>
+      <p class="intro">Атлантиду придумал Платон. Он строил её как аргумент в споре: идеальное государство, которое зазналось и было наказано. Он расписал устройство до подробностей, до каналов и кольцевых стен.</p>
+      <p class="intro">А потом бросил. Диалог обрывается на полуслове, и Атлантида навсегда осталась недостроенной.</p>
+      <p class="identity">Ты видишь всю конструкцию целиком, задолго до первого камня.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это ясность. Платон не описывал существующее, он проектировал: взял мысль и развернул её в устройство, где всё связано со всем. Зум. <b>Ты объясняешь людям, как устроено то, в чём они живут годами, и они видят это впервые.</b> Механика простая: ты мыслишь целыми системами, а не кусками, и разрозненное для тебя всегда часть чего-то большего.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. Атлантида дожила до нас потому, что её пересказывали: две с половиной тысячи лет люди передают её друг другу и спорят о ней всерьёз. Идея выжила через людей. Зум. <b>Ты рассказываешь так, что тебя слушают и потом повторяют твоими словами.</b> Мысль ты подаёшь под конкретного человека и меняешь подачу на ходу. И говорить так можешь весь вечер.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Настоящая катастрофа, похожая на легенду, случилась на Санторини около 1600 года до нашей эры: вулкан снёс остров и подкосил минойскую цивилизацию. Реальность оказалась грубее выдумки и куда конкретнее. Зум. <b>Тебя спрашивают, где всё то, что ты так подробно описываешь, и слово застревает на трое суток.</b> Механика простая: система у тебя в голове совершенна, а перенос её в вещество идёт медленно и разочаровывает. Тебе очень нужно, чтобы в тебе увидели того, кто строит, а не только того, кто задумывает. А отпускает в тот день, когда наружу выходит первый кривой, но настоящий кусок.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Диалог Платона обрывается на полуслове: замысел был, дыхания не хватило. Зум. Кто-то с ясной тягой берёт тебя в оборот, и дело наконец трогается. <b>Где-то ходит тип, собранный ровно из этого огня: решительный там, где ты продумываешь. Когда вы встретитесь, ты сдвинешься раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Андромеда',
+    subtitle: 'Чистое расширение',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты понимаешь, чем кончится разговор, когда он ещё не начался, эта страница про тебя.</p>
+      <p class="intro">Андромеду видно невооружённым глазом. Выходишь в тёмное поле, поднимаешь голову, и вот она: мутное пятнышко размером с ноготь. Этому свету два с половиной миллиона лет. Он вышел в дорогу, когда людей ещё не было.</p>
+      <p class="intro">А теперь зум до конца. Эта громада идёт к нам со скоростью больше ста километров в секунду. И живёт она внутри тела, которому надо отвечать на письма, покупать продукты и помнить, где ключи.</p>
+      <p class="identity">Ты галактика, которая учится жить в обычный вторник.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. Галактики не стоят: Андромеда идёт к нам прямо сейчас, пока ты это читаешь, и разрешения не спрашивает. Зум. <b>Ты понимаешь, чем кончится разговор, раньше, чем он начался. Входишь в уставшую комнату, и через десять минут все почему-то уже что-то делают.</b> Ты носишь это как имя, без усилия и без вопроса. Другие уверенность собирают по частям и ждут разрешения. Ты внутри неё стоишь.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. Галактика держится вместе не веществом, а притяжением: пустоты там больше, чем звёзд, а конструкция стоит. Зум. <b>Вечер, застолье, настроение поехало, и ты уже разворачиваешься к самому тихому и меняешь ритм под него.</b> Без заготовок, на ходу. Читаешь того, кто перед тобой, и попадаешь ровно туда, где он есть. Снова и снова. И можешь так всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Через миллиарды лет Андромеда войдёт в Млечный Путь. И вот что странно: звёзды при этом почти не столкнутся, между ними слишком много пустоты. Две громады проходят друг сквозь друга и почти не задевают. Зум. <b>Ты объясняешь то, что видишь целиком, спокойно и по порядку, а человек напротив читает этот ровный голос как холод.</b> Дальше трое суток по кругу. Достаточно ли внятно. Поняли вообще. Да поняли, конечно. Хотя нет. Механика простая: скорость мысли выше скорости слов, и в промежутке теряется тепло. Не ум подводит, подводит темп. Тебе очень нужно, чтобы в тебе увидели ум, который держит. Нужнее, чем ты себе в этом признаёшься. А отпускает в тот день, когда тебе хватает себя. До всякого доказательства.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Галактика почти вся пустота: расстояний много, вещества мало, и всё, что можно потрогать, там редкость. Зум. Тело, дом, спокойные деньги, еда вовремя. То облегчение, когда наконец разрешаешь себе опереться. <b>Где-то ходит тип, собранный ровно из этой плотности. Спокойный там, где в тебе слишком много. Когда вы встретитесь, тело поймёт раньше ума. Оно всегда быстрее.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Полярис',
+    subtitle: 'Направление',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты начинаешь делать то, что остальные ещё обсуждают, эта страница про тебя.</p>
+      <p class="intro">Полярная звезда это та, по которой находят север. Тысячи лет по ней ходили корабли и караваны, потому что она единственная стоит на месте, пока всё небо крутится вокруг.</p>
+      <p class="intro">Зум до конца, и выходит смешное. Сама она никакого покоя не знает: это пульсирующая звезда, она раздувается и сжимается каждые несколько суток, и яркость её всё время скачет.</p>
+      <p class="identity">Ты держишь направление, даже когда внутри ничего не стоит на месте.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. Полярная звезда работает ориентиром просто потому, что оказалась там, куда смотрит земная ось: направление это её должность, а не характер. Зум. <b>Ты начинаешь делать то, что все вокруг пятый час обсуждают, и через это обсуждение заканчивается.</b> Механика простая: решение у тебя случается раньше, чем заканчивается взвешивание, и обычно оно верное.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в ясности. Полярис не одна звезда, а три: главная и две поменьше, и разглядели это только в телескоп. Простое снаружи, устроенное внутри. Зум. <b>Ты на ходу превращаешь чужую проблему в план из четырёх шагов, прямо посреди разговора.</b> Схему ты собираешь под ситуацию, а не достаёшь готовую. И выдумывать так можешь всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Полярная звезда занимает свой пост временно: земная ось качается, и через несколько тысяч лет север будет показывать уже другая. Должность выглядит вечной, а срок у неё есть. Зум. <b>Тебя спрашивают, что стало с прошлогодним большим замыслом, и слово застревает на трое суток.</b> Механика простая: зажигать у тебя выходит мгновенно, а держать долго это отдельный навык, и он приходит позже. Тебе очень нужно, чтобы в тебе увидели того, кто доводит. А отпускает в тот день, когда сделанное работает уже без тебя.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. По Полярной звезде ориентируются миллионы людей, и почти никто из них ничего о ней не знает: ни расстояния, ни того, что их там три. Зум. Кто-то любит именно тебя, а не твои достижения, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этого тепла: близкий там, где ты вперёдсмотрящий. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Нибиру',
+    subtitle: 'След вместо портрета',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебе надо немедленно сделать вещь руками, а не обсуждать её, эта страница про тебя.</p>
+      <p class="intro">Про далёкую тяжёлую планету на краю системы говорят давно и по-разному. А наука ищет её всерьёз с 2016 года: у десятков ледяных тел за Нептуном орбиты вытянуты и повёрнуты одинаково, будто их кто-то держит.</p>
+      <p class="intro">Это тело до сих пор никто не видел. Его вычисляют по тому, как оно двигает других.</p>
+      <p class="identity">Ты действуешь так, что тебя опознают по следам, а не по портрету.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. Чтобы развернуть орбиты целого пояса, нужна масса в несколько земных: невидимое тело выдаёт себя количеством работы, которую оно делает. Зум. <b>Ты входишь в дело, и оно трогается. Люди рядом с тобой начинают шевелиться, даже когда ты никого не подгоняешь.</b> Механика простая: тяга у тебя постоянная, как гравитация, и работает без твоего участия.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. Планеты собираются из обломков: куски слипаются, разогреваются, спекаются в шар, и это единственный способ появиться на свет. Зум. <b>Ты берёшь идею и в тот же вечер начинаешь строить, паять, резать, собирать.</b> Пока вещь не окажется в руках, ты не веришь, что она существует. И делать так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Девятую планету ищут годами: перебрали огромную часть неба и до сих пор не нашли. Огромное, тяжёлое, влияющее на всё вокруг остаётся невидимым. Зум. <b>Тебе говорят, что к тебе трудно подойти близко, и дальше трое суток по кругу.</b> Механика простая: воздействие от тебя идёт сильное, а вот подпускать к себе приходится учиться отдельно. Тебе очень нужно, чтобы в тебе увидели тёплого, а не только мощного. А отпускает в тот день, когда кого-то пускают внутрь раньше, чем предъявлен результат.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Всё, что известно об этом теле, добыто расчётом: наблюдений нет, есть математика, которая говорит, где искать. Зум. Кто-то раскладывает по полочкам, куда всё это время шла твоя сила, и картинка складывается. <b>Где-то ходит тип, собранный ровно из этой ясности: спокойный и системный там, где ты прёшь. Когда вы встретитесь, в голове стихнет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Египет',
+    subtitle: 'То, что останется',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебе мало просто работы и нужно, чтобы после тебя что-то осталось, эта страница про тебя.</p>
+      <p class="intro">Великая пирамида поставлена по сторонам света с ошибкой меньше одной десятой градуса. Это точнее, чем стоит большинство современных зданий. Четыре с половиной тысячи лет назад, без единого прибора из тех, что мы считаем необходимыми.</p>
+      <p class="intro">Зум до конца. Ты не умеешь просто ходить на работу. Тебе нужно, чтобы это была миссия.</p>
+      <p class="identity">Ты строишь то, что должно пережить тебя.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. Пирамиду строили два десятилетия, и всё это время десятки тысяч человек шли в одну сторону, потому что кто-то держал замысел целиком. Зум. <b>Люди идут за твоим ощущением направления, даже когда ты ничего не объясняешь.</b> Механика простая: ты знаешь, куда, раньше, чем знаешь, зачем, и это чувствуется на расстоянии.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в смысле. Египтяне заметили, что Сириус первый раз в году показывается на рассвете прямо перед разливом Нила, и построили на этом календарь: небо стало инструментом для хлеба. Зум. <b>Ты объясняешь людям, зачем всё это, и у них выпрямляется спина.</b> Смысл ты собираешь на ходу и подаёшь под конкретного человека. И объяснять так можешь всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Имя архитектора Великой пирамиды не сохранилось. Стоит сооружение, которое видно из космоса, а человек, который его задумал, остался безымянным. Зум. <b>Тебе говорят, что ты больше наставник, чем друг, и слово застревает на трое суток.</b> Механика простая: уважение к тебе приходит само, а вот равенство приходится строить руками. Тебе очень нужно, чтобы к тебе были близки, а не только смотрели снизу вверх. А отпускает в тот день, когда с кем-то оказываешься на одной ступеньке.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это земля. Пирамида стоит тысячи лет по единственной причине: под ней выровненное основание, и перепад высот по всему периметру ничтожный. Вся вечность держится на скучной подготовке площадки. Зум. Кто-то надёжный закрывает быт и деньги, пока ты тянешься вверх. <b>Где-то ходит тип, собранный ровно из этой плотности: укоренённый там, где ты растёшь ввысь. Когда вы встретитесь, тело успокоится раньше ума.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Титан',
+    subtitle: 'Стоящий огонь',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты берёшься за то, что все назвали неподъёмным, и просто начинаешь двигать, эта страница про тебя.</p>
+      <p class="intro">Титан это спутник Сатурна и единственное место, кроме Земли, где с неба идёт дождь, а на поверхности стоят озёра и моря. Только жидкость там метан, а температура около минус ста восьмидесяти.</p>
+      <p class="intro">Зум до конца. Ты тот, кто берёт проект, от которого отказались все, и через год он стоит.</p>
+      <p class="identity">Ты строишь на века, по одному тяжёлому камню.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. У Титана атмосфера плотнее земной, единственная такая среди всех спутников системы: он один держит на себе то, что остальные давно растеряли. Зум. <b>Когда ты решаешь, что это будет сделано, это оказывается сделано. Люди подстраивают планы под твоё решение.</b> Механика простая: сила у тебя ровная и не кончается к среде.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в веществе. На Титане есть полный круговорот: метан испаряется, собирается в облака, проливается дождём, течёт реками, наполняет моря. Целая работающая машина при чудовищном холоде. Зум. <b>Ты строишь дело, дом, систему, вещь, рассчитанную не на сезон.</b> Руками ты делаешь то, что должно стоять. И строить так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Аппарат садился на Титан вслепую: сквозь плотную оранжевую дымку поверхность не видно вообще, и до самой посадки никто не знал, будет там твердь или жидкость. Огромная сила спуска и ноль информации о том, куда. Зум. <b>Тебе задают вопрос по существу при людях, и дальше трое суток по кругу.</b> Механика простая: воля у тебя опережает проверку, и уточняющий вопрос ощущается как сомнение в тебе целиком. Тебе очень нужно, чтобы в тебе увидели ум, а не только мощь. А отпускает в тот день, когда вопрос звучит как инструмент, а не как нападение.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. Титан всё время закрыт оранжевой дымкой: разглядеть, что там внутри, удалось только радаром и только вблизи. Зум. Кто-то садится рядом просто так и не восхищается крепостью, а видит тебя. <b>Где-то ходит тип, собранный ровно из этого тепла: мягкий там, где ты твёрдый. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Голубые Авианы',
+    subtitle: 'Открытое сердце',
+    star: '✦',
+    html: `
+      <p class="litmus">Если твоя сила всегда направлена на то, чтобы всем стало лучше, эта страница про тебя.</p>
+      <p class="intro">Птицы видят магнитное поле Земли. Буквально видят: в сетчатке у них белок, который реагирует на поле, и направление попадает прямо в картинку перед глазами, вместе с деревьями и небом.</p>
+      <p class="intro">Полярная крачка проходит так десятки тысяч километров в год, от полюса до полюса. Без карты.</p>
+      <p class="identity">Ты знаешь, куда лететь, и уводишь за собой остальных.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это движение. Стая снимается с места одновременно, без команды: направление появляется у всех сразу, и в этом весь механизм перелёта. Зум. <b>Ты собираешь людей вокруг того, что важно, и они правда идут.</b> Механика простая: тяга у тебя всегда направлена наружу, к общему, и это читается мгновенно.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. Стая в полёте экономит силы: каждая птица садится в поток от впереди летящей, и вместе они проходят намного больше, чем поодиночке. Конструкция целиком держится на близости. Зум. <b>Ты сводишь людей, миришь, греешь комнату, помнишь, кому сейчас плохо.</b> Тепло ты раздаёшь на ходу и подстраиваешь под каждого. И держать людей так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Перед перелётом птица набирает вес почти вдвое и половину его сжигает в дороге. Без этого запаса не долетает никто, и запас этот делается заранее и только для себя. Зум. <b>Тебя спрашивают, а кто заботится о тебе, и вопрос застревает на трое суток.</b> Механика простая: чужую нужду ты видишь мгновенно, а собственную замечаешь последней. Тебе очень нужно, чтобы в тебе увидели устойчивого, а не только щедрого. А отпускает в тот день, когда своё берётся первым и без вины.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Магнитное поле даёт птице только направление. Куда именно лететь, где сесть и когда остановиться, решает уже опыт и жёсткий расчёт расстояний. Зум. Кто-то трезвый помогает увидеть, где проходит граница, и становится легче дышать. <b>Где-то ходит тип, собранный ровно из этой ясности: разграничивающий там, где ты открыт всем. Когда вы встретитесь, в голове стихнет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Тау Кита',
+    subtitle: 'Живая почва',
+    star: '✦',
+    html: `
+      <p class="litmus">Если у тебя всё держится на людях, которые тебе доверяют, эта страница про тебя.</p>
+      <p class="intro">Тау Кита одна из ближайших звёзд, похожих на Солнце: двенадцать световых лет. Она старше нашего Солнца больше чем на миллиард лет и при этом удивительно спокойная, почти без вспышек.</p>
+      <p class="intro">А вокруг неё диск обломков, вещества в котором в разы больше, чем в нашем поясе астероидов. Изобилие и постоянные столкновения одновременно.</p>
+      <p class="identity">Ты превращаешь доверие в самое надёжное имущество.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Тау Кита светит ровно миллиардами лет: никаких скачков, никакой драмы, просто устойчивость, на которую можно поставить всё. Зум. <b>Рядом с тобой людям спокойно, потому что видно, что у тебя всё есть и всё под рукой.</b> Механика простая: практический мир ты понимаешь без напряжения, и другие это чувствуют телом.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. Возле такой старой ровной звезды у планет было в разы больше времени на то, чтобы всё утряслось: спокойный центр даёт остальным сложиться. Зум. <b>Ты знакомишь двоих, а через год у них общее дело. Помнишь мелочь про каждого, и каждый чувствует себя выбранным.</b> Связи ты плетёшь на ходу, под конкретного человека. И делать так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Тау Кита бедна тяжёлыми элементами: строительного материала для планет земного типа у неё меньше, чем у Солнца. Всего много, а нужного не хватает. Зум. <b>Тебя спрашивают, почему ты никогда прямо не идёшь за тем, чего хочешь, и слово застревает на трое суток.</b> Механика простая: заботиться о чужом желании привычно, а собственное озвучить страшно, потому что вдруг откажут. Тебе очень нужно, чтобы в тебе увидели огонь, а не только тепло. А отпускает в тот день, когда своё «хочу» произносится вслух и без подготовки.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Всё, что известно про эту систему, вытащено расчётом из едва заметных колебаний света: без строгой математики там не видно ничего. Зум. Кто-то раскладывает стратегию, и становится видно, куда все эти годы шли твои силы. <b>Где-то ходит тип, собранный ровно из этой ясности: холодноватый и точный там, где ты тёплый. Когда вы встретитесь, в голове стихнет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Альдебаран',
+    subtitle: 'Отдельно стоящий',
+    star: '✦',
+    html: `
+      <p class="litmus">Если тебе доверяют то, что ломаться не должно, эта страница про тебя.</p>
+      <p class="intro">Альдебаран это оранжевый глаз Тельца. Все видят его внутри скопления Гиад и считают его частью этой семьи звёзд.</p>
+      <p class="intro">А он там не состоит. Он просто оказался на линии взгляда и стоит вдвое ближе. Отдельная звезда, которую все записали в чужую компанию.</p>
+      <p class="identity">Ты стоишь отдельно, даже когда все считают тебя своим.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Альдебаран один из немногих ориентиров, по которым удобно наводиться: он яркий, он всегда там, где обещал, и по нему проверяют приборы. Зум. <b>Тебе отдают то, что не имеет права упасть: деньги, сроки, самое важное дело.</b> Механика простая: надёжность у тебя не усилие, а устройство, и это видно без слов.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в ясности. То, что Альдебаран не принадлежит Гиадам, выяснили не на глаз, а измерением: расстояние и движение не сошлись с остальными. Ошибку нашли через арифметику. Зум. <b>Ты строишь план, в котором сходятся числа, сроки и люди, и он потом действительно работает.</b> Схему ты подгоняешь под задачу, а не берёшь готовую. И считать так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Со стороны Альдебаран часть большой яркой семьи. На деле между ним и Гиадами десятки световых лет пустоты, и никакой связи там нет вообще. Зум. <b>Тебе говорят, что ты вроде рядом, а вроде и не здесь, и слово застревает на трое суток.</b> Механика простая: делать для людей у тебя выходит легко, а быть с ними близко это отдельная работа, и ей никто не учил. Тебе очень нужно, чтобы к тебе тянулись, а не только на тебя опирались. А отпускает в тот день, когда о своём говорится первым, до всякой просьбы.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Через миллионы лет мимо Альдебарана пройдёт «Пионер-10»: аппарат, у которого давно кончилось питание и который просто летит по инерции, заданной когда-то. Зум. Кто-то заряженный берёт тебя в оборот, и дело трогается с места. <b>Где-то ходит тип, собранный ровно из этого огня: быстрый там, где ты основательный. Когда вы встретитесь, тебя сдвинет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Альфа Центавра',
+    subtitle: 'Просчитанная опора',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты сначала выстраиваешь опору, а потом на ней всё остальное, эта страница про тебя.</p>
+      <p class="intro">Альфа Центавра ближайшая к нам звёздная система. Ближайшая, а до неё сорок триллионов километров и четыре с лишним года хода на скорости света.</p>
+      <p class="intro">Там три звезды. Две похожи на Солнце и кружат друг вокруг друга, а третья, Проксима, маленькая и тусклая, сидит далеко на отшибе. И именно она ближайшая к нам из всех звёзд неба.</p>
+      <p class="identity">Ты выглядишь спокойно, потому что под тобой всё просчитано.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Система держится восемьдесят лет за оборот и стоит миллиарды лет: две тяжёлые звезды нашли равновесие и просто его соблюдают. Зум. <b>У тебя есть жильё, запас, план на случай сбоя и понимание, сколько всё это стоит.</b> Механика простая: материальный мир для тебя родной язык, и тревоги в нём не возникает.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в ясности. Проксиму нашли только в начале двадцатого века, хотя это ближайшая звезда: слишком тусклая, чтобы попасться на глаза, и вычислили её через сравнение снимков. Ближайшее оказалось наименее заметным. Зум. <b>Ты видишь в задаче скрытую переменную, которую все пропустили, и после этого решение становится очевидным.</b> Схему ты строишь на ходу. И думать так можешь всю ночь.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Проксима спокойной не бывает: это вспыхивающая звезда, она регулярно выдаёт выбросы, при которых яркость подскакивает в разы за минуты. Рядом с двумя уравновешенными соседями живёт та, что не умеет держать ровно. Зум. <b>Тебя спрашивают, чего ты хочешь помимо того, что правильно, и вопрос застревает на трое суток.</b> Механика простая: разумное ты видишь сразу, а желанное приходится нащупывать, и там нет ни одной опоры. Тебе очень нужно, чтобы в тебе увидели живое желание, а не только устойчивость. А отпускает в тот день, когда выбирается то, что хочется, без обоснования.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. У Проксимы есть планета в зоне, где может стоять жидкая вода. У самой невзрачной звезды системы оказалось самое пригодное для жизни место. Зум. Кто-то оказывается рядом просто так, без задачи, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этого тепла: открытый там, где ты выверенный. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Геркулес',
+    subtitle: 'Тот, кто держит вес',
+    star: '✦',
+    html: `
+      <p class="litmus">Если ты берёшь на себя вес, который остальные не подняли, эта страница про тебя.</p>
+      <p class="intro">В созвездии Геркулеса висит шаровое скопление: сотни тысяч звёзд, набитых так плотно, что в его центре расстояния между ними в тысячи раз меньше, чем вокруг нас. Ему почти двенадцать миллиардов лет, он старше почти всего, что мы знаем.</p>
+      <p class="intro">Зум до конца. Ты тот, к кому приходят, когда надо поднять то, что уже уронили.</p>
+      <p class="identity">Ты держишь вес и не объявляешь об этом.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Скопление такой плотности не разлетелось за миллиарды лет по единственной причине: собственная тяжесть держит его лучше любой внешней силы. Зум. <b>На тебя ставят тогда, когда дело тяжёлое и права на ошибку нет.</b> Механика простая: выносливость у тебя встроенная, и ты обычно не замечаешь, сколько несёшь.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в огне. Звёзды в ядре скопления иногда сталкиваются и сливаются, и из двух старых получается одна новая, горячая и яркая, которой там по возрасту быть не положено. Зум. <b>Ты берёшься за дело телом, вкладываешь силу и заводишь всех вокруг.</b> Напор у тебя рабочий инструмент. И тянуть так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. В 1974 году в сторону этого скопления отправили радиосообщение. Оно идёт десятки тысяч лет, и если там кто-то ответит, ответ придёт ещё через столько же. Огромное усилие дотянуться до другого, и никакой обратной связи при жизни. Зум. <b>Тебе говорят, что к тебе не подступиться, и дальше трое суток по кругу.</b> Механика простая: помогать телом привычно, а показывать мягкое непривычно совсем. Тебе очень нужно, чтобы в тебе увидели тёплого, а не только надёжного. А отпускает в тот день, когда кого-то пускают внутрь без всякого повода.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это ясность. Возраст скопления посчитали не на глаз: разложили звёзды по яркости и цвету, и точка перелома на графике дала цифру. Зум. Кто-то раскладывает по полочкам, куда уходит твоя сила, и часть груза оказывается лишней. <b>Где-то ходит тип, собранный ровно из этой ясности: разбирающий там, где ты тянешь. Когда вы встретитесь, в голове стихнет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Ануннаки',
+    subtitle: 'Из амбара система',
+    star: '✦',
+    html: `
+      <p class="litmus">Если у тебя из хозяйства вырастает система, эта страница про тебя.</p>
+      <p class="intro">Шумеры считали шестидесятками. Мы до сих пор живём внутри их системы: шестьдесят секунд в минуте, шестьдесят минут в часе, триста шестьдесят градусов в круге. Пять тысяч лет назад придумано, сегодня утром использовано.</p>
+      <p class="intro">А самая первая письменность в истории появилась ради учёта. Первые тексты человечества это складские расписки: сколько ячменя принято, сколько выдано, кому.</p>
+      <p class="identity">Ты начинаешь с амбара и заканчиваешь системой, которой пользуются тысячи лет.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Письмо родилось из зерна: считать надо было настоящий ячмень в настоящем амбаре, и ради этого человек изобрёл знак. Зум. <b>Ты смотришь на ситуацию и первым делом видишь ресурсы: что есть, сколько, надолго ли хватит.</b> Механика простая: материя для тебя основа разговора, а не скучная его часть.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в огне. Шумеры не улучшали существующее, они делали то, чего не было вообще: город, канал, письмо, закон. Зум. <b>Ты берёшься и запускаешь, а не согласовываешь.</b> Тяга у тебя приходит раньше разрешения и тянет за собой людей. И заводиться так можешь хоть до утра.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. Шестидесятка выжила потому, что шестьдесят делится почти на всё: на два, три, четыре, пять, шесть. Победила не красота идеи, а её удобство в деле. Зум. <b>Тебе при людях задают вопрос о том, почему устроено именно так, и дальше трое суток по кругу.</b> Механика простая: делать ты умеешь быстрее, чем объяснять, и требование обосновать ощущается как проверка на прочность. Тебе очень нужно, чтобы в тебе увидели ум, а не только хватку. А отпускает в тот день, когда вопрос звучит как интерес, а не как экзамен.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это тепло. От шумеров остались тысячи табличек с расписками и почти ничего о том, что эти люди чувствовали. Осталось хозяйство, ушла жизнь. Зум. Кто-то интересуется тобой помимо того, что ты сделал, и внутри отпускает. <b>Где-то ходит тип, собранный ровно из этого тепла: чувствующий там, где ты работающий. Когда вы встретитесь, сердце откроется раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+  {
+    title: 'Гиперборея',
+    subtitle: 'Хранящая земля',
+    star: '✦',
+    html: `
+      <p class="litmus">Если рядом с тобой людям становится надёжно и не страшно, эта страница про тебя.</p>
+      <p class="intro">Гиперборея по-гречески «то, что за северным ветром». Греки помещали туда страну вечного тепла, потому что дальше их карты кончались.</p>
+      <p class="intro">А по-настоящему за полярным кругом происходит вот что: земля промерзает на сотни метров и держит эту мерзлоту десятки тысяч лет. Мамонты, попавшие в неё, лежат целыми, с шерстью и содержимым желудка. Земля хранит всё, что ей доверили.</p>
+      <p class="identity">Ты хранишь то, что доверили, и держишь дольше всех.</p>
+      <div class="section-divider"></div>
+      <div class="section"><div class="section-label">Основная частота</div><div class="section-text">Твоя нота это вещество. Вечная мерзлота работает как хранилище: холод останавливает распад, и то, что попало внутрь, остаётся в целости через тысячи лет. Зум. <b>Люди приносят тебе на хранение вещи, деньги, тайны и детей.</b> Механика простая: устойчивость у тебя не решение, а состав, и её видно с порога.</div></div>
+      <div class="section"><div class="section-label">Творческая сила</div><div class="section-text">Играешь ты в людях. На севере в одиночку не выживают: там всё держится на том, что чужого пускают к огню без вопросов, потому что завтра сам постучишься. Гостеприимство там техника безопасности. Зум. <b>Ты создаёшь место, куда приходят греться, и делаешь это без пафоса, просто накрывая на стол.</b> Тепло ты подстраиваешь под каждого, кто вошёл. И держать людей так можешь весь день.</div></div>
+      <div class="section"><div class="section-label">Точка роста</div><div class="section-text">Вот место, где ты втайне считаешь очки. За полярным кругом солнце не садится месяцами, а потом месяцами не встаёт: сутки там перестают работать, и время приходится держать искусственно, по часам и календарю. Привычные опоры отказывают. Зум. <b>Тебе говорят, что тут многовато чувств и маловато логики, и дальше трое суток по кругу.</b> Механика простая: правильное ты чувствуешь телом сразу, а объяснить это словами получается плохо, и со стороны выглядит как отсутствие доводов. Тебе очень нужно, чтобы в тебе увидели ум, а не только надёжность. А отпускает в тот день, когда чутью хватает собственного веса и доказательства уже не нужны.</div></div>
+      <div class="section"><div class="section-label">Открытый канал</div><div class="section-text">У каждого есть место, созданное принимать. У тебя это огонь. Мерзлота хранит идеально и не меняет ничего: всё, что она получила, остаётся ровно таким, каким было. Зум. Кто-то приходит с ясным желанием и сдвигает тебя с места, и это оказывается облегчением. <b>Где-то ходит тип, собранный ровно из этого огня: резкий и лёгкий на подъём там, где ты укоренён. Когда вы встретитесь, тебя тронет раньше, чем ум согласится.</b></div></div>
+      ${CTA}
+    `
+  },
+
+  {
+    cta: true,
+    title: 'Твоя очередь',
+    subtitle: 'Portal 11.11',
+    star: '✦',
+    html: `
+      <p class="intro">Одна из этих двадцати четырёх страниц читается как твой дневник. Осталось узнать, какая именно.</p>
+      <p class="intro" style="font-style:italic; opacity:0.85;">Двадцать восемь вопросов, семь минут. Отвечать надо из того места, которое знает раньше, чем начинается размышление.</p>
+      <div class="cta-wrap">
+        <a class="cta-link" href="https://starseedsoultype.github.io/starseed/quizru.html" target="_blank" rel="noopener">Войти в PORTAL</a>
+      </div>
+    `
+  }
+];
+
+let cur = 0;
+const stageEl = document.getElementById('stage');
+const dotsEl  = document.getElementById('dots');
+const curEl   = document.getElementById('cur');
+const totEl   = document.getElementById('tot');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+// Build pages
+PAGES.forEach((p, i) => {
+  const page = document.createElement('div');
+  page.className = 'page' + (p.cover ? ' cover' : '') + (i === 0 ? ' active' : '');
+
+  const header = document.createElement('div');
+  header.className = 'page-header';
+  header.innerHTML = `
+    <span class="page-num">${i + 1} / ${PAGES.length}</span>
+    <span class="page-star">${p.star || '✦'}</span>
+    <h1 class="page-title">${p.title}</h1>
+    <p class="page-subtitle">${p.subtitle}</p>
+    <div class="page-divider"></div>
+  `;
+
+  const body = document.createElement('div');
+  body.className = 'page-body';
+
+  const text = document.createElement('div');
+  text.className = 'page-text';
+  text.innerHTML = p.html;
+
+  body.appendChild(text);
+  page.appendChild(header);
+  page.appendChild(body);
+  stageEl.appendChild(page);
+});
+
+// Build TOC dynamically
+const tocListEl = document.getElementById('toc-list');
+if (tocListEl) {
+  // Find indices of Starseed type pages (skip cover, toc, about, cta)
+  const soulTypes = PAGES
+    .map((p, i) => ({ p, i }))
+    .filter(({ p }) => !p.cover && !p.toc && !p.cta && !p.about);
+
+  const tocHTML = soulTypes.map(({ p, i }) => {
+    const num = i + 1;
+    return `<div class="toc-item" onclick="show(${i})" style="
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 7px 0; border-bottom: 1px solid rgba(255,215,0,0.1);
+      cursor:pointer; transition: color 0.2s;
+    ">
+      <span style="color: var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.5px;">${p.title}<span style="color:rgba(232,232,240,0.4); font-style:italic; font-size:0.85rem;"> &middot; ${p.subtitle}</span></span>
+      <span style="color: rgba(232,232,240,0.4); font-size:0.8rem; font-family:'Inter',sans-serif; letter-spacing:1px;">${num}</span>
+    </div>`;
+  }).join('');
+
+  tocListEl.innerHTML = `
+    <div style="font-size:0.75rem; letter-spacing:2px; color:rgba(232,232,240,0.4); font-family:'Inter',sans-serif; text-transform:uppercase; margin-bottom:12px;">Нажми на имя, чтобы перейти сразу</div>
+    ${tocHTML}
+  `;
+}
+
+// Build dots
+PAGES.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  dotsEl.appendChild(d);
+});
+
+totEl.textContent = PAGES.length;
+prevBtn.disabled = true;
+
+function show(idx) {
+  const pages = stageEl.querySelectorAll('.page');
+  const dots  = dotsEl.querySelectorAll('.dot');
+  pages[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur = idx;
+  pages[cur].classList.add('active');
+  dots[cur].classList.add('active');
+  const body = pages[cur].querySelector('.page-body');
+  if (body) body.scrollTop = 0;
+  curEl.textContent = cur + 1;
+  prevBtn.disabled  = cur === 0;
+  nextBtn.disabled  = cur === PAGES.length - 1;
+}
+
+function go(dir) {
+  const n = cur + dir;
+  if (n >= 0 && n < PAGES.length) show(n);
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
+});
+
+// Touch swipe
+let tx = 0, ty = 0, swiping = false;
+document.addEventListener('touchstart', e => {
+  tx = e.changedTouches[0].clientX;
+  ty = e.changedTouches[0].clientY;
+  swiping = false;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  const dx = Math.abs(e.changedTouches[0].clientX - tx);
+  const dy = Math.abs(e.changedTouches[0].clientY - ty);
+  if (dx > dy && dx > 12) swiping = true;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  if (!swiping) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+}, { passive: true });
+</script>
+</body>
+</html>
