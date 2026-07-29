@@ -521,7 +521,13 @@ function calculateResult(){
     tbQueue.push(newTbs[0]);inTiebreaker=true;renderTiebreaker(newTbs[0]);return;
   }
   inTiebreaker=false;
-  resolveTypeServer({scores:scores}).then(function(t){resolvedType=t;showEmailCapture();}).catch(function(){alert('The portal flickered. Please check your connection and try again.');});
+  resolveTypeServer({scores:scores}).then(function(t){
+    resolvedType=t;
+    // Opened from the Telegram bot: the person is already a subscriber,
+    // so the email step is skipped and the result is shown straight away.
+    if(_tgToken){mcEvent('ss_origin_quiz_completed');captureOriginForBot();showResult();}
+    else showEmailCapture();
+  }).catch(function(){alert('The portal flickered. Please check your connection and try again.');});
 }
 
 // ── TYPE RESOLUTION — server-side only (stacks are not shipped to the client) ──
@@ -835,6 +841,22 @@ function drawCrystal(type){
 const _SB_URL='https://pewgupxikbswhaqxjrwk.supabase.co';
 const _SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
 const _sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
+
+// Personal token from the Telegram bot link (quiz.html?tg=...). Empty for everyone else.
+const _tgToken=(function(){try{return new URLSearchParams(location.search).get('tg')||'';}catch(e){return '';}})();
+
+// Hand the finished Origin back to the bot so it can continue the conversation.
+function captureOriginForBot(){
+  try{
+    const t=getType();
+    if(!t||!t.name)return;
+    fetch(_SB_URL+'/functions/v1/bot-origin-capture',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:_tgToken,origin:t.name})
+    }).catch(function(){});
+  }catch(e){}
+}
 function track(event,resultKey){
   try{fetch(_SB_URL+'/rest/v1/quiz_analytics',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({event:event,result_key:resultKey||null,session_id:_sid,quiz_type:'origin_scan'})});}catch(e){}
 }
