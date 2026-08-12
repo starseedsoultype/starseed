@@ -76,12 +76,12 @@ ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);fo
 .voices-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
   scrollbar-width:none;-ms-overflow-style:none;padding-bottom:6px}
 .voices-track::-webkit-scrollbar{display:none}
-.voice{flex:0 0 300px;scroll-snap-align:center;background:var(--bg2);border:1px solid var(--border);
+.voice{flex:0 0 300px;scroll-snap-align:center;background:#F5F2EC;border:1px solid rgba(10,10,10,0.10);
   padding:30px 26px;display:flex;flex-direction:column;justify-content:space-between;min-height:196px}
 .voice q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20.5px;line-height:1.42;
-  color:var(--text);quotes:none}
+  color:#0A0A0A;quotes:none}
 .voice q::before,.voice q::after{content:''}
-.voice .mark{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text4);margin-top:20px}
+.voice .mark{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:#5F5A55;margin-top:20px}
 .voices-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
 .voices-nav button{width:40px;height:40px;background:transparent;border:1px solid var(--border2);
   color:var(--gold);font-size:15px;cursor:pointer;transition:background .3s}
@@ -330,6 +330,12 @@ function slideVoices(dir){
   t.scrollBy({left:dir*step,behavior:'smooth'});
 }
 </script>
+
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Schedule time with me', color: '#C9A96E', textColor: '#0A0A0A', branding: true }); }</script>
+<!-- Calendly badge widget end -->
 
 </body>
 </html>
