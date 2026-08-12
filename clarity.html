@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity Session · A reading of your connection · StarSeedSoul</title>
+<meta name="description" content="A private reading of the connection between you and one specific person. Written by Alexandra, a psychologist. You receive a live reading and an 11 page Relationship Frequency document.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A; --bg2:#111111; --bg3:#161616;
+  --border:rgba(201,169,110,0.08); --border2:rgba(201,169,110,0.18);
+  --text:#E8E4DF; --text2:#C9C1B8; --text3:#7A7672; --text4:#5F5A55;
+  --gold:#C9A96E; --gold2:#E8D5A8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:18px 24px;background:rgba(10,10,10,0.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:1px;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-btn{font-size:10px;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);text-decoration:none;
+  border:1px solid rgba(201,169,110,0.28);padding:9px 18px;transition:all .4s}
+.nav-btn:hover{background:rgba(201,169,110,0.07);border-color:var(--gold)}
+
+.kicker{font-size:10px;letter-spacing:3.4px;text-transform:uppercase;color:var(--text3);margin-bottom:22px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(34px,6vw,58px);line-height:1.12;letter-spacing:.5px}
+h1 em{font-style:italic;color:var(--gold)}
+h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(26px,3.6vw,36px);line-height:1.2;margin-bottom:20px}
+h2 em{font-style:italic;color:var(--gold)}
+h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:22px;margin-bottom:8px;color:var(--text)}
+p{color:var(--text2);font-size:16.5px;margin-bottom:18px}
+p.lead{font-size:18.5px;color:var(--text)}
+section{padding:76px 0;border-top:1px solid var(--border)}
+section:first-of-type{border-top:none}
+
+.hero{padding:88px 0 72px}
+.hero p{max-width:600px}
+
+.quiet{color:var(--text3);font-size:14.5px;letter-spacing:.2px}
+
+.card{background:var(--bg2);border:1px solid var(--border);padding:34px 30px;margin-bottom:18px}
+.card-gold{border-color:var(--border2)}
+
+.who{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:start}
+.who-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 16%;
+  border:1px solid var(--border2);display:block;filter:saturate(.92)}
+.who-text{min-width:0}
+@media(max-width:640px){
+  .who{grid-template-columns:1fr;gap:24px}
+  .who-photo{max-width:200px}
+}
+
+ol.steps{list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-left:56px;margin-bottom:30px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;
+  font-size:17px;color:var(--gold);border:1px solid var(--border2);border-radius:50%}
+
+ul.plain{list-style:none}
+ul.plain li{position:relative;padding-left:24px;margin-bottom:14px;color:var(--text2);font-size:16.5px}
+ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);font-size:20px;line-height:1.2}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);
+  border:1px solid var(--border);margin:26px 0}
+.fact{background:var(--bg2);padding:24px 20px;text-align:center}
+.fact-v{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);margin-bottom:6px}
+.fact-l{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text3)}
+
+.voices{position:relative;margin-top:34px}
+.voices-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;padding-bottom:6px}
+.voices-track::-webkit-scrollbar{display:none}
+.voice{flex:0 0 300px;scroll-snap-align:center;background:var(--bg2);border:1px solid var(--border);
+  padding:30px 26px;display:flex;flex-direction:column;justify-content:space-between;min-height:196px}
+.voice q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20.5px;line-height:1.42;
+  color:var(--text);quotes:none}
+.voice q::before,.voice q::after{content:''}
+.voice .mark{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text4);margin-top:20px}
+.voices-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.voices-nav button{width:40px;height:40px;background:transparent;border:1px solid var(--border2);
+  color:var(--gold);font-size:15px;cursor:pointer;transition:background .3s}
+.voices-nav button:hover{background:rgba(201,169,110,0.07)}
+@media(max-width:640px){.voice{flex:0 0 84%}}
+
+.faq-q{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--text);margin-bottom:10px}
+.faq-item{padding:26px 0;border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+
+.cta{text-align:center;padding:84px 0 96px}
+.btn-gold{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0A0A0A;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:400;text-decoration:none;
+  padding:19px 46px;transition:opacity .4s}
+.btn-gold:hover{opacity:.86}
+
+footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:19px;letter-spacing:1px;margin-bottom:12px}
+.footer-logo span{color:var(--gold)}
+.footer-copy,.footer-contact{font-size:12.5px;color:var(--text4);margin-bottom:8px}
+.footer-contact a{color:var(--text3);text-decoration:none}
+.footer-contact a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Star<span>Seed</span>Soul</a>
+  <a href="#book" class="nav-btn">Book a Session</a>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">Clarity Session · one connection</div>
+    <h1>You know exactly who he is.<br>You have <em>nowhere to put it.</em></h1>
+    <p class="lead" style="margin-top:28px">
+      Maybe it has been three years. Maybe eleven. He lives somewhere at the back of your mind
+      the way a television plays in the next room, and the volume changes while the signal stays.
+    </p>
+    <p>
+      You have said pieces of this out loud once, and you watched the other person’s face change.
+      Since then you have carried it quietly, alongside a full life that works.
+    </p>
+    <p class="quiet">
+      This page describes one hour of my week that belongs entirely to that connection.
+    </p>
+  </section>
+
+  <section>
+    <h2>What you are experiencing is <em>coherent</em></h2>
+    <p>
+      Women who live continents apart describe this in almost identical words. A filter over
+      everything they look at. An app left open in the background. A cloud that follows them
+      from room to room. Same phenomenon, described by strangers.
+    </p>
+    <p>
+      That repetition matters. It means the thing you carry follows rules, and rules can be read.
+      The feeling of losing your mind comes from holding something structured while holding very
+      few words for it.
+    </p>
+    <p>The words exist. That is what this session gives you.</p>
+
+    <div class="voices">
+      <div class="voices-track" id="voicesTrack">
+        <div class="voice"><q>Six years now, and he is the first thing in my head every morning.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>He sits in the back of my mind like a TV playing in the next room.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>I told one friend once, watched her face change, and kept it to myself after that.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>We talked for a few weeks and I have missed him for years.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>I love my husband and this is something else that I have nowhere to put.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>I moved countries to start over and he came with me.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>Every man I meet gets compared to him and they can feel it.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>It sounds insane out loud so I say it to myself instead.</q><div class="mark">Written by a woman online</div></div>
+        <div class="voice"><q>I gave up waiting a long time ago and the feeling stayed exactly the same.</q><div class="mark">Written by a woman online</div></div>
+      </div>
+      <div class="voices-nav">
+        <button type="button" aria-label="Previous" onclick="slideVoices(-1)">&#8249;</button>
+        <button type="button" aria-label="Next" onclick="slideVoices(1)">&#8250;</button>
+      </div>
+    </div>
+
+    <p class="quiet" style="margin-top:22px">
+      Paraphrased from public conversations in twin flame communities, by women who live
+      continents apart and write the same sentences.
+    </p>
+  </section>
+
+  <section>
+    <h2>Who is reading it</h2>
+    <div class="who">
+      <img src="myportraite.jpg" alt="Alexandra" class="who-photo" loading="lazy">
+      <div class="who-text">
+        <h3>Alexandra</h3>
+        <p class="quiet" style="margin-bottom:16px">Psychologist · creator of the StarSeedSoul system</p>
+        <p>
+          I hold a degree in psychology, and I built a system that resolves any two people into
+          one specific configuration out of hundreds. In a session I use both.
+        </p>
+        <p style="margin-bottom:0">
+          I describe structure. I name where the pull comes from, what repeats between you, and
+          why it holds that exact shape. Everything I say stays inside what you can observe in
+          your own life and verify for yourself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What happens in the session</h2>
+    <p class="quiet" style="margin-top:-6px;margin-bottom:28px">We meet on video, both of us on camera, one to one.</p>
+    <ol class="steps">
+      <li>
+        <h3>You bring one person</h3>
+        <p style="margin-bottom:0">His name, when it started, what actually happened between you. Dates and
+        behaviour, in your own words, at your own pace.</p>
+      </li>
+      <li>
+        <h3>I place the two of you</h3>
+        <p style="margin-bottom:0">Your Origin and his, and the connection they form together. Yours is one exact
+        combination out of three hundred.</p>
+      </li>
+      <li>
+        <h3>The pull gets named</h3>
+        <p style="margin-bottom:0">Where the intensity comes from. Which part of it is recognition of something
+        real, and which part your mind completed on its own while he was away.</p>
+      </li>
+      <li>
+        <h3>The friction gets named</h3>
+        <p style="margin-bottom:0">The argument that repeats. The silence that arrives at the same point every
+        time. Both have a shape, and the shape explains itself once you see it.</p>
+      </li>
+      <li>
+        <h3>What it asks of you now</h3>
+        <p style="margin-bottom:0">Concrete and for this month. What belongs to you, what belongs to him, and
+        what to watch for in yourself.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What you receive</h2>
+    <div class="card card-gold">
+      <ul class="plain">
+        <li>A live reading of your connection, one to one, with room for your questions</li>
+        <li>Your Relationship Frequency document, 11 pages: the core frequency of the bond,
+            how your two energies meet, the polarity you keep circling, and the practices that
+            restore coherence between you</li>
+        <li>Language for something you have carried in silence, which stays with you long after
+            the call ends</li>
+      </ul>
+    </div>
+    <p class="quiet">
+      The document is the part women return to. Several have told me they reread it a year later
+      and it still describes the week they are in.
+    </p>
+  </section>
+
+  <section>
+    <div class="facts">
+      <div class="fact"><div class="fact-v">$55</div><div class="fact-l">One session</div></div>
+      <div class="fact"><div class="fact-v">45 min</div><div class="fact-l">Live, one to one</div></div>
+      <div class="fact"><div class="fact-v">11 pages</div><div class="fact-l">Your written reading</div></div>
+      <div class="fact"><div class="fact-v">24 h</div><div class="fact-l">Document delivered</div></div>
+    </div>
+    <p class="quiet" style="text-align:center">
+      A few slots each month, held open on purpose.
+    </p>
+  </section>
+
+  <section>
+    <h2>Questions women ask me first</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Am I imagining all of this?</div>
+      <p style="margin-bottom:0">This is the first question almost every woman asks, which tells you how
+      common it is. What you feel has a structure, and I describe that structure. You leave with a
+      clear account of it rather than reassurance.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">We have barely spoken in years. Is there enough to read?</div>
+      <p style="margin-bottom:0">Yes. The reading works from who the two of you are, so silence, distance and
+      years apart leave it fully readable. Many of the women I read have been out of contact for
+      a long time.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will you tell me whether he comes back?</div>
+      <p style="margin-bottom:0">I describe how your connection is built and how it behaves. Predictions belong
+      to a different trade, and I leave them there. What you gain is understanding precise enough
+      to make your own decisions with a clear head.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What if I go blank and lose my words?</div>
+      <p style="margin-bottom:0">That happens often, and it is fine. I ask a few simple questions and the picture
+      becomes clear quickly. Forty five minutes leaves plenty of room, and the written reading carries the rest.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is this therapy?</div>
+      <p style="margin-bottom:0">This is a reading of one connection, delivered by someone trained in psychology.
+      For treatment of a mental health condition, a therapist in your own country is the right
+      person, and I will say so plainly if that is what I hear.</p>
+    </div>
+  </section>
+
+  <section class="cta" id="book">
+    <div class="kicker">Clarity Session</div>
+    <h2 style="max-width:520px;margin:0 auto 26px">One hour of my week belongs to <em>your connection</em></h2>
+    <p style="max-width:460px;margin:0 auto 34px">
+      You bring one person and everything you have carried about him. I bring the map.
+    </p>
+    <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity"
+       class="btn-gold"
+       onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book your session</a>
+    <p class="quiet" style="margin-top:26px">Alexandra</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Star<span>Seed</span>Soul</div>
+  <div class="footer-copy">© 2026 StarSeedSoul Project · Olesia Rinatovna Popova</div>
+  <div class="footer-contact">
+    Instagram: <a href="https://instagram.com/starseedsoul.type" target="_blank">@starseedsoul.type</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:timsocion@gmail.com">timsocion@gmail.com</a>
+  </div>
+  <div class="footer-contact">
+    <a href="about-the-system.html">About the System</a>
+    &nbsp;·&nbsp;
+    <a href="connections.html">Connection Types</a>
+    &nbsp;·&nbsp;
+    <a href="privacy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+function slideVoices(dir){
+  var t=document.getElementById('voicesTrack');
+  var card=t.querySelector('.voice');
+  var step=card.getBoundingClientRect().width+18;
+  t.scrollBy({left:dir*step,behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>
