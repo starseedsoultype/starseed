@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Analytics 4 · cookieless, no consent banner required -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
+<!-- End Google Analytics 4 -->
+
 <title>Clarity Session · A private reading of your connection · StarSeedSoul</title>
 <meta name="description" content="A private one to one reading of the connection between you and one specific person. 45 minutes live on video with Alexandra, plus a personal 11 page written reading within 24 hours.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +57,8 @@ section:first-of-type{border-top:none}
   color:var(--gold);line-height:1.4;margin:20px 0 30px;max-width:620px}
 
 .quiet{color:var(--text3);font-size:14.5px;letter-spacing:.2px}
+.quiet a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.35);transition:border-color .3s}
+.quiet a:hover{border-bottom-color:var(--gold)}
 
 .card{background:var(--bg2);border:1px solid var(--border);padding:34px 30px;margin-bottom:18px}
 .card-gold{border-color:var(--border2)}
@@ -147,7 +160,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
 <nav>
   <a href="index.html" class="nav-logo">Star<span>Seed</span>Soul</a>
-  <a href="#book" class="nav-btn">Book a Session</a>
+  <a href="#book" class="nav-btn" data-cta="nav">Book a Session</a>
 </nav>
 
 <div class="wrap">
@@ -162,9 +175,11 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
     <div style="margin-top:30px">
       <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
-         onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book Your Clarity Session</a>
+         data-cta="hero">Book Your Clarity Session</a>
       <div class="btn-line">45 minutes live on video. Personal 11 page reading within 24 hours. $55.</div>
-      <div class="quiet" style="margin-top:14px">Not sure if this is right for you? DM me CLARITY on Instagram.</div>
+      <div class="quiet" style="margin-top:14px">Not sure if this is right for you?
+        <a href="https://instagram.com/starseedsoul.type" target="_blank" rel="noopener"
+           data-cta="dm-hero">DM me CLARITY on Instagram</a>.</div>
     </div>
   </section>
 
@@ -189,7 +204,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
     </p>
     <div style="margin-top:34px">
       <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
-         onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book Your Clarity Session</a>
+         data-cta="offer">Book Your Clarity Session</a>
       <div class="btn-line">45 minute private video session · Personal 11 page written reading within 24 hours · $55</div>
     </div>
   </section>
@@ -529,7 +544,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
     <h2 style="max-width:560px;margin:0 auto 30px">Book Your Clarity Session <em>· $55</em></h2>
     <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity"
        class="btn-gold"
-       onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book your session</a>
+       data-cta="final-cta">Book your session</a>
     <div class="btn-line">45 minutes live on video · One person, one connection · 11 page personal reading within 24 hours</div>
   </section>
 
@@ -545,7 +560,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       You are allowed to ask for clarity before you decide what this connection means.
     </p>
     <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
-       onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book Your Private Clarity Session</a>
+       data-cta="final-note">Book Your Private Clarity Session</a>
   </section>
 
 </div>
@@ -580,10 +595,75 @@ function slideVoices(dir){
 }
 </script>
 
+<!-- Funnel tracking begin -->
+<script>
+(function(){
+  var CALENDLY = 'https://calendly.com/alexandrapsy/alexandrapsy_clarity';
+
+  /* 1. Read the campaign tags this visitor arrived with. */
+  var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var incoming = new URLSearchParams(window.location.search);
+  var carry = keys.filter(function(k){ return incoming.get(k); })
+                  .map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(incoming.get(k)); })
+                  .join('&');
+
+  function withTags(url){
+    if(!carry) return url;
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + carry;
+  }
+
+  /* 2. Carry them into every booking link, so the source lands in the Calendly record. */
+  var links = document.querySelectorAll('a[href*="calendly.com"]');
+  for(var i = 0; i < links.length; i++){
+    links[i].href = withTags(links[i].getAttribute('href'));
+  }
+  window.__clarityBookingUrl = withTags(CALENDLY);
+
+  function send(name, params){
+    if(typeof gtag === 'function') gtag('event', name, params || {});
+  }
+
+  /* 3. One handler for every call to action on the page. */
+  document.addEventListener('click', function(e){
+    if(!e.target || !e.target.closest) return;
+
+    var cta = e.target.closest('[data-cta]');
+    if(cta){
+      send('cta_click', {
+        cta_location: cta.getAttribute('data-cta'),
+        link_url: cta.getAttribute('href') || ''
+      });
+    }
+
+    /* Open booking in a popup so the visitor stays on the page and the
+       Calendly steps below stay measurable. Plain navigation if the widget
+       has not loaded yet. */
+    var booking = e.target.closest('a[href*="calendly.com"]');
+    if(booking && typeof Calendly !== 'undefined' && Calendly.initPopupWidget){
+      e.preventDefault();
+      Calendly.initPopupWidget({ url: booking.href });
+    }
+  });
+
+  /* 4. The three Calendly steps, reported by the widget itself. */
+  var steps = {
+    'calendly.profile_page_viewed': 'calendly_opened',
+    'calendly.date_and_time_selected': 'calendly_time_selected',
+    'calendly.event_scheduled': 'calendly_scheduled'
+  };
+  window.addEventListener('message', function(e){
+    if(!e.data || typeof e.data.event !== 'string') return;
+    var name = steps[e.data.event];
+    if(name) send(name);
+  });
+})();
+</script>
+<!-- Funnel tracking end -->
+
 <!-- Calendly badge widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Book your session', color: '#C9A96E', textColor: '#0A0A0A', branding: false }); }</script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: window.__clarityBookingUrl || 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Book your session', color: '#C9A96E', textColor: '#0A0A0A', branding: false }); }</script>
 <!-- Calendly badge widget end -->
 
 </body>
