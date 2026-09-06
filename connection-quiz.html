@@ -829,7 +829,6 @@ function render(key, animate = true) {
             <input type="hidden" name="connection_type" value="${r.name}">
             <input type="hidden" name="connection_tension" value="${r.tension}">
             <input type="hidden" name="full_reading" value="${r.truth.replace(/"/g, '&quot;').replace(/\n/g, ' ')}">
-            <input type="hidden" name="soul_origin_invite" value="Discover your Soul Origin: https://starseedsoultype.github.io/starseed/quiz.html">
             <input
               type="email"
               name="email"
@@ -846,8 +845,11 @@ function render(key, animate = true) {
         <div id="next-steps-section" style="margin-top:28px;">
           <p style="font-size:14px;color:rgba(232,224,240,0.7);text-align:center;margin-bottom:20px;line-height:1.7;">Want to understand this connection more deeply, with me?</p>
           <a href="clarity.html?utm_source=quiz&utm_medium=connection_quiz&utm_campaign=clarity" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="if(typeof fbq!=='undefined')fbq('trackCustom','ss_connection_clicked_book'); mcEvent('ss_connection_clicked_calendly'); track('calendly_clicked');">Book a Personal Session ✦ $55</a>
-          <a href="https://twinfrequency.io/library.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);">Explore All 10 Connection Types</a>
-          <a href="https://starseedsoultype.github.io/starseed/bond.html" target="_blank" class="cta-button" style="text-decoration:none;display:block;background:transparent;border:1px solid rgba(180,140,255,0.3);color:rgba(180,140,255,0.8);">Calculate Your Bond ◈</a>
+          <p style="font-size:11px;text-align:center;margin-top:18px;line-height:2;letter-spacing:0.05em;">
+            <a href="https://twinfrequency.io/library.html" target="_blank" style="color:rgba(201,168,76,0.55);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.2);">Explore all 10 connection types</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.starseedsoultype.com/bond.html" target="_blank" style="color:rgba(201,168,76,0.55);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.2);">Calculate your bond</a>
+          </p>
         </div>
 
         <br>
