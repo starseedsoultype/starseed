@@ -66,10 +66,10 @@ h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:22px;margin-
 p{color:var(--text2);font-size:16.5px;margin-bottom:18px}
 p.lead{font-size:18.5px;color:var(--text)}
 p.tight{margin-bottom:10px}
-section{padding:76px 0;border-top:1px solid var(--border)}
+section{padding:62px 0;border-top:1px solid var(--border)}
 section:first-of-type{border-top:none}
 
-.hero{padding:88px 0 66px}
+.hero{padding:76px 0 54px}
 .hero p{max-width:640px}
 .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,2.4vw,23px);
   color:var(--gold);line-height:1.4;margin:20px 0 30px;max-width:620px}
@@ -88,7 +88,10 @@ section:first-of-type{border-top:none}
 .who{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:start}
 .who-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 16%;
   border:1px solid var(--border2);display:block;filter:saturate(.92)}
+.who-photo-main{width:100%;max-width:430px;margin:0 auto 30px;aspect-ratio:4/5;object-position:50% 16%}
 .who-text{min-width:0}
+.clarity-photo{max-width:620px;margin:0 auto 30px}
+.clarity-photo .scene{aspect-ratio:3/1.7}
 @media(max-width:640px){
   .who{grid-template-columns:1fr;gap:24px}
   .who-photo{max-width:200px}
@@ -140,7 +143,7 @@ ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);fo
 .faq-item{padding:26px 0;border-bottom:1px solid var(--border)}
 .faq-item:last-child{border-bottom:none}
 
-.cta{text-align:center;padding:84px 0 96px}
+.cta{text-align:center;padding:70px 0 78px}
 .btn-gold{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0A0A0A;
   font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:400;text-decoration:none;
   padding:19px 46px;transition:opacity .4s}
@@ -203,6 +206,10 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>You do not need another prediction. <em>You need clarity.</em></h2>
+    <div class="clarity-photo">
+      <img src="clarity-notebook.jpg" alt="Alexandra writing in a notebook" class="scene" loading="lazy">
+      <p class="quiet scene-cap">A private space to make sense of what you’ve been carrying alone.</p>
+    </div>
     <p>
       The Clarity Session is a private, one to one reading of the connection between you and
       one specific person.
@@ -256,19 +263,12 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>Meet <em>Alexandra</em></h2>
-    <div class="who">
-      <img src="clarity-portrait.jpg" alt="Alexandra" class="who-photo" loading="lazy">
-      <div class="who-text">
-        <p>I’m Alexandra, creator of the StarSeedSoul relationship reading system.</p>
-        <p>I help women understand the pattern beneath a powerful connection and see what they can choose now.</p>
-        <p style="margin-bottom:0">I do not promise a reunion or tell you what another person secretly feels. I help you see what has been difficult to see alone.</p>
-      </div>
+    <img src="clarity-portrait.jpg" alt="Alexandra" class="who-photo who-photo-main" loading="lazy">
+    <div class="who-text">
+      <p>I’m Alexandra, creator of the StarSeedSoul relationship reading system.</p>
+      <p>I help women understand the pattern beneath a powerful connection and see what they can choose now.</p>
+      <p style="margin-bottom:0">I do not promise a reunion or tell you what another person secretly feels. I help you see what has been difficult to see alone.</p>
     </div>
-  </section>
-
-  <section>
-    <img src="clarity-notebook.jpg" alt="Alexandra writing in a notebook" class="scene" loading="lazy">
-    <p class="quiet scene-cap">A private space to make sense of what you’ve been carrying alone.</p>
   </section>
 
   <section>
@@ -303,36 +303,22 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
     <h2>The part you have not had a safe place to <em>say out loud</em></h2>
     <p>
       You can know that he is not choosing contact and still feel that the connection is not
-      emotionally finished for you.
+      emotionally finished for you. You can understand that waiting hurts and still wake up with
+      the sensation that he is somehow near.
     </p>
     <p>
-      You can understand that waiting is hurting you and still wake up with the sensation that he
-      is somehow near.
+      You can be rational and grounded while carrying intense longing, vivid dreams, synchronicities,
+      or feelings for one person you have never found a safe place to put.
     </p>
-    <p>
-      You can be a rational, grounded woman and still experience intense longing, vivid dreams,
-      intuitive flashes, repeating synchronicities, or sudden emotions that seem to come from
-      nowhere.
-    </p>
-    <p>
-      You can love your husband, your partner, your family, and the life you built, and still
-      carry feelings for one person you have never found a safe place to put.
-    </p>
-    <p>
-      This does not automatically tell you what action to take. It does mean the experience
-      deserves to be examined honestly, without shame and without another empty promise.
-    </p>
-    <p>That is what the Clarity Session is for.</p>
+    <p>This does not tell you what action to take. It means the experience deserves to be examined
+      honestly, without shame and without another empty promise. That is what this session is for.</p>
 
     <div class="voices">
       <div class="voices-track" id="voicesTrack">
         <div class="voice"><q>Six years now, and he is the first thing in my head every morning.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>He sits in the back of my mind like a TV playing in the next room.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>I told one friend once, watched her face change, and kept it to myself after that.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>We talked for a few weeks and I have missed him for years.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>I love my husband, and this is something else I have nowhere to put.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>I moved countries to start over and he came with me.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>Every man I meet gets compared to him and they can feel it.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>It sounds insane out loud, so I keep it to myself.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>I gave up waiting a long time ago and the feeling stayed exactly the same.</q><div class="mark">From a public discussion</div></div>
       </div>
@@ -347,60 +333,19 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
   </section>
 
   <section>
-    <h2>What we <em>explore together</em></h2>
-
-    <div class="block">
-      <h3>Why the connection feels different</h3>
-      <p>We look at what made it feel immediate, familiar, magnetic, or larger than ordinary
-      attraction, even if the relationship was brief or never fully developed.</p>
-    </div>
-
-    <div class="block">
-      <h3>The pattern beneath the push and pull</h3>
-      <p>We examine what happens when you move toward him, what happens when he withdraws, and
-      how separation, silence, ghosting, fear, or mixed signals keep affecting you.</p>
-    </div>
-
-    <div class="block">
-      <h3>What you know, what you feel, and what remains uncertain</h3>
-      <p>We make room for your spiritual understanding while staying honest about observable
-      facts, emotional history, expectations, and unanswered questions. The goal is not to dismiss
-      what you feel or turn every feeling into proof. The goal is to help you see clearly.</p>
-    </div>
-
-    <div class="block" style="margin-bottom:0">
-      <h3>What this connection may be asking of you now</h3>
-      <p>Not how to make him come back. Not how to decode every sign. The more useful question
-      is: what would emotional honesty, self respect, and peace look like for you in this
-      chapter?</p>
-    </div>
-  </section>
-
-  <section>
     <h2>A private reading, <em>not another psychic prediction</em></h2>
     <p>
-      You may have already paid for readings that told you he is coming back, that he is afraid
-      of his feelings, or that you only need to wait a little longer.
+      You may have already received promises that he is coming back or that you only need to wait
+      a little longer. Those messages can create hope, but also more confusion and dependence on
+      signs.
     </p>
     <p>
-      Maybe those messages gave you hope for a moment. Maybe they left you more confused, more
-      dependent on signs, and more afraid to make a decision without checking what the universe
-      supposedly wants.
+      This work is different. We examine the connection as it appears in your life: what happened,
+      what you felt, what repeats, what you know, and what remains uncertain.
     </p>
-    <p>This work is different.</p>
-    <p>
-      I will help you examine the connection as it actually appears in your life: what happened,
-      what you felt, what keeps repeating, what you know, what you do not know, and what you can
-      choose now.
-    </p>
-    <p>
-      You can keep your spiritual understanding of twin flames. You can question it. You can be
-      somewhere in between.
-    </p>
-    <p>
-      You do not have to prove that the connection is real before you are allowed to talk about
-      what it has done to you.
-    </p>
+    <p>You can keep your spiritual understanding, question it, or be somewhere in between. You do
+      not have to prove the connection is real before you are allowed to talk about what it has done
+      to you.</p>
   </section>
 
   <section>
@@ -441,31 +386,11 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>What you <em>receive</em></h2>
-
+    <p class="lead">A private 45-minute video session, a personal 11-page Relationship Reading within 24 hours, and a clearer next step grounded in your own life.</p>
     <div class="card card-gold">
-      <div class="block">
-        <h3>A private 45 minute video session</h3>
-        <p>Focused time for your story, your questions, and the connection you have been trying
-        to understand alone.</p>
-      </div>
-      <div class="block">
-        <h3>An 11 page personal Relationship Reading</h3>
-        <p>A written reading created around your specific connection, rather than a generic
-        template, and delivered within 24 hours.</p>
-      </div>
-      <div class="block">
-        <h3>A clearer next step</h3>
-        <p>You leave with language for what you feel and a more grounded way to think about what
-        belongs to you, what belongs to him, and what you can choose now.</p>
-      </div>
-      <div class="block" style="margin-bottom:0">
-        <h3>A judgment free conversation</h3>
-        <p style="margin-bottom:0">You do not have to defend the word “twin flame,” and you do not
-        have to convince me that he is your destined partner. You can simply tell the truth about
-        what has been happening inside you.</p>
-      </div>
+      <h3>A judgment-free conversation</h3>
+      <p style="margin-bottom:0">You do not have to defend the word “twin flame” or convince me that he is your destined partner. You can simply tell the truth about what has been happening inside you.</p>
     </div>
-
     <div class="facts">
       <div class="fact"><div class="fact-v">$55</div><div class="fact-l">One session</div></div>
       <div class="fact"><div class="fact-v">45 min</div><div class="fact-l">Live on video</div></div>
@@ -537,23 +462,12 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>You do not have to keep <em>carrying this alone</em></h2>
-    <p>Maybe you have spent years trying to make the feeling smaller.</p>
-    <p>
-      Maybe you have searched every version of “runner and chaser,” watched readings late at
-      night, journaled through separation, looked for signs, or convinced yourself that one more
-      month of waiting would finally give you an answer.
-    </p>
-    <p>Maybe the answer is not hidden in the next sign.</p>
-    <p>
-      Maybe it begins with giving the experience a clear name, looking at it without romanticizing
-      or dismissing it, and asking what your life needs from you now.
-    </p>
-    <p>Bring the person you cannot stop thinking about.</p>
-    <p>Bring the story you have never been able to tell cleanly.</p>
-    <p>
-      Bring the part of you that still hopes, the part that is tired of hoping, and the part that
-      simply wants to feel like yourself again.
-    </p>
+    <p>You may have spent years trying to make the feeling smaller—searching for signs, watching
+      readings, journaling through separation, or waiting for one more answer.</p>
+    <p>Maybe clarity begins with giving the experience a name, looking at it without romanticizing
+      or dismissing it, and asking what your life needs from you now.</p>
+    <p>Bring the person you cannot stop thinking about, the story you have never been able to tell
+      cleanly, and the part of you that wants to feel like yourself again.</p>
     <p class="lead">You bring the connection. I bring the map.</p>
   </section>
 
