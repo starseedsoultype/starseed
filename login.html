@@ -335,11 +335,9 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   }
 </style>
 
-<!-- ManyChat Pixel and StarSeed Funnel Tracking -->
-<script src="//widget.manychat.com/3703484_8c327.js" defer="defer"></script>
-<script src="https://mccdn.me/assets/js/widget.js" defer="defer"></script>
-<script src="manychat-tracking.js"></script>
-<!-- End ManyChat Pixel and StarSeed Funnel Tracking -->
+<!-- StarSeed Funnel Tracking -->
+<script src="funnel-tracking.js"></script>
+<!-- End StarSeed Funnel Tracking -->
 </head>
 <body>
 
@@ -440,7 +438,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
 
  sb.auth.onAuthStateChange((event, session) => {
     if (session) {
-      window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+      window.location.href = 'https://www.starseedsoultype.com/onboarding.html'
     } else if (event === 'INITIAL_SESSION') {
       document.getElementById('loader').classList.add('hide')
     }
@@ -524,7 +522,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
     setMsg('Aligning frequencies...')
     const { error } = await sb.auth.signInWithPassword({ email, password })
     if (error) return setMsg(error.message, true)
-    window.location.href = 'https://starseedsoultype.github.io/starseed/onboarding.html'
+    window.location.href = 'https://www.starseedsoultype.com/onboarding.html'
   }
 
   // Forgot Password
@@ -570,7 +568,7 @@ src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
   async function signInGoogle() {
     const { error } = await sb.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: 'https://starseedsoultype.github.io/starseed/onboarding.html' }
+      options: { redirectTo: 'https://www.starseedsoultype.com/onboarding.html' }
     })
     if (error) setMsg(error.message, true)
   }
