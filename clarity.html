@@ -3,6 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- Google Analytics 4 · cookieless -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
+<!-- End Google Analytics 4 -->
+
 <title>Clarity Session · A private reading of your connection · StarSeedSoul</title>
 <meta name="description" content="A private one to one reading of the connection between you and one specific person. 45 minutes live on video with Alexandra, plus a personal 11 page written reading within 24 hours.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,15 +66,17 @@ h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:22px;margin-
 p{color:var(--text2);font-size:16.5px;margin-bottom:18px}
 p.lead{font-size:18.5px;color:var(--text)}
 p.tight{margin-bottom:10px}
-section{padding:76px 0;border-top:1px solid var(--border)}
+section{padding:62px 0;border-top:1px solid var(--border)}
 section:first-of-type{border-top:none}
 
-.hero{padding:88px 0 66px}
+.hero{padding:76px 0 54px}
 .hero p{max-width:640px}
 .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,2.4vw,23px);
   color:var(--gold);line-height:1.4;margin:20px 0 30px;max-width:620px}
 
 .quiet{color:var(--text3);font-size:14.5px;letter-spacing:.2px}
+.quiet a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.35);transition:border-color .3s}
+.quiet a:hover{border-bottom-color:var(--gold)}
 
 .card{background:var(--bg2);border:1px solid var(--border);padding:34px 30px;margin-bottom:18px}
 .card-gold{border-color:var(--border2)}
@@ -57,14 +88,13 @@ section:first-of-type{border-top:none}
 .who{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:start}
 .who-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 16%;
   border:1px solid var(--border2);display:block;filter:saturate(.92)}
+.who-photo-main{width:100%;max-width:430px;margin:0 auto 30px;aspect-ratio:4/5;object-position:50% 16%}
 .who-text{min-width:0}
+.clarity-photo{max-width:620px;margin:0 auto 30px}
+.clarity-photo .scene{aspect-ratio:3/1.7}
 @media(max-width:640px){
   .who{grid-template-columns:1fr;gap:24px}
   .who-photo{max-width:200px}
-  .btn-gold{display:block;width:100%;padding-left:18px;padding-right:18px;text-align:center}
-  .hero{padding-top:64px}
-  section{padding:58px 0}
-  .wrap{padding-left:20px;padding-right:20px}
 }
 
 ol.steps{list-style:none;counter-reset:s}
@@ -113,7 +143,7 @@ ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);fo
 .faq-item{padding:26px 0;border-bottom:1px solid var(--border)}
 .faq-item:last-child{border-bottom:none}
 
-.cta{text-align:center;padding:84px 0 96px}
+.cta{text-align:center;padding:70px 0 78px}
 .btn-gold{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0A0A0A;
   font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:400;text-decoration:none;
   padding:19px 46px;transition:opacity .4s}
@@ -151,7 +181,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
 <nav>
   <a href="index.html" class="nav-logo">Star<span>Seed</span>Soul</a>
-  <a href="#book" class="nav-btn">Book a Session</a>
+  <a href="#book" class="nav-btn" data-cta="nav">Book a Session</a>
 </nav>
 
 <div class="wrap">
@@ -166,14 +196,20 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
     <div style="margin-top:30px">
       <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
-         onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book Your Clarity Session</a>
+         data-cta="hero">Book Your Clarity Session</a>
       <div class="btn-line">45 minutes live on video. Personal 11 page reading within 24 hours. $55.</div>
-      <div class="quiet" style="margin-top:14px">Not sure if this is right for you? DM me CLARITY on Instagram.</div>
+      <div class="quiet" style="margin-top:14px">Not sure if this is right for you?
+        <a href="https://instagram.com/starseedsoul.type" target="_blank" rel="noopener"
+           data-cta="dm-hero">DM me CLARITY on Instagram</a>.</div>
     </div>
   </section>
 
   <section>
     <h2>You do not need another prediction. <em>You need clarity.</em></h2>
+    <div class="clarity-photo">
+      <img src="clarity-notebook.jpg" alt="Alexandra writing in a notebook" class="scene" loading="lazy">
+      <p class="quiet scene-cap">A private space to make sense of what you’ve been carrying alone.</p>
+    </div>
     <p>
       The Clarity Session is a private, one to one reading of the connection between you and
       one specific person.
@@ -191,6 +227,11 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       You receive a compassionate, grounded space to understand what you are experiencing and
       what you can choose now.
     </p>
+    <div style="margin-top:34px">
+      <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
+         data-cta="offer">Book Your Clarity Session</a>
+      <div class="btn-line">45 minute private video session · Personal 11 page written reading within 24 hours · $55</div>
+    </div>
   </section>
 
   <section>
@@ -222,19 +263,12 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>Meet <em>Alexandra</em></h2>
-    <div class="who">
-      <img src="clarity-portrait.jpg" alt="Alexandra" class="who-photo" loading="lazy">
-      <div class="who-text">
-        <p>I’m Alexandra, creator of the StarSeedSoul relationship reading system.</p>
-        <p>I help women understand the pattern beneath a powerful connection and see what they can choose now.</p>
-        <p style="margin-bottom:0">I do not promise a reunion or tell you what another person secretly feels. I help you see what has been difficult to see alone.</p>
-      </div>
+    <img src="clarity-portrait.jpg" alt="Alexandra" class="who-photo who-photo-main" loading="lazy">
+    <div class="who-text">
+      <p>I’m Alexandra, creator of the StarSeedSoul relationship reading system.</p>
+      <p>I help women understand the pattern beneath a powerful connection and see what they can choose now.</p>
+      <p style="margin-bottom:0">I do not promise a reunion or tell you what another person secretly feels. I help you see what has been difficult to see alone.</p>
     </div>
-  </section>
-
-  <section>
-    <img src="clarity-notebook.jpg" alt="Alexandra writing in a notebook" class="scene" loading="lazy">
-    <p class="quiet scene-cap">A private space to make sense of what you’ve been carrying alone.</p>
   </section>
 
   <section>
@@ -250,12 +284,18 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       <li>Do I need to wait for him, release him, contact him, or finally choose myself?</li>
     </ul>
     <p style="margin-top:28px">
-      You may be living a full life while this connection still takes up space inside you. You can
-      look honestly at both sides: what you feel and what is actually happening.
+      You may be living a full life on the outside while this connection continues to take up
+      space inside you. You may be tired of explaining it to people who reduce everything to “If
+      he wanted to be with you, he would.”
     </p>
     <p>
-      You do not have to prove a spiritual explanation before you are allowed to take your
-      experience seriously.
+      That may be a practical truth. But it does not automatically explain the emotional reality
+      you are living with.
+    </p>
+    <p>
+      You are allowed to look at both: what you feel and what is actually happening. You do not
+      have to prove the spiritual explanation before you are allowed to take your experience
+      seriously.
     </p>
   </section>
 
@@ -263,23 +303,22 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
     <h2>The part you have not had a safe place to <em>say out loud</em></h2>
     <p>
       You can know that he is not choosing contact and still feel that the connection is not
-      emotionally finished. You can be grounded, love your current life, and still carry feelings
-      you have never found a safe place to put.
+      emotionally finished for you. You can understand that waiting hurts and still wake up with
+      the sensation that he is somehow near.
     </p>
     <p>
-      This does not tell you what action to take. It means the experience deserves an honest look,
-      without shame and without another empty promise. That is what the Clarity Session is for.
+      You can be rational and grounded while carrying intense longing, vivid dreams, synchronicities,
+      or feelings for one person you have never found a safe place to put.
     </p>
+    <p>This does not tell you what action to take. It means the experience deserves to be examined
+      honestly, without shame and without another empty promise. That is what this session is for.</p>
 
     <div class="voices">
       <div class="voices-track" id="voicesTrack">
         <div class="voice"><q>Six years now, and he is the first thing in my head every morning.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>He sits in the back of my mind like a TV playing in the next room.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>I told one friend once, watched her face change, and kept it to myself after that.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>We talked for a few weeks and I have missed him for years.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>I love my husband, and this is something else I have nowhere to put.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>I moved countries to start over and he came with me.</q><div class="mark">From a public discussion</div></div>
-        <div class="voice"><q>Every man I meet gets compared to him and they can feel it.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>It sounds insane out loud, so I keep it to myself.</q><div class="mark">From a public discussion</div></div>
         <div class="voice"><q>I gave up waiting a long time ago and the feeling stayed exactly the same.</q><div class="mark">From a public discussion</div></div>
       </div>
@@ -294,60 +333,19 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
   </section>
 
   <section>
-    <h2>What we <em>explore together</em></h2>
-
-    <div class="block">
-      <h3>Why the connection feels different</h3>
-      <p>We look at what made it feel immediate, familiar, magnetic, or larger than ordinary
-      attraction, even if the relationship was brief or never fully developed.</p>
-    </div>
-
-    <div class="block">
-      <h3>The pattern beneath the push and pull</h3>
-      <p>We examine what happens when you move toward him, what happens when he withdraws, and
-      how separation, silence, ghosting, fear, or mixed signals keep affecting you.</p>
-    </div>
-
-    <div class="block">
-      <h3>What you know, what you feel, and what remains uncertain</h3>
-      <p>We make room for your spiritual understanding while staying honest about observable
-      facts, emotional history, expectations, and unanswered questions. The goal is not to dismiss
-      what you feel or turn every feeling into proof. The goal is to help you see clearly.</p>
-    </div>
-
-    <div class="block" style="margin-bottom:0">
-      <h3>What this connection may be asking of you now</h3>
-      <p>Not how to make him come back. Not how to decode every sign. The more useful question
-      is: what would emotional honesty, self respect, and peace look like for you in this
-      chapter?</p>
-    </div>
-  </section>
-
-  <section>
     <h2>A private reading, <em>not another psychic prediction</em></h2>
     <p>
-      You may have already paid for readings that told you he is coming back, that he is afraid
-      of his feelings, or that you only need to wait a little longer.
+      You may have already received promises that he is coming back or that you only need to wait
+      a little longer. Those messages can create hope, but also more confusion and dependence on
+      signs.
     </p>
     <p>
-      Maybe those messages gave you hope for a moment. Maybe they left you more confused, more
-      dependent on signs, and more afraid to make a decision without checking what the universe
-      supposedly wants.
+      This work is different. We examine the connection as it appears in your life: what happened,
+      what you felt, what repeats, what you know, and what remains uncertain.
     </p>
-    <p>This work is different.</p>
-    <p>
-      I will help you examine the connection as it actually appears in your life: what happened,
-      what you felt, what keeps repeating, what you know, what you do not know, and what you can
-      choose now.
-    </p>
-    <p>
-      You can keep your spiritual understanding of twin flames. You can question it. You can be
-      somewhere in between.
-    </p>
-    <p>
-      You do not have to prove that the connection is real before you are allowed to talk about
-      what it has done to you.
-    </p>
+    <p>You can keep your spiritual understanding, question it, or be somewhere in between. You do
+      not have to prove the connection is real before you are allowed to talk about what it has done
+      to you.</p>
   </section>
 
   <section>
@@ -388,31 +386,11 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>What you <em>receive</em></h2>
-
+    <p class="lead">A private 45-minute video session, a personal 11-page Relationship Reading within 24 hours, and a clearer next step grounded in your own life.</p>
     <div class="card card-gold">
-      <div class="block">
-        <h3>A private 45 minute video session</h3>
-        <p>Focused time for your story, your questions, and the connection you have been trying
-        to understand alone.</p>
-      </div>
-      <div class="block">
-        <h3>An 11 page personal Relationship Reading</h3>
-        <p>A written reading created around your specific connection, rather than a generic
-        template, and delivered within 24 hours.</p>
-      </div>
-      <div class="block">
-        <h3>A clearer next step</h3>
-        <p>You leave with language for what you feel and a more grounded way to think about what
-        belongs to you, what belongs to him, and what you can choose now.</p>
-      </div>
-      <div class="block" style="margin-bottom:0">
-        <h3>A judgment free conversation</h3>
-        <p style="margin-bottom:0">You do not have to defend the word “twin flame,” and you do not
-        have to convince me that he is your destined partner. You can simply tell the truth about
-        what has been happening inside you.</p>
-      </div>
+      <h3>A judgment-free conversation</h3>
+      <p style="margin-bottom:0">You do not have to defend the word “twin flame” or convince me that he is your destined partner. You can simply tell the truth about what has been happening inside you.</p>
     </div>
-
     <div class="facts">
       <div class="fact"><div class="fact-v">$55</div><div class="fact-l">One session</div></div>
       <div class="fact"><div class="fact-v">45 min</div><div class="fact-l">Live on video</div></div>
@@ -490,23 +468,12 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
   <section>
     <h2>You do not have to keep <em>carrying this alone</em></h2>
-    <p>Maybe you have spent years trying to make the feeling smaller.</p>
-    <p>
-      Maybe you have searched every version of “runner and chaser,” watched readings late at
-      night, journaled through separation, looked for signs, or convinced yourself that one more
-      month of waiting would finally give you an answer.
-    </p>
-    <p>Maybe the answer is not hidden in the next sign.</p>
-    <p>
-      Maybe it begins with giving the experience a clear name, looking at it without romanticizing
-      or dismissing it, and asking what your life needs from you now.
-    </p>
-    <p>Bring the person you cannot stop thinking about.</p>
-    <p>Bring the story you have never been able to tell cleanly.</p>
-    <p>
-      Bring the part of you that still hopes, the part that is tired of hoping, and the part that
-      simply wants to feel like yourself again.
-    </p>
+    <p>You may have spent years trying to make the feeling smaller—searching for signs, watching
+      readings, journaling through separation, or waiting for one more answer.</p>
+    <p>Maybe clarity begins with giving the experience a name, looking at it without romanticizing
+      or dismissing it, and asking what your life needs from you now.</p>
+    <p>Bring the person you cannot stop thinking about, the story you have never been able to tell
+      cleanly, and the part of you that wants to feel like yourself again.</p>
     <p class="lead">You bring the connection. I bring the map.</p>
   </section>
 
@@ -515,7 +482,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
     <h2 style="max-width:560px;margin:0 auto 30px">Book Your Clarity Session <em>· $55</em></h2>
     <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity"
        class="btn-gold"
-       onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book your session</a>
+       data-cta="final-cta">Book your session</a>
     <div class="btn-line">45 minutes live on video · One person, one connection · 11 page personal reading within 24 hours</div>
   </section>
 
@@ -531,7 +498,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       You are allowed to ask for clarity before you decide what this connection means.
     </p>
     <a href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" class="btn-gold"
-       onclick="if(typeof fbq!=='undefined')fbq('track','Schedule')">Book Your Private Clarity Session</a>
+       data-cta="final-note">Book Your Private Clarity Session</a>
   </section>
 
 </div>
@@ -566,10 +533,80 @@ function slideVoices(dir){
 }
 </script>
 
+<!-- Funnel tracking begin -->
+<script>
+(function(){
+  var CALENDLY = 'https://calendly.com/alexandrapsy/alexandrapsy_clarity';
+
+  /* 1. Read the campaign tags this visitor arrived with. */
+  var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var incoming = new URLSearchParams(window.location.search);
+  var carry = keys.filter(function(k){ return incoming.get(k); })
+                  .map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(incoming.get(k)); })
+                  .join('&');
+
+  function withTags(url){
+    if(!carry) return url;
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + carry;
+  }
+
+  /* 2. Carry them into every booking link, so the source lands in the Calendly record. */
+  var links = document.querySelectorAll('a[href*="calendly.com"]');
+  for(var i = 0; i < links.length; i++){
+    links[i].href = withTags(links[i].getAttribute('href'));
+  }
+  window.__clarityBookingUrl = withTags(CALENDLY);
+
+  function send(name, params){
+    if(typeof gtag === 'function') gtag('event', name, params || {});
+  }
+
+  /* 3. One handler for every call to action on the page. */
+  document.addEventListener('click', function(e){
+    if(!e.target || !e.target.closest) return;
+
+    var cta = e.target.closest('[data-cta]');
+    if(cta){
+      send('cta_click', {
+        cta_location: cta.getAttribute('data-cta'),
+        link_url: cta.getAttribute('href') || ''
+      });
+    }
+
+    /* Open booking in a popup so the visitor stays on the page and the
+       Calendly steps below stay measurable. Plain navigation if the widget
+       has not loaded yet. */
+    var booking = e.target.closest('a[href*="calendly.com"]');
+    if(booking){
+      if(typeof fbq === 'function') fbq('trackCustom', 'ss_clicked_book', { page: '/clarity' });
+      if(typeof Calendly !== 'undefined' && Calendly.initPopupWidget){
+        e.preventDefault();
+        Calendly.initPopupWidget({ url: booking.href });
+      }
+    }
+  });
+
+  /* 4. The three Calendly steps, reported by the widget itself. */
+  var steps = {
+    'calendly.profile_page_viewed': 'calendly_opened',
+    'calendly.date_and_time_selected': 'calendly_time_selected',
+    'calendly.event_scheduled': 'calendly_scheduled'
+  };
+  window.addEventListener('message', function(e){
+    if(!e.data || typeof e.data.event !== 'string') return;
+    var name = steps[e.data.event];
+    if(!name) return;
+    send(name);
+    if(name === 'calendly_scheduled' && typeof fbq === 'function') fbq('track', 'Schedule');
+  });
+})();
+</script>
+<!-- Funnel tracking end -->
+
 <!-- Calendly badge widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Book your session', color: '#C9A96E', textColor: '#0A0A0A', branding: false }); }</script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: window.__clarityBookingUrl || 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Book your session', color: '#C9A96E', textColor: '#0A0A0A', branding: false }); }</script>
 <!-- Calendly badge widget end -->
 
 </body>
