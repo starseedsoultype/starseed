@@ -236,11 +236,21 @@ footer .logo span{color:var(--gold)}
 
 <script>
 // The deck: every picture inside the "mak" folder.
-// To add a card, upload it to mak/ and add its name here.
-const CARDS = [
-  'mak/01.jpeg', 'mak/02.jpeg', 'mak/03.jpeg', 'mak/04.jpeg', 'mak/05.jpeg',
-  'mak/06.jpeg', 'mak/07.jpeg', 'mak/08.jpeg', 'mak/09.jpeg', 'mak/10.jpeg'
-];
+// The page asks GitHub for the folder contents, so a new upload joins the deck by itself.
+// If GitHub does not answer, cards 01 to 40 are used.
+const CARDS = [];
+for (let n = 1; n <= 40; n++) CARDS.push('mak/' + String(n).padStart(2, '0') + '.jpeg');
+
+fetch('https://api.github.com/repos/starseedsoultype/starseed/contents/mak')
+  .then(r => r.ok ? r.json() : [])
+  .then(files => {
+    const found = files
+      .filter(f => f.type === 'file' && /\.(jpe?g|png|webp)$/i.test(f.name))
+      .map(f => 'mak/' + f.name);
+    if (found.length) CARDS.splice(0, CARDS.length, ...found);
+  })
+  .catch(() => {});
+
 const FAN_SIZE = 7;
 
 // Page text in both languages. The page opens in the language of the device.
@@ -362,10 +372,23 @@ function randomCard() {
   return src;
 }
 
+// Loads a random card; if a picture is missing, it leaves the deck and another is drawn.
+function loadCard(tries = 5) {
+  return new Promise(resolve => {
+    const src = randomCard();
+    const img = new Image();
+    img.onload = () => resolve(src);
+    img.onerror = () => {
+      const i = CARDS.indexOf(src);
+      if (i > -1 && CARDS.length > 1) CARDS.splice(i, 1);
+      tries > 1 ? loadCard(tries - 1).then(resolve) : resolve(src);
+    };
+    img.src = src;
+  });
+}
+
 function pick(card) {
-  const src = randomCard();
-  const img = new Image();
-  img.src = src;
+  const ready = loadCard();
 
   card.classList.add('chosen');
   fan.classList.add('picked');
@@ -375,14 +398,15 @@ function pick(card) {
 
   setTimeout(() => {
     fan.classList.add('gone');
-    faceImg.src = src;
-    faceBlur.style.backgroundImage = 'url(' + src + ')';
-    document.getElementById('save').href = src;
     stage.classList.add('on');
     stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const flip = () => setTimeout(() => big.classList.add('flip'), 350);
-    img.complete ? flip() : (img.onload = img.onerror = flip);
-    setTimeout(() => { reflect.classList.add('on'); showQuestion(0); }, 1700);
+    ready.then(src => {
+      faceImg.src = src;
+      faceBlur.style.backgroundImage = 'url(' + src + ')';
+      document.getElementById('save').href = src;
+      setTimeout(() => big.classList.add('flip'), 350);
+      setTimeout(() => { reflect.classList.add('on'); showQuestion(0); }, 1700);
+    });
   }, 650);
 
   if (window.gtag) gtag('event', 'card_draw');
