@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- Google Analytics 4 · cookieless -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
+<!-- End Google Analytics 4 -->
+
+<title>Metaphor Cards · Draw a card for your question · StarSeedSoul</title>
+<meta name="description" content="Hold a question in mind, draw one metaphor card and let the image answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A; --bg2:#111111; --bg3:#161616;
+  --border:rgba(201,169,110,0.08); --border2:rgba(201,169,110,0.18);
+  --text:#E8E4DF; --text2:#C9C1B8; --text3:#7A7672; --text4:#5F5A55;
+  --gold:#C9A96E; --gold2:#E8D5A8;
+  --card-w:min(300px,74vw);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 38%,rgba(201,169,110,0.07),transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 16px;text-align:center}
+
+nav{position:sticky;top:0;z-index:50;display:flex;justify-content:center;align-items:center;
+  padding:18px 24px;background:rgba(10,10,10,0.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:1px;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+
+.kicker{font-size:10px;letter-spacing:3.4px;text-transform:uppercase;color:var(--text3);margin-bottom:18px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(34px,7vw,52px);line-height:1.12;letter-spacing:.5px}
+h1 em{font-style:italic;color:var(--gold)}
+.sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--text2);margin-top:12px}
+header{padding:44px 0 26px}
+
+/* question */
+.ask{margin:0 auto 10px;max-width:420px}
+.ask input{width:100%;background:transparent;border:0;border-bottom:1px solid var(--border2);
+  color:var(--text);font-family:'Cormorant Garamond',serif;font-size:21px;text-align:center;padding:10px 4px;outline:none;transition:border-color .4s}
+.ask input::placeholder{color:var(--text4);font-style:italic}
+.ask input:focus{border-bottom-color:var(--gold)}
+.ask small{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text4);margin-top:10px}
+
+/* fan of face-down cards */
+.hint{font-size:13px;color:var(--text3);margin:26px 0 0;letter-spacing:.3px}
+.fan{position:relative;height:calc(var(--fan-w) * 1.5 + 70px);--fan-w:min(130px,28vw);margin:0 auto 40px;max-width:560px}
+.fan .card{position:absolute;left:50%;bottom:10px;width:var(--fan-w);aspect-ratio:2/3;cursor:pointer;border:0;background:none;padding:0;
+  transform-origin:50% 120%;
+  transform:translateX(-50%) rotate(var(--r)) translateY(0);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .5s,filter .45s;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.6))}
+.fan .card:hover,.fan .card:focus-visible{transform:translateX(-50%) rotate(var(--r)) translateY(-18px);filter:drop-shadow(0 14px 26px rgba(201,169,110,.22));outline:none}
+.fan.picked .card{opacity:0;pointer-events:none}
+.fan.picked .card.chosen{opacity:1;transform:translateX(-50%) rotate(0) translateY(-40px) scale(1.08)}
+.fan.gone{display:none}
+.card svg{width:100%;height:100%;display:block;border-radius:10px}
+
+/* the drawn card */
+.stage{display:none;perspective:1400px;margin:10px auto 0;scroll-margin-top:84px}
+.stage.on{display:block}
+.your-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--text2);margin-bottom:22px;min-height:1px}
+.big{position:relative;width:var(--card-w);aspect-ratio:2/3;margin:0 auto;transform-style:preserve-3d;
+  transition:transform 1.1s cubic-bezier(.3,.7,.2,1)}
+.big.flip{transform:rotateY(180deg)}
+.big .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.7),0 0 60px rgba(201,169,110,.08)}
+.big .face{transform:rotateY(180deg);background:var(--bg2)}
+.face .blur{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(24px) brightness(.45);transform:scale(1.1)}
+.face img{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);object-fit:contain;border-radius:6px}
+.face::after{content:"";position:absolute;inset:7px;border:1px solid rgba(201,169,110,.45);border-radius:10px;pointer-events:none}
+
+/* reflection */
+.reflect{max-width:440px;margin:42px auto 0;opacity:0;transition:opacity .8s}
+.reflect.on{opacity:1}
+.qs{list-style:none}
+.qs li{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.35;color:var(--text);
+  margin-bottom:18px;display:none;animation:rise .7s ease both}
+.qs li.seen{display:block;color:var(--text3);font-size:19px}
+.qs li.now{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.btn{display:inline-block;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;background:transparent;border:1px solid rgba(201,169,110,0.3);
+  padding:13px 24px;cursor:pointer;transition:all .4s;margin:6px}
+.btn:hover{background:rgba(201,169,110,0.07);border-color:var(--gold)}
+.btn.solid{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.btn.solid:hover{background:var(--gold2)}
+
+.closing{display:none;margin-top:10px}
+.closing.on{display:block;animation:rise .8s ease both}
+.mirror{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--gold2);margin:8px 0 26px}
+
+.next-step{margin:64px auto 0;padding:40px 0 0;border-top:1px solid var(--border)}
+.next-step p{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.4;color:var(--text2);margin-bottom:20px}
+
+footer{position:relative;z-index:1;text-align:center;padding:70px 16px 40px;color:var(--text4);font-size:11px;letter-spacing:.4px}
+footer .logo{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text3);margin-bottom:6px}
+footer .logo span{color:var(--gold)}
+
+@media (prefers-reduced-motion:reduce){
+  .big,.fan .card{transition:none}
+  .qs li,.closing.on{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Card back, drawn once and reused by every card -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="backBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#17130d"/>
+      <stop offset=".5" stop-color="#0d0c0a"/>
+      <stop offset="1" stop-color="#17130d"/>
+    </linearGradient>
+    <radialGradient id="backGlow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#C9A96E" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#C9A96E" stop-opacity="0"/>
+    </radialGradient>
+    <symbol id="cardBack" viewBox="0 0 200 300">
+      <rect width="200" height="300" rx="14" fill="url(#backBg)"/>
+      <rect x="8" y="8" width="184" height="284" rx="9" fill="none" stroke="#C9A96E" stroke-opacity=".55" stroke-width="1"/>
+      <rect x="14" y="14" width="172" height="272" rx="6" fill="none" stroke="#C9A96E" stroke-opacity=".22" stroke-width=".6"/>
+      <circle cx="100" cy="150" r="70" fill="url(#backGlow)"/>
+      <g fill="none" stroke="#C9A96E" stroke-width=".8">
+        <circle cx="100" cy="150" r="52" stroke-opacity=".5"/>
+        <circle cx="100" cy="150" r="40" stroke-opacity=".3" stroke-dasharray="1.5 3"/>
+        <circle cx="100" cy="150" r="24" stroke-opacity=".6"/>
+        <rect x="75" y="125" width="50" height="50" stroke-opacity=".45"/>
+        <rect x="75" y="125" width="50" height="50" stroke-opacity=".45" transform="rotate(45 100 150)"/>
+        <line x1="100" y1="84" x2="100" y2="216" stroke-opacity=".25"/>
+        <line x1="34" y1="150" x2="166" y2="150" stroke-opacity=".25"/>
+      </g>
+      <path d="M100 136 L103 147 L114 150 L103 153 L100 164 L97 153 L86 150 L97 147 Z" fill="#E8D5A8" fill-opacity=".9"/>
+      <g fill="#C9A96E">
+        <path d="M100 30 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill-opacity=".7"/>
+        <path d="M100 254 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill-opacity=".7"/>
+        <circle cx="42" cy="58" r=".9" opacity=".7"/><circle cx="158" cy="72" r="1.1" opacity=".6"/>
+        <circle cx="54" cy="232" r="1" opacity=".6"/><circle cx="150" cy="240" r=".8" opacity=".7"/>
+        <circle cx="36" cy="120" r=".7" opacity=".5"/><circle cx="166" cy="186" r=".7" opacity=".5"/>
+        <circle cx="70" cy="80" r=".6" opacity=".5"/><circle cx="132" cy="220" r=".6" opacity=".5"/>
+        <circle cx="160" cy="118" r=".6" opacity=".4"/><circle cx="40" cy="190" r=".6" opacity=".4"/>
+      </g>
+      <g fill="none" stroke="#C9A96E" stroke-opacity=".4" stroke-width=".7">
+        <path d="M22 22 h14 M22 22 v14"/><path d="M178 22 h-14 M178 22 v14"/>
+        <path d="M22 278 h14 M22 278 v-14"/><path d="M178 278 h-14 M178 278 v-14"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<nav>
+  <a href="index.html" class="nav-logo">Star<span>Seed</span>Soul</a>
+</nav>
+
+<main class="wrap">
+
+  <header>
+    <div class="kicker">Metaphor Cards</div>
+    <h1>Hold a question.<br><em>Draw a card.</em></h1>
+    <p class="sub">Let the image answer.</p>
+  </header>
+
+  <div class="ask">
+    <input id="question" type="text" maxlength="140" placeholder="What is on your mind right now?" autocomplete="off">
+    <small>Stays on your screen only</small>
+  </div>
+
+  <p class="hint" id="hint">Take a breath. Choose the card your hand is drawn to.</p>
+  <div class="fan" id="fan"></div>
+
+  <section class="stage" id="stage">
+    <p class="your-q" id="yourQ"></p>
+    <div class="big" id="big">
+      <div class="side back"><svg><use href="#cardBack"/></svg></div>
+      <div class="side face"><div class="blur" id="faceBlur"></div><img id="faceImg" alt="Your metaphor card"></div>
+    </div>
+
+    <div class="reflect" id="reflect">
+      <ol class="qs" id="qs">
+        <li>What do you see first?</li>
+        <li>Where are you in this picture?</li>
+        <li>What do you feel as you look at it?</li>
+        <li>What is the image telling you?</li>
+        <li>What is one small step it suggests?</li>
+      </ol>
+      <button class="btn" id="nextQ">Next question</button>
+
+      <div class="closing" id="closing">
+        <p class="mirror">The card holds a mirror. The meaning comes from you.</p>
+        <button class="btn" id="again">Draw another card</button>
+        <a class="btn" id="save" download>Save this card</a>
+
+        <div class="next-step">
+          <p>When your question is about one person,<br>go deeper together with me.</p>
+          <a class="btn solid" href="clarity.html">Clarity Session</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="logo">Star<span>Seed</span>Soul</div>
+  © 2026 Alexandra Olesia Rinatovna Popova · StarSeedSoul Project
+</footer>
+
+<script>
+// The deck: every picture inside the "mak" folder.
+// To add a card, upload it to mak/ and add its name here.
+const CARDS = [
+  'mak/01.jpeg', 'mak/02.jpeg', 'mak/03.jpeg', 'mak/04.jpeg', 'mak/05.jpeg',
+  'mak/06.jpeg', 'mak/07.jpeg', 'mak/08.jpeg', 'mak/09.jpeg', 'mak/10.jpeg'
+];
+const FAN_SIZE = 7;
+
+const fan = document.getElementById('fan');
+const stage = document.getElementById('stage');
+const big = document.getElementById('big');
+const hint = document.getElementById('hint');
+const faceImg = document.getElementById('faceImg');
+const faceBlur = document.getElementById('faceBlur');
+const reflect = document.getElementById('reflect');
+const questions = [...document.querySelectorAll('#qs li')];
+const nextQ = document.getElementById('nextQ');
+const closing = document.getElementById('closing');
+const question = document.getElementById('question');
+let lastCard = null;
+let step = 0;
+
+function layFan() {
+  fan.innerHTML = '';
+  fan.className = 'fan';
+  const narrow = window.innerWidth < 480;
+  const spread = narrow ? 11 : 9;   // degrees between cards
+  for (let i = 0; i < FAN_SIZE; i++) {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.setAttribute('aria-label', 'Choose card ' + (i + 1));
+    card.style.setProperty('--r', ((i - (FAN_SIZE - 1) / 2) * spread) + 'deg');
+    card.innerHTML = '<svg><use href="#cardBack"/></svg>';
+    card.addEventListener('click', () => pick(card));
+    fan.appendChild(card);
+  }
+}
+
+function randomCard() {
+  let src;
+  do { src = CARDS[Math.floor(Math.random() * CARDS.length)]; }
+  while (CARDS.length > 1 && src === lastCard);
+  lastCard = src;
+  return src;
+}
+
+function pick(card) {
+  const src = randomCard();
+  const img = new Image();
+  img.src = src;
+
+  card.classList.add('chosen');
+  fan.classList.add('picked');
+  hint.style.visibility = 'hidden';
+
+  const q = question.value.trim();
+  document.getElementById('yourQ').textContent = q ? '“' + q + '”' : '';
+
+  setTimeout(() => {
+    fan.classList.add('gone');
+    faceImg.src = src;
+    faceBlur.style.backgroundImage = 'url(' + src + ')';
+    document.getElementById('save').href = src;
+    stage.classList.add('on');
+    stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const flip = () => setTimeout(() => big.classList.add('flip'), 350);
+    img.complete ? flip() : (img.onload = img.onerror = flip);
+    setTimeout(() => { reflect.classList.add('on'); showQuestion(0); }, 1700);
+  }, 650);
+
+  if (window.gtag) gtag('event', 'card_draw');
+}
+
+function showQuestion(n) {
+  step = n;
+  questions.forEach((li, i) => {
+    li.className = i < n ? 'seen' : i === n ? 'now' : '';
+  });
+  if (n === questions.length - 1) {
+    nextQ.style.display = 'none';
+    closing.classList.add('on');
+  }
+}
+
+nextQ.addEventListener('click', () => showQuestion(step + 1));
+
+document.getElementById('again').addEventListener('click', () => {
+  big.classList.remove('flip');
+  reflect.classList.remove('on');
+  closing.classList.remove('on');
+  nextQ.style.display = '';
+  questions.forEach(li => li.className = '');
+  stage.classList.remove('on');
+  hint.style.visibility = '';
+  layFan();
+  question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+question.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { question.blur(); hint.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+});
+
+layFan();
+</script>
+</body>
+</html>
