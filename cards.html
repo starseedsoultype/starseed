@@ -117,6 +117,9 @@ header{padding:44px 0 26px}
 .btn.solid:hover{background:var(--gold2)}
 
 .closing{display:none;margin-top:10px}
+.redraw{background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text3);padding:10px;margin-top:20px;opacity:0;pointer-events:none;transition:opacity .6s,color .3s}
+.redraw.on{opacity:1;pointer-events:auto}
+.redraw:hover{color:var(--gold)}
 .closing.on{display:block;animation:rise .8s ease both}
 .mirror{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--gold2);margin:8px 0 26px}
 
@@ -203,6 +206,7 @@ footer .logo span{color:var(--gold)}
       <div class="side back"><svg><use href="#cardBack"/></svg></div>
       <div class="side face"><div class="blur" id="faceBlur"></div><img id="faceImg" alt="Your metaphor card"></div>
     </div>
+    <button class="redraw" id="redraw" data-t="redraw">Choose another card</button>
 
     <div class="reflect" id="reflect">
       <ol class="qs" id="qs">
@@ -269,6 +273,7 @@ const TEXT = {
     mirror: 'The card holds a mirror. The meaning comes from you.',
     again: 'Draw another card',
     save: 'Save this card',
+    redraw: 'Choose another card',
     cta: 'When your question is about one person,<br>go deeper together with me.',
     ctaBtn: 'Clarity Session',
     ctaHref: 'clarity.html',
@@ -291,6 +296,7 @@ const TEXT = {
     mirror: 'Карта держит зеркало. Смысл рождается в вас.',
     again: 'Вытянуть ещё карту',
     save: 'Сохранить карту',
+    redraw: 'Выбрать другую карту',
     cta: 'Когда ваш вопрос касается одного человека,<br>давайте посмотрим глубже вместе.',
     ctaBtn: 'Личная сессия',
     ctaHref: 'ru.html#session',
@@ -405,6 +411,7 @@ function pick(card) {
       faceBlur.style.backgroundImage = 'url(' + src + ')';
       document.getElementById('save').href = src;
       setTimeout(() => big.classList.add('flip'), 350);
+      setTimeout(() => redrawBtn.classList.add('on'), 1300);
       setTimeout(() => { reflect.classList.add('on'); showQuestion(0); }, 1700);
     });
   }, 650);
@@ -425,8 +432,12 @@ function showQuestion(n) {
 
 nextQ.addEventListener('click', () => showQuestion(step + 1));
 
-document.getElementById('again').addEventListener('click', () => {
+const redrawBtn = document.getElementById('redraw');
+
+// Back to the fan at any moment, with the question kept.
+function drawAgain() {
   big.classList.remove('flip');
+  redrawBtn.classList.remove('on');
   reflect.classList.remove('on');
   closing.classList.remove('on');
   nextQ.style.display = '';
@@ -434,7 +445,10 @@ document.getElementById('again').addEventListener('click', () => {
   stage.classList.remove('on');
   layFan();
   question.scrollIntoView({ behavior: 'smooth', block: 'center' });
-});
+}
+
+document.getElementById('again').addEventListener('click', drawAgain);
+redrawBtn.addEventListener('click', drawAgain);
 
 question.addEventListener('keydown', e => {
   if (e.key === 'Enter') { question.blur(); fan.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
