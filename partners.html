@@ -61,6 +61,48 @@ p { font-size: 14px; color: var(--text3); }
 .dots button { width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0; background: var(--border2); cursor: pointer; }
 .dots button.on { background: #FF7A1F; }
 @media (min-width: 700px) { .carousel { margin: 0; } .slide { flex-basis: 260px; } }
+.flip { all: unset; display: block; position: relative; width: 100%; aspect-ratio: 800 / 1131; perspective: 1200px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.flip:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform 0.7s cubic-bezier(.2,.7,.2,1); }
+.face.front img { width: 100%; height: 100%; object-fit: cover; }
+.face.back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; padding: 28px 22px; text-align: center;
+  background: radial-gradient(120% 80% at 50% 30%, #1d1630 0%, #0b0913 70%); border: 1px solid rgba(201,169,110,0.35); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.flip.on .front { transform: rotateY(-180deg); }
+.flip.on .back { transform: rotateY(0deg); }
+.back-eye { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+.back-quote { font-family: var(--serif); font-size: 22px; line-height: 1.45; color: var(--text); }
+.back-hint { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text4); }
+.love-slide { position: relative; }
+.love-slide img { aspect-ratio: 900 / 1350; object-fit: cover; }
+.love-over { position: absolute; left: 1px; right: 1px; bottom: 1px; top: 40%; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 20px 18px;
+  background: linear-gradient(to bottom, transparent, rgba(5,4,10,0.92) 45%); text-align: left; }
+.love-quote { font-family: var(--serif); font-size: 17px; line-height: 1.5; color: var(--text); }
+.love-name { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+.love-end { display: flex; }
+.love-end-in { width: 100%; aspect-ratio: 900 / 1350; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; padding: 24px; text-align: center;
+  border: 1px solid rgba(201,169,110,0.35); background: radial-gradient(120% 80% at 50% 30%, #1d1630 0%, #0b0913 70%); }
+.love-end-title { font-family: var(--serif); font-size: 28px; color: var(--text); }
+.love-end-text { font-size: 13px; color: var(--text3); line-height: 1.7; }
+.love-end .btn { padding: 14px 18px; letter-spacing: 2px; font-size: 10px; }
+.story-sec { text-align: center; }
+.story-wrap { display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+.story-controls { flex: 1 1 220px; max-width: 260px; text-align: left; }
+.story-pick { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 18px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); }
+.story-pick .car-btn { position: static; transform: none; }
+.phone { position: relative; width: 250px; aspect-ratio: 9 / 16; border-radius: 30px; overflow: hidden; border: 6px solid #1c1c1c; box-shadow: 0 0 0 1px rgba(201,169,110,0.25), 0 20px 60px rgba(0,0,0,0.7); background: #000; text-align: left; }
+.phone #story-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+.phone::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 38%, rgba(0,0,0,0.88) 70%); }
+.phone-top { position: absolute; top: 10px; left: 12px; right: 12px; z-index: 2; display: flex; align-items: center; gap: 8px; font-size: 11px; color: #fff; font-weight: 400; flex-wrap: wrap; }
+.ph-bar { flex-basis: 100%; height: 2px; background: rgba(255,255,255,0.8); border-radius: 2px; margin-bottom: 6px; }
+.ph-av { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #FF7A1F, #C9A96E); }
+.phone-body { position: absolute; left: 14px; right: 14px; bottom: 16px; z-index: 2; display: flex; flex-direction: column; gap: 9px; color: #fff; }
+.ph-title { font-family: var(--serif); font-size: 26px; line-height: 1.1; }
+.ph-sub { font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+.ph-link { align-self: flex-start; background: #fff; color: #1a5bd8; font-size: 9px; font-weight: 400; letter-spacing: 0.5px; padding: 7px 11px; border-radius: 8px; }
+.ph-code { font-size: 11px; line-height: 1.5; background: rgba(255,122,31,0.92); color: #140A02; padding: 8px 10px; border-radius: 8px; }
+.ph-code b { font-weight: 400; letter-spacing: 1px; font-family: ui-monospace, Menlo, monospace; }
+.ph-disc { font-size: 9px; color: rgba(255,255,255,0.75); }
+@media (prefers-reduced-motion: reduce) { .face { transition: none; } }
 .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .try { text-align: center; }
 .try .lead { margin-bottom: 16px; }
@@ -211,22 +253,71 @@ footer a { color: var(--text4); }
   <section class="gallery">
     <div class="eyebrow">What your audience receives</div>
     <h2>A reading they keep</h2>
-    <p class="lead">Every origin has its own Full Origin Reading: 11 pages of portrait, art and practice. Here are six of the twenty four.</p>
-    <div class="carousel">
+    <p class="lead">Every origin has its own Full Origin Reading: 11 pages of portrait, art and practice. Here are six of the twenty four. Tap a cover to read one line from inside.</p>
+    <div class="carousel" data-carousel>
       <button class="car-btn car-prev" type="button" aria-label="Previous">‹</button>
-      <div class="track" id="car-track">
-        <figure class="slide"><img src="partners-img/andromedan.webp" alt="Andromedan Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Andromedan</figcaption></figure>
-        <figure class="slide"><img src="partners-img/pleiadian.webp" alt="Pleiadian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Pleiadian</figcaption></figure>
-        <figure class="slide"><img src="partners-img/lyran.webp" alt="Lyrian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Lyrian</figcaption></figure>
-        <figure class="slide"><img src="partners-img/siriusian.webp" alt="Siriusian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Siriusian</figcaption></figure>
-        <figure class="slide"><img src="partners-img/arcturian.webp" alt="Arcturian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Arcturian</figcaption></figure>
-        <figure class="slide"><img src="partners-img/atlantean.webp" alt="Atlantean Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Atlantean</figcaption></figure>
+      <div class="track">
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Andromedan cover"><span class="face front"><img src="partners-img/andromedan.webp" alt="Andromedan Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Andromedan reading</span><span class="back-quote">You are a galaxy learning to live on an ordinary Tuesday.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Andromedan</figcaption></figure>
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Pleiadian cover"><span class="face front"><img src="partners-img/pleiadian.webp" alt="Pleiadian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Pleiadian reading</span><span class="back-quote">You are the bridge that keeps the room from breaking.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Pleiadian</figcaption></figure>
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Lyrian cover"><span class="face front"><img src="partners-img/lyran.webp" alt="Lyrian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Lyrian reading</span><span class="back-quote">You love people into becoming who they already are.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Lyrian</figcaption></figure>
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Siriusian cover"><span class="face front"><img src="partners-img/siriusian.webp" alt="Siriusian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Siriusian reading</span><span class="back-quote">You are the place other people come home to.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Siriusian</figcaption></figure>
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Arcturian cover"><span class="face front"><img src="partners-img/arcturian.webp" alt="Arcturian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Arcturian reading</span><span class="back-quote">You dream it and you can build it, which is rarer than you think.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Arcturian</figcaption></figure>
+        <figure class="slide"><button class="flip" type="button" aria-label="Turn the Atlantean cover"><span class="face front"><img src="partners-img/atlantean.webp" alt="Atlantean Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"></span><span class="face back"><span class="back-eye">From the Atlantean reading</span><span class="back-quote">You build the kind of order people actually want to live inside.</span><span class="back-hint">Tap to turn back</span></span></button><figcaption>Atlantean</figcaption></figure>
         <figure class="slide"><img src="partners-img/inside-art.webp" alt="Full page art inside the reading" loading="lazy" width="800" height="1131"><figcaption>Full page art inside</figcaption></figure>
         <figure class="slide"><img src="partners-img/inside-text.webp" alt="First page of a Full Origin Reading" loading="lazy" width="800" height="1131"><figcaption>11 pages, written for one origin</figcaption></figure>
       </div>
       <button class="car-btn car-next" type="button" aria-label="Next">›</button>
     </div>
-    <div class="dots" id="car-dots"></div>
+    <div class="dots"></div>
+  </section>
+
+  <section class="gallery">
+    <div class="eyebrow">Love &amp; connection</div>
+    <h2>How each origin loves</h2>
+    <p class="lead">Every reading has a chapter on love. One line from six more origins.</p>
+    <div class="carousel" data-carousel>
+      <button class="car-btn car-prev" type="button" aria-label="Previous">‹</button>
+      <div class="track">
+        <figure class="slide love-slide"><img src="partners-img/love-epsilon.webp" alt="Epsilon Eridan relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that leads with the heart and pulls the warmth out of your careful hands.</span><span class="love-name">Epsilon Eridan</span></span></figure>
+        <figure class="slide love-slide"><img src="partners-img/love-polarisian.webp" alt="Polarisian relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that reaches you on the day you built nothing, and reminds you that you were never only your output.</span><span class="love-name">Polarisian</span></span></figure>
+        <figure class="slide love-slide"><img src="partners-img/love-egyptian.webp" alt="Egyptian relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that meets you off the platform, on a plain evening with no lesson in it, and finds you worth staying for anyway.</span><span class="love-name">Egyptian</span></span></figure>
+        <figure class="slide love-slide"><img src="partners-img/love-blueavian.webp" alt="Blue Avian relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that fills your cup without being asked, and will not let you disappear into the giving.</span><span class="love-name">Blue Avian</span></span></figure>
+        <figure class="slide love-slide"><img src="partners-img/love-taucetian.webp" alt="Tau Cetian relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that seats you at the head of the table for once, and insists you want out loud.</span><span class="love-name">Tau Cetian</span></span></figure>
+        <figure class="slide love-slide"><img src="partners-img/love-aldebaran.webp" alt="Aldebaran relationships art" loading="lazy" width="900" height="1350"><span class="love-over"><span class="love-quote">The love that holds you is the one that coaxes the warmth into the open, and finds the deep feeling under the steady surface.</span><span class="love-name">Aldebaran</span></span></figure>
+        <figure class="slide love-slide love-end"><span class="love-end-in"><span class="back-eye">The next question</span><span class="love-end-title">Who completes you?</span><span class="love-end-text">The Bond Calculator reads the connection between any two origins: the pull, the friction and the gift each one carries for the other.</span><a class="btn btn-orange" href="bond.html" target="_blank" rel="noopener">Try the Bond Calculator</a></span></figure>
+      </div>
+      <button class="car-btn car-next" type="button" aria-label="Next">›</button>
+    </div>
+    <div class="dots"></div>
+  </section>
+
+  <section class="story-sec">
+    <div class="eyebrow">See your post</div>
+    <h2>Your story, ready in seconds</h2>
+    <p class="lead">Type your name and watch your own story appear, with your personal code and the disclosure line already in place.</p>
+    <div class="story-wrap">
+      <div class="story-controls">
+        <label for="story-name">Your name</label>
+        <input id="story-name" maxlength="20" placeholder="Anna" autocomplete="off">
+        <p class="form-note" style="margin-top:12px;">Your code: <span class="code" id="story-code-out">YOURNAME10</span></p>
+        <div class="story-pick">
+          <button type="button" class="car-btn story-prev" aria-label="Previous origin">‹</button>
+          <span id="story-type">Andromedan</span>
+          <button type="button" class="car-btn story-next" aria-label="Next origin">›</button>
+        </div>
+      </div>
+      <div class="phone" aria-label="Story preview">
+        <img id="story-bg" src="partners-img/andromedan.webp" alt="" width="800" height="1131">
+        <div class="phone-top"><span class="ph-bar"></span><span class="ph-av"></span><span id="story-handle">@yourname</span></div>
+        <div class="phone-body">
+          <div class="ph-title">Which origin<br>are you?</div>
+          <div class="ph-sub">7 questions · 3 minutes · free</div>
+          <div class="ph-link">🔗 STARSEEDSOULTYPE.COM/QUIZ</div>
+          <div class="ph-code">Code <b id="story-code">YOURNAME10</b><br>10% off your Full Origin Reading</div>
+          <div class="ph-disc">I earn a commission if you use my code.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section>
@@ -408,16 +499,37 @@ footer a { color: var(--text4); }
 </script>
 <script>
 (function(){
-  var track = document.getElementById('car-track'); if (!track) return;
-  var slides = track.querySelectorAll('.slide'), dots = document.getElementById('car-dots');
-  slides.forEach(function(_, i){ var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ go(i); }; dots.appendChild(b); });
-  function current(){ var c = track.scrollLeft + track.clientWidth / 2, best = 0, d = 1e9; slides.forEach(function(s, i){ var m = Math.abs(s.offsetLeft + s.offsetWidth / 2 - c); if (m < d) { d = m; best = i; } }); return best; }
-  function go(i){ i = Math.max(0, Math.min(slides.length - 1, i)); var s = slides[i]; track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2, behavior: 'smooth' }); }
-  function mark(){ var k = current(); dots.querySelectorAll('button').forEach(function(b, i){ b.classList.toggle('on', i === k); }); }
-  document.querySelector('.car-prev').onclick = function(){ go(current() - 1); };
-  document.querySelector('.car-next').onclick = function(){ go(current() + 1); };
-  track.addEventListener('scroll', function(){ window.requestAnimationFrame(mark); }, { passive: true });
-  mark();
+  document.querySelectorAll('[data-carousel]').forEach(function(car){
+    var track = car.querySelector('.track'), slides = track.querySelectorAll('.slide');
+    var dots = car.parentNode.querySelector('.dots');
+    slides.forEach(function(_, i){ var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ go(i); }; dots.appendChild(b); });
+    function current(){ var c = track.scrollLeft + track.clientWidth / 2, best = 0, d = 1e9; slides.forEach(function(s, i){ var m = Math.abs(s.offsetLeft - track.offsetLeft + s.offsetWidth / 2 - c); if (m < d) { d = m; best = i; } }); return best; }
+    function go(i){ i = Math.max(0, Math.min(slides.length - 1, i)); var s = slides[i]; track.scrollTo({ left: s.offsetLeft - track.offsetLeft - (track.clientWidth - s.offsetWidth) / 2, behavior: 'smooth' }); }
+    function mark(){ var k = current(); dots.querySelectorAll('button').forEach(function(b, i){ b.classList.toggle('on', i === k); }); }
+    car.querySelector('.car-prev').onclick = function(){ go(current() - 1); };
+    car.querySelector('.car-next').onclick = function(){ go(current() + 1); };
+    track.addEventListener('scroll', function(){ window.requestAnimationFrame(mark); }, { passive: true });
+    mark();
+  });
+  document.querySelectorAll('.flip').forEach(function(f){ f.addEventListener('click', function(){ f.classList.toggle('on'); }); });
+
+  // story mockup
+  var covers = [['andromedan','Andromedan'],['pleiadian','Pleiadian'],['lyran','Lyrian'],['siriusian','Siriusian'],['arcturian','Arcturian'],['atlantean','Atlantean']], ci = 0;
+  var nameIn = document.getElementById('story-name'); if (!nameIn) return;
+  var bg = document.getElementById('story-bg');
+  function upd(){
+    var raw = nameIn.value.trim();
+    var letters = raw.toUpperCase().normalize('NFD').replace(/[^A-Z]/g, '').slice(0, 12);
+    var code = (letters || 'YOURNAME') + '10';
+    document.getElementById('story-code').textContent = code;
+    document.getElementById('story-code-out').textContent = code;
+    document.getElementById('story-handle').textContent = '@' + (raw ? raw.toLowerCase().replace(/[^a-z0-9._]/g, '') || 'yourname' : 'yourname');
+  }
+  function setCover(i){ ci = (i + covers.length) % covers.length; bg.style.opacity = 0; setTimeout(function(){ bg.src = 'partners-img/' + covers[ci][0] + '.webp'; bg.style.opacity = 1; }, 150); document.getElementById('story-type').textContent = covers[ci][1]; }
+  nameIn.addEventListener('input', upd);
+  document.querySelector('.story-prev').onclick = function(){ setCover(ci - 1); };
+  document.querySelector('.story-next').onclick = function(){ setCover(ci + 1); };
+  upd();
 })();
 </script>
 </body>
