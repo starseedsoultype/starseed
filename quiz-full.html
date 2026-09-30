@@ -457,7 +457,7 @@ text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 
     <input class="ec-input" type="email" name="email" id="ecEmail" placeholder="your@email.com" required autocomplete="email">
     <div class="ec-error" id="ecError">Please enter a valid email address</div>
     <button class="ec-btn" type="submit">Reveal My Origin</button>
-    <div class="ec-note">No spam. Unsubscribe anytime.</div>
+    <div class="ec-note">By submitting you agree to receive your reading and occasional updates. Unsubscribe anytime. <a href="privacy.html" style="color:inherit;text-decoration:underline;opacity:0.7;">Privacy Policy</a></div>
   </form>
 </div>
 
@@ -481,7 +481,7 @@ const QUESTIONS = [
   // NEW Q1 (Original Q1 - Block 1, force4, 3pts, M/L/R/E)
   {
     id:1, block:1, type:"force4",
-    text:"You walk into a room where a conversation is already unfolding. Before you consciously decide to pay attention, what has your body already registered?",
+    text:"You arrive somewhere a conversation is already in motion. Before you consciously decide to pay attention, what has your body already registered?",
     opts:[
       { text:"The physical reality. What feels grounded, what resources are present, the tangible facts of the space.", f:"M" },
       { text:"The underlying structure. Whether the situation holds together or if something feels fundamentally off-balance.", f:"L" },
@@ -1233,6 +1233,7 @@ function showEmailCapture() {
     } catch(err) {
       // Silently continue even if submission fails
     }
+    try{fetch(_SB_URL+'/rest/v1/api_leads',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({email:email,source:'portal_full',interest:document.getElementById('ecSoulType').value||null,session_id:_sessionId})});}catch(e){}
     // Show result regardless
     document.getElementById('email-capture').style.display = 'none';
     showResult();
