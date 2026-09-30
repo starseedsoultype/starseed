@@ -1,22 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '847407428375701');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
-/></noscript>
+<!-- Meta Pixel Code (consent aware, see pixel.js) -->
+<script src="pixel.js"></script>
 <!-- End Meta Pixel Code -->
 
 <meta charset="UTF-8">
@@ -300,7 +286,7 @@ body {
   <div class="divider"></div>
   <div class="intro-body">You have always operated from a specific frequency. Most people spend years trying to name it.</div>
   <div class="intro-note">7 questions · 3 minutes · your soul type revealed</div>
-  <div class="intro-social-proof">Taken by 47,000 souls worldwide</div>
+  <div class="intro-social-proof">24 soul origins. One of them is yours.</div>
   <button class="start-btn" onclick="startQuiz()">Begin</button>
 </div>
 
@@ -321,7 +307,7 @@ body {
     <input class="ec-input" type="email" name="email" id="ecEmail" placeholder="your@email.com" required autocomplete="email">
     <div class="ec-error" id="ecError">Please enter a valid email address</div>
     <button class="ec-btn" type="submit">Reveal My Origin</button>
-    <div class="ec-note">By submitting you agree to receive your reading and occasional updates. Unsubscribe anytime. <a href="legal.html" style="color:inherit;text-decoration:underline;opacity:0.7;">Privacy Policy</a></div>
+    <div class="ec-note">By submitting you agree to receive your reading and occasional updates. Unsubscribe anytime. <a href="privacy.html" style="color:inherit;text-decoration:underline;opacity:0.7;">Privacy Policy</a></div>
   </form>
 </div>
 

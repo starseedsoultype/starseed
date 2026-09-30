@@ -1,27 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '847407428375701');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
-/></noscript>
+<!-- Meta Pixel Code (consent aware, see pixel.js) -->
+<script src="pixel.js"></script>
 <!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partner Program · Starseed Soul</title>
-<meta name="description" content="Share the Origin Scan with your audience. They get 10% off their Full Origin Reading, you earn $6 for every confirmed paid Full Origin Reading.">
+<meta name="description" content="Share the Origin Scanner with your audience. They get 10% off their Full Origin Reading, you earn $6 for every confirmed paid Full Origin Reading.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300;400&display=swap">
 <style>
@@ -56,6 +42,11 @@ p { font-size: 14px; color: var(--text3); }
   text-transform: uppercase; transition: all 0.3s;
 }
 .btn:hover { background: rgba(201,169,110,0.06); border-color: var(--gold); }
+.btn-ghost { border-color: rgba(255,255,255,0.12); color: var(--text2); }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.try { text-align: center; }
+.try .lead { margin-bottom: 16px; }
+.try p { margin-bottom: 32px; }
 .btn:disabled { opacity: 0.4; cursor: wait; }
 
 /* hero */
@@ -143,14 +134,17 @@ footer a { color: var(--text4); }
 
   <header class="hero">
     <div class="eyebrow">Starseed Soul · Partner Program</div>
-    <h1>Share the<br>Origin Scan</h1>
+    <h1>Share the<br>Origin Scanner</h1>
     <p class="lead">Give your audience a simple 3-minute self-discovery experience, a fun and affordable way to explore their cosmic origin, and earn $6 for every confirmed paid Full Origin Reading.</p>
     <div class="hero-stats">
       <div class="stat"><b>$6</b><span>per confirmed reading</span></div>
       <div class="stat"><b>10%</b><span>off for your people</span></div>
       <div class="stat"><b>11th</b><span>payout every month</span></div>
     </div>
-    <a class="btn" href="#apply">Become a partner</a>
+    <div class="hero-btns">
+      <a class="btn" href="#apply">Become a partner</a>
+      <a class="btn btn-ghost" href="quiz.html" target="_blank" rel="noopener">Try the scanner</a>
+    </div>
   </header>
 
   <section>
@@ -168,7 +162,7 @@ footer a { color: var(--text4); }
         <div class="step-num">2</div>
         <div>
           <h3>Your people take the scan</h3>
-          <p>They take the free Origin Scan at <span class="code">starseedsoultype.com/quiz</span>: 7 questions, 3 minutes. At Gumroad checkout, your unique partner code gives them 10% off their Full Origin Reading.</p>
+          <p>They take the free Origin Scanner at <span class="code">starseedsoultype.com/quiz</span>: 7 questions, 3 minutes. At Gumroad checkout, your unique partner code gives them 10% off their Full Origin Reading.</p>
         </div>
       </div>
       <div class="step">
@@ -178,6 +172,17 @@ footer a { color: var(--text4); }
           <p>You earn $6 for every confirmed paid Full Origin Reading bought with your unique code. Payouts arrive on the 11th of every month via PayPal or Wise.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="try">
+    <div class="eyebrow">See it yourself</div>
+    <h2>Try the Origin Scanner</h2>
+    <p class="lead">Take it exactly the way your audience will: 7 questions, 3 minutes, and your origin named at the end.</p>
+    <p>Want to read your Full Origin Reading as well? Send your application below and I will give you a free partner code that opens the full reading, so you see the whole journey from the first question to the last page.</p>
+    <div class="hero-btns">
+      <a class="btn" href="quiz.html" target="_blank" rel="noopener">Start the scanner</a>
+      <a class="btn btn-ghost" href="#apply">Get my free code</a>
     </div>
   </section>
 
@@ -199,7 +204,7 @@ footer a { color: var(--text4); }
     <ul class="gifts">
       <li>
         <h3>Your own Full Origin Reading</h3>
-        <p>Free, the moment you join. Take the scan yourself and read your full Origin portrait first, so you speak about it from your own experience.</p>
+        <p>Free with your application: a partner code that opens your own Full Origin Reading. Read your portrait first, so you speak about it from your own experience.</p>
       </li>
       <li>
         <h3>A ready content kit</h3>
@@ -259,7 +264,7 @@ footer a { color: var(--text4); }
     </details>
     <details>
       <summary>What does my audience receive?</summary>
-      <p>The quiz is taken on the Starseed Soul website. After checkout, the customer receives a Full Origin Reading: their core frequency, their gifts, where life asks the most of them, and their compatibility map. With your code it costs $10.</p>
+      <p>The Origin Scanner runs on the Starseed Soul website. After checkout, the customer receives a Full Origin Reading: their core frequency, their gifts, where life asks the most of them, and their compatibility map. With your code it costs $10.</p>
     </details>
     <details>
       <summary>Who is behind Starseed Soul?</summary>
@@ -320,7 +325,7 @@ footer a { color: var(--text4); }
   <div class="wrap">
     <p class="sign">Alexandra</p>
     <p style="margin:6px 0 20px;">Founder, Starseed Soul</p>
-    <p><a href="index.html">Home</a> · <a href="quiz.html">Origin Scan</a> · <a href="partner-terms.html">Partner Terms</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    <p><a href="index.html">Home</a> · <a href="quiz.html">Origin Scanner</a> · <a href="partner-terms.html">Partner Terms</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   </div>
 </footer>
 
