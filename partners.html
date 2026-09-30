@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '847407428375701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=847407428375701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Program · Starseed Soul</title>
+<meta name="description" content="Share the Origin Scan with your audience. They get 10% off their full reading, you earn 60% of every reading.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300;400&display=swap">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #161616;
+  --border: rgba(201,169,110,0.08); --border2: rgba(201,169,110,0.18);
+  --text: #E8E4DF; --text2: #C9C1B8; --text3: #7A7672; --text4: #5F5A55;
+  --gold: #C9A96E; --gold2: #E8D5A8; --red: #ff5544;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-weight: 300;
+  -webkit-font-smoothing: antialiased; line-height: 1.7;
+}
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+section { padding: 64px 0; border-top: 1px solid var(--border); }
+.eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--text4); text-transform: uppercase; margin-bottom: 20px; }
+h1, h2 { font-family: var(--serif); font-weight: 300; color: var(--text); }
+h1 { font-size: 40px; letter-spacing: 6px; text-transform: uppercase; line-height: 1.25; margin-bottom: 24px; }
+h2 { font-size: 26px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 28px; }
+p { font-size: 14px; color: var(--text3); }
+.lead { font-family: var(--serif); font-size: 21px; color: var(--text2); line-height: 1.7; letter-spacing: 0.3px; }
+.divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 36px auto; }
+.btn {
+  display: inline-block; padding: 14px 44px; border: 1px solid rgba(201,169,110,0.35);
+  background: transparent; color: var(--gold); text-decoration: none; cursor: pointer;
+  font-family: var(--sans); font-weight: 300; font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; transition: all 0.3s;
+}
+.btn:hover { background: rgba(201,169,110,0.06); border-color: var(--gold); }
+.btn:disabled { opacity: 0.4; cursor: wait; }
+
+/* hero */
+.hero { text-align: center; padding: 96px 0 72px; border-top: none; }
+.hero .lead { margin-bottom: 36px; }
+.hero-stats { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+.stat { border: 1px solid var(--border2); padding: 16px 20px; min-width: 150px; flex: 1; max-width: 190px; }
+.stat b { display: block; font-family: var(--serif); font-weight: 300; font-size: 34px; color: var(--gold); line-height: 1.2; }
+.stat span { font-size: 10px; letter-spacing: 2px; color: var(--text4); text-transform: uppercase; }
+
+/* steps */
+.steps { display: flex; flex-direction: column; gap: 10px; }
+.step { display: flex; gap: 18px; background: var(--bg2); border: 1px solid var(--border); padding: 22px 20px; }
+.step-num { font-family: var(--serif); font-size: 26px; color: var(--gold); line-height: 1; min-width: 22px; }
+.step h3 { font-family: var(--sans); font-weight: 400; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
+.code { font-family: ui-monospace, Menlo, monospace; color: var(--gold2); letter-spacing: 1px; }
+
+/* math */
+.math { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.math td { padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text3); }
+.math td:last-child { text-align: right; color: var(--text); font-family: var(--serif); font-size: 20px; }
+.math tr.total td { color: var(--text); border-bottom: none; }
+.math tr.total td:last-child { color: var(--gold); font-size: 26px; }
+.tier { background: var(--bg2); border: 1px solid var(--border2); padding: 20px; margin-top: 12px; }
+.tier b { color: var(--gold); font-weight: 400; }
+
+/* gifts */
+.gifts { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.gifts li { background: var(--bg2); border: 1px solid var(--border); padding: 20px 20px 20px 48px; position: relative; }
+.gifts li::before { content: '✦'; position: absolute; left: 20px; top: 20px; color: var(--gold); font-size: 11px; }
+.gifts h3 { font-family: var(--serif); font-weight: 400; font-size: 20px; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+
+/* who */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.tag { border: 1px solid var(--border2); padding: 8px 14px; font-size: 12px; color: var(--text2); letter-spacing: 1px; }
+
+/* faq */
+details { border-bottom: 1px solid var(--border); }
+summary { list-style: none; cursor: pointer; padding: 20px 28px 20px 0; position: relative; font-family: var(--serif); font-size: 19px; color: var(--text); }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; position: absolute; right: 0; top: 18px; color: var(--gold); font-family: var(--sans); font-size: 18px; transition: transform 0.2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { padding: 0 0 22px; }
+
+/* form */
+form { display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; gap: 14px; }
+.row > * { flex: 1; min-width: 0; }
+label { display: block; font-size: 10px; letter-spacing: 3px; color: var(--text4); text-transform: uppercase; margin-bottom: 8px; }
+input, select, textarea {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border2); color: var(--text);
+  font-family: var(--sans); font-weight: 300; font-size: 15px; padding: 13px 14px; border-radius: 0;
+  -webkit-appearance: none; appearance: none; outline: none; transition: border-color 0.2s;
+}
+select { background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+textarea { min-height: 96px; resize: vertical; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-note { font-size: 11px; color: var(--text4); letter-spacing: 0.5px; }
+.form-error { color: var(--red); font-size: 13px; display: none; }
+.success { display: none; text-align: center; padding: 40px 20px; border: 1px solid var(--border2); background: var(--bg2); }
+.success h3 { font-family: var(--serif); font-weight: 300; font-size: 26px; color: var(--gold); margin-bottom: 12px; }
+
+footer { border-top: 1px solid var(--border); padding: 40px 0 60px; text-align: center; }
+footer p { font-size: 11px; color: var(--text4); letter-spacing: 1px; }
+footer a { color: var(--text4); }
+.sign { font-family: var(--serif); font-size: 22px; color: var(--text2); margin-top: 28px; }
+
+@media (max-width: 560px) {
+  h1 { font-size: 30px; letter-spacing: 4px; }
+  h2 { font-size: 22px; }
+  .lead { font-size: 19px; }
+  .row { flex-direction: column; }
+  .stat { min-width: 0; }
+  section { padding: 52px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Starseed Soul · Partner Program</div>
+    <h1>Share the<br>Origin Scan</h1>
+    <p class="lead">Your audience already asks which starseed they are. Give them an answer so precise they recognize themselves in every line, and earn 60% of every reading they buy.</p>
+    <div class="hero-stats">
+      <div class="stat"><b>60%</b><span>to you</span></div>
+      <div class="stat"><b>10%</b><span>off for your people</span></div>
+      <div class="stat"><b>11th</b><span>payout every month</span></div>
+    </div>
+    <a class="btn" href="#apply">Become a partner</a>
+  </header>
+
+  <section>
+    <div class="eyebrow">How it works</div>
+    <h2>Three simple steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>You receive your code</h3>
+          <p>A personal code made from your name, for example <span class="code">ROSE10</span>. That is all you need.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Your people take the scan</h3>
+          <p>They take the free Origin Scan at <span class="code">starseedsoultype.com/quiz</span>: 7 questions, 3 minutes. At checkout your code gives them 10% off their full reading.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>You earn 60%</h3>
+          <p>Every reading bought with your code pays you 60% of what your person paid. Payouts arrive on the 11th of every month via PayPal or Wise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">The numbers</div>
+    <h2>What one code earns</h2>
+    <table class="math">
+      <tr><td>Full Origin reading</td><td>$11.11</td></tr>
+      <tr><td>With your code, your person pays</td><td>$10.00</td></tr>
+      <tr><td>You earn per reading</td><td>$6.00</td></tr>
+      <tr class="total"><td>100 readings from your audience</td><td>$600</td></tr>
+    </table>
+    <div class="tier">
+      <p><b>Grow to 70%.</b> Reach 50 readings in one calendar month and that whole month pays you 70%, which is $7.00 per reading.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">What you receive</div>
+    <h2>Beyond the 60%</h2>
+    <ul class="gifts">
+      <li>
+        <h3>Your own full Origin reading</h3>
+        <p>Free, the moment you join. Take the scan yourself and read your full portrait first, so you speak about it from your own experience.</p>
+      </li>
+      <li>
+        <h3>A ready content kit</h3>
+        <p>Five short videos made in your style, ten hooks, caption and pinned comment text, and story images. Post them as they are or make them yours.</p>
+      </li>
+      <li>
+        <h3>A compatibility reading as a gift</h3>
+        <p>After your first 10 readings you receive a full compatibility reading for you and a person you love: partner, twin flame, friend or family.</p>
+      </li>
+      <li>
+        <h3>A place among Recommended Readers</h3>
+        <p>Active partners are featured on our site and social pages, so new people find you through us too.</p>
+      </li>
+      <li>
+        <h3>Payouts on the 11th, every month</h3>
+        <p>On time, every time, via PayPal or Wise, with a short statement of your readings for the month.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">Who it is for</div>
+    <h2>Made for guides</h2>
+    <p>Creators whose audience is curious about their soul origin. Every size is welcome from 1,000 followers.</p>
+    <div class="tags">
+      <span class="tag">Tarot &amp; oracle readers</span>
+      <span class="tag">Starseed creators</span>
+      <span class="tag">Channelers</span>
+      <span class="tag">Spiritual coaches</span>
+      <span class="tag">Twin flame mentors</span>
+      <span class="tag">Meditation guides</span>
+      <span class="tag">Newsletters &amp; podcasts</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Questions</div>
+    <h2>Good to know</h2>
+    <details>
+      <summary>Do I need Gumroad or any account?</summary>
+      <p>Only your code. Your people take the scan on our site and buy their reading there. You share the code and the quiz link wherever you like.</p>
+    </details>
+    <details>
+      <summary>How are my readings counted?</summary>
+      <p>Every purchase made with your code is recorded at checkout under that code. Before each payout you receive a short statement with your number of readings and your amount.</p>
+    </details>
+    <details>
+      <summary>When do I get paid?</summary>
+      <p>On the 11th of every month, for all readings of the previous month, via PayPal or Wise, whichever you prefer.</p>
+    </details>
+    <details>
+      <summary>Where can I use my code?</summary>
+      <p>Anywhere you speak to your people: videos, descriptions, pinned comments, live readings, stories, newsletters and private messages.</p>
+    </details>
+    <details>
+      <summary>What does my audience receive?</summary>
+      <p>A free Origin Scan with their origin revealed on the spot, then a full written reading of their origin: their core frequency, their gifts, where life asks the most of them, and their compatibility map. With your code it costs $10.</p>
+    </details>
+    <details>
+      <summary>Who is behind Starseed Soul?</summary>
+      <p>I am Alexandra, the founder. Every partner hears from me personally.</p>
+    </details>
+  </section>
+
+  <section id="apply">
+    <div class="eyebrow">Apply</div>
+    <h2>Become a partner</h2>
+    <p style="margin-bottom:28px;">Tell me a little about you and your audience. I will write to you personally with your code and your free reading.</p>
+
+    <form id="partner-form" novalidate>
+      <div class="row">
+        <div><label for="f-name">Your name</label><input id="f-name" name="name" required autocomplete="name"></div>
+        <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" required autocomplete="email"></div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="f-platform">Main platform</label>
+          <select id="f-platform" name="platform">
+            <option>YouTube</option><option>TikTok</option><option>Instagram</option>
+            <option>Newsletter</option><option>Podcast</option><option>Other</option>
+          </select>
+        </div>
+        <div><label for="f-handle">Username</label><input id="f-handle" name="handle" placeholder="@yourname"></div>
+      </div>
+      <div><label for="f-link">Link to your page</label><input id="f-link" name="link" type="url" required placeholder="https://"></div>
+      <div class="row">
+        <div>
+          <label for="f-audience">Audience size</label>
+          <select id="f-audience" name="audience">
+            <option>1K to 5K</option><option>5K to 20K</option><option>20K to 100K</option><option>100K+</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-payout">Payout via</label>
+          <select id="f-payout" name="payout"><option>PayPal</option><option>Wise</option></select>
+        </div>
+      </div>
+      <div><label for="f-message">Anything you want me to know</label><textarea id="f-message" name="message" placeholder="Optional"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+      <div class="form-error" id="form-error"></div>
+      <div><button class="btn" type="submit" id="f-submit">Send application</button></div>
+      <p class="form-note">By applying you agree to our <a href="privacy.html" style="color:inherit;">Privacy Policy</a>.</p>
+    </form>
+
+    <div class="success" id="form-success">
+      <h3>Received ✦</h3>
+      <p>Thank you. I will write to you personally with your code and your free reading.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="sign">Alexandra</p>
+    <p style="margin:6px 0 20px;">Founder, Starseed Soul</p>
+    <p><a href="index.html">Home</a> · <a href="quiz.html">Origin Scan</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('partner-form');
+  var err = document.getElementById('form-error');
+  var btn = document.getElementById('f-submit');
+  function showError(msg){ err.textContent = msg; err.style.display = 'block'; }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    err.style.display = 'none';
+    var data = Object.fromEntries(new FormData(form).entries());
+    if (!data.name.trim()) return showError('Please enter your name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return showError('Please enter a valid email.');
+    if (!data.link.trim()) return showError('Please add a link to your page.');
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      var res = await fetch('https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/partner-apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('status ' + res.status);
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+      try { fbq('track', 'Lead', { content_name: 'partner_application' }); } catch(_){}
+    } catch (ex) {
+      btn.disabled = false; btn.textContent = 'Send application';
+      showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
