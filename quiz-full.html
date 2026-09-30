@@ -677,7 +677,7 @@ const QUESTIONS = [
   // NEW Q28 (Original Q8 - Block 1, force4, check:true, 3pts, L/R/M/E)
   {
     id:8, block:1, type:"force4", check:true,
-    text:"In moments when a deep, sudden knowing lands in your body\u2014faster than thought\u2014what are you usually recognizing?",
+    text:"In moments when a deep, sudden knowing lands in your body, faster than thought, what are you usually recognizing?",
     opts:[
       { text:"The structural truth. A sudden, felt sense of whether something holds together or falls apart.", f:"L" },
       { text:"The relational truth. A sudden awareness of who is being genuine and who is wearing a mask.", f:"R" },
@@ -738,28 +738,28 @@ const TIEBREAK = {
 // PREVIEW TEXTS
 const PREVIEWS = {
   R: {
-    1:"Connection is not something you seek — it is the medium you live in. You read the space between people the way others read words on a page. Your greatest gift is invisible to you, because for you, it has always simply been the air.",
-    2:"You bring people into contact with something real in themselves. In conversation, in presence, in the quality of attention you offer — you are a catalyst for genuine meeting. This is your natural creative force in the world.",
-    3:"Relationships are where your deepest learning happens — and your deepest wounds. You are drawn to the complexity of human connection, sometimes more than is comfortable. This tension is your growth edge.",
-    4:"You receive connection easily, without much analysis. When someone offers warmth or belonging, you absorb it naturally — trusting what arrives without needing to verify it first.",
+    1:"Connection is not something you seek. It is the medium you live in. You read the space between people the way others read words on a page. Your greatest gift is invisible to you, because for you, it has always simply been the air.",
+    2:"You bring people into contact with something real in themselves. In conversation, in presence, in the quality of attention you offer, you are a catalyst for genuine meeting. This is your natural creative force in the world.",
+    3:"Relationships are where your deepest learning happens, and your deepest wounds. You are drawn to the complexity of human connection, sometimes more than is comfortable. This tension is your growth edge.",
+    4:"You receive connection easily, without much analysis. When someone offers warmth or belonging, you absorb it naturally, trusting what arrives without needing to verify it first.",
   },
   E: {
-    1:"You were born already knowing what you want. Not as a thought, but as a current — something that runs underneath everything and does not ask permission. Others often feel more alive in your presence without knowing why.",
-    2:"Your aliveness is visible. When you move toward something you want, the room notices. You bring energy into spaces that needed it — this is your creative contribution, whether you intend it or not.",
-    3:"The question of desire — what you truly want, whether you are living your actual life — runs through everything you do. This is not a flaw. It is the territory of your transformation.",
-    4:"You receive energy from your environment freely. You don't guard it or analyze it — it simply flows in. Other people's charge becomes available to you without resistance.",
+    1:"You were born already knowing what you want. Not as a thought, but as a current: something that runs underneath everything and does not ask permission. Others often feel more alive in your presence without knowing why.",
+    2:"Your aliveness is visible. When you move toward something you want, the room notices. You bring energy into spaces that needed it. This is your creative contribution, whether you intend it or not.",
+    3:"The question of desire, what you truly want and whether you are living your actual life, runs through everything you do. This is not a flaw. It is the territory of your transformation.",
+    4:"You receive energy from your environment freely. You don't guard it or analyze it. It simply flows in. Other people's charge becomes available to you without resistance.",
   },
   M: {
-    1:"You understand the physical world — money, the body, space, time — with an authority that is simply native to you. You have never needed to learn how to be real. You arrived here already knowing.",
-    2:"You make things real. Ideas that float in other people's minds land in the physical world when you're involved. This is your specific creative power — the capacity to bring things into form.",
-    3:"The material world is where you work hardest on yourself — money, health, physical stability — this is the terrain of your growth. You think deeply about these things. That depth is the gift inside the wound.",
-    4:"In material matters, you receive what comes easily and don't overthink it. Someone handles the food, the space, the logistics — and you absorb it, trusting the provision without needing to direct it.",
+    1:"You understand the physical world with an authority that is simply native to you: money, the body, space, time. You have never needed to learn how to be real. You arrived here already knowing.",
+    2:"You make things real. Ideas that float in other people's minds land in the physical world when you're involved. This is your specific creative power: the capacity to bring things into form.",
+    3:"The material world is where you work hardest on yourself. Money, health, physical stability: this is the terrain of your growth. You think deeply about these things. That depth is the gift inside the wound.",
+    4:"In material matters, you receive what comes easily and don't overthink it. Someone handles the food, the space, the logistics, and you absorb it, trusting the provision without needing to direct it.",
   },
   L: {
-    1:"You understand how things work. Not as an intellectual exercise, but as a fundamental orientation — the way a fish understands water. Structure, causality, the architecture of systems — this is your native language.",
-    2:"You generate ideas and frameworks that others find clarifying. When you speak your thinking aloud, something in the room settles. This is your creative gift — the capacity to make the complex navigable.",
+    1:"You understand how things work. Not as an intellectual exercise, but as a fundamental orientation, the way a fish understands water. Structure, causality, the architecture of systems: this is your native language.",
+    2:"You generate ideas and frameworks that others find clarifying. When you speak your thinking aloud, something in the room settles. This is your creative gift: the capacity to make the complex navigable.",
     3:"You are drawn to other people's systems and ideas, evaluating them, questioning them, weighing them. This intelligence is most alive when you allow it to be fed by those who think structurally at the deepest level.",
-    4:"You receive frameworks and explanations readily. When something is presented to you coherently, you absorb it and use it — trusting the structure you're given rather than needing to build it from scratch.",
+    4:"You receive frameworks and explanations readily. When something is presented to you coherently, you absorb it and use it, trusting the structure you're given rather than needing to build it from scratch.",
   },
 };
 
@@ -900,9 +900,9 @@ function renderQuestion() {
     const hasLeast = saved.least !== null;
 
     let stepText = '';
-    if (!hasMost) stepText = 'Step 1 of 2 — Tap the one that is MOST like you';
-    else if (!hasLeast) stepText = 'Step 2 of 2 — Tap the one that is LEAST like you';
-    else stepText = 'Both selected — tap any to change';
+    if (!hasMost) stepText = 'Step 1 of 2: tap the one that is MOST like you';
+    else if (!hasLeast) stepText = 'Step 2 of 2: tap the one that is LEAST like you';
+    else stepText = 'Both selected. Tap any to change';
 
     html += `<div class="ml-step">${stepText}</div>
     <div class="opts-ml2">`;
@@ -920,7 +920,7 @@ function renderQuestion() {
     const saved = answers[q.id];
     const order = saved || q.opts.map((_, i) => i);
     const isConfirmed = !!saved;
-    html += `<div class="rank-instruction">Use arrows to rank — most like you at top</div>
+    html += `<div class="rank-instruction">Use arrows to rank, most like you at top</div>
     <div class="opts-rank" id="rankList">`;
     order.forEach((optIdx, pos) => {
       html += `<div class="rank-item" data-idx="${optIdx}" data-pos="${pos}">
@@ -1124,8 +1124,8 @@ function showResult() {
   const fc1 = FC[ch1];
 
   const SOUL_RESONANCE = {
-    "I":  "You have spent your life translating the unspoken spaces between people. Your sensitivity is not a burden to be managed\u2014it is the exact instrument you were sent here to use.",
-    "II": "You see the architecture underneath the chaos. Your constant need to understand how things connect is not overthinking\u2014it is your soul trying to build a map for others to follow.",
+    "I":  "You have spent your life translating the unspoken spaces between people. Your sensitivity is not a burden to be managed. It is the exact instrument you were sent here to use.",
+    "II": "You see the architecture underneath the chaos. Your constant need to understand how things connect is not overthinking. It is your soul trying to build a map for others to follow.",
     "III":"You have always known what you wanted before you had the words for it. Your intensity scares people, so you learned to turn it down. It is time to turn it back up.",
     "IV": "You carry an innate authority over the physical world. While others get lost in ideas, you know exactly how to make things real. Your grounding is your greatest power."
   };
@@ -1140,7 +1140,7 @@ function showResult() {
       <div class="celebrate-stars">✦ ✦ ✦</div>
       <div class="celebrate-title">Your origin has been revealed</div>
       <div class="celebrate-msg">This is rare. Most people never find the name for what they have always felt. Share this moment.</div>
-      <button class="share-btn-big" id="shareBtn" onclick="downloadShareCard('${type.name}')">✨ Save your origin card — Share to Stories</button>
+      <button class="share-btn-big" id="shareBtn" onclick="downloadShareCard('${type.name}')">✨ Save your origin card and share to Stories</button>
     </div>
 
     <div class="scroll-hint">
@@ -1248,7 +1248,7 @@ function downloadShareCard(typeName) {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      if (btn) { btn.textContent = '✦ Saved — Share your origin ✦'; btn.disabled = false; }
+      if (btn) { btn.textContent = '✦ Saved. Share your origin ✦'; btn.disabled = false; }
     })
     .catch(() => {
       window.open(url, '_blank');
