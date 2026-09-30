@@ -161,34 +161,6 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 .footer-legal{font-size:11.5px;color:var(--text4);max-width:620px;margin:18px auto;line-height:1.7}
 .footer-contact a{color:var(--text3);text-decoration:none}
 .footer-contact a:hover{color:var(--gold)}
-
-/* connection flip carousel */
-.conn-sec{text-align:center}
-.ccar{position:relative;margin:28px -16px 0}
-.ctrack{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 16px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.ctrack::-webkit-scrollbar{display:none}
-.cslide{flex:0 0 74%;max-width:340px;scroll-snap-align:center;margin:0}
-.cflip{all:unset;display:block;position:relative;width:100%;aspect-ratio:4/5;perspective:1300px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.cflip:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
-.cface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.cfront img{width:100%;height:100%;object-fit:cover;display:block;border:1px solid rgba(201,169,110,.25);box-shadow:0 12px 40px rgba(0,0,0,.6)}
-.cback,.cend{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;padding:26px 22px;text-align:center;
-  background:radial-gradient(120% 80% at 50% 30%,#1d1630 0%,#0b0913 70%);border:1px solid rgba(201,169,110,.35);box-shadow:0 12px 40px rgba(0,0,0,.6)}
-.cend{position:relative;transform:none;aspect-ratio:4/5}
-.cflip.on .cfront{transform:rotateY(-180deg)}
-.cflip.on .cback{transform:rotateY(0)}
-.cb-eye{font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
-.cb-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--text);line-height:1.2}
-.cb-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.45;color:var(--text)}
-.cb-note{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text4)}
-.cb-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0A0A0A;text-decoration:none;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;padding:12px 18px;font-weight:400}
-.ccar-btn{position:absolute;top:44%;transform:translateY(-50%);z-index:2;width:42px;height:42px;border-radius:50%;border:1px solid rgba(201,169,110,.4);background:rgba(10,10,10,.8);color:var(--gold);font-size:22px;line-height:1;cursor:pointer}
-.ccar-prev{left:8px}.ccar-next{right:8px}
-.cdots{display:flex;justify-content:center;gap:8px;margin-top:16px}
-.cdots button{width:7px;height:7px;border-radius:50%;border:none;padding:0;background:rgba(201,169,110,.25);cursor:pointer}
-.cdots button.on{background:var(--gold)}
-@media(min-width:700px){.ccar{margin:28px 0 0}.cslide{flex-basis:300px}}
-@media(prefers-reduced-motion:reduce){.cface{transition:none}}
 </style>
 </head>
 <body>
@@ -277,39 +249,6 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       <p>I’m Alexandra, creator of the StarSeedSoul relationship reading system.</p>
       <p>I help women understand the pattern beneath a powerful connection and see what they can choose now.</p>
     </div>
-  </section>
-
-  <section class="conn-sec">
-    <h2>Which connection <em>are you living?</em></h2>
-    <p>Every powerful bond follows one of ten patterns. Tap a card and see if one of them sounds like yours.</p>
-    <div class="ccar" data-ccar>
-      <button class="ccar-btn ccar-prev" type="button" aria-label="Previous">‹</button>
-      <div class="ctrack">
-        <figure class="cslide"><div class="cflip" role="button" tabindex="0" aria-label="Turn the Karmic Bonds card">
-          <span class="cface cfront"><img src="clarity-img/karmic-bonds.webp" alt="Karmic Bonds connection" width="800" height="1000" loading="lazy"></span>
-          <span class="cface cback"><span class="cb-eye">How Karmic Bonds can feel</span><span class="cb-quote">“It started as admiration. Now the same arguments come back again and again, and they never land.”</span><span class="cb-note">One of 10 connections</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-karmic-bonds">This is ours · Book</a></span>
-        </div></figure>
-        <figure class="cslide"><div class="cflip" role="button" tabindex="0" aria-label="Turn the Shadow Contracts card">
-          <span class="cface cfront"><img src="clarity-img/shadow-contracts.webp" alt="Shadow Contracts connection" width="800" height="1000" loading="lazy"></span>
-          <span class="cface cback"><span class="cb-eye">How Shadow Contracts can feel</span><span class="cb-quote">“It was so gentle at first. Now we both wait for the other to decide, and the energy between us keeps thinning.”</span><span class="cb-note">One of 10 connections</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-shadow-contracts">This is ours · Book</a></span>
-        </div></figure>
-        <figure class="cslide"><div class="cflip" role="button" tabindex="0" aria-label="Turn the Mirror Portals card">
-          <span class="cface cfront"><img src="clarity-img/mirror-portals.webp" alt="Mirror Portals connection" width="800" height="1000" loading="lazy"></span>
-          <span class="cface cback"><span class="cb-eye">How Mirror Portals can feel</span><span class="cb-quote">“He understands me without a word, and we get stuck on the very same things, every time.”</span><span class="cb-note">One of 10 connections</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-mirror-portals">This is ours · Book</a></span>
-        </div></figure>
-        <figure class="cslide"><div class="cflip" role="button" tabindex="0" aria-label="Turn the Twin Stars card">
-          <span class="cface cfront"><img src="clarity-img/twin-stars.webp" alt="Twin Stars connection" width="800" height="1000" loading="lazy"></span>
-          <span class="cface cback"><span class="cb-eye">How Twin Stars can feel</span><span class="cb-quote">“We can talk for hours. He believes in me exactly where I doubt myself, and I cannot imagine losing that.”</span><span class="cb-note">One of 10 connections</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-twin-stars">This is ours · Book</a></span>
-        </div></figure>
-        <figure class="cslide"><div class="cflip" role="button" tabindex="0" aria-label="Turn the Frequency Twins card">
-          <span class="cface cfront"><img src="clarity-img/frequency-twins.webp" alt="Frequency Twins connection" width="800" height="1000" loading="lazy"></span>
-          <span class="cface cback"><span class="cb-eye">How Frequency Twins can feel</span><span class="cb-quote">“He gives me, with no effort at all, the thing I always had to fight for. It feels so easy that I keep waiting for the catch.”</span><span class="cb-note">One of 10 connections</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-frequency-twins">This is ours · Book</a></span>
-        </div></figure>
-        <figure class="cslide"><span class="cface cend"><span class="cb-eye">Ten connections</span><span class="cb-title">Not sure which one is yours?</span><span class="cb-quote" style="font-size:17px">That is exactly what we map together in the session.</span><a class="cb-btn" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="connection-unsure">Book Your Personal Reading · $111</a></span></figure>
-      </div>
-      <button class="ccar-btn ccar-next" type="button" aria-label="Next">›</button>
-    </div>
-    <div class="cdots"></div>
   </section>
 
   <section>
@@ -634,20 +573,5 @@ function slideVoices(dir){
 <script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: window.__clarityBookingUrl || 'https://calendly.com/alexandrapsy/alexandrapsy_clarity', text: 'Book your session · $111', color: '#C9A96E', textColor: '#0A0A0A', branding: false }); }</script>
 <!-- Calendly badge widget end -->
 
-<script>
-(function(){
-  var car=document.querySelector('[data-ccar]'); if(!car) return;
-  var track=car.querySelector('.ctrack'), slides=track.querySelectorAll('.cslide'), dots=car.parentNode.querySelector('.cdots');
-  slides.forEach(function(_,i){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Card '+(i+1));b.onclick=function(){go(i)};dots.appendChild(b);});
-  function current(){var c=track.scrollLeft+track.clientWidth/2,best=0,d=1e9;slides.forEach(function(s,i){var m=Math.abs(s.offsetLeft-track.offsetLeft+s.offsetWidth/2-c);if(m<d){d=m;best=i}});return best}
-  function go(i){i=Math.max(0,Math.min(slides.length-1,i));var s=slides[i];track.scrollTo({left:s.offsetLeft-track.offsetLeft-(track.clientWidth-s.offsetWidth)/2,behavior:'smooth'})}
-  function mark(){var k=current();dots.querySelectorAll('button').forEach(function(b,i){b.classList.toggle('on',i===k)})}
-  car.querySelector('.ccar-prev').onclick=function(){go(current()-1)};
-  car.querySelector('.ccar-next').onclick=function(){go(current()+1)};
-  track.addEventListener('scroll',function(){requestAnimationFrame(mark)},{passive:true});
-  car.querySelectorAll('.cflip').forEach(function(f){f.addEventListener('click',function(e){if(e.target.closest('.cb-btn'))return;f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}})});
-  mark();
-})();
-</script>
 </body>
 </html>
