@@ -43,20 +43,24 @@ p { font-size: 14px; color: var(--text3); }
 }
 .btn:hover { background: rgba(201,169,110,0.06); border-color: var(--gold); }
 .btn-ghost { border-color: rgba(255,255,255,0.12); color: var(--text2); }
-.btn-bright {
-  display: inline-block; padding: 18px 40px; border-radius: 999px; text-decoration: none;
-  background: linear-gradient(135deg, #FF8A1F 0%, #FF5E1A 100%); color: #140A02;
-  font-family: var(--sans); font-weight: 400; font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
-  box-shadow: 0 0 0 1px rgba(255,138,31,0.5), 0 8px 32px rgba(255,110,30,0.45);
-  animation: brightPulse 2.6s ease-in-out infinite; transition: transform 0.2s;
-}
-.btn-bright:hover { transform: translateY(-2px) scale(1.02); }
-@keyframes brightPulse {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(255,138,31,0.5), 0 8px 32px rgba(255,110,30,0.35); }
-  50% { box-shadow: 0 0 0 1px rgba(255,138,31,0.8), 0 8px 48px rgba(255,110,30,0.7); }
-}
-@media (prefers-reduced-motion: reduce) { .btn-bright { animation: none; } }
-.bright-note { font-size: 12px; color: #F2B07A; letter-spacing: 0.3px; margin: 14px auto 32px; max-width: 360px; line-height: 1.6; }
+.btn-orange { background: #FF7A1F; border-color: #FF7A1F; color: #140A02; font-weight: 400; }
+.btn-orange:hover { background: #FF8F3F; border-color: #FF8F3F; }
+.bright-note { font-size: 12px; color: #F2B07A; letter-spacing: 0.3px; margin: 14px auto 0; max-width: 380px; line-height: 1.6; }
+.gallery { text-align: center; }
+.gallery .lead { margin-bottom: 32px; }
+.carousel { position: relative; margin: 0 -16px; }
+.track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.track::-webkit-scrollbar { display: none; }
+.slide { flex: 0 0 68%; max-width: 300px; scroll-snap-align: center; margin: 0; }
+.slide img { width: 100%; height: auto; display: block; border: 1px solid var(--border2); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.slide figcaption { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-top: 12px; }
+.car-btn { position: absolute; top: 42%; transform: translateY(-50%); z-index: 2; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.4); background: rgba(10,10,10,0.8); color: var(--gold); font-size: 22px; line-height: 1; cursor: pointer; }
+.car-prev { left: 8px; } .car-next { right: 8px; }
+.car-btn:hover { border-color: var(--gold); }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.dots button { width: 7px; height: 7px; border-radius: 50%; border: none; padding: 0; background: var(--border2); cursor: pointer; }
+.dots button.on { background: #FF7A1F; }
+@media (min-width: 700px) { .carousel { margin: 0; } .slide { flex-basis: 260px; } }
 .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .try { text-align: center; }
 .try .lead { margin-bottom: 16px; }
@@ -138,6 +142,8 @@ footer a { color: var(--text4); }
   .lead { font-size: 19px; }
   .row { flex-direction: column; }
   .stat { min-width: 0; }
+  .hero-btns { flex-wrap: nowrap; gap: 8px; }
+  .hero-btns .btn { flex: 1; padding: 14px 8px; letter-spacing: 2px; font-size: 10px; }
   section { padding: 52px 0; }
 }
 </style>
@@ -155,9 +161,11 @@ footer a { color: var(--text4); }
       <div class="stat"><b>10%</b><span>off for your people</span></div>
       <div class="stat"><b>11th</b><span>payout every month</span></div>
     </div>
-    <a class="btn-bright" href="quiz.html" target="_blank" rel="noopener">✦ Try the scanner ✦</a>
+    <div class="hero-btns">
+      <a class="btn" href="#apply">Become a partner</a>
+      <a class="btn btn-orange" href="quiz.html" target="_blank" rel="noopener">Try the scanner</a>
+    </div>
     <p class="bright-note">Free for partners: apply and get a promo code to download your Full Origin Reading at no cost.</p>
-    <a class="btn" href="#apply">Become a partner</a>
   </header>
 
   <section>
@@ -193,9 +201,32 @@ footer a { color: var(--text4); }
     <h2>Try the Origin Scanner</h2>
     <p class="lead">Take it exactly the way your audience will: 7 questions, 3 minutes, and your origin named at the end.</p>
     <p>Want to read your Full Origin Reading as well? Send your application below and I will give you a free partner code that opens the full reading, so you see the whole journey from the first question to the last page.</p>
-    <a class="btn-bright" href="quiz.html" target="_blank" rel="noopener">✦ Start the scanner ✦</a>
+    <div class="hero-btns">
+      <a class="btn btn-orange" href="quiz.html" target="_blank" rel="noopener">Start the scanner</a>
+      <a class="btn" href="#apply">Get my free code</a>
+    </div>
     <p class="bright-note">Free for partners: apply and get a promo code to download your Full Origin Reading at no cost.</p>
-    <a class="btn" href="#apply">Get my free code</a>
+  </section>
+
+  <section class="gallery">
+    <div class="eyebrow">What your audience receives</div>
+    <h2>A reading they keep</h2>
+    <p class="lead">Every origin has its own Full Origin Reading: 11 pages of portrait, art and practice. Here are six of the twenty four.</p>
+    <div class="carousel">
+      <button class="car-btn car-prev" type="button" aria-label="Previous">‹</button>
+      <div class="track" id="car-track">
+        <figure class="slide"><img src="partners-img/andromedan.webp" alt="Andromedan Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Andromedan</figcaption></figure>
+        <figure class="slide"><img src="partners-img/pleiadian.webp" alt="Pleiadian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Pleiadian</figcaption></figure>
+        <figure class="slide"><img src="partners-img/lyran.webp" alt="Lyrian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Lyrian</figcaption></figure>
+        <figure class="slide"><img src="partners-img/siriusian.webp" alt="Siriusian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Siriusian</figcaption></figure>
+        <figure class="slide"><img src="partners-img/arcturian.webp" alt="Arcturian Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Arcturian</figcaption></figure>
+        <figure class="slide"><img src="partners-img/atlantean.webp" alt="Atlantean Frequency, Full Origin Reading cover" loading="lazy" width="800" height="1131"><figcaption>Atlantean</figcaption></figure>
+        <figure class="slide"><img src="partners-img/inside-art.webp" alt="Full page art inside the reading" loading="lazy" width="800" height="1131"><figcaption>Full page art inside</figcaption></figure>
+        <figure class="slide"><img src="partners-img/inside-text.webp" alt="First page of a Full Origin Reading" loading="lazy" width="800" height="1131"><figcaption>11 pages, written for one origin</figcaption></figure>
+      </div>
+      <button class="car-btn car-next" type="button" aria-label="Next">›</button>
+    </div>
+    <div class="dots" id="car-dots"></div>
   </section>
 
   <section>
@@ -373,6 +404,20 @@ footer a { color: var(--text4); }
       showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');
     }
   });
+})();
+</script>
+<script>
+(function(){
+  var track = document.getElementById('car-track'); if (!track) return;
+  var slides = track.querySelectorAll('.slide'), dots = document.getElementById('car-dots');
+  slides.forEach(function(_, i){ var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ go(i); }; dots.appendChild(b); });
+  function current(){ var c = track.scrollLeft + track.clientWidth / 2, best = 0, d = 1e9; slides.forEach(function(s, i){ var m = Math.abs(s.offsetLeft + s.offsetWidth / 2 - c); if (m < d) { d = m; best = i; } }); return best; }
+  function go(i){ i = Math.max(0, Math.min(slides.length - 1, i)); var s = slides[i]; track.scrollTo({ left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2, behavior: 'smooth' }); }
+  function mark(){ var k = current(); dots.querySelectorAll('button').forEach(function(b, i){ b.classList.toggle('on', i === k); }); }
+  document.querySelector('.car-prev').onclick = function(){ go(current() - 1); };
+  document.querySelector('.car-next').onclick = function(){ go(current() + 1); };
+  track.addEventListener('scroll', function(){ window.requestAnimationFrame(mark); }, { passive: true });
+  mark();
 })();
 </script>
 </body>
