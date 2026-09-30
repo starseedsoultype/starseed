@@ -115,6 +115,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--gold); }
 textarea { min-height: 96px; resize: vertical; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-note { font-size: 11px; color: var(--text4); letter-spacing: 0.5px; }
+.agree { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--text3); line-height: 1.6; cursor: pointer; margin: 4px 0 0; }
+.agree input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; padding: 0; -webkit-appearance: auto; appearance: auto; accent-color: var(--gold); }
+.agree a { color: var(--gold); }
 .form-error { color: var(--red); font-size: 13px; display: none; }
 .success { display: none; text-align: center; padding: 40px 20px; border: 1px solid var(--border2); background: var(--bg2); }
 .success h3 { font-family: var(--serif); font-weight: 300; font-size: 26px; color: var(--gold); margin-bottom: 12px; }
@@ -141,7 +144,7 @@ footer a { color: var(--text4); }
   <header class="hero">
     <div class="eyebrow">Starseed Soul · Partner Program</div>
     <h1>Share the<br>Origin Scan</h1>
-    <p class="lead">Give your audience a simple 3-minute self-discovery experience — a fun, affordable way to explore their cosmic origin — and earn $6 for every confirmed paid Full Origin Reading.</p>
+    <p class="lead">Give your audience a simple 3-minute self-discovery experience, a fun and affordable way to explore their cosmic origin, and earn $6 for every confirmed paid Full Origin Reading.</p>
     <div class="hero-stats">
       <div class="stat"><b>$6</b><span>per confirmed reading</span></div>
       <div class="stat"><b>10%</b><span>off for your people</span></div>
@@ -187,7 +190,7 @@ footer a { color: var(--text4); }
       <tr><td>You earn per confirmed paid Full Origin Reading</td><td>$6.00</td></tr>
       <tr class="total"><td>100 Full Origin Readings from your audience</td><td>$600</td></tr>
     </table>
-    <p class="form-note">Your payout is $6 for every confirmed paid Full Origin Reading, after refunds and applicable platform fees.</p>
+    <p class="form-note">You receive a flat $6 for every Full Origin Reading that stays paid. Refunded readings are excluded.</p>
   </section>
 
   <section>
@@ -207,7 +210,7 @@ footer a { color: var(--text4); }
         <p>After your first 10 confirmed paid Full Origin Readings, you receive a full compatibility reading for you and a person you love: partner, twin flame, friend or family.</p>
       </li>
       <li>
-        <h3>A feature on the StarseedSoul partner page</h3>
+        <h3>A feature on the Starseed Soul partner page</h3>
         <p>Active partners may be featured on our partner page and social pages, so new people can find you through us too.</p>
       </li>
       <li>
@@ -222,6 +225,8 @@ footer a { color: var(--text4); }
     <h2>Made for guides</h2>
     <p>We care more about audience fit and trust than follower count.</p>
     <div class="tags">
+      <span class="tag">Tarot &amp; oracle readers</span>
+      <span class="tag">Starseed creators</span>
       <span class="tag">Conscious communities</span>
       <span class="tag">Event and retreat pages</span>
       <span class="tag">Spiritual newsletters</span>
@@ -238,7 +243,7 @@ footer a { color: var(--text4); }
     <h2>Good to know</h2>
     <details>
       <summary>Do I need Gumroad or any account?</summary>
-      <p>No Gumroad account is needed. Each partner receives a unique promo code. Your people take the scan on the StarseedSoul website and use your code at Gumroad checkout to get 10% off their Full Origin Reading.</p>
+      <p>Your unique promo code is all you need. Each partner receives a unique promo code. Your people take the scan on the Starseed Soul website and use your code at Gumroad checkout to get 10% off their Full Origin Reading.</p>
     </details>
     <details>
       <summary>How are my readings counted?</summary>
@@ -254,7 +259,7 @@ footer a { color: var(--text4); }
     </details>
     <details>
       <summary>What does my audience receive?</summary>
-      <p>The quiz is taken on the StarseedSoul website. After checkout, the customer receives a Full Origin Reading: their core frequency, their gifts, where life asks the most of them, and their compatibility map. With your code it costs $10.</p>
+      <p>The quiz is taken on the Starseed Soul website. After checkout, the customer receives a Full Origin Reading: their core frequency, their gifts, where life asks the most of them, and their compatibility map. With your code it costs $10.</p>
     </details>
     <details>
       <summary>Who is behind Starseed Soul?</summary>
@@ -297,9 +302,10 @@ footer a { color: var(--text4); }
       </div>
       <div><label for="f-message">Anything you want me to know</label><textarea id="f-message" name="message" placeholder="Optional"></textarea></div>
       <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+      <label class="agree"><input type="checkbox" id="f-agree" name="agree" value="yes"><span>I have read and agree to the <a href="partner-terms.html" target="_blank">Partner Program Terms</a>, including clear disclosure of my code.</span></label>
       <div class="form-error" id="form-error"></div>
       <div><button class="btn" type="submit" id="f-submit">Send application</button></div>
-      <p class="form-note">By applying you agree to our <a href="privacy.html" style="color:inherit;">Privacy Policy</a>.</p>
+      <p class="form-note">Your details are handled as described in our <a href="privacy.html" style="color:inherit;">Privacy Policy</a>.</p>
     </form>
 
     <div class="success" id="form-success">
@@ -314,7 +320,7 @@ footer a { color: var(--text4); }
   <div class="wrap">
     <p class="sign">Alexandra</p>
     <p style="margin:6px 0 20px;">Founder, Starseed Soul</p>
-    <p><a href="index.html">Home</a> · <a href="quiz.html">Origin Scan</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    <p><a href="index.html">Home</a> · <a href="quiz.html">Origin Scan</a> · <a href="partner-terms.html">Partner Terms</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   </div>
 </footer>
 
@@ -332,6 +338,7 @@ footer a { color: var(--text4); }
     if (!data.name.trim()) return showError('Please enter your name.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return showError('Please enter a valid email.');
     if (!data.link.trim()) return showError('Please add a link to your page.');
+    if (!document.getElementById('f-agree').checked) return showError('Please agree to the Partner Program Terms.');
 
     btn.disabled = true; btn.textContent = 'Sending…';
     try {
