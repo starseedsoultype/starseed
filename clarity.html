@@ -275,6 +275,13 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 .cards-hint{text-align:center;margin:30px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--text2)}
 .cards-hint a{font-family:'Inter',sans-serif;font-style:normal;font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-block;margin-top:10px;border-bottom:1px solid rgba(201,169,110,.4);padding-bottom:3px}
 .cards-hint a:hover{border-color:var(--gold)}
+
+/* floating Calendly badge: hidden on the first screen and at the booking block */
+body .calendly-badge-widget{opacity:0 !important;transform:translateY(16px) !important;pointer-events:none !important;transition:opacity .4s ease,transform .4s ease !important}
+body.show-badge .calendly-badge-widget{opacity:1 !important;transform:none !important;pointer-events:auto !important}
+
+/* smaller hero heading on phones so the booking button stays on the first screen */
+@media(max-width:640px){.hero h1{font-size:32px;line-height:1.15}}
 </style>
 </head>
 <body>
@@ -296,7 +303,7 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
     <p class="hero-sub">
       A private Clarity Session for women who feel deeply affected by one
-      specific person — even when the story has gone quiet.
+      specific person, even when the story has gone quiet.
     </p>
 
     <p>
@@ -772,6 +779,18 @@ function slideVoices(dir){
     },220);
   })})});
   box.querySelector('.mq-again').addEventListener('click',function(){ans={};box.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});show(0);});
+})();
+</script>
+<script>
+/* Show the floating badge only after the hero button has scrolled away,
+   and hide it again while the big booking block is on screen. */
+(function(){
+  var hero=document.querySelector('[data-cta="hero"]'), book=document.getElementById('book');
+  if(!hero||!('IntersectionObserver' in window)){document.body.classList.add('show-badge');return;}
+  var heroVisible=true, bookVisible=false;
+  function upd(){document.body.classList.toggle('show-badge', !heroVisible && !bookVisible);}
+  new IntersectionObserver(function(e){heroVisible=e[0].isIntersecting;upd();}).observe(hero);
+  if(book) new IntersectionObserver(function(e){bookVisible=e[0].isIntersecting;upd();},{threshold:.25}).observe(book);
 })();
 </script>
 </body>
