@@ -55,8 +55,28 @@ p.tight{margin-bottom:10px}
 section{padding:62px 0;border-top:1px solid var(--border)}
 section:first-of-type{border-top:none}
 
-.hero{padding:76px 0 54px}
+.hero{
+  position:relative;
+  padding:104px 0 82px;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  width:520px;
+  height:520px;
+  top:-210px;
+  right:-180px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,110,.16) 0%,rgba(201,169,110,.05) 38%,transparent 72%);
+  pointer-events:none;
+}
+.hero > *{position:relative}
 .hero p{max-width:640px}
+.hero h1{max-width:690px;font-size:clamp(42px,7vw,68px);letter-spacing:-.2px}
+.hero .btn-gold{margin-top:18px}
+.hero-meta{margin-top:20px;color:var(--text3);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.hero-question{margin-top:28px}
 .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,2.4vw,23px);
   color:var(--gold);line-height:1.4;margin:20px 0 30px;max-width:620px}
 
@@ -208,16 +228,33 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 <div class="wrap">
 
   <section class="hero">
-    <div class="kicker">Clarity Session</div>
-    <h1>Understand the connection you <em>cannot explain</em></h1>
-    <p class="lead">A private session for women who still feel deeply affected by one specific person.</p>
-    <p>We look at what keeps repeating between you and what you can choose now.</p>
+    <div class="kicker">Private one-to-one reading · 45 minutes</div>
 
-    <div style="margin-top:30px">
-      <div class="btn-line">45 minutes live on video. Personal 11 page reading within 24 hours. $111.</div>
-      <div class="quiet" style="margin-top:14px">Not sure if this is right for you?
-        <a href="https://instagram.com/starseedsoul.type" target="_blank" rel="noopener"
-           data-cta="dm-hero">DM me CLARITY on Instagram</a>.</div>
+    <h1>
+      When one connection still lives inside you,
+      <em>there may be more to understand.</em>
+    </h1>
+
+    <p class="hero-sub">
+      A private Clarity Session for women who feel deeply affected by one
+      specific person — even when the story has gone quiet.
+    </p>
+
+    <p>
+      We look at the pattern beneath the intensity, the silence, the longing,
+      and the questions you have not been able to put into words.
+    </p>
+
+    <a href="#book" class="btn-gold" data-cta="hero">Book a Clarity Session</a>
+
+    <div class="hero-meta">
+      Live on video · Personal 11-page reading within 24 hours · $111
+    </div>
+
+    <div class="quiet hero-question">
+      Not sure if this is right for you?
+      <a href="https://instagram.com/starseedsoul.type" target="_blank" rel="noopener"
+         data-cta="dm-hero">DM me CLARITY on Instagram</a>
     </div>
   </section>
 
