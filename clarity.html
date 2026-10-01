@@ -122,6 +122,42 @@ ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);fo
 .block{margin-bottom:34px}
 .block h3{margin-bottom:10px}
 .block p:last-child{margin-bottom:0}
+.clarity-takeaways{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:34px;
+}
+.clarity-takeaway{
+  display:flex;
+  flex-direction:column;
+  min-height:250px;
+  padding:28px 24px 24px;
+  background:linear-gradient(145deg,#151515,#101010);
+  border:1px solid var(--border2);
+}
+.takeaway-number{
+  margin-bottom:28px;
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:2px;
+}
+.clarity-takeaway h3{
+  margin-bottom:14px;
+  font-size:23px;
+  line-height:1.15;
+}
+.clarity-takeaway p{
+  margin-bottom:0;
+  font-size:15px;
+  line-height:1.65;
+  color:var(--text2);
+}
+@media(max-width:700px){
+  .clarity-takeaways{grid-template-columns:1fr;gap:12px}
+  .clarity-takeaway{min-height:auto;padding:24px 22px}
+  .takeaway-number{margin-bottom:18px}
+}
 
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);
   border:1px solid var(--border);margin:26px 0}
@@ -449,32 +485,37 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 
     <p>
       The purpose of the session is to bring more clarity to the connection
-      you have been carrying — by looking at the whole picture, not just one
+      you have been carrying by looking at the whole picture, not just one
       part of the experience.
     </p>
 
-    <div class="block">
-      <h3>The emotional reality</h3>
-      <p>
-        Understand why this connection may still feel so present, even when
-        there has been distance, silence, or very little contact.
-      </p>
-    </div>
+    <div class="clarity-takeaways">
+      <article class="clarity-takeaway">
+        <div class="takeaway-number">01</div>
+        <h3>The emotional reality</h3>
+        <p>
+          Understand why this connection may still feel so present, even when
+          there has been distance, silence, or very little contact.
+        </p>
+      </article>
 
-    <div class="block">
-      <h3>The pattern beneath it</h3>
-      <p>
-        Look more closely at the attraction, longing, dreams, synchronicities,
-        uncertainty, and repeated thoughts that keep bringing you back to him.
-      </p>
-    </div>
+      <article class="clarity-takeaway">
+        <div class="takeaway-number">02</div>
+        <h3>The pattern beneath it</h3>
+        <p>
+          Look more closely at the attraction, longing, dreams, synchronicities,
+          uncertainty, and repeated thoughts that keep bringing you back to him.
+        </p>
+      </article>
 
-    <div class="block">
-      <h3>What this means for you now</h3>
-      <p>
-        Bring together what you feel, what has happened, and what you need
-        at this point in your life.
-      </p>
+      <article class="clarity-takeaway">
+        <div class="takeaway-number">03</div>
+        <h3>What this means for you now</h3>
+        <p>
+          Bring together what you feel, what has happened, and what you need
+          at this point in your life.
+        </p>
+      </article>
     </div>
   </section>
 
