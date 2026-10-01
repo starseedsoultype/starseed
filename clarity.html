@@ -93,12 +93,10 @@ section:first-of-type{border-top:none}
 .hero-photo img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;
   border:1px solid rgba(201,169,110,.55)}
 .hero-photo::before{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid var(--gold);
-  transform:translate(12px,10px);animation:heroRing 9s ease-in-out infinite}
+  transform:rotate(45deg) translateX(12px);will-change:transform;animation:heroRing 14s linear infinite}
 @keyframes heroRing{
-  0%,100%{transform:translate(12px,10px)}
-  25%{transform:translate(-9px,12px)}
-  50%{transform:translate(-11px,-8px)}
-  75%{transform:translate(10px,-10px)}
+  from{transform:rotate(45deg) translateX(12px)}
+  to{transform:rotate(405deg) translateX(12px)}
 }
 @keyframes heroPhotoIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(max-width:640px){.hero{padding-top:56px}.hero-photo{float:none;width:118px;margin:12px 0 30px 14px}}
@@ -338,26 +336,9 @@ body.show-badge .calendly-badge-widget{opacity:1 !important;transform:none !impo
       <li>Why do I still feel him after months or years of silence?</li>
       <li>Why did one brief encounter affect me more than relationships I actually lived through?</li>
       <li>Why did he pull away when things became real?</li>
-      <li>Am I feeling his emotions, or am I projecting my own?</li>
-      <li>Why do the dreams, synchronicities, songs, numbers, and reminders keep appearing when I try to let go?</li>
-      <li>Why do I love my partner and still feel deeply connected to someone else?</li>
-      <li>Is this a soul connection, limerence, a trauma response, or something I do not have words for yet?</li>
-      <li>Do I need to wait for him, release him, contact him, or finally choose myself?</li>
+      <li>Why do the signs, songs and numbers keep appearing when I try to let go?</li>
     </ul>
-    <p style="margin-top:28px">
-      You may be living a full life on the outside while this connection continues to take up
-      space inside you. You may be tired of explaining it to people who reduce everything to “If
-      he wanted to be with you, he would.”
-    </p>
-    <p>
-      That may be a practical truth. But it does not automatically explain the emotional reality
-      you are living with.
-    </p>
-    <p>
-      You are allowed to look at both: what you feel and what is actually happening. You do not
-      have to prove the spiritual explanation before you are allowed to take your experience
-      seriously.
-    </p>
+    <p style="margin-top:28px">Maybe your life looks full from the outside, and this connection still takes up space inside you.</p>
   </section>
 
   <section class="conn-sec">
