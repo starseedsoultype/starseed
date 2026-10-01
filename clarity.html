@@ -291,6 +291,21 @@ body.show-badge .calendly-badge-widget{opacity:1 !important;transform:none !impo
 
 /* smaller hero heading on phones so the booking button stays on the first screen */
 @media(max-width:640px){.hero h1{font-size:32px;line-height:1.15}}
+
+/* scroll animations (added by JS only, so the page stays readable without it) */
+.anim .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.anim .reveal.in{opacity:1;transform:none}
+.anim .qlist li{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease}
+.anim .qlist li.in{opacity:1;transform:none}
+@keyframes cardPeek{0%,100%{transform:perspective(1300px) rotateY(0)}45%{transform:perspective(1300px) rotateY(-24deg)}}
+.cflip.peek{animation:cardPeek 1.3s ease-in-out}
+ol.steps li::before{transition:background .5s ease,border-color .5s ease,box-shadow .5s ease}
+ol.steps li::after{content:'';position:absolute;left:18px;top:42px;bottom:-26px;width:1px;background:var(--gold);opacity:.45;
+  transform:scaleY(0);transform-origin:top;transition:transform .6s ease .25s}
+ol.steps li:last-child::after{display:none}
+.anim ol.steps li::after{transform:scaleY(0)}
+ol.steps li.lit::before{background:rgba(201,169,110,.14);border-color:var(--gold);box-shadow:0 0 18px rgba(201,169,110,.25)}
+ol.steps li.lit::after,html:not(.anim) ol.steps li::after{transform:scaleY(1)}
 </style>
 </head>
 <body>
@@ -694,6 +709,26 @@ body.show-badge .calendly-badge-widget{opacity:1 !important;transform:none !impo
     },220);
   })})});
   box.querySelector('.mq-again').addEventListener('click',function(){ans={};box.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});show(0);});
+})();
+</script>
+<script>
+/* Scroll animations: sections rise in, questions arrive one by one,
+   the first connection card peeks once, session steps light up in turn. */
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('anim');
+  function once(el,fn,th){ if(!el) return; new IntersectionObserver(function(e,o){ if(e[0].isIntersecting){ o.disconnect(); fn(); } },{threshold:th||.15}).observe(el); }
+  document.querySelectorAll('.wrap > section:not(.hero)').forEach(function(s){
+    s.classList.add('reveal'); once(s,function(){ s.classList.add('in'); },.08);
+  });
+  var q=document.querySelector('.qlist');
+  once(q,function(){ q.querySelectorAll('li').forEach(function(li,i){ setTimeout(function(){ li.classList.add('in'); },300+i*450); }); },.3);
+  var card=document.querySelector('.cflip');
+  once(card,function(){ setTimeout(function(){ if(!card.classList.contains('on')) card.classList.add('peek'); },700); },.6);
+  if(card) card.addEventListener('animationend',function(){ card.classList.remove('peek'); });
+  var steps=document.querySelector('ol.steps');
+  once(steps,function(){ steps.querySelectorAll('li').forEach(function(li,i){ setTimeout(function(){ li.classList.add('lit'); },200+i*650); }); },.25);
 })();
 </script>
 <script>
