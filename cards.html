@@ -85,14 +85,6 @@ header{padding:44px 0 26px}
 .face img{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);object-fit:contain;border-radius:6px}
 .face::after{content:"";position:absolute;inset:7px;border:1px solid rgba(201,169,110,.45);border-radius:10px;pointer-events:none}
 
-/* reflection */
-.reflect{max-width:440px;margin:42px auto 0;opacity:0;transition:opacity .8s}
-.reflect.on{opacity:1}
-.qs{list-style:none}
-.qs li{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.35;color:var(--text);
-  margin-bottom:18px;display:none;animation:rise .7s ease both}
-.qs li.seen{display:block;color:var(--text3);font-size:19px}
-.qs li.now{display:block}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 .btn{display:inline-block;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.6px;text-transform:uppercase;
@@ -102,12 +94,8 @@ header{padding:44px 0 26px}
 .btn.solid{background:var(--gold);color:var(--bg);border-color:var(--gold)}
 .btn.solid:hover{background:var(--gold2)}
 
-.closing{display:none;margin-top:10px}
-.redraw{background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text3);padding:10px;margin-top:20px;opacity:0;pointer-events:none;transition:opacity .6s,color .3s}
-.redraw.on{opacity:1;pointer-events:auto}
-.redraw:hover{color:var(--gold)}
+.closing{display:none;max-width:440px;margin:30px auto 0}
 .closing.on{display:block;animation:rise .8s ease both}
-.mirror{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--gold2);margin:8px 0 26px}
 
 .next-step{margin:64px auto 0;padding:40px 0 0;border-top:1px solid var(--border)}
 .next-step p{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.4;color:var(--text2);margin-bottom:20px}
@@ -118,7 +106,7 @@ footer .logo span{color:var(--gold)}
 
 @media (prefers-reduced-motion:reduce){
   .big,.fan .card{transition:none}
-  .qs li,.closing.on{animation:none}
+  .closing.on{animation:none}
 }
 </style>
 </head>
@@ -192,20 +180,8 @@ footer .logo span{color:var(--gold)}
       <div class="side back"><svg><use href="#cardBack"/></svg></div>
       <div class="side face"><div class="blur" id="faceBlur"></div><img id="faceImg" alt="Your metaphor card"></div>
     </div>
-    <button class="redraw" id="redraw" data-t="redraw">Choose another card</button>
 
-    <div class="reflect" id="reflect">
-      <ol class="qs" id="qs">
-        <li data-t="q1">What do you see first?</li>
-        <li data-t="q2">Where are you in this picture?</li>
-        <li data-t="q3">What do you feel as you look at it?</li>
-        <li data-t="q4">What is the image telling you?</li>
-        <li data-t="q5">What is one small step it suggests?</li>
-      </ol>
-      <button class="btn" id="nextQ" data-t="next">Next question</button>
-
-      <div class="closing" id="closing">
-        <p class="mirror" data-t="mirror">The card holds a mirror. The meaning comes from you.</p>
+    <div class="closing" id="closing">
         <button class="btn" id="again" data-t="again">Draw another card</button>
         <a class="btn" id="save" download data-t="save">Save this card</a>
 
@@ -213,7 +189,6 @@ footer .logo span{color:var(--gold)}
           <p data-t="cta">When your question is about one person,<br>go deeper together with me.</p>
           <a class="btn solid" id="ctaLink" href="clarity.html" data-t="ctaBtn">Clarity Session</a>
         </div>
-      </div>
     </div>
   </section>
 
@@ -250,16 +225,8 @@ const TEXT = {
     kicker: 'Metaphor Cards',
     title: 'Hold a question.',
     placeholder: 'What is on your mind right now?',
-    q1: 'What do you see first?',
-    q2: 'Where are you in this picture?',
-    q3: 'What do you feel as you look at it?',
-    q4: 'What is the image telling you?',
-    q5: 'What is one small step it suggests?',
-    next: 'Next question',
-    mirror: 'The card holds a mirror. The meaning comes from you.',
     again: 'Draw another card',
     save: 'Save this card',
-    redraw: 'Choose another card',
     cta: 'When your question is about one person,<br>go deeper together with me.',
     ctaBtn: 'Clarity Session',
     ctaHref: 'clarity.html',
@@ -273,16 +240,8 @@ const TEXT = {
     kicker: 'Метафорические карты',
     title: 'Загадайте вопрос.',
     placeholder: 'О чём вы сейчас думаете?',
-    q1: 'Что вы видите первым?',
-    q2: 'Где вы на этой картинке?',
-    q3: 'Что вы чувствуете, когда смотрите на неё?',
-    q4: 'Что говорит вам эта картинка?',
-    q5: 'Какой маленький шаг она подсказывает?',
-    next: 'Следующий вопрос',
-    mirror: 'Карта держит зеркало. Смысл рождается в вас.',
     again: 'Вытянуть ещё карту',
     save: 'Сохранить карту',
-    redraw: 'Выбрать другую карту',
     cta: 'Когда ваш вопрос касается одного человека,<br>давайте посмотрим глубже вместе.',
     ctaBtn: 'Личная сессия',
     ctaHref: 'ru.html#session',
@@ -332,13 +291,9 @@ const stage = document.getElementById('stage');
 const big = document.getElementById('big');
 const faceImg = document.getElementById('faceImg');
 const faceBlur = document.getElementById('faceBlur');
-const reflect = document.getElementById('reflect');
-const questions = [...document.querySelectorAll('#qs li')];
-const nextQ = document.getElementById('nextQ');
 const closing = document.getElementById('closing');
 const question = document.getElementById('question');
 let lastCard = null;
-let step = 0;
 
 function layFan() {
   fan.innerHTML = '';
@@ -397,44 +352,23 @@ function pick(card) {
       faceBlur.style.backgroundImage = 'url(' + src + ')';
       document.getElementById('save').href = src;
       setTimeout(() => big.classList.add('flip'), 350);
-      setTimeout(() => redrawBtn.classList.add('on'), 1300);
-      setTimeout(() => { reflect.classList.add('on'); showQuestion(0); }, 1700);
+      setTimeout(() => closing.classList.add('on'), 1300);
     });
   }, 650);
 
   if (window.gtag) gtag('event', 'card_draw');
 }
 
-function showQuestion(n) {
-  step = n;
-  questions.forEach((li, i) => {
-    li.className = i < n ? 'seen' : i === n ? 'now' : '';
-  });
-  if (n === questions.length - 1) {
-    nextQ.style.display = 'none';
-    closing.classList.add('on');
-  }
-}
-
-nextQ.addEventListener('click', () => showQuestion(step + 1));
-
-const redrawBtn = document.getElementById('redraw');
-
-// Back to the fan at any moment, with the question kept.
+// Back to the fan, with the question kept.
 function drawAgain() {
   big.classList.remove('flip');
-  redrawBtn.classList.remove('on');
-  reflect.classList.remove('on');
   closing.classList.remove('on');
-  nextQ.style.display = '';
-  questions.forEach(li => li.className = '');
   stage.classList.remove('on');
   layFan();
   question.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 document.getElementById('again').addEventListener('click', drawAgain);
-redrawBtn.addEventListener('click', drawAgain);
 
 question.addEventListener('keydown', e => {
   if (e.key === 'Enter') { question.blur(); fan.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
