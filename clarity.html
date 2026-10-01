@@ -216,6 +216,25 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
 @media(min-width:700px){.ccar{margin:28px 0 0}.cslide{flex-basis:300px}}
 @media(prefers-reduced-motion:reduce){.cface{transition:none}}
 
+
+/* readiness mini quiz */
+.mq-sec{text-align:center}
+.mq{max-width:560px;margin:26px auto 0;border:1px solid rgba(201,169,110,.3);background:radial-gradient(90% 70% at 50% 0%,rgba(201,169,110,.10),transparent 70%),#0d0d0e;padding:30px 22px 26px}
+.mq-dots{display:flex;justify-content:center;gap:8px;margin-bottom:22px}
+.mq-dots span{width:7px;height:7px;border-radius:50%;background:rgba(201,169,110,.25);transition:background .3s}
+.mq-dots span.on{background:var(--gold)}
+.mq-step,.mq-result{display:none;animation:mqIn .45s ease}
+.mq-step.on,.mq-result.on{display:block}
+@keyframes mqIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mq-q{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.3;color:var(--text);margin-bottom:20px}
+.mq-opts{display:flex;flex-direction:column;gap:9px}
+.mq-opts button{background:transparent;border:1px solid rgba(201,169,110,.28);color:var(--text2);font:300 15px 'Inter',sans-serif;padding:14px 16px;cursor:pointer;transition:all .2s;text-align:center}
+.mq-opts button:hover,.mq-opts button.sel{border-color:var(--gold);color:var(--text);background:rgba(201,169,110,.08)}
+.mq-eye{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.mq-title{font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.2;color:var(--text);margin-bottom:14px}
+.mq-line{margin:0 auto 24px;max-width:440px}
+.mq-again{display:block;margin:16px auto 0;background:none;border:none;color:var(--text3);font:300 12px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.mq-step,.mq-result{animation:none}}
 </style>
 </head>
 <body>
@@ -368,6 +387,33 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
       <button class="ccar-btn ccar-next" type="button" aria-label="Next">›</button>
     </div>
     <div class="cdots"></div>
+  </section>
+
+  <section class="mq-sec" id="ready">
+    <h2>Is a Clarity Session <em>right for you?</em></h2>
+    <p>Three quick taps. About twenty seconds.</p>
+    <div class="mq" data-mq>
+      <div class="mq-dots"><span class="on"></span><span></span><span></span></div>
+      <div class="mq-step on" data-q="1">
+        <div class="mq-q">How long has this connection been with you?</div>
+        <div class="mq-opts"><button type="button" data-a="weeks">A few weeks</button><button type="button" data-a="months">Months</button><button type="button" data-a="years">Years</button></div>
+      </div>
+      <div class="mq-step" data-q="2">
+        <div class="mq-q">What do you want most right now?</div>
+        <div class="mq-opts"><button type="button" data-a="repeat">To understand what keeps repeating</button><button type="button" data-a="decision">To make a clear decision</button><button type="button" data-a="alone">To feel less alone with it</button><button type="button" data-a="feelings">To understand my own feelings</button><button type="button" data-a="comeback">To know if he will come back</button></div>
+      </div>
+      <div class="mq-step" data-q="3">
+        <div class="mq-q">How does it live in you today?</div>
+        <div class="mq-opts"><button type="button" data-a="daily">In my first thought every morning</button><button type="button" data-a="waves">It comes in waves</button><button type="button" data-a="quiet">It is quieter, and still unfinished</button></div>
+      </div>
+      <div class="mq-result">
+        <div class="mq-eye">Your answer</div>
+        <div class="mq-title">You are ready for a Clarity Session.</div>
+        <p class="mq-line" id="mq-line"></p>
+        <a class="btn-gold" href="https://calendly.com/alexandrapsy/alexandrapsy_clarity" data-cta="quiz-result">Book Your Clarity Session · $111</a>
+        <button type="button" class="mq-again">Start again</button>
+      </div>
+    </div>
   </section>
 
   <section>
@@ -660,6 +706,25 @@ function slideVoices(dir){
   track.addEventListener('scroll',function(){requestAnimationFrame(mark)},{passive:true});
   car.querySelectorAll('.cflip').forEach(function(f){f.addEventListener('click',function(e){if(e.target.closest('.cb-btn'))return;f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}})});
   mark();
+})();
+</script>
+<script>
+(function(){
+  var box=document.querySelector('[data-mq]'); if(!box) return;
+  var steps=box.querySelectorAll('.mq-step'), dots=box.querySelectorAll('.mq-dots span'), res=box.querySelector('.mq-result'), ans={};
+  var first={weeks:'Even a few weeks can leave a deep mark.',months:'Months of carrying this deserve one honest conversation.',years:'Years of carrying this deserve one honest conversation.'};
+  var second={repeat:'Together we trace what keeps repeating, and what it is showing you.',decision:'We map the connection so your decision comes from clarity.',alone:'For one hour, all of it can be said out loud and heard.',feelings:'We give words to what you feel, so it finally makes sense.',comeback:'This is the question that brings most women here. In the session we look at what this connection is asking of you now, so your next step comes from clarity.'};
+  function ev(n,p){try{if(typeof gtag==='function')gtag('event',n,p||{})}catch(e){}}
+  function show(i){steps.forEach(function(s,k){s.classList.toggle('on',k===i)});res.classList.toggle('on',i===steps.length);dots.forEach(function(d,k){d.classList.toggle('on',k<=Math.min(i,dots.length-1))});}
+  steps.forEach(function(st,i){st.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
+    st.querySelectorAll('button').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');
+    ans['q'+(i+1)]=b.getAttribute('data-a'); ev('clarity_quiz_answer',{question:'q'+(i+1),answer:b.getAttribute('data-a')});
+    setTimeout(function(){
+      if(i+1===steps.length){document.getElementById('mq-line').textContent=(first[ans.q1]||'')+' '+(second[ans.q2]||'');ev('clarity_quiz_complete',{q1:ans.q1,q2:ans.q2,q3:ans.q3});}
+      show(i+1);
+    },220);
+  })})});
+  box.querySelector('.mq-again').addEventListener('click',function(){ans={};box.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});show(0);});
 })();
 </script>
 </body>
