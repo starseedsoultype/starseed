@@ -125,9 +125,13 @@ ul.plain li::before{content:'·';position:absolute;left:6px;color:var(--gold);fo
 .voices-nav button:hover{background:rgba(201,169,110,0.07)}
 @media(max-width:640px){.voice{flex:0 0 84%}}
 
-.faq-q{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--text);margin-bottom:10px}
 .faq-item{padding:26px 0;border-bottom:1px solid var(--border)}
 .faq-item:last-child{border-bottom:none}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:24px;font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--text);cursor:pointer;list-style:none}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q::after{content:'+';flex:0 0 auto;font-family:'Inter',sans-serif;font-size:24px;font-weight:200;line-height:1;color:var(--gold)}
+.faq-item[open] .faq-q::after{content:'×'}
+.faq-item p{margin-top:18px}
 
 .cta{text-align:center;padding:70px 0 78px}
 .btn-gold{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0A0A0A;
@@ -459,40 +463,30 @@ footer{border-top:1px solid var(--border);padding:52px 24px;text-align:center}
   <section>
     <h2>Questions women ask <em>before booking</em></h2>
 
-    <div class="faq-item">
-      <div class="faq-q">What if we have not spoken in years?</div>
-      <p style="margin-bottom:0">You can still bring the connection. Long silence is often part of
-      what makes the experience so difficult. We will work with what you have actually
-      experienced, without inventing contact or promises where there are none.</p>
-    </div>
+    <details class="faq-item">
+      <summary class="faq-q">What if we have not spoken in years?</summary>
+      <p>You can still bring the connection. Long silence is often part of what makes the experience so difficult. We will work with what you have actually experienced, without inventing contact or promises where there are none.</p>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-q">What if we barely knew each other?</div>
-      <p style="margin-bottom:0">That happens. Sometimes the intensity arrives after a brief
-      encounter, an online connection, or a moment that seemed ordinary to everyone else. We will
-      explore why the experience has carried so much weight for you and what it means for your
-      life now.</p>
-    </div>
+    <details class="faq-item">
+      <summary class="faq-q">What if we barely knew each other?</summary>
+      <p>That happens. Sometimes the intensity arrives after a brief encounter, an online connection, or a moment that seemed ordinary to everyone else. We will explore why the experience has carried so much weight for you and what it means for your life now.</p>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-q">What if I am married or in another relationship?</div>
-      <p style="margin-bottom:0">You can still bring the situation. Having feelings does not
-      automatically tell you what action to take. We can make space for the complexity without
-      shame or impulsive advice.</p>
-    </div>
+    <details class="faq-item">
+      <summary class="faq-q">What if I am married or in another relationship?</summary>
+      <p>You can still bring the situation. Having feelings does not automatically tell you what action to take. We can make space for the complexity without shame or impulsive advice.</p>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-q">Is this therapy?</div>
-      <p style="margin-bottom:0">No. This is a personal relationship reading, not psychotherapy,
-      diagnosis, or mental health treatment. The session is designed for reflection, language, and
-      clarity.</p>
-    </div>
+    <details class="faq-item">
+      <summary class="faq-q">Is this therapy?</summary>
+      <p>No. This is a personal relationship reading, not psychotherapy, diagnosis, or mental health treatment. The session is designed for reflection, language, and clarity.</p>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-q">What do I receive?</div>
-      <p style="margin-bottom:0">You receive a private 45 minute video session and an 11 page personal
-      reading delivered within 24 hours.</p>
-    </div>
+    <details class="faq-item">
+      <summary class="faq-q">What do I receive?</summary>
+      <p>You receive a private 45 minute video session and an 11 page personal reading delivered within 24 hours.</p>
+    </details>
   </section>
 
 
