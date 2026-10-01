@@ -80,6 +80,12 @@ section:first-of-type{border-top:none}
 .signoff img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:1px solid rgba(201,169,110,.5);flex-shrink:0}
 .signoff-name{font-family:'Pinyon Script',cursive;font-size:28px;line-height:1;color:var(--gold)}
 .signoff-role{margin-top:8px;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text3)}
+/* sign-off appears on scroll, then the signature writes itself left to right */
+.anim .signoff{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s ease}
+.anim .signoff-name{clip-path:inset(0 100% 0 0);transition:clip-path 1.6s cubic-bezier(.45,.05,.35,1) .6s}
+.anim .signoff.in{opacity:1;transform:none}
+.anim .signoff.in .signoff-name{clip-path:inset(0 -10% 0 0)}
+@media(prefers-reduced-motion:reduce){.anim .signoff,.anim .signoff-name{opacity:1;transform:none;clip-path:none;transition:none}}
 
 /* hero portrait: circle with an offset gold ring that slowly drifts */
 .hero-photo{float:left;position:relative;width:180px;aspect-ratio:1;margin:6px 40px 24px 4px;
@@ -707,6 +713,17 @@ body.show-badge .calendly-badge-widget{opacity:1 !important;transform:none !impo
     },220);
   })})});
   box.querySelector('.mq-again').addEventListener('click',function(){ans={};box.querySelectorAll('.sel').forEach(function(x){x.classList.remove('sel')});show(0);});
+})();
+</script>
+<script>
+/* Sign-off: fade in when it scrolls into view, then write the signature. */
+(function(){
+  var s=document.querySelector('.signoff');
+  if(!s||!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('anim');
+  new IntersectionObserver(function(e,o){
+    if(e[0].isIntersecting){s.classList.add('in');o.disconnect();}
+  },{threshold:.6}).observe(s);
 })();
 </script>
 <script>
