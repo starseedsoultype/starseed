@@ -46,7 +46,10 @@ nav{position:sticky;top:0;z-index:50;display:flex;justify-content:center;align-i
 .lang button:hover{color:var(--text2)}
 .lang button.on{color:var(--gold)}
 
-.kicker{font-size:10px;letter-spacing:3.4px;text-transform:uppercase;color:var(--text3);margin-bottom:18px}
+.decks{display:inline-flex;gap:4px;margin-bottom:22px;border:1px solid var(--border2);border-radius:40px;padding:4px}
+.decks button{background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--text3);padding:9px 16px;border-radius:40px;transition:all .3s}
+.decks button:hover{color:var(--text2)}
+.decks button.on{background:rgba(201,169,110,0.12);color:var(--gold)}
 h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(34px,7vw,52px);line-height:1.12;letter-spacing:.5px}
 h1 em{font-style:italic;color:var(--gold)}
 header{padding:44px 0 26px}
@@ -167,7 +170,7 @@ footer .logo span{color:var(--gold)}
 <main class="wrap">
 
   <header>
-    <div class="kicker" data-t="kicker">Metaphor Cards</div>
+    <div class="decks"><button data-deck="mak" data-t="tabMak">Metaphor Cards</button><button data-deck="resource" data-t="tabRes">Resource Cards</button></div>
     <h1 data-t="title">Hold a question.</h1>
   </header>
 
@@ -203,21 +206,31 @@ footer .logo span{color:var(--gold)}
 </footer>
 
 <script>
-// The deck: every picture inside the "mak" folder.
-// The page asks GitHub for the folder contents, so a new upload joins the deck by itself.
-// If GitHub does not answer, cards 01 to 40 are used.
-const CARDS = [];
-for (let n = 1; n <= 40; n++) CARDS.push('mak/' + String(n).padStart(2, '0') + '.jpeg');
+// Two decks, each one is a folder: "mak" for metaphor cards, "resource" for resource cards.
+// The page asks GitHub for the folder contents, so a new upload joins its deck by itself.
+// If GitHub does not answer, the fallback list is used.
+const DECKS = {
+  mak: { cards: [] },
+  resource: { cards: [] }
+};
+for (let n = 1; n <= 40; n++) DECKS.mak.cards.push('mak/' + String(n).padStart(2, '0') + '.jpeg');
+for (let n = 1; n <= 10; n++) DECKS.resource.cards.push('resource/' + String(n).padStart(2, '0') + '.webp');
 
-fetch('https://api.github.com/repos/starseedsoultype/starseed/contents/mak')
-  .then(r => r.ok ? r.json() : [])
-  .then(files => {
-    const found = files
-      .filter(f => f.type === 'file' && /\.(jpe?g|png|webp)$/i.test(f.name))
-      .map(f => 'mak/' + f.name);
-    if (found.length) CARDS.splice(0, CARDS.length, ...found);
-  })
-  .catch(() => {});
+Object.keys(DECKS).forEach(folder => {
+  fetch('https://api.github.com/repos/starseedsoultype/starseed/contents/' + folder)
+    .then(r => r.ok ? r.json() : [])
+    .then(files => {
+      const found = files
+        .filter(f => f.type === 'file' && /\.(jpe?g|png|webp)$/i.test(f.name))
+        .map(f => folder + '/' + f.name);
+      if (found.length) DECKS[folder].cards.splice(0, DECKS[folder].cards.length, ...found);
+    })
+    .catch(() => {});
+});
+
+// A link with ?deck=resource opens the resource deck right away.
+let deck = new URLSearchParams(location.search).get('deck') === 'resource' ? 'resource' : 'mak';
+let CARDS = DECKS[deck].cards;
 
 const FAN_SIZE = 7;
 
@@ -225,8 +238,10 @@ const FAN_SIZE = 7;
 const TEXT = {
   en: {
     pageTitle: 'Metaphor Cards · Draw a card for your question · StarSeedSoul',
-    kicker: 'Metaphor Cards',
+    tabMak: 'Metaphor Cards',
+    tabRes: 'Resource Cards',
     title: 'Hold a question.',
+    titleRes: 'What supports you today?',
     placeholder: 'What is on your mind right now?',
     again: 'Draw another card',
     save: 'Save this card',
@@ -240,8 +255,10 @@ const TEXT = {
   },
   ru: {
     pageTitle: 'Метафорические карты · Вытяните карту на свой вопрос · StarSeedSoul',
-    kicker: 'Метафорические карты',
+    tabMak: 'Метафорические',
+    tabRes: 'Ресурсные',
     title: 'Загадайте вопрос.',
+    titleRes: 'Что поддержит вас сегодня?',
     placeholder: 'О чём вы сейчас думаете?',
     again: 'Вытянуть ещё карту',
     save: 'Сохранить карту',
@@ -272,6 +289,8 @@ function applyLang() {
   document.documentElement.lang = lang;
   document.title = T.pageTitle;
   document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = T[el.dataset.t]; });
+  document.querySelector('h1').innerHTML = deck === 'resource' ? T.titleRes : T.title;
+  document.querySelectorAll('.decks button').forEach(b => b.classList.toggle('on', b.dataset.deck === deck));
   document.getElementById('question').placeholder = T.placeholder;
   document.getElementById('ctaLink').href = T.ctaHref;
   document.getElementById('home').href = T.home;
@@ -359,7 +378,7 @@ function pick(card) {
     });
   }, 650);
 
-  if (window.gtag) gtag('event', 'card_draw');
+  if (window.gtag) gtag('event', 'card_draw', { deck: deck });
 }
 
 // Back to the fan, with the question kept.
@@ -372,6 +391,19 @@ function drawAgain() {
 }
 
 document.getElementById('again').addEventListener('click', drawAgain);
+
+document.querySelectorAll('.decks button').forEach(b => b.addEventListener('click', () => {
+  if (b.dataset.deck === deck) return;
+  deck = b.dataset.deck;
+  CARDS = DECKS[deck].cards;
+  lastCard = null;
+  history.replaceState(null, '', deck === 'resource' ? '?deck=resource' : location.pathname);
+  big.classList.remove('flip');
+  closing.classList.remove('on');
+  stage.classList.remove('on');
+  layFan();
+  applyLang();
+}));
 
 question.addEventListener('keydown', e => {
   if (e.key === 'Enter') { question.blur(); fan.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
