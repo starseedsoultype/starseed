@@ -29,7 +29,7 @@
   --border:rgba(201,169,110,0.08); --border2:rgba(201,169,110,0.18);
   --text:#E8E4DF; --text2:#C9C1B8; --text3:#7A7672; --text4:#5F5A55;
   --gold:#C9A96E; --gold2:#E8D5A8;
-  --card-w:min(300px,74vw);
+  --card-w:min(300px,74vw,calc((100svh - 330px) * 0.667));
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -77,7 +77,8 @@ header{padding:44px 0 26px}
 /* the drawn card */
 .stage{display:none;perspective:1400px;margin:10px auto 0;scroll-margin-top:84px}
 .stage.on{display:block}
-.your-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--text2);margin-bottom:22px;min-height:1px}
+.your-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--text2);margin-bottom:14px;min-height:1px}
+.your-q:empty{display:none}
 .big{position:relative;width:var(--card-w);aspect-ratio:2/3;margin:0 auto;transform-style:preserve-3d;
   transition:transform 1.1s cubic-bezier(.3,.7,.2,1)}
 .big.flip{transform:rotateY(180deg)}
@@ -87,6 +88,26 @@ header{padding:44px 0 26px}
 .face .blur{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(24px) brightness(.45);transform:scale(1.1)}
 .face img{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);object-fit:contain;border-radius:6px}
 .face::after{content:"";position:absolute;inset:7px;border:1px solid rgba(201,169,110,.45);border-radius:10px;pointer-events:none}
+
+/* questions under the card, one at a time */
+.reflect{max-width:440px;margin:22px auto 0;opacity:0;transition:opacity .6s;touch-action:pan-y}
+.reflect.on{opacity:1}
+.dots{display:flex;justify-content:center;gap:7px;margin-bottom:12px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--text4);opacity:.5;transition:all .3s}
+.dots i.on{background:var(--gold);opacity:1}
+.dots i.seen{background:var(--gold);opacity:.4}
+.q{font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.35;color:var(--text);min-height:86px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0 6px;transition:opacity .25s}
+.q.fade{opacity:0}
+.q{flex-direction:column}
+.q .hint{display:block;font-family:'Inter',sans-serif;font-size:12px;line-height:1.55;color:var(--text3);margin-top:8px;max-width:340px}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.qnav button{background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);padding:10px 6px;transition:color .3s,opacity .3s}
+.qnav button:hover{color:var(--gold2)}
+.qnav button:disabled{opacity:0;pointer-events:none}
+.redraw{background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--text3);padding:10px;margin-top:4px;transition:color .3s}
+.redraw:hover{color:var(--gold)}
+.reflect.done .redraw{display:none}
 
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -187,6 +208,16 @@ footer .logo span{color:var(--gold)}
       <div class="side face"><div class="blur" id="faceBlur"></div><img id="faceImg" alt="Your metaphor card"></div>
     </div>
 
+    <div class="reflect" id="reflect">
+      <div class="dots" id="dots"></div>
+      <p class="q" id="q" aria-live="polite"></p>
+      <div class="qnav">
+        <button id="prevQ" data-t="prev">‹ Back</button>
+        <button id="nextQ" data-t="next">Next ›</button>
+      </div>
+      <button class="redraw" id="redraw" data-t="redraw">Choose another card</button>
+    </div>
+
     <div class="closing" id="closing">
         <button class="btn" id="again" data-t="again">Draw another card</button>
         <a class="btn" id="save" download data-t="save">Save this card</a>
@@ -242,6 +273,23 @@ const TEXT = {
     tabRes: 'Resource Cards',
     title: 'Hold a question.',
     titleRes: 'What supports you today?',
+    qMak: [
+      ['What do you see on the card?', 'Describe it as if I have never seen it and must paint it from your words.'],
+      'What feelings does it bring up in you?',
+      'What do you like in this picture?',
+      'What do you dislike in this picture?',
+      'Which detail feels especially uncomfortable?',
+      'How is this connected to your question?'
+    ],
+    qRes: [
+      ['What do you see on the card?', 'Describe it as if I have never seen it and must paint it from your words.'],
+      'What feelings does it bring up in you?',
+      'What do you like in this picture?',
+      'How can this support you right now?'
+    ],
+    prev: '‹ Back',
+    next: 'Next ›',
+    redraw: 'Choose another card',
     placeholder: 'What is on your mind right now?',
     again: 'Draw another card',
     save: 'Save this card',
@@ -259,6 +307,23 @@ const TEXT = {
     tabRes: 'Ресурсные',
     title: 'Загадайте вопрос.',
     titleRes: 'Что поддержит вас сегодня?',
+    qMak: [
+      ['Что изображено на картинке?', 'Описывайте карту так, как будто я её никогда не видела, но должна буду нарисовать её по вашему описанию.'],
+      'Какие чувства она у вас вызывает?',
+      'Что вам нравится на этой картинке?',
+      'Что вам не нравится на этой картинке?',
+      'Какая деталь вызывает особый дискомфорт?',
+      'Как это связано с вашим запросом?'
+    ],
+    qRes: [
+      ['Что изображено на картинке?', 'Описывайте карту так, как будто я её никогда не видела, но должна буду нарисовать её по вашему описанию.'],
+      'Какие чувства она у вас вызывает?',
+      'Что вам нравится на этой картинке?',
+      'Как это может поддержать вас сейчас?'
+    ],
+    prev: '‹ Назад',
+    next: 'Дальше ›',
+    redraw: 'Выбрать другую карту',
     placeholder: 'О чём вы сейчас думаете?',
     again: 'Вытянуть ещё карту',
     save: 'Сохранить карту',
@@ -300,6 +365,7 @@ function applyLang() {
   const yourQ = document.getElementById('yourQ');
   const q = document.getElementById('question').value.trim();
   if (q && yourQ.textContent) yourQ.textContent = T.quote[0] + q + T.quote[1];
+  if (typeof reflect !== 'undefined' && reflect.classList.contains('on')) showQuestion(step, true);
 }
 
 document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
@@ -368,22 +434,88 @@ function pick(card) {
   setTimeout(() => {
     fan.classList.add('gone');
     stage.classList.add('on');
-    stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showStage();
     ready.then(src => {
       faceImg.src = src;
       faceBlur.style.backgroundImage = 'url(' + src + ')';
       document.getElementById('save').href = src;
       setTimeout(() => big.classList.add('flip'), 350);
-      setTimeout(() => closing.classList.add('on'), 1300);
+      setTimeout(() => { reflect.classList.add('on'); showQuestion(0, true); showStage(); }, 1300);
     });
   }, 650);
 
   if (window.gtag) gtag('event', 'card_draw', { deck: deck });
 }
 
+const reflect = document.getElementById('reflect');
+const qEl = document.getElementById('q');
+const dots = document.getElementById('dots');
+const prevQ = document.getElementById('prevQ');
+const nextQ = document.getElementById('nextQ');
+let step = 0;
+
+function questionList() { return deck === 'resource' ? T.qRes : T.qMak; }
+
+// One question at a time under the card; the buttons appear after the last one.
+function showQuestion(n, instant) {
+  const list = questionList();
+  step = Math.max(0, Math.min(n, list.length - 1));
+  const render = () => {
+    // A question can carry a quiet hint: ['question', 'hint'].
+    const item = list[step];
+    qEl.textContent = '';
+    if (Array.isArray(item)) {
+      const main = document.createElement('span');
+      main.textContent = item[0];
+      const hint = document.createElement('small');
+      hint.className = 'hint';
+      hint.textContent = item[1];
+      qEl.append(main, hint);
+    } else {
+      qEl.textContent = item;
+    }
+    qEl.classList.remove('fade');
+  };
+  if (instant) render(); else { qEl.classList.add('fade'); setTimeout(render, 250); }
+  dots.innerHTML = list.map((_, i) => '<i class="' + (i === step ? 'on' : i < step ? 'seen' : '') + '"></i>').join('');
+  prevQ.disabled = step === 0;
+  const last = step === list.length - 1;
+  nextQ.disabled = last;
+  if (last) { reflect.classList.add('done'); closing.classList.add('on'); }
+}
+
+const goNext = () => { if (step < questionList().length - 1) showQuestion(step + 1); };
+const goPrev = () => { if (step > 0) showQuestion(step - 1); };
+nextQ.addEventListener('click', goNext);
+prevQ.addEventListener('click', goPrev);
+qEl.addEventListener('click', goNext);
+
+let touchX = null;
+reflect.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+reflect.addEventListener('touchend', e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (dx < -40) goNext(); else if (dx > 40) goPrev();
+  touchX = null;
+});
+
+// Scrolls so the card sits right under the header.
+function showStage() {
+  const navH = document.querySelector('nav').offsetHeight;
+  window.scrollTo({ top: stage.getBoundingClientRect().top + window.scrollY - navH - 12, behavior: 'smooth' });
+}
+
+function resetQuestions() {
+  reflect.classList.remove('on', 'done');
+  qEl.textContent = '';
+  dots.innerHTML = '';
+  step = 0;
+}
+
 // Back to the fan, with the question kept.
 function drawAgain() {
   big.classList.remove('flip');
+  resetQuestions();
   closing.classList.remove('on');
   stage.classList.remove('on');
   layFan();
@@ -391,6 +523,7 @@ function drawAgain() {
 }
 
 document.getElementById('again').addEventListener('click', drawAgain);
+document.getElementById('redraw').addEventListener('click', drawAgain);
 
 document.querySelectorAll('.decks button').forEach(b => b.addEventListener('click', () => {
   if (b.dataset.deck === deck) return;
@@ -399,6 +532,7 @@ document.querySelectorAll('.decks button').forEach(b => b.addEventListener('clic
   lastCard = null;
   history.replaceState(null, '', deck === 'resource' ? '?deck=resource' : location.pathname);
   big.classList.remove('flip');
+  resetQuestions();
   closing.classList.remove('on');
   stage.classList.remove('on');
   layFan();
