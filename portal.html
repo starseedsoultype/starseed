@@ -190,6 +190,22 @@ footer a { color:var(--text3); text-decoration:none; }
   .facts { gap:28px; }
   .btn { display:block; text-align:center; padding:16px 20px; }
 }
+/* FINAL · WHY STEP THROUGH */
+#why { text-align:center; }
+#why .wrap { max-width:900px; }
+.why-row { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; max-width:760px; margin:8px auto 52px; }
+.why-item { font-family:'Cormorant Garamond',Georgia,serif; font-size:21px; line-height:1.35; color:var(--text); }
+.why-item::before { content:'✦'; display:block; font-size:11px; color:var(--gold); margin-bottom:12px; }
+.why-deeper { max-width:620px; margin:0 auto 52px; padding:24px 0; border-top:1px solid rgba(201,169,110,0.22); border-bottom:1px solid rgba(201,169,110,0.22); }
+.why-deeper-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:12px; }
+.why-deeper-list { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:22px; color:var(--gold2); }
+.why-deeper-list span { color:var(--text4); font-style:normal; margin:0 10px; }
+.why-note { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text4); margin-bottom:22px; }
+@media (max-width:720px) {
+  .why-row { grid-template-columns:1fr; gap:22px; margin-bottom:40px; }
+  .why-deeper-list { font-size:20px; line-height:1.7; }
+  .why-deeper-list span { display:block; height:0; overflow:hidden; margin:0; }
+}
 @media (prefers-reduced-motion:reduce) {
   .reveal { opacity:1; transform:none; transition:none; }
 }
@@ -314,6 +330,27 @@ footer a { color:var(--text3); text-decoration:none; }
         <p>Your question is with me. I will answer you personally by email.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- FINAL · WHY STEP THROUGH -->
+<section class="screen" id="why">
+  <div class="wrap reveal">
+    <div class="eyebrow">Why step through</div>
+    <h2 class="title">A name for what you have always felt.</h2>
+  </div>
+  <div class="why-row reveal">
+    <div class="why-item">Why you are the way you are</div>
+    <div class="why-item">The gift you never noticed</div>
+    <div class="why-item">Words for yourself</div>
+  </div>
+  <div class="why-deeper reveal">
+    <div class="why-deeper-label">Your full reading goes deeper</div>
+    <div class="why-deeper-list">your shadow<span>·</span>how you love<span>·</span>your path</div>
+  </div>
+  <div class="center reveal">
+    <div class="why-note">Seven questions · Three minutes · Free</div>
+    <a href="quiz.html" class="btn js-scan" data-where="final">Enter the Portal</a>
   </div>
 </section>
 
