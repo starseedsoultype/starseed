@@ -146,6 +146,38 @@ footer { padding:48px 16px; text-align:center; border-top:1px solid var(--border
 footer p { font-size:11px; letter-spacing:2px; color:var(--text4); }
 footer a { color:var(--text3); text-decoration:none; }
 
+
+/* TESTIMONIALS · WHAT SHIFTED */
+.shifted { max-width:900px; margin:0 auto 80px; padding:52px 40px 44px; border:1px solid var(--border2); background:rgba(10,10,10,0.42); }
+.shifted-intro { max-width:620px; margin:0 auto 34px; text-align:center; }
+.shifted-kicker { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--text4); margin-bottom:18px; }
+.shifted-intro h2 { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:clamp(32px,5vw,52px); letter-spacing:1px; color:var(--text); margin-bottom:14px; }
+.shifted-intro p { font-size:14px; line-height:1.8; color:var(--text2); }
+.shifted-questions { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:0 auto 38px; }
+.shifted-question { appearance:none; border:1px solid rgba(201,169,110,0.22); background:transparent; color:var(--text3); font:300 10px/1.3 'Inter',-apple-system,sans-serif; letter-spacing:1.3px; padding:11px 14px; cursor:pointer; transition:all .35s; }
+.shifted-question:hover, .shifted-question:focus-visible { color:var(--gold2); border-color:var(--gold); outline:none; }
+.shifted-question[aria-selected="true"] { color:var(--bg); background:var(--gold); border-color:var(--gold); }
+.shifted-story { max-width:720px; margin:0 auto; }
+.shifted-step { position:relative; padding:0 0 24px 28px; border-left:1px solid rgba(201,169,110,0.28); }
+.shifted-step:last-of-type { padding-bottom:0; border-left-color:transparent; }
+.shifted-step::before { content:''; position:absolute; left:-4px; top:3px; width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(201,169,110,0.08); }
+.shifted-step-label { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.shifted-step p { font-family:'Cormorant Garamond',Georgia,serif; font-size:22px; line-height:1.45; color:var(--text); }
+.shifted-source { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-top:30px; padding-top:20px; border-top:1px solid var(--border); }
+.shifted-source span { font-size:11px; letter-spacing:2px; color:var(--text3); }
+.shifted-count { color:var(--gold) !important; white-space:nowrap; }
+.shifted-pulses { display:flex; justify-content:center; flex-wrap:wrap; gap:10px 24px; margin:44px auto 0; padding-top:26px; border-top:1px solid var(--border); }
+.shifted-pulse { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:17px; color:var(--text2); }
+@media (max-width:720px) {
+  .shifted { margin-bottom:56px; padding:38px 20px 32px; }
+  .shifted-questions { justify-content:flex-start; overflow-x:auto; flex-wrap:nowrap; margin-left:-4px; margin-right:-4px; padding:2px 4px 8px; scrollbar-width:none; }
+  .shifted-questions::-webkit-scrollbar { display:none; }
+  .shifted-question { flex:0 0 auto; }
+  .shifted-step p { font-size:20px; }
+  .shifted-source { align-items:flex-start; flex-direction:column; gap:10px; }
+  .shifted-pulses { align-items:center; flex-direction:column; gap:8px; }
+}
+
 @media (max-width:720px) {
   .screen { padding:80px 16px; }
   .me { grid-template-columns:1fr; text-align:center; gap:24px; margin-bottom:48px; }
@@ -205,6 +237,46 @@ footer a { color:var(--text3); text-decoration:none; }
 
   <div class="eyebrow reveal">Prefer to begin with a person?</div>
   <h2 class="title reveal">Two ways to begin with me</h2>
+
+
+
+  <div class="shifted reveal" id="what-shifted">
+    <div class="shifted-intro">
+      <div class="shifted-kicker">Reflections from sessions with Alexandra</div>
+      <h2>What shifted</h2>
+      <p>Every session begins with a question.<br>Sometimes it ends with a new one.</p>
+    </div>
+    <div class="shifted-questions" role="tablist" aria-label="Questions from clients">
+      <button class="shifted-question" role="tab" aria-selected="true" aria-controls="shifted-story" data-story="0">Will I feel safe?</button>
+      <button class="shifted-question" role="tab" aria-selected="false" aria-controls="shifted-story" data-story="1">What if I feel lost?</button>
+      <button class="shifted-question" role="tab" aria-selected="false" aria-controls="shifted-story" data-story="2">Can something shift?</button>
+      <button class="shifted-question" role="tab" aria-selected="false" aria-controls="shifted-story" data-story="3">What will I understand?</button>
+      <button class="shifted-question" role="tab" aria-selected="false" aria-controls="shifted-story" data-story="4">What might I discover?</button>
+    </div>
+    <div class="shifted-story" id="shifted-story" role="tabpanel" tabindex="0">
+      <div class="shifted-step">
+        <div class="shifted-step-label">Before</div>
+        <p id="shifted-before">I was unsure whether I could open up and feel at ease.</p>
+      </div>
+      <div class="shifted-step">
+        <div class="shifted-step-label">What shifted</div>
+        <p id="shifted-during">The atmosphere felt comfortable, calm and spacious enough to explore what was happening inside me.</p>
+      </div>
+      <div class="shifted-step">
+        <div class="shifted-step-label">After</div>
+        <p id="shifted-after">I left feeling safe, more open and more connected to myself.</p>
+      </div>
+      <div class="shifted-source">
+        <span id="shifted-author">— Anonymous</span>
+        <span class="shifted-count" id="shifted-count">01 / 05</span>
+      </div>
+    </div>
+    <div class="shifted-pulses" aria-label="Client reflections">
+      <span class="shifted-pulse">A new perspective opened.</span>
+      <span class="shifted-pulse">I found an inner sense of support.</span>
+      <span class="shifted-pulse">I understood where to move next.</span>
+    </div>
+  </div>
 
   <div class="choices">
     <div class="choice reveal">
@@ -273,6 +345,59 @@ footer a { color:var(--text3); text-decoration:none; }
   document.getElementById('book-btn').addEventListener('click', function(){
     ev('book_click', { page: '/portal', session: 'origin' });
     fb('ss_clicked_book', { page: '/portal', session: 'origin' });
+  });
+
+
+
+  // What shifted — question-led client reflections
+  var stories = [
+    {
+      before: 'I was unsure whether I could open up and feel at ease.',
+      during: 'The atmosphere felt comfortable, calm and spacious enough to explore what was happening inside me.',
+      after: 'I left feeling safe, more open and more connected to myself.',
+      author: '— Anonymous'
+    },
+    {
+      before: 'I came during a turbulent transition, feeling that I had lost my direction and sense of meaning.',
+      during: 'The session helped me find words for what I was going through and explore new possibilities.',
+      after: 'I left with new questions about who else I could be and what I might be ready to experience.',
+      author: '— Anastasia'
+    },
+    {
+      before: 'I was looking at my situation from the same familiar angle.',
+      during: 'Something shifted in the way I saw it.',
+      after: 'A completely new perspective opened up.',
+      author: '— Katya.travell'
+    },
+    {
+      before: 'I knew that some parts of me needed attention, but I did not know where to begin.',
+      during: 'The session helped me understand my inner processes more deeply.',
+      after: 'I left with a clearer sense of where to move next and which parts of myself needed attention.',
+      author: '— Vilena Sense'
+    },
+    {
+      before: 'I had a deep question, but no clear answer.',
+      during: 'The process let the answer emerge easily and playfully, even when it was unexpected.',
+      after: 'The discovery felt precise and deeply personal.',
+      author: '— Anonymous'
+    }
+  ];
+  var shiftedButtons = document.querySelectorAll('.shifted-question');
+  var shiftedBefore = document.getElementById('shifted-before');
+  var shiftedDuring = document.getElementById('shifted-during');
+  var shiftedAfter = document.getElementById('shifted-after');
+  var shiftedAuthor = document.getElementById('shifted-author');
+  var shiftedCount = document.getElementById('shifted-count');
+  shiftedButtons.forEach(function(tab, index){
+    tab.addEventListener('click', function(){
+      var story = stories[index];
+      shiftedButtons.forEach(function(item){ item.setAttribute('aria-selected', item === tab ? 'true' : 'false'); });
+      shiftedBefore.textContent = story.before;
+      shiftedDuring.textContent = story.during;
+      shiftedAfter.textContent = story.after;
+      shiftedAuthor.textContent = story.author;
+      shiftedCount.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(stories.length).padStart(2, '0');
+    });
   });
 
   // Reveal on scroll
