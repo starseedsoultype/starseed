@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
+<!-- Meta Pixel Code (consent aware, see pixel.js) -->
+<script src="pixel.js"></script>
+<!-- End Meta Pixel Code -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal 11.11 · StarSeedSoul</title>
+<meta name="description" content="Portal 11.11. Seven questions, three minutes, one of 24 soul Origins.">
+<meta property="og:title" content="Portal 11.11 · StarSeedSoul">
+<meta property="og:description" content="Seven questions. Three minutes. One of 24 soul Origins is yours.">
+<meta property="og:image" content="https://www.starseedsoultype.com/portal.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@200;300;400&display=swap">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg:#0A0A0A; --bg2:#111111;
+  --border:rgba(201,169,110,0.08); --border2:rgba(201,169,110,0.2);
+  --text:#E8E4DF; --text2:#C9C1B8; --text3:#7A7672; --text4:#5F5A55;
+  --gold:#C9A96E; --gold2:#E8D5A8;
+}
+html { scroll-behavior:smooth; }
+body { font-variant-numeric:lining-nums; background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; font-weight:300; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a { color:var(--gold2); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+@keyframes fadeIn { to{opacity:1} }
+@keyframes drift { 0%,100%{transform:translateY(0);opacity:0.35} 50%{transform:translateY(8px);opacity:0.8} }
+
+/* SCREEN 1 · PORTAL */
+#portal { position:relative; height:100vh; height:100svh; min-height:520px; overflow:hidden; }
+#portal-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+.portal-link {
+  position:relative; z-index:1; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; text-decoration:none; color:inherit; padding:0 16px;
+  -webkit-tap-highlight-color:transparent;
+}
+.portal-title {
+  font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
+  font-size:clamp(44px,9vw,120px); letter-spacing:clamp(6px,1.6vw,22px);
+  color:var(--text); text-transform:uppercase; line-height:1.05;
+  opacity:0; animation:fadeUp 1.8s ease 0.4s forwards;
+  text-shadow:0 0 40px rgba(201,169,110,0.15); transition:text-shadow 0.6s;
+}
+.portal-title span { display:block; color:var(--gold); }
+.portal-link:hover .portal-title { text-shadow:0 0 60px rgba(201,169,110,0.4); }
+.portal-sub {
+  margin-top:28px; font-weight:200; font-size:11px; letter-spacing:6px;
+  text-transform:uppercase; color:var(--text4);
+  opacity:0; animation:fadeUp 1.8s ease 1s forwards;
+}
+.portal-enter {
+  margin-top:56px; font-size:10px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold); padding:12px 32px; border:1px solid rgba(201,169,110,0.18);
+  opacity:0; animation:fadeIn 2s ease 1.8s forwards; transition:all 0.5s;
+}
+.portal-link:hover .portal-enter { border-color:var(--gold); background:rgba(201,169,110,0.06); }
+.scroll-cue {
+  position:absolute; left:50%; bottom:28px; z-index:2; margin-left:-12px;
+  width:24px; height:36px; display:flex; justify-content:center; text-decoration:none;
+  opacity:0; animation:fadeIn 2s ease 2.6s forwards;
+}
+.scroll-cue::before {
+  content:''; width:1px; height:28px; background:linear-gradient(to bottom,transparent,var(--gold));
+  animation:drift 2.6s ease-in-out infinite;
+}
+
+/* SHARED */
+.screen { position:relative; padding:120px 16px; border-top:1px solid var(--border); }
+.wrap { max-width:680px; margin:0 auto; }
+.eyebrow { font-size:11px; letter-spacing:5px; color:var(--text4); text-transform:uppercase; margin-bottom:22px; text-align:center; }
+.title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:clamp(28px,4.4vw,44px); line-height:1.25; letter-spacing:1px; color:var(--text); text-align:center; margin-bottom:28px; }
+.body { font-size:15px; line-height:1.9; color:var(--text2); text-align:center; margin-bottom:16px; }
+.muted { color:var(--text3); }
+.btn {
+  display:inline-block; font-family:'Inter',-apple-system,sans-serif; font-weight:300;
+  font-size:11px; letter-spacing:4px; text-transform:uppercase; text-decoration:none;
+  color:var(--bg); background:var(--gold); border:1px solid var(--gold);
+  padding:16px 40px; cursor:pointer; transition:all 0.4s;
+}
+.btn:hover { background:var(--gold2); border-color:var(--gold2); }
+.btn-ghost { color:var(--gold); background:transparent; border-color:rgba(201,169,110,0.3); }
+.btn-ghost:hover { background:rgba(201,169,110,0.08); border-color:var(--gold); color:var(--gold); }
+.center { text-align:center; }
+.reveal { opacity:0; transform:translateY(24px); transition:opacity 1.2s ease, transform 1.2s ease; }
+.reveal.on { opacity:1; transform:none; }
+
+/* SCREEN 2 · WHAT IT IS */
+.facts { display:flex; justify-content:center; gap:48px; margin:44px 0 48px; flex-wrap:wrap; }
+.fact { text-align:center; min-width:90px; }
+.fact-num { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:46px; color:var(--gold); line-height:1; }
+.fact-label { margin-top:10px; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); }
+.free-note { margin-top:16px; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text4); }
+
+/* SCREEN 3 · ALEXANDRA */
+#alexandra { background:var(--bg2); }
+.me { display:grid; grid-template-columns:220px 1fr; gap:40px; align-items:center; max-width:760px; margin:0 auto 72px; }
+.me img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:4px; opacity:0.92; }
+.me-name { font-family:'Cormorant Garamond',Georgia,serif; font-size:30px; font-weight:300; color:var(--text); margin-bottom:6px; }
+.me-role { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text4); margin-bottom:22px; line-height:1.9; }
+.me-quote { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:20px; line-height:1.6; color:var(--text2); }
+
+.choices { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:860px; margin:0 auto; }
+.choice { border:1px solid var(--border2); background:var(--bg); padding:40px 32px; display:flex; flex-direction:column; }
+.choice-label { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--text4); margin-bottom:14px; }
+.choice-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:28px; color:var(--text); margin-bottom:16px; }
+.choice-body { font-size:14px; line-height:1.85; color:var(--text2); margin-bottom:12px; }
+.choice ul { list-style:none; margin:4px 0 24px; }
+.choice li { font-size:14px; line-height:1.7; color:var(--text2); padding-left:18px; position:relative; margin-bottom:8px; }
+.choice li::before { content:'✦'; position:absolute; left:0; top:1px; font-size:9px; color:var(--gold); }
+.price { font-family:'Cormorant Garamond',Georgia,serif; font-size:40px; font-weight:300; letter-spacing:2px; color:var(--gold); margin-top:auto; }
+.price-note { font-size:11px; color:var(--text4); letter-spacing:1px; margin:4px 0 24px; }
+.choice .btn { text-align:center; }
+
+form { display:flex; flex-direction:column; gap:14px; margin-top:4px; flex:1; }
+label.f { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); display:block; margin-bottom:6px; }
+input[type=text], input[type=email], textarea {
+  width:100%; background:transparent; border:1px solid rgba(201,169,110,0.18); color:var(--text);
+  font-family:'Inter',-apple-system,sans-serif; font-weight:300; font-size:16px; padding:12px 14px; border-radius:0;
+  transition:border-color 0.3s;
+}
+input:focus, textarea:focus { outline:none; border-color:var(--gold); }
+textarea { min-height:120px; resize:vertical; line-height:1.6; }
+.hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.agree { display:flex; gap:10px; align-items:flex-start; font-size:12px; line-height:1.6; color:var(--text3); cursor:pointer; }
+.agree input { margin-top:3px; accent-color:var(--gold); }
+.form-error { display:none; font-size:13px; color:#E0A08A; }
+.success { display:none; text-align:center; padding:24px 0; }
+.success h3 { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:28px; color:var(--gold); margin-bottom:10px; }
+.success p { font-size:14px; color:var(--text2); line-height:1.8; }
+
+footer { padding:48px 16px; text-align:center; border-top:1px solid var(--border); }
+.foot-logo { font-family:'Cormorant Garamond',Georgia,serif; font-size:16px; letter-spacing:4px; color:var(--gold); text-transform:uppercase; margin-bottom:14px; }
+footer p { font-size:11px; letter-spacing:2px; color:var(--text4); }
+footer a { color:var(--text3); text-decoration:none; }
+
+@media (max-width:720px) {
+  .screen { padding:80px 16px; }
+  .me { grid-template-columns:1fr; text-align:center; gap:24px; margin-bottom:48px; }
+  .me img { max-width:220px; margin:0 auto; }
+  .choices { grid-template-columns:1fr; }
+  .choice { padding:32px 22px; }
+  .facts { gap:28px; }
+  .btn { display:block; text-align:center; padding:16px 20px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1 · PORTAL -->
+<section id="portal">
+  <canvas id="portal-canvas"></canvas>
+  <a href="quiz.html" class="portal-link js-scan" data-where="hero" aria-label="Enter Portal 11.11">
+    <h1 class="portal-title">Portal<span>11.11</span></h1>
+    <div class="portal-sub">intuitive · silent · exact</div>
+    <div class="portal-enter">Enter</div>
+  </a>
+  <a href="#scan" class="scroll-cue" aria-label="Scroll down"></a>
+</section>
+
+<!-- SCREEN 2 · WHAT IT IS -->
+<section class="screen" id="scan">
+  <div class="wrap reveal">
+    <div class="eyebrow">The Origin Scan</div>
+    <h2 class="title">24 soul origins.<br>One of them is yours.</h2>
+    <p class="body">Your soul arrived here carrying a specific frequency. The Scan is a map of something that was already there before you had words for it.</p>
+    <p class="body muted">Answer seven questions. At the end your Origin is named, and your Soul Frequency reading arrives in your inbox.</p>
+    <div class="facts">
+      <div class="fact"><div class="fact-num">7</div><div class="fact-label">questions</div></div>
+      <div class="fact"><div class="fact-num">3</div><div class="fact-label">minutes</div></div>
+      <div class="fact"><div class="fact-num">24</div><div class="fact-label">origins</div></div>
+    </div>
+    <div class="center">
+      <a href="quiz.html" class="btn js-scan" data-where="explain">Enter the Portal</a>
+      <div class="free-note">Free · Instant</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 3 · ALEXANDRA -->
+<section class="screen" id="alexandra">
+  <div class="me reveal">
+    <img src="clarity-hero-alexandra.jpg" alt="Alexandra" loading="lazy">
+    <div>
+      <div class="me-name">Alexandra</div>
+      <div class="me-role">Creator of the StarSeedSoul Origin System<br>Psychologist · Origin Reader</div>
+      <div class="me-quote">“A private session where your Origin, your life themes, and your relationship dynamics are read personally.”</div>
+    </div>
+  </div>
+
+  <div class="eyebrow reveal">Prefer to begin with a person?</div>
+  <h2 class="title reveal">Two ways to begin with me</h2>
+
+  <div class="choices">
+    <div class="choice reveal">
+      <div class="choice-label">Personal Reading · about you</div>
+      <div class="choice-title">Origin Session</div>
+      <p class="choice-body">45 minutes one to one. I read your StarSeedSoul Origin: your frequency, your mission, the themes that keep returning to your life.</p>
+      <ul>
+        <li>A live reading of your Origin with space for your questions</li>
+        <li>Your personal Origin PDF, 11 pages</li>
+        <li>A complimentary Soul Compatibility Scan with one chosen person</li>
+      </ul>
+      <div class="price">$111</div>
+      <div class="price-note">45 minute session · Only a few slots per month</div>
+      <a href="https://cal.com/starseedsoul-typology-nctndd/starseed" class="btn" id="book-btn">Book an Origin Session</a>
+    </div>
+
+    <div class="choice reveal">
+      <div class="choice-label">Ask me anything</div>
+      <div class="choice-title">Write to me</div>
+      <p class="choice-body">Your question comes straight to me. I answer personally, by email.</p>
+      <form id="ask-form" novalidate>
+        <div><label class="f" for="q-name">Your name</label><input type="text" id="q-name" name="name" autocomplete="name" maxlength="120"></div>
+        <div><label class="f" for="q-email">Email</label><input type="email" id="q-email" name="email" required autocomplete="email" maxlength="200"></div>
+        <div><label class="f" for="q-question">Your question</label><textarea id="q-question" name="question" required maxlength="3000"></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="q-website">Website</label><input type="text" id="q-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <label class="agree"><input type="checkbox" id="q-agree"><span>I agree that my question and email are used to reply to me, as described in the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
+        <div class="form-error" id="q-error"></div>
+        <button type="submit" class="btn btn-ghost" id="q-submit">Send my question</button>
+      </form>
+      <div class="success" id="q-success">
+        <h3>Received ✦</h3>
+        <p>Your question is with me. I will answer you personally by email.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">StarSeedSoul</div>
+  <p><a href="index.html">Home</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+  <p style="margin-top:10px;">© 2026 StarSeedSoul · Alexandra</p>
+</footer>
+
+<script>
+(function(){
+  function ev(name, params){
+    try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch(_){}
+  }
+  function fb(name, params){
+    try { if (typeof fbq === 'function') fbq('trackCustom', name, params || {}); } catch(_){}
+  }
+
+  // Carry the visitor's UTM tags into the Scan, default to this page
+  var inParams = new URLSearchParams(location.search);
+  var out = new URLSearchParams();
+  ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k){ if (inParams.get(k)) out.set(k, inParams.get(k)); });
+  if (!out.get('utm_source')) { out.set('utm_source','portal_page'); out.set('utm_medium','page'); out.set('utm_campaign','portal'); }
+  document.querySelectorAll('.js-scan').forEach(function(a){
+    a.href = 'quiz.html?' + out.toString();
+    a.addEventListener('click', function(){
+      ev('portal_enter', { where: a.dataset.where });
+      fb('ss_portal_enter', { page: '/portal', where: a.dataset.where });
+    });
+  });
+
+  document.getElementById('book-btn').addEventListener('click', function(){
+    ev('book_click', { page: '/portal', session: 'origin' });
+    fb('ss_clicked_book', { page: '/portal', session: 'origin' });
+  });
+
+  // Reveal on scroll
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add('on'); });
+  }
+
+  // Ask me anything
+  var form = document.getElementById('ask-form');
+  var err = document.getElementById('q-error');
+  var btn = document.getElementById('q-submit');
+  function showError(msg){ err.textContent = msg; err.style.display = 'block'; }
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    err.style.display = 'none';
+    var data = Object.fromEntries(new FormData(form).entries());
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((data.email || '').trim())) return showError('Please enter a valid email, so I can answer you.');
+    if (!(data.question || '').trim()) return showError('Please write your question.');
+    if (!document.getElementById('q-agree').checked) return showError('Please tick the box to agree.');
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      var res = await fetch('https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/portal-question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('status ' + res.status);
+      form.style.display = 'none';
+      document.getElementById('q-success').style.display = 'block';
+      ev('question_sent', { page: '/portal' });
+      try { if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'portal_question' }); } catch(_){}
+    } catch (ex) {
+      btn.disabled = false; btn.textContent = 'Send my question';
+      showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');
+    }
+  });
+})();
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+// Same figure as the index hero
+const canvas = document.getElementById('portal-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.set(0, 0, 5);
+
+const group = new THREE.Group();
+
+const coreGeo = new THREE.IcosahedronGeometry(0.65, 0);
+const coreMat = new THREE.MeshPhysicalMaterial({
+  color: 0x1a1a1a, metalness: 0.95, roughness: 0.1,
+  clearcoat: 1.0, clearcoatRoughness: 0.05, reflectivity: 1.0, envMapIntensity: 0.5,
+});
+group.add(new THREE.Mesh(coreGeo, coreMat));
+
+const shellGeo = new THREE.IcosahedronGeometry(1.0, 1);
+const shellMat = new THREE.MeshPhysicalMaterial({
+  color: 0x222222, metalness: 0.1, roughness: 0.0,
+  transmission: 0.85, thickness: 0.5, clearcoat: 1.0, clearcoatRoughness: 0.0,
+  ior: 1.5, transparent: true, opacity: 0.4, envMapIntensity: 0.3,
+});
+const shellMesh = new THREE.Mesh(shellGeo, shellMat);
+group.add(shellMesh);
+
+const ringGeo = new THREE.TorusGeometry(1.35, 0.008, 16, 64);
+const ringMat = new THREE.MeshStandardMaterial({ color: 0xC9A96E, metalness: 1, roughness: 0.3, emissive: 0xC9A96E, emissiveIntensity: 0.1 });
+const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+ringMesh.rotation.x = Math.PI / 2;
+group.add(ringMesh);
+
+const ring2Mesh = new THREE.Mesh(ringGeo, ringMat);
+ring2Mesh.rotation.x = Math.PI / 2;
+ring2Mesh.rotation.y = Math.PI / 3;
+group.add(ring2Mesh);
+
+group.add(new THREE.LineSegments(
+  new THREE.EdgesGeometry(shellGeo),
+  new THREE.LineBasicMaterial({ color: 0xC9A96E, transparent: true, opacity: 0.12 })
+));
+
+scene.add(group);
+scene.add(new THREE.AmbientLight(0xffffff, 0.08));
+
+const dir = new THREE.DirectionalLight(0xC9A96E, 1.2);
+dir.position.set(3, 4, 5);
+scene.add(dir);
+
+const dir2 = new THREE.DirectionalLight(0x8A7444, 0.4);
+dir2.position.set(-4, -2, 3);
+scene.add(dir2);
+
+const beamMat = new THREE.MeshBasicMaterial({ color: 0xC9A96E, transparent: true, opacity: 0.2, side: THREE.DoubleSide });
+const beam = new THREE.Mesh(new THREE.PlaneGeometry(0.004, 6), beamMat);
+scene.add(beam);
+
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+document.addEventListener('touchmove', (e) => {
+  const t = e.touches[0]; if (!t) return;
+  mouseX = (t.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (t.clientY / window.innerHeight - 0.5) * 2;
+}, { passive: true });
+
+function resize() {
+  const w = canvas.parentElement.clientWidth;
+  const h = canvas.parentElement.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  // keep the figure inside narrow phone screens
+  camera.position.z = w < 600 ? 6.4 : 5;
+  camera.updateProjectionMatrix();
+}
+resize();
+window.addEventListener('resize', resize);
+
+const clock = new THREE.Clock();
+(function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  group.rotation.y = t * 0.08 + mouseX * 0.15;
+  group.rotation.x = Math.sin(t * 0.05) * 0.1 + mouseY * 0.1;
+  shellMesh.rotation.y = -t * 0.04;
+  ringMesh.rotation.z = t * 0.06;
+  ring2Mesh.rotation.z = -t * 0.04;
+  ring2Mesh.rotation.x = Math.PI / 2 + t * 0.03;
+  beam.material.opacity = 0.12 + Math.sin(t * 0.5) * 0.06;
+  renderer.render(scene, camera);
+})();
+</script>
+</body>
+</html>
