@@ -65,6 +65,7 @@ body {
   font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300;
   font-size: 20px; color: var(--text); line-height: 1.75; margin-bottom: 32px; letter-spacing: 0.5px;
 }
+.q-text:focus { outline: none; }
 .teaser-block { text-align: center; padding: 48px 0; animation: fadeIn 0.6s ease; }
 .teaser-line {
   font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300;
@@ -480,6 +481,17 @@ const TIEBREAKERS = {
 let current=0, answers={}, tbQueue=[], inTiebreaker=false;
 let scores={R:0,E:0,M:0,L:0};
 let _halfwayFired=false;
+let _shownStep=null;
+
+// New question on screen: jump to the top and move focus to its heading.
+// Re-renders of the same question (rank arrows, most/least taps) stay put.
+function enterStep(key){
+  if(_shownStep===key)return;
+  _shownStep=key;
+  window.scrollTo(0,0);
+  const h=document.querySelector('#quiz .q-text');
+  if(h)h.focus({preventScroll:true});
+}
 
 function scoreQuestion(q,ans){
   if(q.type==="force4"){scores[q.opts[ans].f]+=(q.pts||1);}
@@ -532,7 +544,7 @@ function startQuiz(){
   document.getElementById('intro').style.display='none';
   document.getElementById('quiz').style.display='block';
   document.getElementById('progressWrap').style.display='block';
-  current=0;renderQuestion();
+  current=0;_shownStep=null;renderQuestion();
   mcEvent('ss_origin_quiz_started');
 }
 
@@ -555,7 +567,7 @@ function renderQuestion(){
   const q=QUESTIONS[current];
   updateProgress();
   if(current===3&&!_halfwayFired){_halfwayFired=true;mcEvent('ss_origin_quiz_halfway');}
-  let html=`<div class="q-block"><div class="q-num">Question ${current+1} of ${QUESTIONS.length}</div><div class="q-text">${q.text}</div>`;
+  let html=`<div class="q-block"><div class="q-num">Question ${current+1} of ${QUESTIONS.length}</div><div class="q-text" tabindex="-1">${q.text}</div>`;
   if(q.type==="force4"){
     html+=`<div class="opts-force4">`;
     q.opts.forEach((o,i)=>{
@@ -591,12 +603,12 @@ function renderQuestion(){
     <button class="nav-next" onclick="goNext()" ${isAnswered(q)?'':'disabled'}>Continue</button>
   </div></div>`;
   document.getElementById('quiz').innerHTML=html;
-  window.scrollTo({top:0,behavior:'smooth'});
+  enterStep(q.id);
 }
 
 function renderTiebreaker(tb){
   updateProgress();
-  let html=`<div class="q-block"><div class="tb-label">✦ One final question ✦</div><div class="q-text">${tb.text}</div><div class="opts-binary">`;
+  let html=`<div class="q-block"><div class="tb-label">✦ One final question ✦</div><div class="q-text" tabindex="-1">${tb.text}</div><div class="opts-binary">`;
   tb.opts.forEach((o,i)=>{
     html+=`<button class="opt-btn${answers[tb.id]===i?' selected':''}" onclick="selectBin('${tb.id}',${i})">${o.text}</button>`;
   });
@@ -605,7 +617,7 @@ function renderTiebreaker(tb){
     <button class="nav-next" onclick="finishTB()" ${answers[tb.id]!==undefined?'':'disabled'}>Continue</button>
   </div></div>`;
   document.getElementById('quiz').innerHTML=html;
-  window.scrollTo({top:0,behavior:'smooth'});
+  enterStep(tb.id);
 }
 
 function selectF4(qId,idx){
