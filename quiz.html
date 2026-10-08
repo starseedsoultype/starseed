@@ -526,6 +526,7 @@ function calculateResult(){
     // Opened from the Telegram bot: the person is already a subscriber,
     // so the email step is skipped and the result is shown straight away.
     if(_tgToken){mcEvent('ss_origin_quiz_completed');captureOriginForBot();showResult();}
+    else if(_oliToken){captureOriginForOli();showResult();}
     else showEmailCapture();
   }).catch(function(){alert('The portal flickered. Please check your connection and try again.');});
 }
@@ -706,7 +707,12 @@ function showResultForOrigin(origin,options){
     "III":"You have always known what you wanted before you had the words for it. Your intensity scares people, so you learned to turn it down. It is time to turn it back up.",
     "IV":"You carry an innate authority over the physical world. While others get lost in ideas, you know exactly how to make things real. Your grounding is your greatest power."
   };
-  document.getElementById('result').innerHTML=`
+  document.getElementById('result').innerHTML=`${_oliToken?`
+    <div class="app-entry-box" style="margin-top:0;margin-bottom:40px">
+      <div class="app-entry-label">Oli now knows your Origin</div>
+      <a href="${OLI_URL}" class="app-entry-btn">Return to Oli &nbsp;✦</a>
+      <div class="app-entry-note">Your conversation continues where you left it</div>
+    </div>`:''}
     <div class="result-eyebrow">Origin Consciousness System</div>
     <div class="result-crystal"><canvas id="resCrystal" width="200" height="200"></canvas></div>
     <div class="result-origin" style="color:${FC[ch1].hex}">${type.name}</div>
@@ -844,6 +850,21 @@ const _sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
 
 // Personal token from the Telegram bot link (quiz.html?tg=...). Empty for everyone else.
 const _tgToken=(function(){try{return new URLSearchParams(location.search).get('tg')||'';}catch(e){return '';}})();
+
+// Personal token from Oli's link (quiz.html?oli=...). The result goes back to the Oli chat.
+const _oliToken=(function(){try{return new URLSearchParams(location.search).get('oli')||'';}catch(e){return '';}})();
+const OLI_URL='https://twinfrequency.io/oli/';
+function captureOriginForOli(){
+  try{
+    const t=getType();
+    if(!t||!t.name)return;
+    fetch(_SB_URL+'/functions/v1/oli-origin-capture',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:_oliToken,origin:t.name})
+    }).catch(function(){});
+  }catch(e){}
+}
 
 // Hand the finished Origin back to the bot so it can continue the conversation.
 function captureOriginForBot(){
