@@ -873,6 +873,21 @@ async function resolveTypeServer(payload){
 }
 function getType(){ return resolvedType; }
 
+// Personal token from Oli's link (quiz-full.html?oli=...). The result goes back to the Oli chat, as in quiz.html.
+const _oliToken=(function(){try{return new URLSearchParams(location.search).get('oli')||'';}catch(e){return '';}})();
+const OLI_URL='https://twinfrequency.io/oli/';
+function captureOriginForOli(){
+  try{
+    const t=getType();
+    if(!t||!t.name||!_oliToken)return;
+    fetch('https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/oli-origin-capture',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:_oliToken,origin:t.name})
+    }).catch(function(){});
+  }catch(e){}
+}
+
 function startQuiz() {
   document.getElementById('intro').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
@@ -1196,7 +1211,15 @@ function showResult() {
     <button class="retake-btn" onclick="retake()" style="display:none">Begin again</button>
   `;
 
-  document.getElementById('result').innerHTML = html;
+  // Came from Oli: the Origin goes back to her chat, and the way back to Oli comes first.
+  const oliBox = _oliToken ? `
+    <div class="app-entry-box" style="margin-top:0;margin-bottom:40px">
+      <div class="app-entry-label">Oli now knows your Origin</div>
+      <a href="${OLI_URL}" class="app-entry-btn">Return to Oli &nbsp;✦</a>
+      <div class="app-entry-note">Your conversation continues where you left it</div>
+    </div>` : ''
+  if (_oliToken) captureOriginForOli()
+  document.getElementById('result').innerHTML = oliBox + html;
 
   // Attach portal button handler after DOM is ready
   const portalBtn = document.getElementById('portalBtn');
