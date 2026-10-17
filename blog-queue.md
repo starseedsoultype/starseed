@@ -7,9 +7,9 @@ To change the order, move lines. To skip an article, delete its line.
 ## Published
 - [x] how-to-know-if-someone-is-your-twin-flame | How Do I Know If Someone Is Really My Twin Flame? | How do I know if someone is really my twin flame?
 - [x] twin-flame-or-infatuation | Twin Flame or Infatuation? How to Read the Pull You Feel | Is this a twin flame connection or am I just infatuated?
+- [x] is-my-twin-flame-coming-back | Is My Twin Flame Coming Back? | Is my twin flame coming back? / How do I know if reunion is possible?
 
 ## Queue
-- [ ] is-my-twin-flame-coming-back | Is My Twin Flame Coming Back? | Is my twin flame coming back? / How do I know if reunion is possible?
 - [ ] runner-and-chaser-twin-flame | Runner and Chaser: Is It Real, and Which One Are You? | Is the runner and chaser dynamic real? / Am I the runner or the chaser?
 - [ ] why-did-my-twin-flame-pull-away | Why Did My Twin Flame Pull Away? | Why did my twin flame pull away? / Why does my twin flame avoid me?
 - [ ] does-my-twin-flame-think-about-me | Does My Twin Flame Think About Me Too? | Does my twin flame think about me too? / Does my twin flame feel the same connection? / Is my twin flame thinking about me when I feel their energy? / How do I know if my twin flame misses me?
