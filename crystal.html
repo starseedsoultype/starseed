@@ -181,33 +181,32 @@ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 
 const TYPES = [
-  {name:"Siriusian",      funcs:["R","E","M","L"]},
-  {name:"Pleiadian",      funcs:["R","M","L","E"]},
-  {name:"Lemurian",       funcs:["R","E","L","M"]},
-  {name:"Cassiopeian",    funcs:["R","L","M","E"]},
-  {name:"Procyonian",     funcs:["R","M","E","L"]},
-  {name:"Lyran",          funcs:["R","L","E","M"]},
-  {name:"Arcturian",      funcs:["L","E","M","R"]},
-  {name:"Orion",          funcs:["L","M","R","E"]},
-  {name:"Vegan",          funcs:["L","E","R","M"]},
-  {name:"Zeta Reticulan", funcs:["L","R","E","M"]},
-  {name:"Epsilon Eridan", funcs:["L","M","E","R"]},
-  {name:"Atlantean",      funcs:["L","R","M","E"]},
-  {name:"Andromedan",     funcs:["E","R","L","M"]},
-  {name:"Polarisian",     funcs:["E","L","M","R"]},
-  {name:"Nibiruan",       funcs:["E","M","R","L"]},
-  {name:"Egyptian",       funcs:["E","L","R","M"]},
-  {name:"Titanian",       funcs:["E","M","L","R"]},
-  {name:"Blue Avian",     funcs:["E","R","M","L"]},
-  {name:"Tau Cetian",     funcs:["M","R","E","L"]},
-  {name:"Aldebaran",      funcs:["M","L","R","E"]},
-  {name:"Centaurian",     funcs:["M","L","E","R"]},
-  {name:"Herculean",      funcs:["M","E","R","L"]},
-  {name:"Anunnaki",       funcs:["M","E","L","R"]},
-  {name:"Hyperborean",    funcs:["M","R","L","E"]},
+  {name:"Siriusian"},
+  {name:"Pleiadian"},
+  {name:"Lemurian"},
+  {name:"Cassiopeian"},
+  {name:"Procyonian"},
+  {name:"Lyran"},
+  {name:"Arcturian"},
+  {name:"Orion"},
+  {name:"Vegan"},
+  {name:"Zeta Reticulan"},
+  {name:"Epsilon Eridan"},
+  {name:"Atlantean"},
+  {name:"Andromedan"},
+  {name:"Polarisian"},
+  {name:"Nibiruan"},
+  {name:"Egyptian"},
+  {name:"Titanian"},
+  {name:"Blue Avian"},
+  {name:"Tau Cetian"},
+  {name:"Aldebaran"},
+  {name:"Centaurian"},
+  {name:"Herculean"},
+  {name:"Anunnaki"},
+  {name:"Hyperborean"},
 ];
 
-const WEIGHTS = [0, 0.60, 0.25, 0.12, 0.03];
 const R3D     = [0, 1.35,  0.95, 0.60, 0.32];
 const GOLD    = 0xC9A96E;
 const GOLD2   = 0xE8D5A8;
@@ -218,33 +217,6 @@ function makeLine2(pts, color, width, opacity=1) {
   const mat = new LineMaterial({ color, linewidth: width, transparent: opacity < 1, opacity, depthTest: false, resolution: new THREE.Vector2(window.innerWidth, window.innerHeight) });
   return new Line2(geo, mat);
 }
-
-const PREVIEWS={
-  R:{
-    1:"Connection is the medium you live in. You read the space between people the way others read words on a page. Your greatest gift is invisible to you. For you, it has always simply been there.",
-    2:"You bring people into contact with something real in themselves. In conversation, in presence, in the quality of attention you offer, you are a catalyst for genuine meeting.",
-    3:"Relationships are where your deepest learning happens. You are drawn to the complexity of human connection, sometimes more than is comfortable. This territory is your transformation.",
-    4:"You receive connection easily, without much analysis. When someone offers warmth or belonging, you absorb it naturally, trusting what arrives without needing to verify it first.",
-  },
-  E:{
-    1:"You were born already knowing what you want. The desire runs underneath everything and does not ask permission. Others often feel more alive in your presence without knowing why.",
-    2:"Your aliveness is visible. When you move toward something you want, the room notices. You bring energy into spaces that needed it. This is your creative contribution.",
-    3:"The question of desire, what you truly want, whether you are living your actual life, runs through everything you do. This territory is the ground of your growth.",
-    4:"You receive energy from your environment freely. You absorb it naturally. Other people's charge becomes available to you without resistance.",
-  },
-  M:{
-    1:"You understand the physical world, money, the body, space, time, with an authority that is simply native to you. You arrived here already knowing how to be real.",
-    2:"You make things real. Ideas that float in other people's minds land in the physical world when you are involved. This is your specific creative power, the capacity to bring things into form.",
-    3:"The material world is where you work hardest on yourself, money, health, physical stability. You think deeply about these things. That depth is the gift inside the wound.",
-    4:"In material matters, you receive what comes easily. Someone handles the food, the space, the logistics, and you absorb it, trusting the provision without needing to direct it.",
-  },
-  L:{
-    1:"You understand how things work, the way a fish understands water. Structure, causality, the architecture of systems, this is your native language, arrived before any effort.",
-    2:"You generate ideas and frameworks that others find clarifying. When you speak your thinking aloud, something in the room settles. This is your creative gift.",
-    3:"You are drawn to other people's systems and ideas, evaluating them, questioning them, weighing them. This intelligence is most alive when it is fed by those who think at the deepest level.",
-    4:"You receive frameworks and explanations readily. When something is presented to you coherently, you absorb it and use it, trusting the structure you are given rather than needing to build it from scratch.",
-  },
-};
 
 const GUMROAD_LINKS = {
   "Siriusian":       "https://starseedsoul.gumroad.com/l/soul-20",
@@ -275,9 +247,16 @@ const GUMROAD_LINKS = {
 
 let current = 12;
 
-function getChannels(idx) {
+// The shape and the texts come from the server; the page only draws them.
+const VIEW_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/origin-view';
+async function loadView(name) {
+  const r = await fetch(VIEW_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ crystal: name, lang: 'en' }) });
+  if (!r.ok) throw new Error('view failed');
+  return r.json();
+}
+function channelsOf(view) {
   const ch = {};
-  TYPES[idx].funcs.forEach((f, i) => { ch[f] = i + 1; });
+  view.axes.forEach((a, i) => { ch[a] = i + 1; });
   return ch;
 }
 
@@ -285,7 +264,7 @@ function getChannels(idx) {
 let scene, camera, renderer, crystalGroup, clock;
 let targetRX = 0, targetRY = 0;
 
-const EDGE_DEFS = [['E','R'],['R','M'],['M','L'],['L','E']];
+const EDGE_DEFS = [['up','right'],['right','down'],['down','left'],['left','up']];
 const EDGE_SEG  = 48;
 let pulseLines   = [];
 let tipPositions = {};
@@ -316,7 +295,7 @@ function initThree() {
   window.addEventListener('resize', () => { const W=stage.offsetWidth,H=stage.offsetHeight; renderer.setSize(W,H); camera.aspect=W/H; camera.updateProjectionMatrix(); });
 }
 
-function buildCrystal(idx) {
+function buildCrystal(ch) {
   if (crystalGroup) {
     crystalGroup.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
     scene.remove(crystalGroup);
@@ -328,12 +307,11 @@ function buildCrystal(idx) {
   crystalGroup = new THREE.Group();
   pulseLines   = [];
 
-  const ch = getChannels(idx);
   tipPositions = {
-    E: new THREE.Vector3(0,           R3D[ch.E],  0),
-    M: new THREE.Vector3(0,          -R3D[ch.M],  0),
-    R: new THREE.Vector3( R3D[ch.R],  0,           0),
-    L: new THREE.Vector3(-R3D[ch.L],  0,           0),
+    up:    new THREE.Vector3(0,               R3D[ch.up],    0),
+    down:  new THREE.Vector3(0,              -R3D[ch.down],  0),
+    right: new THREE.Vector3( R3D[ch.right],  0,             0),
+    left:  new THREE.Vector3(-R3D[ch.left],   0,             0),
   };
 
   const O = new THREE.Vector3(0, 0, 0);
@@ -353,9 +331,9 @@ function buildCrystal(idx) {
   }
 
   // dim static gold outline
-  const outerPts = ['E','R','M','L','E'].map(k => tipPositions[k]);
+  const outerPts = ['up','right','down','left','up'].map(k => tipPositions[k]);
   crystalGroup.add(makeLine2(outerPts, GOLD, 2.5, 0.55));
-  for (const [a, b] of [['E','M'],['R','L']]) {
+  for (const [a, b] of [['up','down'],['right','left']]) {
     crystalGroup.add(makeLine2([tipPositions[a], tipPositions[b]], GOLD, 1.5, 0.22));
   }
 
@@ -398,33 +376,33 @@ function buildCrystal(idx) {
   // ── elliptical orbits passing exactly through opposing vertices ──
   orbitGroup = new THREE.Group();
 
-  // E↔M orbit: passes through E(0,rE,0) and M(0,-rM,0)
-  // center offset = (rE-rM)/2, semi-major = (rE+rM)/2
-  const emCy    = (R3D[ch.E] - R3D[ch.M]) / 2;
-  const emMajor = (R3D[ch.E] + R3D[ch.M]) / 2;
-  const emMinor = Math.max(R3D[ch.R], R3D[ch.L]) * 0.55;
-  const emPts = [];
+  // vertical orbit: passes through the top (0,rUp,0) and bottom (0,-rDown,0) points
+  // center offset = (rUp-rDown)/2, semi-major = (rUp+rDown)/2
+  const vCy    = (R3D[ch.up] - R3D[ch.down]) / 2;
+  const vMajor = (R3D[ch.up] + R3D[ch.down]) / 2;
+  const vMinor = Math.max(R3D[ch.right], R3D[ch.left]) * 0.55;
+  const vPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    emPts.push(new THREE.Vector3(0, emCy + Math.sin(a) * emMajor, Math.cos(a) * emMinor));
+    vPts.push(new THREE.Vector3(0, vCy + Math.sin(a) * vMajor, Math.cos(a) * vMinor));
   }
   orbitGroup.add(new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints(emPts),
+    new THREE.BufferGeometry().setFromPoints(vPts),
     new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
-  // R↔L orbit: passes through R(rR,0,0) and L(-rL,0,0)
-  // center offset = (rR-rL)/2, semi-major = (rR+rL)/2
-  const rlCx    = (R3D[ch.R] - R3D[ch.L]) / 2;
-  const rlMajor = (R3D[ch.R] + R3D[ch.L]) / 2;
-  const rlMinor = Math.max(R3D[ch.E], R3D[ch.M]) * 0.55;
-  const rlPts = [];
+  // horizontal orbit: passes through the right (rRight,0,0) and left (-rLeft,0,0) points
+  // center offset = (rRight-rLeft)/2, semi-major = (rRight+rLeft)/2
+  const hCx    = (R3D[ch.right] - R3D[ch.left]) / 2;
+  const hMajor = (R3D[ch.right] + R3D[ch.left]) / 2;
+  const hMinor = Math.max(R3D[ch.up], R3D[ch.down]) * 0.55;
+  const hPts = [];
   for (let i = 0; i <= 128; i++) {
     const a = (i / 128) * Math.PI * 2;
-    rlPts.push(new THREE.Vector3(rlCx + Math.cos(a) * rlMajor, 0, Math.sin(a) * rlMinor));
+    hPts.push(new THREE.Vector3(hCx + Math.cos(a) * hMajor, 0, Math.sin(a) * hMinor));
   }
   orbitGroup.add(new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints(rlPts),
+    new THREE.BufferGeometry().setFromPoints(hPts),
     new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.65, depthTest: false })
   ));
 
@@ -462,7 +440,7 @@ function startLoop() {
   })();
 }
 
-function updateText(idx) {
+function updateText(idx, view) {
   const name = TYPES[idx].name;
   document.getElementById('typeName').textContent       = name;
   document.getElementById('readingEyebrow').textContent = `Soul Reading · ${name}`;
@@ -470,12 +448,18 @@ function updateText(idx) {
   const btn = document.getElementById('unlockBtn');
   const url = GUMROAD_LINKS[name];
   btn.href  = (url && !url.includes('REPLACE')) ? url : 'quiz.html';
-  TYPES[idx].funcs.forEach((f, i) => {
-    document.getElementById(`desc${i+1}text`).textContent = PREVIEWS[f][i+1];
+  view.texts.forEach((t, i) => {
+    document.getElementById(`desc${i+1}text`).textContent = t;
   });
 }
 
-function draw(idx) { buildCrystal(idx); updateText(idx); }
+let drawSeq = 0;
+async function draw(idx) {
+  const seq = ++drawSeq;
+  const view = await loadView(TYPES[idx].name).catch(() => null);
+  if (!view || seq !== drawSeq) return;
+  buildCrystal(channelsOf(view)); updateText(idx, view);
+}
 
 const sel = document.getElementById('typeSelector');
 TYPES.forEach((t, i) => {

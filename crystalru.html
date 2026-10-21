@@ -131,69 +131,42 @@ text-decoration:none; border-radius:3px; transition:all 0.2s;
 
 <script>
 const TYPES = [
-  {name:"Сириус",           nameEn:"Siriusian",      funcs:["R","E","M","L"]},
-  {name:"Плеяды",           nameEn:"Pleiadian",      funcs:["R","M","L","E"]},
-  {name:"Лемурия",          nameEn:"Lemurian",       funcs:["R","E","L","M"]},
-  {name:"Кассиопея",        nameEn:"Cassiopeian",    funcs:["R","L","M","E"]},
-  {name:"Процион",          nameEn:"Procyonian",     funcs:["R","M","E","L"]},
-  {name:"Лира",             nameEn:"Lyran",          funcs:["R","L","E","M"]},
-  {name:"Арктур",           nameEn:"Arcturian",      funcs:["L","E","M","R"]},
-  {name:"Орион",            nameEn:"Orion",          funcs:["L","M","R","E"]},
-  {name:"Вега",             nameEn:"Vegan",          funcs:["L","E","R","M"]},
-  {name:"Зета Ретикули",     nameEn:"Zeta Reticulan", funcs:["L","R","E","M"]},
-  {name:"Эпсилон Эридана",   nameEn:"Epsilon Eridan", funcs:["L","M","E","R"]},
-  {name:"Атлантида",        nameEn:"Atlantean",      funcs:["L","R","M","E"]},
-  {name:"Андромеда",        nameEn:"Andromedan",     funcs:["E","R","L","M"]},
-  {name:"Полярис",  nameEn:"Polarisian",     funcs:["E","L","M","R"]},
-  {name:"Нибиру",           nameEn:"Nibiruan",       funcs:["E","M","R","L"]},
-  {name:"Египет",           nameEn:"Egyptian",       funcs:["E","L","R","M"]},
-  {name:"Титан",            nameEn:"Titanian",       funcs:["E","M","L","R"]},
-  {name:"Голубые Авианы",   nameEn:"Blue Avian",     funcs:["E","R","M","L"]},
-  {name:"Тау Кита",         nameEn:"Tau Cetian",     funcs:["M","R","E","L"]},
-  {name:"Альдебаран",       nameEn:"Aldebaran",      funcs:["M","L","R","E"]},
-  {name:"Альфа Центавра",   nameEn:"Centaurian",     funcs:["M","L","E","R"]},
-  {name:"Геркулес",         nameEn:"Herculean",      funcs:["M","E","R","L"]},
-  {name:"Ануннаки",         nameEn:"Anunnaki",       funcs:["M","E","L","R"]},
-  {name:"Гиперборея",       nameEn:"Hyperborean",    funcs:["M","R","L","E"]},
+  {name:"Сириус"},
+  {name:"Плеяды"},
+  {name:"Лемурия"},
+  {name:"Кассиопея"},
+  {name:"Процион"},
+  {name:"Лира"},
+  {name:"Арктур"},
+  {name:"Орион"},
+  {name:"Вега"},
+  {name:"Зета Ретикули"},
+  {name:"Эпсилон Эридана"},
+  {name:"Атлантида"},
+  {name:"Андромеда"},
+  {name:"Полярис"},
+  {name:"Нибиру"},
+  {name:"Египет"},
+  {name:"Титан"},
+  {name:"Голубые Авианы"},
+  {name:"Тау Кита"},
+  {name:"Альдебаран"},
+  {name:"Альфа Центавра"},
+  {name:"Геркулес"},
+  {name:"Ануннаки"},
+  {name:"Гиперборея"},
 ];
 
 const FC = {
-  E:{r:255,g:185,b:0,  hex:"#ffb900", name:"Энергия",    element:"Огонь"},
-  M:{r:220,g:40, b:40, hex:"#dc2828", name:"Материя",    element:"Земля"},
-  R:{r:40, g:190,b:80, hex:"#28be50", name:"Отношения",  element:"Вода"},
-  L:{r:60, g:130,b:255,hex:"#3c82ff", name:"Логика",     element:"Воздух"},
+  up:{r:255,g:185,b:0,  hex:"#ffb900", element:"Огонь"},
+  down:{r:220,g:40, b:40, hex:"#dc2828", element:"Земля"},
+  right:{r:40, g:190,b:80, hex:"#28be50", element:"Вода"},
+  left:{r:60, g:130,b:255,hex:"#3c82ff", element:"Воздух"},
 };
 
-const AXIS={E:-Math.PI/2, M:Math.PI/2, R:0, L:Math.PI};
+const AXIS={up:-Math.PI/2, down:Math.PI/2, right:0, left:Math.PI};
 const RADII=[0,155,108,66,32];
 const WEIGHTS=[0,0.60,0.25,0.12,0.03];
-
-const PREVIEWS={
-  R:{
-    1:"Связь — это среда, в которой ты живёшь. Ты считываешь пространство между людьми так, как другие читают слова на странице. Твой главный дар невидим тебе самой. Для тебя он всегда просто был.",
-    2:"Ты приводишь людей в контакт с чем-то настоящим в них самих. В разговоре, в присутствии, в качестве внимания, которое ты даёшь, ты — катализатор подлинной встречи.",
-    3:"Отношения — это где происходит твоё самое глубокое обучение. Тебя притягивает сложность человеческой связи, иногда сильнее, чем это комфортно. Эта территория — твоя трансформация.",
-    4:"Ты легко принимаешь связь, без особого анализа. Когда кто-то предлагает тепло или принадлежность, ты впитываешь это естественно, доверяя тому, что приходит, не проверяя.",
-  },
-  E:{
-    1:"Ты родилась уже зная, чего хочешь. Желание течёт под всем и не спрашивает разрешения. Другие часто чувствуют себя живее в твоём присутствии, не понимая почему.",
-    2:"Твоя живость видна. Когда ты движешься к тому, чего хочешь, пространство это замечает. Ты приносишь энергию туда, где её не хватало. Это твой творческий вклад.",
-    3:"Вопрос желания — чего ты на самом деле хочешь, живёшь ли ты своей настоящей жизнью — пронизывает всё, что ты делаешь. Эта территория — почва твоего роста.",
-    4:"Ты свободно принимаешь энергию из своего окружения. Впитываешь её естественно. Заряд других людей становится доступен тебе без сопротивления.",
-  },
-  M:{
-    1:"Ты понимаешь физический мир — деньги, тело, пространство, время — с авторитетом, который просто присущ тебе от природы. Ты пришла сюда уже зная, как быть настоящей.",
-    2:"Ты делаешь вещи реальными. Идеи, которые плавают в головах других людей, приземляются в физическом мире, когда ты рядом. Это твоя конкретная творческая сила — способность воплощать.",
-    3:"Материальный мир — это где ты больше всего работаешь над собой: деньги, здоровье, физическая устойчивость. Ты думаешь об этом глубоко. Эта глубина — дар внутри раны.",
-    4:"В материальных вопросах ты легко принимаешь то, что приходит. Кто-то берёт на себя еду, пространство, логистику — и ты впитываешь это, доверяя тому, что приходит.",
-  },
-  L:{
-    1:"Ты понимаешь как всё устроено — так, как рыба понимает воду. Структура, причинность, архитектура систем — это твой родной язык, появившийся раньше любых усилий.",
-    2:"Ты генерируешь идеи и системы, которые другие находят прояснящими. Когда ты говоришь своё мышление вслух, что-то в пространстве успокаивается. Это твой творческий дар.",
-    3:"Тебя притягивают системы и идеи других людей — ты оцениваешь их, ставишь под сомнение, взвешиваешь. Этот интеллект живёт ярче всего, когда его питают те, кто думает на самом глубоком уровне.",
-    4:"Ты легко принимаешь системы и объяснения. Когда что-то представлено тебе связно, ты впитываешь и используешь, доверяя структуре, которую получаешь, а не строя её с нуля.",
-  },
-};
 
 const GUMROAD_LINKS = {
   "Сириус":          "https://starseedsoul.gumroad.com/l/soul-20",
@@ -224,10 +197,12 @@ const GUMROAD_LINKS = {
 
 let current=12;
 
-function getChannels(idx){
-  const ch={};
-  TYPES[idx].funcs.forEach((f,i)=>{ch[f]=i+1;});
-  return ch;
+// The shape and the texts come from the server; the page only draws them.
+const VIEW_URL='https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/origin-view';
+async function loadView(name){
+  const r=await fetch(VIEW_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({crystal:name,lang:'ru'})});
+  if(!r.ok)throw new Error('view failed');
+  return r.json();
 }
 
 function blend(ch){
@@ -236,13 +211,18 @@ function blend(ch){
   return{r:Math.round(r),g:Math.round(g),b:Math.round(b)};
 }
 
-function draw(idx){
+let drawSeq=0;
+async function draw(idx){
+  const seq=++drawSeq;
+  const view=await loadView(TYPES[idx].name).catch(()=>null);
+  if(!view||seq!==drawSeq)return;
   const canvas=document.getElementById('crystalCanvas');
   const ctx=canvas.getContext('2d');
   const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2;
   ctx.clearRect(0,0,W,H);
 
-  const ch=getChannels(idx);
+  const ch={};
+  view.axes.forEach((a,i)=>{ch[a]=i+1;});
   const bl=blend(ch);
 
   const tips={};
@@ -255,13 +235,13 @@ function draw(idx){
   bg.addColorStop(1,'rgba(4,2,10,0)');
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-  const tE=tips.E,tM=tips.M,tR=tips.R,tL=tips.L;
+  const tUp=tips.up,tDown=tips.down,tRight=tips.right,tLeft=tips.left;
 
   ctx.save(); ctx.globalCompositeOperation='screen';
-  [{pts:[cx,cy,tE.x,tE.y,tR.x,tR.y],f1:'E',f2:'R',b:.85},
-   {pts:[cx,cy,tE.x,tE.y,tL.x,tL.y],f1:'E',f2:'L',b:.65},
-   {pts:[cx,cy,tM.x,tM.y,tR.x,tR.y],f1:'M',f2:'R',b:.55},
-   {pts:[cx,cy,tM.x,tM.y,tL.x,tL.y],f1:'M',f2:'L',b:.38}
+  [{pts:[cx,cy,tUp.x,tUp.y,tRight.x,tRight.y],f1:'up',f2:'right',b:.85},
+   {pts:[cx,cy,tUp.x,tUp.y,tLeft.x,tLeft.y],f1:'up',f2:'left',b:.65},
+   {pts:[cx,cy,tDown.x,tDown.y,tRight.x,tRight.y],f1:'down',f2:'right',b:.55},
+   {pts:[cx,cy,tDown.x,tDown.y,tLeft.x,tLeft.y],f1:'down',f2:'left',b:.38}
   ].forEach(({pts,f1,f2,b})=>{
     const c1=FC[f1],c2=FC[f2];
     const bf={r:Math.round((c1.r+c2.r)/2),g:Math.round((c1.g+c2.g)/2),b:Math.round((c1.b+c2.b)/2)};
@@ -275,11 +255,11 @@ function draw(idx){
   });
   ctx.restore();
 
-  ctx.beginPath();ctx.moveTo(tE.x,tE.y);ctx.lineTo(tR.x,tR.y);
-  ctx.lineTo(tM.x,tM.y);ctx.lineTo(tL.x,tL.y);ctx.closePath();
+  ctx.beginPath();ctx.moveTo(tUp.x,tUp.y);ctx.lineTo(tRight.x,tRight.y);
+  ctx.lineTo(tDown.x,tDown.y);ctx.lineTo(tLeft.x,tLeft.y);ctx.closePath();
   ctx.strokeStyle=`rgba(${bl.r+100},${bl.g+100},${bl.b+100},.65)`;ctx.lineWidth=1.5;ctx.stroke();
 
-  [[tE,tM],[tR,tL]].forEach(([a,b])=>{
+  [[tUp,tDown],[tRight,tLeft]].forEach(([a,b])=>{
     ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
     ctx.strokeStyle='rgba(220,200,255,.1)';ctx.lineWidth=.5;
     ctx.setLineDash([3,8]);ctx.stroke();ctx.setLineDash([]);
@@ -311,8 +291,8 @@ function draw(idx){
   // labels — element names in Russian
   for(const[f,c]of Object.entries(ch)){
     const t=tips[f],fc=FC[f],angle=AXIS[f];
-    // horizontal tips (L=Air, R=Water) need more offset because text is wider
-    const isHorizontal = (f==='L' || f==='R');
+    // horizontal tips (Air, Water) need more offset because text is wider
+    const isHorizontal = (f==='left' || f==='right');
     const baseOff=[0,40,30,24,18][c];
     const off = isHorizontal ? baseOff + 30 : baseOff;
     const lx=t.x+Math.cos(angle)*off;
@@ -347,10 +327,8 @@ function draw(idx){
     unlockBtn.href = gumroadUrl;
   }
 
-  const funcs=TYPES[idx].funcs;
   [0,1,2,3].forEach(i=>{
-    const f=funcs[i];
-    document.getElementById(`desc${i+1}text`).textContent=PREVIEWS[f][i+1];
+    document.getElementById(`desc${i+1}text`).textContent=view.texts[i];
   });
 }
 

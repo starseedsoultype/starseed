@@ -174,7 +174,7 @@
     width: 80px;
   }
   .type-crystal-card:hover { opacity: 0.75; }
-  .type-crystal-card canvas { width: 72px; height: 72px; display: block; }
+  .type-crystal-card canvas, .type-crystal-card img { width: 72px; height: 72px; display: block; }
   .type-crystal-label {
     font-size: 10px;
     letter-spacing: 0.1em;
@@ -350,7 +350,7 @@
       gap: 12px;
     }
     .type-crystal-card { width: 68px; }
-    .type-crystal-card canvas { width: 60px; height: 60px; }
+    .type-crystal-card canvas, .type-crystal-card img { width: 60px; height: 60px; }
   }
 </style>
 
@@ -577,131 +577,52 @@
     starsEl.appendChild(s);
   }
 
-  /* Mini crystals */
+  /* Mini crystals: ready images, one per Origin */
   (function(){
-    const TYPES = [
-      {name:"Сириус",         funcs:["R","E","M","L"]},
-      {name:"Плеяды",         funcs:["R","M","L","E"]},
-      {name:"Лемурия",        funcs:["R","E","L","M"]},
-      {name:"Кассиопея",      funcs:["R","L","M","E"]},
-      {name:"Процион",        funcs:["R","M","E","L"]},
-      {name:"Лира",           funcs:["R","L","E","M"]},
-      {name:"Арктур",         funcs:["L","E","M","R"]},
-      {name:"Орион",          funcs:["L","M","R","E"]},
-      {name:"Вега",           funcs:["L","E","R","M"]},
-      {name:"Зета Ретикули",  funcs:["L","R","E","M"]},
-      {name:"Эпсилон Эридана",funcs:["L","M","E","R"]},
-      {name:"Атлантида",      funcs:["L","R","M","E"]},
-      {name:"Андромеда",      funcs:["E","R","L","M"]},
-      {name:"Полярис",        funcs:["E","L","M","R"]},
-      {name:"Нибиру",         funcs:["E","M","R","L"]},
-      {name:"Египет",         funcs:["E","L","R","M"]},
-      {name:"Титан",          funcs:["E","M","L","R"]},
-      {name:"Голубые Авианы", funcs:["E","R","M","L"]},
-      {name:"Тау Кита",       funcs:["M","R","E","L"]},
-      {name:"Альдебаран",     funcs:["M","L","R","E"]},
-      {name:"Альфа Центавра", funcs:["M","L","E","R"]},
-      {name:"Геркулес",       funcs:["M","E","R","L"]},
-      {name:"Ануннаки",       funcs:["M","E","L","R"]},
-      {name:"Гиперборея",     funcs:["M","R","L","E"]},
+    const ORIGINS = [
+      ["Сириус", "siriusian"],
+      ["Плеяды", "pleiadian"],
+      ["Лемурия", "lemurian"],
+      ["Кассиопея", "cassiopeian"],
+      ["Процион", "procyonian"],
+      ["Лира", "lyran"],
+      ["Арктур", "arcturian"],
+      ["Орион", "orion"],
+      ["Вега", "vegan"],
+      ["Зета Ретикули", "zeta-reticulan"],
+      ["Эпсилон Эридана", "epsilon-eridan"],
+      ["Атлантида", "atlantean"],
+      ["Андромеда", "andromedan"],
+      ["Полярис", "polarisian"],
+      ["Нибиру", "nibiruan"],
+      ["Египет", "egyptian"],
+      ["Титан", "titanian"],
+      ["Голубые Авианы", "blue-avian"],
+      ["Тау Кита", "tau-cetian"],
+      ["Альдебаран", "aldebaran"],
+      ["Альфа Центавра", "centaurian"],
+      ["Геркулес", "herculean"],
+      ["Ануннаки", "anunnaki"],
+      ["Гиперборея", "hyperborean"],
     ];
 
-    const FC = {
-      E:{r:255,g:200,b:20},
-      M:{r:210,g:40, b:40},
-      R:{r:40, g:180,b:80},
-      L:{r:60, g:120,b:255},
-    };
-    const AXIS   = {E:-Math.PI/2, M:Math.PI/2, R:0, L:Math.PI};
-    const RADII  = [0,32,22,14,7];
-    const WEIGHTS= [0,0.60,0.25,0.12,0.03];
-
-    function blend(funcs){
-      let r=0,g=0,b=0;
-      funcs.forEach((f,i)=>{const w=WEIGHTS[i+1],fc=FC[f];r+=fc.r*w;g+=fc.g*w;b+=fc.b*w;});
-      return{r:Math.round(r),g:Math.round(g),b:Math.round(b)};
-    }
-
-    function drawMini(canvas, funcs){
-      const ctx=canvas.getContext('2d');
-      const W=72,H=72,cx=36,cy=36;
-      ctx.clearRect(0,0,W,H);
-
-      const ch={};
-      funcs.forEach((f,i)=>{ ch[f]=i+1; });
-      const bl=blend(funcs);
-
-      const tips={};
-      for(const[f,c] of Object.entries(ch)){
-        tips[f]={x:cx+Math.cos(AXIS[f])*RADII[c], y:cy+Math.sin(AXIS[f])*RADII[c]};
-      }
-
-      // bg glow
-      const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,36);
-      bg.addColorStop(0,`rgba(${bl.r},${bl.g},${bl.b},0.13)`);
-      bg.addColorStop(1,'rgba(4,2,10,0)');
-      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-      // faces
-      const tE=tips.E,tM=tips.M,tR=tips.R,tL=tips.L;
-      ctx.save(); ctx.globalCompositeOperation='screen';
-      [
-        {p:[cx,cy,tE.x,tE.y,tR.x,tR.y],f1:'E',f2:'R',a:0.48},
-        {p:[cx,cy,tE.x,tE.y,tL.x,tL.y],f1:'E',f2:'L',a:0.36},
-        {p:[cx,cy,tM.x,tM.y,tR.x,tR.y],f1:'M',f2:'R',a:0.32},
-        {p:[cx,cy,tM.x,tM.y,tL.x,tL.y],f1:'M',f2:'L',a:0.24},
-      ].forEach(({p,f1,f2,a})=>{
-        const c1=FC[f1],c2=FC[f2];
-        const bf={r:Math.round((c1.r+c2.r)/2),g:Math.round((c1.g+c2.g)/2),b:Math.round((c1.b+c2.b)/2)};
-        ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[2],p[3]);ctx.lineTo(p[4],p[5]);
-        ctx.closePath();
-        ctx.fillStyle=`rgba(${bf.r},${bf.g},${bf.b},${a})`;ctx.fill();
-        ctx.strokeStyle=`rgba(${bf.r+60},${bf.g+60},${bf.b+60},.5)`;ctx.lineWidth=0.6;ctx.stroke();
-      });
-      ctx.restore();
-
-      // outline diamond
-      ctx.beginPath();
-      ctx.moveTo(tE.x,tE.y);ctx.lineTo(tR.x,tR.y);
-      ctx.lineTo(tM.x,tM.y);ctx.lineTo(tL.x,tL.y);
-      ctx.closePath();
-      ctx.strokeStyle=`rgba(${bl.r+100},${bl.g+100},${bl.b+100},.75)`;ctx.lineWidth=1.1;ctx.stroke();
-
-      // tip dots
-      ctx.save(); ctx.globalCompositeOperation='screen';
-      for(const[f,c] of Object.entries(ch)){
-        const t=tips[f],fc=FC[f];
-        const sz=[0,4.5,3,2,1.2][c];
-        ctx.beginPath();ctx.arc(t.x,t.y,sz,0,Math.PI*2);
-        ctx.fillStyle=`rgba(${fc.r},${fc.g},${fc.b},.95)`;ctx.fill();
-      }
-      ctx.restore();
-
-      // center star
-      const star=ctx.createRadialGradient(cx,cy,0,cx,cy,6);
-      star.addColorStop(0,'rgba(255,255,255,.9)');
-      star.addColorStop(1,'rgba(4,2,10,0)');
-      ctx.fillStyle=star;ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fill();
-    }
-
     const grid=document.getElementById('typesGrid');
-    TYPES.forEach(t=>{
+    ORIGINS.forEach(([name, file])=>{
       const card=document.createElement('a');
       card.href='https://www.starseedsoultype.com/crystalru.html';
       card.className='type-crystal-card';
 
-      const canvas=document.createElement('canvas');
-      canvas.width=72; canvas.height=72;
+      const img=document.createElement('img');
+      img.src='crystals/mini/'+file+'.png';
+      img.width=72; img.height=72; img.alt=name;
 
       const label=document.createElement('div');
       label.className='type-crystal-label';
-      label.textContent=t.name;
+      label.textContent=name;
 
-      card.appendChild(canvas);
+      card.appendChild(img);
       card.appendChild(label);
       grid.appendChild(card);
-
-      drawMini(canvas, t.funcs);
     });
   })();
 </script>
