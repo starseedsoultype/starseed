@@ -400,19 +400,6 @@ const RESULTS = {
   result_kb: { emoji: "🔗", name: "Karmic Bonds",         tension: "60% tension · something unfinished" },
 };
 
-async function query(sql) {
-  const res = await fetch(SB_URL + '/rest/v1/rpc/execute_sql', {
-    method: 'POST',
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': 'Bearer ' + SB_KEY,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ query: sql })
-  });
-  return res.json();
-}
-
 async function fetchCount(event, quizType = 'soul_connection') {
   const qtFilter = quizType ? '&quiz_type=eq.' + quizType : '';
   const res = await fetch(
