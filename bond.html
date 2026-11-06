@@ -315,7 +315,7 @@ select:focus { border-color: var(--gold); }
       <input id="certName2" type="text" maxlength="18" placeholder="Second name" autocomplete="off">
     </div>
     <canvas id="certCanvas" width="1080" height="1920"></canvas>
-    <button class="cert-btn" id="certDownload" type="button">Download for stories</button>
+    <button class="cert-btn" id="certDownload" type="button">Share your bond</button>
   </div>
 
   <div class="result-footer">StarSeedSoul · Soul Bond Matrix</div>
@@ -693,13 +693,26 @@ function drawCertificate() {
 
 document.getElementById('certName1').addEventListener('input', drawCertificate);
 document.getElementById('certName2').addEventListener('input', drawCertificate);
-document.getElementById('certDownload').addEventListener('click', () => {
+const certBtn = document.getElementById('certDownload');
+function certCanShareFiles() {
+  try {
+    if (!navigator.canShare || !navigator.share) return false;
+    return navigator.canShare({ files: [new File([''], 'a.png', { type: 'image/png' })] });
+  } catch (e) { return false; }
+}
+if (!certCanShareFiles()) certBtn.textContent = 'Save your bond';
+certBtn.addEventListener('click', () => {
   if (!certData) return;
   drawCertificate();
-  document.getElementById('certCanvas').toBlob(blob => {
+  document.getElementById('certCanvas').toBlob(async blob => {
+    const name = 'soul-bond-' + certData.t1.name.toLowerCase() + '-' + certData.t2.name.toLowerCase() + '.png';
+    const file = new File([blob], name, { type: 'image/png' });
+    if (certCanShareFiles() && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'Our Soul Bond' }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; }
+    }
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'soul-bond-' + certData.t1.name.toLowerCase() + '-' + certData.t2.name.toLowerCase() + '.png';
+    a.href = URL.createObjectURL(blob); a.download = name;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   }, 'image/png');
