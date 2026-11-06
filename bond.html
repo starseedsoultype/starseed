@@ -12,7 +12,7 @@
 <title>Soul Bond Calculator — StarSeedSoul</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -219,6 +219,26 @@ select:focus { border-color: var(--gold); }
   .bond-desc p { font-size: 16px; }
   select { min-width: 160px; }
 }
+
+/* ── CERTIFICATE ── */
+.cert { margin-top: 28px; padding: 24px; border: 1px solid var(--border2); background: var(--bg2); text-align: center; }
+.cert h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: 22px; letter-spacing: 3px; color: var(--gold2); margin-bottom: 6px; }
+.cert-note { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 18px; }
+.cert-names { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+.cert-names input {
+  background: var(--bg); border: 1px solid var(--border2); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 13px;
+  padding: 10px 14px; outline: none; width: 170px; text-align: center; letter-spacing: 1px;
+}
+.cert-names input:focus { border-color: var(--gold); }
+#certCanvas { display: block; width: 100%; max-width: 260px; height: auto; margin: 0 auto 18px; border: 1px solid var(--border2); }
+.cert-btn {
+  padding: 16px 44px; border: 0; border-radius: 999px; cursor: pointer; color: #111;
+  background: linear-gradient(90deg, #8799D6 0%, #C5A7CE 33%, #E9AEC9 55%, #F6BC79 82%, #F6C156 100%);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; font-size: 16px;
+  letter-spacing: -0.5px; transition: opacity 0.2s, transform 0.2s;
+}
+.cert-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 </style>
 
 
@@ -285,6 +305,17 @@ select:focus { border-color: var(--gold); }
     <p id="bondWhy"></p>
     <p id="bondHow" class="blurred"></p>
     <a id="bondUnlock" href="https://starseedsoul.gumroad.com/?section=EQ01D5whAcB-aZ97zp8rmg==#EQ01D5whAcB-aZ97zp8rmg==" class="bond-unlock">✦ &nbsp; Unlock Full Reading &nbsp; ✦</a>
+  </div>
+
+  <div class="cert" id="certBox">
+    <h3>Your Bond Certificate</h3>
+    <div class="cert-note">Made in your browser. Names are never sent anywhere.</div>
+    <div class="cert-names">
+      <input id="certName1" type="text" maxlength="18" placeholder="First name" autocomplete="off">
+      <input id="certName2" type="text" maxlength="18" placeholder="Second name" autocomplete="off">
+    </div>
+    <canvas id="certCanvas" width="1080" height="1920"></canvas>
+    <button class="cert-btn" id="certDownload" type="button">Download for stories</button>
   </div>
 
   <div class="result-footer">StarSeedSoul · Soul Bond Matrix</div>
@@ -484,6 +515,196 @@ function drawCrystalOnContextRotated(ctx, type, cx, cy, scale, globalAlpha, rota
   ctx.restore();
 }
 
+
+// ── CERTIFICATE (story image built in the browser, nothing leaves the page) ──
+const CERT_LINES = {
+  'Frequency Twins': 'Between these two, every place is covered.',
+  'Twin Stars': 'Instant recognition, and each one feeds the other’s tender place.',
+  'Cosmic Flow': 'What one is sure of, the other takes in whole.',
+  'Mirror Portals': 'Each one sees themselves more clearly in the other.',
+  'Celestial Mentor': 'A bond where someone is always growing.',
+  'Karmic Bonds': 'Each is sure where the other doubts, and together they never run out of play.',
+  'Shadow Contracts': 'Two people who know the same tender place from the inside.',
+  'Black Holes': 'Each is strongest exactly where the other is most tender.',
+  'Star Alchemy': 'The most demanding bond there is. Both come out of it changed.',
+  'Eternal Reflection': 'The same nature twice. They understood each other from the first word.'
+};
+const CERT_ELEMENT_COLORS = { Fire:'#ffb900', Water:'#28be50', Earth:'#dc2828', Air:'#3c82ff' };
+const CERT_TIP = { up:['F'], right:['W'], down:['E'], left:['A'] };
+const CERT_FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+let certData = null;
+const certMoon = new Image();
+certMoon.onload = () => { if (certData) drawCertificate(); };
+certMoon.src = 'cert-moon.webp';
+
+function certFit(ctx, text, weight, size, maxW, minSize) {
+  let s = size;
+  while (s > minSize) {
+    ctx.font = `${weight} ${s}px ${CERT_FONT}`;
+    if (ctx.measureText(text).width <= maxW) break;
+    s -= 4;
+  }
+  return s;
+}
+
+function certWrap(ctx, text, maxW) {
+  const words = text.split(' '), lines = [];
+  let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function drawCertificate() {
+  if (!certData) return;
+  const { v, t1, t2 } = certData;
+  const c = document.getElementById('certCanvas');
+  const ctx = c.getContext('2d');
+  const W = 1080, H = 1920;
+  const n1 = (document.getElementById('certName1').value || '').trim() || 'First name';
+  const n2 = (document.getElementById('certName2').value || '').trim() || 'Second name';
+  const CH = '#FBF1D8';
+  const LS = (px) => { if ('letterSpacing' in ctx) ctx.letterSpacing = px + 'px'; };
+
+  ctx.clearRect(0, 0, W, H);
+  LS(0);
+
+  // sky: blue to lilac and pink
+  const a = 160 * Math.PI / 180, len = Math.abs(W * Math.sin(a)) + Math.abs(H * Math.cos(a));
+  const dx = Math.sin(a) * len / 2, dy = -Math.cos(a) * len / 2;
+  const g = ctx.createLinearGradient(W/2 - dx, H/2 - dy, W/2 + dx, H/2 + dy);
+  [[0,'#2F6DB5'],[.2,'#6C86C4'],[.42,'#B79ACB'],[.66,'#F2AEC0'],[.84,'#E7A4CB'],[1,'#C99BDD']].forEach(([o,col]) => g.addColorStop(o, col));
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+  // huge faint planet
+  const px = 880, py = 350, pr = 500;
+  ctx.save();
+  ctx.shadowColor = 'rgba(255,255,255,0.10)'; ctx.shadowBlur = 120;
+  ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.fillStyle = 'rgba(255,255,255,0.02)'; ctx.fill();
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.clip();
+  const pg = ctx.createRadialGradient(680, 130, 0, 680, 130, 1004);
+  pg.addColorStop(0,'rgba(255,255,255,.34)'); pg.addColorStop(.38,'rgba(255,255,255,.20)');
+  pg.addColorStop(.7,'rgba(255,255,255,.07)'); pg.addColorStop(1,'rgba(255,255,255,.02)');
+  ctx.fillStyle = pg; ctx.fillRect(px-pr, py-pr, pr*2, pr*2);
+  ctx.save(); ctx.translate(px, py); ctx.rotate(-12 * Math.PI / 180);
+  for (let y = -900; y < 900; y += 250) {
+    ctx.fillStyle = 'rgba(255,255,255,.05)'; ctx.fillRect(-700, y + 70, 1400, 50);
+    ctx.fillStyle = 'rgba(120,100,200,.06)'; ctx.fillRect(-700, y + 210, 1400, 40);
+  }
+  ctx.restore();
+  const sg = ctx.createRadialGradient(px - 90, py - 70, 0, px - 90, py - 70, 600);
+  sg.addColorStop(0,'rgba(40,30,110,0)'); sg.addColorStop(.62,'rgba(40,30,110,0)'); sg.addColorStop(1,'rgba(40,30,110,.28)');
+  ctx.fillStyle = sg; ctx.fillRect(px-pr, py-pr, pr*2, pr*2);
+  ctx.restore();
+
+  // small moon
+  if (certMoon.complete && certMoon.naturalWidth) {
+    ctx.save(); ctx.globalAlpha = 0.3; ctx.drawImage(certMoon, 282, 10, 124, 124); ctx.restore();
+  }
+
+  // crystal of the pair, behind the plate
+  const R = [0, 80, 56, 34, 17];
+  const ANG = { up:-90, right:0, down:90, left:180 };
+  const ORDER = ['up','right','down','left'];
+  ctx.save();
+  ctx.translate(540, 960); ctx.scale(1539 / 184, 1539 / 184);
+  v.axes.forEach((ax, k) => {
+    const rot = k ? -22.5 : 22.5, t = {};
+    ax.forEach((f, i) => { const an = (ANG[f] + rot) * Math.PI / 180; t[f] = [Math.cos(an) * R[i+1], Math.sin(an) * R[i+1]]; });
+    ORDER.forEach((f, i) => {
+      const A = t[f], B = t[ORDER[(i+1) % 4]];
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(A[0],A[1]); ctx.lineTo(B[0],B[1]); ctx.closePath();
+      ctx.fillStyle = 'rgba(255,255,255,.07)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(251,241,216,.8)'; ctx.lineWidth = .25; ctx.stroke();
+    });
+    ctx.beginPath(); ORDER.forEach((f, i) => i ? ctx.lineTo(t[f][0], t[f][1]) : ctx.moveTo(t[f][0], t[f][1])); ctx.closePath();
+    ctx.strokeStyle = CH; ctx.lineWidth = .68; ctx.stroke();
+    [['up','down'],['right','left']].forEach(([p, q]) => {
+      const P = t[p], Q = t[q], mx = (P[0]+Q[0])/2, my = (P[1]+Q[1])/2;
+      const L = Math.hypot(P[0]-Q[0], P[1]-Q[1]) / 2, an = Math.atan2(Q[1]-P[1], Q[0]-P[0]);
+      ctx.beginPath(); ctx.ellipse(mx, my, L, L * .32, an, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(251,241,216,.85)'; ctx.lineWidth = .38; ctx.stroke();
+    });
+    ax.forEach((f, i) => {
+      const rr = [0, 2.6, 2, 1.5, 1][i+1];
+      ctx.beginPath(); ctx.arc(t[f][0], t[f][1], rr, 0, Math.PI*2); ctx.fillStyle = CH; ctx.fill();
+      const L = Math.hypot(t[f][0], t[f][1]), kk = (L + 7.5) / L;
+      ctx.font = `200 6px ${CERT_FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = CH; ctx.fillText(CERT_TIP[f][0], t[f][0] * kk, t[f][1] * kk);
+    });
+  });
+  ctx.beginPath(); ctx.arc(0, 0, 1.6, 0, Math.PI*2); ctx.fillStyle = CH; ctx.fill();
+  ctx.restore();
+
+  // black plate, half transparent
+  ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(0, 1330, W, H - 1330);
+
+  // top block
+  ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#0b0b0b';
+  ctx.textAlign = 'left'; ctx.font = `400 32px ${CERT_FONT}`;
+  ctx.fillText(new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }), 80, 227);
+  ctx.textAlign = 'right'; ctx.fillText('Soul Bond', 1000, 227);
+
+  ctx.textAlign = 'left';
+  LS(-6);
+  const label2 = '& ' + n2;
+  const fs = Math.min(certFit(ctx, n1, 700, 190, 920, 90), certFit(ctx, label2, 700, 190, 920, 90));
+  ctx.font = `700 ${fs}px ${CERT_FONT}`;
+  ctx.fillText(n1, 80, 444);
+  ctx.fillText(label2, 80, 712);
+  LS(0);
+  ctx.font = `300 42px ${CERT_FONT}`;
+  ctx.fillText(t1.name, 80, 517);
+  ctx.fillText(t2.name, 80, 785);
+
+  LS(-12);
+  ctx.font = `700 250px ${CERT_FONT}`;
+  ctx.fillText(v.tension + '%', 80, 1211);
+  LS(0);
+  ctx.font = `300 44px ${CERT_FONT}`;
+  ctx.fillText('tension', 80, 1272);
+
+  // plate text, right aligned
+  ctx.fillStyle = '#F4EEE2'; ctx.textAlign = 'right';
+  LS(-2); ctx.font = `700 68px ${CERT_FONT}`; ctx.fillText(v.verdict, 1000, 1432); LS(0);
+  ctx.font = `400 38px ${CERT_FONT}`;
+  certWrap(ctx, CERT_LINES[v.verdict] || '', 920).slice(0, 2).forEach((ln, i) => ctx.fillText(ln, 1000, 1492 + i * 45));
+
+  ctx.strokeStyle = CH; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(80, 1572); ctx.lineTo(1000, 1572); ctx.moveTo(80, 1674); ctx.lineTo(1000, 1674);
+  [310, 540, 770].forEach(x => { ctx.moveTo(x, 1572); ctx.lineTo(x, 1674); });
+  ctx.stroke();
+  v.cells.slice(0, 4).forEach((cell, i) => {
+    const right = 80 + 230 * (i + 1) - 16;
+    ctx.font = `600 26px ${CERT_FONT}`; ctx.fillStyle = CERT_ELEMENT_COLORS[cell.element] || CH;
+    ctx.fillText(cell.element, right, 1610);
+    ctx.font = `600 33px ${CERT_FONT}`; ctx.fillStyle = '#F4EEE2';
+    ctx.fillText((cell.label || '').replace(/[^A-Za-z ]/g, '').trim(), right, 1647);
+  });
+
+  ctx.font = `500 32px ${CERT_FONT}`; ctx.textAlign = 'left'; ctx.fillText('Alexandra', 80, 1723);
+  ctx.font = `400 32px ${CERT_FONT}`; ctx.textAlign = 'right'; ctx.fillText('starseedsoultype.com', 1000, 1723);
+}
+
+document.getElementById('certName1').addEventListener('input', drawCertificate);
+document.getElementById('certName2').addEventListener('input', drawCertificate);
+document.getElementById('certDownload').addEventListener('click', () => {
+  if (!certData) return;
+  drawCertificate();
+  document.getElementById('certCanvas').toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'soul-bond-' + certData.t1.name.toLowerCase() + '-' + certData.t2.name.toLowerCase() + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }, 'image/png');
+});
+
 // ── CALCULATE ─────────────────────────────────────────────────────────────────
 let calcSeq = 0;
 async function calculate() {
@@ -537,6 +758,9 @@ async function calculate() {
   // Full reading: one product per pair. Falls back to the general shop if a pair has no product yet.
   const pairKey = [i1, i2].sort((x, y) => x - y).map(i => TYPES[i].name.toLowerCase().replace(/ /g, '_')).join('__')
   document.getElementById('bondUnlock').href = PAIR_LINKS[pairKey] ? PAIR_BASE + PAIR_LINKS[pairKey] : document.getElementById('bondUnlock').href
+
+  certData = { v, t1, t2 };
+  drawCertificate();
 
   // Show result
   const resultEl = document.getElementById('result');
