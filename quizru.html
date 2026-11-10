@@ -11,232 +11,117 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --bg: #07050f;
-  --bg2: #0e0820;
-  --bg3: #130d22;
-  --border: #221133;
-  --border2: #332244;
-  --text: #f0eaff;
-  --text2: #ccbbdd;
-  --text3: #9988aa;
-  --text4: #7766aa;
-  --accent: #9966cc;
-  --accent2: #bb88ff;
-  --gold: #d4a843;
-  --green: #44cc88;
-  --red: #ff5544;
+  --cream: #F2ECE3;
+  --card: #FFFFFF;
+  --ink: #111111;
+  --ink2: #55524D;
+  --ink3: #8A857E;
+  --line: rgba(17,17,17,0.12);
+  --accent2: #111111;
+  --grad: linear-gradient(135deg,#3E6FC4 0%,#9B8CD6 30%,#E6A6C8 55%,#F6B8A8 75%,#F5CD6A 100%);
 }
+html { background: var(--cream); }
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Georgia', serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 16px 80px;
+  background: var(--cream); color: var(--ink);
+  font-family: 'Onest', system-ui, -apple-system, sans-serif;
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+  padding: 0 16px 80px; -webkit-font-smoothing: antialiased;
 }
+.grad-bg { position: absolute; inset: 0; background: var(--grad); overflow: hidden; }
+.grad-bg::after {
+  content: ""; position: absolute; inset: -20%;
+  background:
+    radial-gradient(40% 35% at 20% 70%, rgba(62,111,196,.8), transparent 70%),
+    radial-gradient(45% 40% at 80% 20%, rgba(245,205,106,.8), transparent 70%),
+    radial-gradient(50% 45% at 70% 75%, rgba(242,169,198,.8), transparent 70%);
+  filter: blur(30px); animation: breathe 9s ease-in-out infinite alternate;
+}
+@keyframes breathe { to { transform: translate(4%,-3%) scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { .grad-bg::after { animation: none; } }
 
 .progress-wrap {
-  width: 100%; max-width: 640px;
-  position: sticky; top: 0;
-  background: var(--bg);
-  z-index: 10;
-  padding: 20px 0 16px;
-  display: none;
+  width: 100%; max-width: 640px; position: sticky; top: 0; background: var(--cream);
+  z-index: 10; padding: 20px 0 14px; display: none;
 }
-.progress-meta {
-  display: flex; justify-content: space-between;
-  font-size: 10px; letter-spacing: 2px; color: var(--text4);
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.progress-bg { width: 100%; height: 2px; background: var(--bg3); border-radius: 1px; }
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #553388, #9966cc);
-  border-radius: 1px; transition: width 0.4s ease;
-}
+.progress-meta { display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+.progress-bg { width: 100%; height: 4px; background: rgba(17,17,17,.08); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--grad); border-radius: 4px; transition: width .4s ease; }
 
 #intro {
-  max-width: 560px; width: 100%;
-  text-align: center; padding-top: 80px;
+  position: relative; width: calc(100% + 32px); margin: 0 -16px; min-height: 100svh;
+  display: flex; flex-direction: column; overflow: hidden;
 }
-.eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--text4); text-transform: uppercase; margin-bottom: 16px; }
-.intro-title { font-size: 28px; color: var(--text); letter-spacing: 2px; margin-bottom: 16px; font-weight: normal; }
-.intro-body { font-size: 14px; color: var(--text3); line-height: 1.9; margin-bottom: 12px; }
-.divider { width: 60px; height: 1px; background: var(--border2); margin: 28px auto; }
-.intro-note { font-size: 11px; color: var(--text4); letter-spacing: 1px; margin-bottom: 40px; font-style: italic; }
-.start-btn {
-  padding: 14px 48px; border: 1px solid var(--accent);
-  background: var(--bg3); color: var(--accent2);
-  font-family: Georgia, serif; font-size: 13px; letter-spacing: 3px;
-  text-transform: uppercase; cursor: pointer; border-radius: 2px;
-  transition: all 0.2s;
+.intro-in { position: relative; flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 560px; margin: 0 auto; padding: 28px 24px 40px; }
+.intro-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; }
+.intro-main { margin-top: auto; }
+.intro-title { font-weight: 900; font-size: clamp(52px, 15vw, 84px); line-height: .92; letter-spacing: -.035em; }
+.intro-sub { font-weight: 300; font-size: 22px; line-height: 1.1; margin: 14px 0 28px; }
+.intro-body { font-size: 16px; line-height: 1.5; margin-bottom: 26px; max-width: 440px; }
+.start-btn, .bot-btn {
+  display: block; width: 100%; text-align: center; background: var(--ink); color: #fff; border: 0;
+  border-radius: 999px; padding: 17px; font-family: inherit; font-weight: 600; font-size: 15px;
+  cursor: pointer; text-decoration: none; transition: transform .15s;
 }
-.start-btn:hover { background: #1a0a2e; border-color: var(--accent2); }
+.start-btn:active, .bot-btn:active { transform: scale(.98); }
+.intro-note { font-size: 13px; text-align: center; margin-top: 12px; }
 
-#quiz { max-width: 640px; width: 100%; padding-top: 20px; display: none; }
-
-.q-block { animation: fadeIn 0.4s ease; }
+#quiz { max-width: 640px; width: 100%; padding-top: 14px; display: none; }
+.q-block { animation: fadeIn .35s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.q-num { font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--ink2); text-transform: uppercase; margin-bottom: 10px; }
+.q-text { font-weight: 800; font-size: clamp(22px, 6vw, 28px); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 22px; }
 
-.q-num { font-size: 9px; letter-spacing: 3px; color: var(--text4); text-transform: uppercase; margin-bottom: 14px; }
-.q-text { font-size: 17px; color: var(--text); line-height: 1.8; margin-bottom: 28px; font-style: italic; }
+.opts-force4, .opts-binary { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn, .ml2-btn {
+  width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 15px 16px; text-align: left; cursor: pointer; font-family: inherit; font-size: 16px;
+  line-height: 1.4; color: var(--ink); position: relative; transition: all .2s;
+}
+.opt-btn:hover, .ml2-btn:hover { border-color: rgba(17,17,17,.3); }
+.opt-btn:active, .ml2-btn:active { transform: scale(.99); }
+.opt-btn.selected { background: var(--grad); border-color: transparent; font-weight: 500; }
 
-.opts-force4 { display: flex; flex-direction: column; gap: 10px; }
-.opt-btn {
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 16px 18px; text-align: left; cursor: pointer;
-  font-family: Georgia, serif; font-size: 13px; color: var(--text2);
-  line-height: 1.65; border-radius: 3px; transition: all 0.2s;
-  position: relative;
-}
-.opt-btn:hover { border-color: var(--accent); color: var(--text); background: var(--bg3); }
-.opt-btn:active { border-color: var(--accent2); background: #1a0a2e; transform: scale(0.99); }
-.opt-btn.selected { border-color: var(--accent2); color: var(--text); background: #1a0a2e; }
-.opt-btn.selected::after {
-  content: '✦'; position: absolute; right: 16px; top: 50%;
-  transform: translateY(-50%); color: var(--accent2); font-size: 12px;
-}
+.ml-step { font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 14px; padding: 10px; border-radius: 12px; background: rgba(17,17,17,.06); }
+.opts-ml2 { display: flex; flex-direction: column; gap: 10px; }
+.ml2-btn { padding-right: 16px; }
+.ml2-btn.is-most { background: var(--grad); border-color: transparent; font-weight: 500; padding-bottom: 34px; }
+.ml2-btn.is-most::after { content: '✦ больше всего'; position: absolute; left: 16px; bottom: 10px; font-size: 12px; font-weight: 600; }
+.ml2-btn.is-least { background: #E4DED5; border-color: transparent; color: var(--ink2); padding-bottom: 34px; }
+.ml2-btn.is-least::after { content: '✕ меньше всего'; position: absolute; left: 16px; bottom: 10px; font-size: 12px; font-weight: 600; }
+.ml2-btn.is-disabled { opacity: .45; cursor: default; }
 
-.ml-step {
-  font-size: 11px; letter-spacing: 2px; color: var(--accent2);
-  text-transform: uppercase; margin-bottom: 14px; text-align: center;
-  padding: 8px; background: var(--bg3); border-radius: 3px;
-  border: 1px solid var(--border2);
-}
-.opts-ml2 { display: flex; flex-direction: column; gap: 8px; }
-.ml2-btn {
-  width: 100%; padding: 16px 18px; text-align: left; cursor: pointer;
-  font-family: Georgia, serif; font-size: 13px; color: var(--text2);
-  line-height: 1.65; border-radius: 3px; transition: all 0.2s;
-  position: relative; border: 1px solid var(--border);
-  background: var(--bg2);
-}
-.ml2-btn:hover { border-color: var(--border2); }
-.ml2-btn:active { background: var(--bg3); transform: scale(0.99); }
-.ml2-btn.is-most {
-  border-color: var(--green); background: #041208; color: var(--text);
-}
-.ml2-btn.is-most::after {
-  content: '✦ БОЛЬШЕ ВСЕГО'; position: absolute; right: 14px; top: 50%;
-  transform: translateY(-50%); color: var(--green);
-  font-size: 10px; letter-spacing: 2px;
-}
-.ml2-btn.is-least {
-  border-color: var(--red); background: #120404; color: var(--text);
-}
-.ml2-btn.is-least::after {
-  content: '✕ МЕНЬШЕ ВСЕГО'; position: absolute; right: 14px; top: 50%;
-  transform: translateY(-50%); color: var(--red);
-  font-size: 10px; letter-spacing: 2px;
-}
-.ml2-btn.is-disabled { opacity: 0.4; cursor: default; }
-
-.rank-instruction {
-  font-size: 10px; letter-spacing: 2px; color: var(--text4);
-  text-transform: uppercase; margin-bottom: 16px;
-}
-.opts-rank { display: flex; flex-direction: column; gap: 8px; }
-.rank-item {
-  display: flex; gap: 10px; align-items: center;
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 12px 14px; border-radius: 3px;
-  transition: all 0.2s;
-}
-.rank-item.rank-selected { border-color: var(--accent2); background: #1a0a2e; }
-.rank-num {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--border2); color: var(--accent2);
-  font-size: 12px; font-weight: bold;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; background: var(--bg3);
-}
-.rank-text { font-size: 13px; color: var(--text2); line-height: 1.5; flex: 1; }
-.rank-item.rank-unset { border-color: var(--border2); }
-.rank-item.rank-unset .rank-num { color: var(--text4); border-color: var(--border); }
+.rank-instruction { font-size: 13px; font-weight: 500; color: var(--ink2); margin-bottom: 14px; }
+.opts-rank { display: flex; flex-direction: column; gap: 10px; }
+.rank-item { display: flex; gap: 10px; align-items: center; background: var(--card); border: 1px solid var(--line); padding: 12px 12px 12px 14px; border-radius: 16px; transition: all .2s; }
+.rank-item.rank-selected { border-color: var(--ink); }
+.rank-num { width: 30px; height: 30px; border-radius: 50%; background: var(--grad); color: var(--ink); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rank-text { font-size: 15px; line-height: 1.4; flex: 1; }
+.rank-item.rank-unset .rank-num { background: rgba(17,17,17,.08); color: var(--ink3); }
 .rank-arrows { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
-.rank-arrow {
-  width: 44px; height: 44px; background: var(--bg3);
-  border: 1px solid var(--border); border-radius: 3px;
-  color: var(--text4); font-size: 16px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; user-select: none; -webkit-tap-highlight-color: transparent;
-}
-.rank-arrow:hover { border-color: var(--accent); color: var(--accent2); }
-.rank-arrow:active { background: var(--bg2); color: var(--accent2); }
-.rank-arrow:disabled { opacity: 0.2; pointer-events: none; }
+.rank-arrow { width: 44px; height: 40px; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; color: var(--ink); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; user-select: none; -webkit-tap-highlight-color: transparent; }
+.rank-arrow:active { background: #E4DED5; }
+.rank-arrow:disabled { opacity: .25; pointer-events: none; }
 
-.opts-binary { display: flex; flex-direction: column; gap: 10px; }
+.nav-row { display: flex; gap: 10px; align-items: center; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+.nav-back { background: transparent; border: 1px solid var(--line); color: var(--ink); padding: 15px 22px; cursor: pointer; font-family: inherit; font-weight: 500; font-size: 15px; border-radius: 999px; }
+.nav-back:disabled { opacity: .3; pointer-events: none; }
+.nav-next { flex: 1; background: var(--ink); border: 0; color: #fff; padding: 16px 24px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 15px; border-radius: 999px; transition: opacity .2s; }
+.nav-next:disabled { opacity: .25; cursor: not-allowed; }
 
-.nav-row {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);
-}
-.nav-back {
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text4); padding: 10px 20px; cursor: pointer;
-  font-family: Georgia, serif; font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; border-radius: 2px; transition: all 0.2s;
-}
-.nav-back:hover { border-color: var(--border2); color: var(--text3); }
-.nav-back:disabled { opacity: 0.2; pointer-events: none; }
-.nav-next {
-  background: var(--bg3); border: 1px solid var(--accent);
-  color: var(--accent2); padding: 12px 28px; cursor: pointer;
-  font-family: Georgia, serif; font-size: 12px; letter-spacing: 3px;
-  text-transform: uppercase; border-radius: 2px; transition: all 0.2s;
-}
-.nav-next:hover { background: #1a0a2e; border-color: var(--accent2); }
-.nav-next:disabled { opacity: 0.3; cursor: not-allowed; }
-
-#result { max-width: 640px; width: 100%; display: none; padding-top: 40px; }
-.result-eyebrow { text-align: center; font-size: 10px; letter-spacing: 5px; color: var(--text4); text-transform: uppercase; margin-bottom: 16px; }
-.result-crystal { display: flex; justify-content: center; margin-bottom: 24px; }
-.result-subtitle { font-size: 11px; color: var(--text4); letter-spacing: 3px; text-transform: uppercase; text-align: center; margin-bottom: 32px; }
-.result-origin { font-size: 32px; letter-spacing: 2px; text-align: center; margin-bottom: 6px; font-style: italic; }
-
-.preview-box {
-  background: var(--bg2); border: 1px solid var(--border2);
-  padding: 28px; border-radius: 4px; margin-bottom: 24px;
-}
-.preview-box h2 { font-size: 10px; letter-spacing: 4px; color: var(--text4); text-transform: uppercase; margin-bottom: 20px; text-align: center; }
-.preview-section { margin-bottom: 20px; }
-.preview-label { font-size: 9px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-.preview-text { font-size: 14px; color: var(--text2); line-height: 1.9; }
-.preview-blurred { filter: blur(5px); user-select: none; -webkit-user-select: none; pointer-events: none; color: var(--text3); }
-
-.unlock-box {
-  background: linear-gradient(135deg, #0e0820, #1a0a2e);
-  border: 1px solid var(--accent); padding: 32px 24px;
-  border-radius: 4px; text-align: center; margin-bottom: 24px;
-}
-.unlock-title { font-size: 22px; color: var(--text); letter-spacing: 1px; margin-bottom: 8px; font-style: italic; }
-.unlock-sub { font-size: 13px; color: var(--text3); line-height: 1.7; margin-bottom: 24px; }
-.unlock-list { text-align: left; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
-.unlock-item { font-size: 12px; color: var(--text2); display: flex; align-items: flex-start; gap: 10px; }
-.unlock-item::before { content: '✦'; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-.portal-num { font-size: 11px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; font-family: Georgia, serif; }
-.price { font-size: 32px; color: var(--gold); margin-bottom: 6px; }
-.price-note { font-size: 10px; color: var(--text4); margin-bottom: 20px; letter-spacing: 1px; }
-.unlock-btn {
-  display: block; width: 100%; padding: 16px;
-  background: linear-gradient(135deg, #553388, #7744aa);
-  border: none; color: #fff; font-family: Georgia, serif;
-  font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
-  cursor: pointer; border-radius: 3px; transition: all 0.2s;
-  text-decoration: none; text-align: center; box-sizing: border-box;
-}
-.unlock-btn:hover { background: linear-gradient(135deg, #6644aa, #9955cc); }
-
-.retake-btn {
-  width: 100%; padding: 12px; background: transparent;
-  border: 1px solid var(--border); color: var(--text4);
-  font-family: Georgia, serif; font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s;
-}
-.retake-btn:hover { border-color: var(--border2); color: var(--text3); }
+#result { max-width: 640px; width: 100%; display: none; }
+.poster { position: relative; width: calc(100% + 32px); margin: 0 -16px; min-height: 64svh; border-radius: 0 0 28px 28px; overflow: hidden; display: flex; }
+.poster-in { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 28px 24px; max-width: 640px; margin: 0 auto; width: 100%; }
+.poster-top, .poster-foot { display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; }
+.poster-name { font-weight: 900; font-size: clamp(48px, 16vw, 96px); line-height: .92; letter-spacing: -.04em; word-break: break-word; }
+.poster-label { font-weight: 300; font-size: 22px; margin-top: 12px; }
+.res { padding: 26px 0 0; }
+.res-text { font-size: 17px; line-height: 1.45; margin-bottom: 20px; }
+.save-btn { display: block; width: 100%; margin-top: 10px; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 16px; font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
+.retake-btn { display: block; margin: 22px auto 0; background: none; border: 0; color: var(--ink2); font-family: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- StarSeed Funnel Tracking -->
 <script src="funnel-tracking.js"></script>
@@ -257,17 +142,17 @@ body {
 
 <!-- INTRO -->
 <div id="intro">
-  <div class="eyebrow">Система Происхождения Души</div>
-  <div class="intro-title">Происхождение вашей звёздной души</div>
-  <div class="divider"></div>
-  <div class="intro-body">
-    Интуитивный сканер для звёздных душ: как вы проявляетесь в 3D мире.
+  <div class="grad-bg"></div>
+  <div class="intro-in">
+    <div class="intro-top"><span>StarSeedSoul</span><span>PORTAL 11.11</span></div>
+    <div class="intro-main">
+      <h1 class="intro-title">Звёздный<br>сканер</h1>
+      <div class="intro-sub">Происхождение<br>вашей души</div>
+      <p class="intro-body">Интуитивный сканер для звёздных душ: как вы проявляетесь в 3D мире. 10 минут погружения в себя, и вы получите чтение своего типа.</p>
+      <button class="start-btn" onclick="startQuiz()">Начать</button>
+      <div class="intro-note">10 минут · отвечайте первым откликом</div>
+    </div>
   </div>
-  <div class="intro-body">
-    10 минут погружения в себя, и вы получите чтение своего типа.
-  </div>
-  <div class="intro-note">28 вопросов · 10 минут · отвечайте первым откликом</div>
-  <button class="start-btn" onclick="startQuiz()">Начать</button>
 </div>
 
 <!-- QUIZ -->
@@ -277,62 +162,6 @@ body {
 <div id="result"></div>
 
 <script>
-// Stripe — для иностранных карт (Visa/Mastercard)
-const STRIPE_LINKS = {
-  "Сириус":            "https://buy.stripe.com/14A3cv0qzgQd3TNaRzejK0o",
-  "Плеяды":            "https://buy.stripe.com/7sY14nddlgQd0HB6BjejK0p",
-  "Лемурия":           "https://buy.stripe.com/6oUaEX4GP1VjaibbVDejK0q",
-  "Кассиопея":         "https://buy.stripe.com/8x200j8X59nL4XRgbTejK0r",
-  "Процион":           "https://buy.stripe.com/9B67sL0qzdE1bmf0cVejK0s",
-  "Лира":              "https://buy.stripe.com/cNidR93CLczXbmf3p7ejK0t",
-  "Арктур":            "https://buy.stripe.com/bJe28rgpx57v75Z6BjejK0u",
-  "Орион":             "https://buy.stripe.com/3cI28r1uD2Zncqj1gZejK0v",
-  "Вега":              "https://buy.stripe.com/8x2fZhc9h1Vj2PJ5xfejK0w",
-  "Зета Ретикули":        "https://buy.stripe.com/28E00jc9h6bzaibcZHejK0x",
-  "Эпсилон Эридана":   "https://buy.stripe.com/3cI14n7T17fD8a32l3ejK0y",
-  "Атлантида":         "https://buy.stripe.com/28E00j4GP0Rf9e73p7ejK0z",
-  "Андромеда":         "https://buy.stripe.com/14A9ATb5d57vcqj1gZejK0A",
-  "Полярис":           "https://buy.stripe.com/14A7sL7T10Rf2PJ7FnejK0B",
-  "Нибиру":            "https://buy.stripe.com/9B64gzc9h57v3TN4tbejK0C",
-  "Египет":            "https://buy.stripe.com/6oU14nehp8jHgGz6BjejK0D",
-  "Титан":             "https://buy.stripe.com/dRm4gza19czX3TNf7PejK0E",
-  "Голубые Авианы":    "https://buy.stripe.com/fZucN5ddl1VjdungbTejK0F",
-  "Тау Кита":          "https://buy.stripe.com/3cI14nddl9nLaibgbTejK0G",
-  "Альдебаран":        "https://buy.stripe.com/bJe4gzehp43rfCvgbTejK0H",
-  "Альфа Центавра":           "https://buy.stripe.com/cNi6oH2yHgQdcqj6BjejK0I",
-  "Геркулес":          "https://buy.stripe.com/aFa3cv8X5arP61V9NvejK0J",
-  "Ануннаки":          "https://buy.stripe.com/3cI00ja199nL8a37FnejK0K",
-  "Гиперборея":        "https://buy.stripe.com/4gMdR98X5bvTgGz3p7ejK0L",
-};
-
-// Продамус — для российских карт (Мир/СБП)
-// Заполни ссылки после создания платёжных ссылок в Продамусе
-const PRODAMUS_LINKS = {
-  "Сириус":            "https://payform.ru/okb7S3W/",
-  "Плеяды":            "https://payform.ru/i1b7RKj/",
-  "Лемурия":           "https://payform.ru/3mb7S8V/",
-  "Кассиопея":         "https://payform.ru/7lb7Sb2/",
-  "Процион":           "https://payform.ru/f1b7SeY/",
-  "Лира":              "https://payform.ru/gtb7SfX/",
-  "Арктур":            "https://payform.ru/igb7SgO/",
-  "Орион":             "https://payform.ru/ksb7Si4/",
-  "Вега":              "https://payform.ru/ohb7Sk1/",
-  "Зета Ретикули":        "REPLACE_PRODAMUS",
-  "Эпсилон Эридана":   "REPLACE_PRODAMUS",
-  "Атлантида":         "REPLACE_PRODAMUS",
-  "Андромеда":         "REPLACE_PRODAMUS",
-  "Полярис":           "REPLACE_PRODAMUS",
-  "Нибиру":            "REPLACE_PRODAMUS",
-  "Египет":            "REPLACE_PRODAMUS",
-  "Титан":             "REPLACE_PRODAMUS",
-  "Голубые Авианы":    "REPLACE_PRODAMUS",
-  "Тау Кита":          "REPLACE_PRODAMUS",
-  "Альдебаран":        "REPLACE_PRODAMUS",
-  "Альфа Центавра":           "REPLACE_PRODAMUS",
-  "Геркулес":          "REPLACE_PRODAMUS",
-  "Ануннаки":          "REPLACE_PRODAMUS",
-  "Гиперборея":        "REPLACE_PRODAMUS",
-};
 
 
 
@@ -849,86 +678,90 @@ function moveRank(qId, pos, dir) {
 }
 
 // ── РЕЗУЛЬТАТ ──────────────────────────────────────────────────────────────
+// Russian Origin name → slug used by the bot link (same slugs as origin-scan)
+const ORIGIN_SLUGS = {
+  "Сириус":"siriusian","Плеяды":"pleiadian","Лемурия":"lemurian","Кассиопея":"cassiopeian","Процион":"procyonian","Лира":"lyran",
+  "Арктур":"arcturian","Орион":"orion","Вега":"vegan","Зета Ретикули":"zeta-reticulan","Эпсилон Эридана":"epsilon-eridan","Атлантида":"atlantean",
+  "Андромеда":"andromedan","Полярис":"polarisian","Нибиру":"nibiruan","Египет":"egyptian","Титан":"titanian","Голубые Авианы":"blue-avian",
+  "Тау Кита":"tau-cetian","Альдебаран":"aldebaran","Альфа Центавра":"centaurian","Геркулес":"herculean","Ануннаки":"anunnaki","Гиперборея":"hyperborean"
+};
+const BOT_URL = 'https://t.me/starseedsoul_bot';
+
 function showResult() {
   if (typeof fbq !== 'undefined') fbq('track', 'Lead');
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
-  document.getElementById('result').style.display = 'block';
+  const box = document.getElementById('result');
+  box.style.display = 'block';
 
   const type = getType();
-
-  // Format date in Russian
+  const slug = ORIGIN_SLUGS[type.name] || '';
   const now = new Date();
   const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
-  const html = `
-    <div class="result-eyebrow">Система Происхождения Души</div>
-    <div class="result-crystal"><canvas id="resCrystal" width="200" height="200"></canvas></div>
-    <div class="result-origin" style="color:${type.color}">${type.name}</div>
-    <div class="result-subtitle">Чтение происхождения души · ${dateStr}</div>
-
-    <div class="preview-box">
-      <h2>Ваша частота души</h2>
-      <div class="preview-section">
-        <div class="preview-label">Ваша основная частота</div>
-        <div class="preview-text">${type.core}</div>
-      </div>
-      <div class="preview-section">
-        <div class="preview-label">Ваша творческая сила</div>
-        <div class="preview-text">${type.creative}</div>
-      </div>
-      <div class="preview-section">
-        <div class="preview-label">Ваш рост &nbsp;🔒</div>
-        <div class="preview-text preview-blurred">${type.growth}</div>
-        <div style="font-size:11px;color:var(--text4);margin-top:8px;letter-spacing:2px;text-transform:uppercase">ВОЙДИТЕ В PORTAL 11.11, ЧТОБЫ ПОЛУЧИТЬ ДОСТУП К ГЛУБИННЫМ СЛОЯМ</div>
+  box.innerHTML = `
+    <div class="poster">
+      <div class="grad-bg"></div>
+      <div class="poster-in">
+        <div class="poster-top"><span>${dateStr}</span><span>StarSeedSoul</span></div>
+        <div>
+          <div class="poster-name">${type.name}</div>
+          <div class="poster-label">ваш звёздный тип</div>
+        </div>
+        <div class="poster-foot"><span>starseedsoultype.com</span></div>
       </div>
     </div>
+    <div class="res">
+      <p class="res-text">Ваше чтение готово: основная частота, творческая сила, точка роста и 8 признаков вашего типа.</p>
+      <a class="bot-btn" id="botBtn" href="${BOT_URL}?start=${slug}" target="_blank" rel="noopener">Полное чтение в Telegram!</a>
+      <button class="save-btn" id="saveBtn">Сохранить для сторис</button>
+      <button class="retake-btn" onclick="retake()">Пройти заново</button>
+    </div>`;
 
-    <div class="unlock-box">
-      <div class="portal-num">PORTAL 11.11</div>
-      <div class="unlock-title">Вы в одном шаге</div>
-      <div class="unlock-sub">Чтение подготовлено. Остался только шаг сквозь него.</div>
-      <div class="unlock-list">
-        <div class="unlock-item">Полный космический портрет вашего происхождения души. Откуда вы пришли и что несёте сюда</div>
-        <div class="unlock-item">Все четыре слоя вашей частоты. Как они движутся через вашу жизнь, отношения, работу, тело</div>
-        <div class="unlock-item">Территория, которую это воплощение требует от вас больше всего</div>
-        <div class="unlock-item">Место, где вы получаете без разборчивости. И чего это вам стоило</div>
-        <div class="unlock-item">Конкретная миссия вашей души в этом измерении</div>
-        <div class="unlock-item">Ваша карта совместимости. Какие происхождения душ завершают вас, а какие тянут</div>
-      </div>
-      <div class="price">$11.11</div>
-      <div class="price-note">Единоразово · Мгновенный доступ · Навсегда ваше</div>
-      <a href="${STRIPE_LINKS[type.name]}" target="_blank" class="unlock-btn" style="margin-bottom:10px">Оплатить картой Visa / Mastercard</a>
-      <a href="${PRODAMUS_LINKS[type.name]}" target="_blank" class="unlock-btn" style="background:linear-gradient(135deg,#1a3a1a,#2a5a2a);border:1px solid #44cc88" id="portalBtn" data-url="${PRODAMUS_LINKS[type.name]}">Оплатить российской картой (Мир / СБП)</a>
-    </div>
-
-    <button class="retake-btn" onclick="retake()" style="display:none">Начать заново</button>
-  `;
-
-  document.getElementById('result').innerHTML = html;
-
-  const portalBtn = document.getElementById('portalBtn');
-  if (portalBtn) {
-    portalBtn.addEventListener('click', function(e) {
-      const url = this.dataset.url;
-      if (url && url.includes('REPLACE')) {
-        e.preventDefault();
-        const overlay = document.createElement('div');
-        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(7,5,15,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;padding:32px;text-align:center;';
-        overlay.innerHTML = `
-          <div style="font-size:10px;letter-spacing:4px;color:#7766aa;text-transform:uppercase;margin-bottom:16px">Система Происхождения Души</div>
-          <div style="font-size:22px;color:#f0eaff;margin-bottom:12px;font-family:Georgia,serif;font-style:italic">Оплата российской картой скоро откроется</div>
-          <div style="font-size:13px;color:#9988aa;line-height:1.7;margin-bottom:28px;max-width:320px;font-family:Georgia,serif">Ваше чтение подготовлено. Оплата через Продамус подключается в ближайшее время.</div>
-          <button onclick="this.parentElement.remove()" style="padding:12px 32px;border:1px solid #9966cc;background:#130d22;color:#bb88ff;font-family:Georgia,serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;">Закрыть</button>
-        `;
-        document.body.appendChild(overlay);
-      }
-    });
-  }
-
+  document.getElementById('botBtn').addEventListener('click', function(){
+    if (typeof fbq !== 'undefined') fbq('trackCustom', 'OpenBotRU', { origin: slug });
+  });
+  document.getElementById('saveBtn').addEventListener('click', function(){ saveStory(type.name, dateStr); });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => drawCrystal(type.crystal), 100);
+}
+
+// Story image 1080×1920: gradient, Origin name, label, site
+async function saveStory(name, dateStr) {
+  try { await document.fonts.load('900 160px Onest'); await document.fonts.load('300 60px Onest'); } catch (e) {}
+  const W = 1080, H = 1920, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  const g = x.createLinearGradient(0, 0, W, H);
+  [['#3E6FC4',0],['#9B8CD6',.3],['#E6A6C8',.55],['#F6B8A8',.75],['#F5CD6A',1]].forEach(([col, st]) => g.addColorStop(st, col));
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  [[220,1350,700,'rgba(62,111,196,.55)'],[860,380,650,'rgba(245,205,106,.55)'],[760,1450,750,'rgba(242,169,198,.55)']].forEach(([cx, cy, r, col]) => {
+    const rg = x.createRadialGradient(cx, cy, 0, cx, cy, r); rg.addColorStop(0, col); rg.addColorStop(1, col.replace(/[\d.]+\)$/, '0)'));
+    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+  });
+  x.fillStyle = '#111';
+  x.font = '500 40px Onest, sans-serif'; x.textBaseline = 'top';
+  x.fillText(dateStr, 80, 110);
+  x.textAlign = 'right'; x.fillText('StarSeedSoul', W - 80, 110); x.textAlign = 'left';
+  // fit the name: up to two lines, largest size that fits
+  const words = name.split(' ');
+  let size = 220, lines;
+  for (; size > 80; size -= 6) {
+    x.font = `900 ${size}px Onest, sans-serif`;
+    lines = words.length > 1 && x.measureText(name).width > W - 160 ? [words.slice(0, Math.ceil(words.length / 2)).join(' '), words.slice(Math.ceil(words.length / 2)).join(' ')] : [name];
+    if (lines.every(l => x.measureText(l).width <= W - 160)) break;
+  }
+  x.textBaseline = 'alphabetic';
+  const lh = size * .92, base = 1180 - (lines.length - 1) * lh;
+  lines.forEach((l, i) => x.fillText(l, 80, base + i * lh));
+  x.font = '300 64px Onest, sans-serif'; x.fillText('мой звёздный тип', 80, base + (lines.length - 1) * lh + 100);
+  x.font = '500 40px Onest, sans-serif'; x.fillText('starseedsoultype.com', 80, H - 120);
+  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
+  const file = new File([blob], 'starseed-' + (ORIGIN_SLUGS[name] || 'type') + '.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
 }
 
 function retake() {
