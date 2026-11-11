@@ -180,6 +180,8 @@ select:focus { border-color: var(--gold); }
   transition: opacity 0.2s;
 }
 .bond-unlock:hover { opacity: 0.85; }
+.intro { max-width: 460px; text-align: center; font-size: 13px; line-height: 1.8; color: var(--text2); margin: 0 auto 28px; padding: 0 8px; }
+.intro a { color: var(--gold); }
 .bond-unlock-2 { background: transparent; color: var(--gold); border: 1px solid var(--border2); margin-top: 12px; }
 .bond-unlock { line-height: 1.5; }
 
@@ -255,21 +257,22 @@ select:focus { border-color: var(--gold); }
 
 <div class="eyebrow">StarSeed Soul · Звёздное происхождение</div>
 <h1>Калькулятор связи душ</h1>
-<div class="subtitle">Выберите два звёздных типа · Узнайте связь</div>
+<div class="subtitle">Как разные звёздные души ведут себя в отношениях</div>
+<p class="intro">Выберите любые два типа и посмотрите, что происходит между ними: где легко, где трудно и почему. Это можно читать как наблюдение за звёздными душами вообще. А можно подставить себя и близкого человека. Свой тип и тип партнёра можно узнать в <a href="quizru.html">звёздном сканере</a>.</p>
 
 <div class="selectors">
   <div class="selector-block">
-    <div class="selector-label">Первая душа</div>
+    <div class="selector-label">Первый звёздный тип</div>
     <select id="type1"></select>
   </div>
   <div class="vs">✦</div>
   <div class="selector-block">
-    <div class="selector-label">Вторая душа</div>
+    <div class="selector-label">Второй звёздный тип</div>
     <select id="type2"></select>
   </div>
 </div>
 
-<button class="calc-btn" onclick="calculate()">Узнать связь</button>
+<button class="calc-btn" onclick="calculate()">Показать связь</button>
 
 <div id="result">
   <div class="bond-banner">
@@ -303,15 +306,15 @@ select:focus { border-color: var(--gold); }
   <div class="func-grid" id="funcGrid"></div>
 
   <div class="bond-desc">
-    <h3>Чтение вашей связи</h3>
+    <h3>Чтение связи</h3>
     <p id="bondWhy"></p>
     <p id="bondHow" class="blurred"></p>
-    <a id="bondUnlock" href="https://t.me/starseedsoul_bot?start=para" class="bond-unlock" target="_blank" rel="noopener">✦ &nbsp; Подробнее о вашей паре в Telegram &nbsp; ✦</a>
+    <a id="bondUnlock" href="https://t.me/starseedsoul_bot?start=para" class="bond-unlock" target="_blank" rel="noopener">✦ &nbsp; Узнать про вашу пару в Telegram &nbsp; ✦</a>
     <a id="bondPersonal" href="https://t.me/alexandra_source" class="bond-unlock bond-unlock-2" target="_blank" rel="noopener">Личное чтение пары</a>
   </div>
 
   <div class="cert" id="certBox">
-    <h3>Сертификат вашей связи</h3>
+    <h3>Именной сертификат связи</h3>
     <div class="cert-note">Создаётся в вашем браузере. Имена никуда не отправляются.</div>
     <div class="cert-names">
       <input id="certName1" type="text" maxlength="18" placeholder="Первое имя" autocomplete="off">
