@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<!-- Meta Pixel Code (consent aware, see pixel.js) -->
+<script src="pixel.js"></script>
+<!-- End Meta Pixel Code -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Узнайте, какая частота возникает между двумя звёздными типами. Рисунок вашей связи и то, что за ним стоит.">
+<title>Калькулятор связи душ | StarSeed Soul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0A0A0A;
+  --bg2: #111111;
+  --gold: #C9A96E;
+  --gold2: #E8D5A8;
+  --text: #E8E4DF;
+  --text2: #C9C1B8;
+  --muted: #5F5A55;
+  --border: rgba(201,169,110,0.08);
+  --border2: rgba(201,169,110,0.18);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  padding: 48px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-size: 10px; letter-spacing: 5px; color: var(--muted);
+  text-transform: uppercase; text-align: center; margin-bottom: 16px;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 38px; color: var(--text); letter-spacing: 4px;
+  text-align: center; font-weight: 300; margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; text-align: center; margin-bottom: 40px;
+}
+
+/* ── SELECTORS ── */
+.selectors {
+  display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center;
+}
+.selector-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.selector-label {
+  font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+}
+select {
+  background: var(--bg2); border: 1px solid var(--border2); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 12px; padding: 10px 16px; cursor: pointer; outline: none;
+  min-width: 200px; appearance: none; text-align: center; letter-spacing: 1px;
+}
+select:focus { border-color: var(--gold); }
+
+.vs {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 24px; color: var(--muted); align-self: flex-end; padding-bottom: 10px;
+}
+
+.calc-btn {
+  padding: 14px 48px; border: 1px solid var(--border2); background: transparent;
+  color: var(--gold); font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300; font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  margin-bottom: 40px;
+}
+.calc-btn:hover { background: rgba(201,169,110,0.06); border-color: var(--gold); }
+
+/* ── RESULT AREA ── */
+#result { width: 100%; max-width: 860px; display: none; flex-direction: column; align-items: center; }
+
+/* Bond banner */
+.bond-banner {
+  width: 100%; text-align: center; padding: 28px 20px;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.bond-symbol { font-size: 30px; margin-bottom: 10px; }
+.bond-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 28px; letter-spacing: 4px; margin-bottom: 8px; font-weight: 300;
+}
+.bond-tension {
+  font-size: 10px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase;
+}
+
+/* ── MERGED CRYSTAL ── */
+.merged-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; margin-bottom: 32px; width: 100%;
+}
+.merged-labels {
+  display: flex; justify-content: space-between; width: 100%; max-width: 420px;
+  padding: 0 8px;
+}
+.merged-label { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.crystal-name {
+  font-size: 10px; letter-spacing: 3px; color: var(--text2); text-transform: uppercase;
+}
+.crystal-tagline {
+  font-size: 9px; color: var(--muted); text-align: center; max-width: 140px; line-height: 1.5;
+}
+
+/* ── FUNCTION GRID ── */
+.func-grid {
+  width: 100%; display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; margin-bottom: 32px;
+}
+@media (min-width: 600px) {
+  .func-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.func-cell {
+  background: var(--bg2); border: 1px solid var(--border); padding: 16px 12px;
+  text-align: center;
+}
+.func-cell .func-sym { font-size: 16px; margin-bottom: 6px; }
+.func-cell .func-name {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 6px; color: var(--text2);
+}
+.func-cell .pair-quality {
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 6px; font-weight: 300;
+}
+.func-cell .pair-desc { font-size: 9px; color: var(--muted); line-height: 1.6; }
+
+/* quality tones */
+.q-ideal    { color: #88ccaa !important; border-color: rgba(136,204,170,0.15) !important; }
+.q-harmonic { color: #88b8cc !important; border-color: rgba(136,184,204,0.15) !important; }
+.q-tandem   { color: var(--gold2) !important; border-color: var(--border2) !important; }
+.q-mirror   { color: var(--text2) !important; border-color: var(--border) !important; }
+.q-mismatch { color: var(--gold) !important; border-color: var(--border2) !important; }
+.q-trap     { color: #cc9966 !important; border-color: rgba(204,153,102,0.15) !important; }
+.q-conflict { color: #cc7766 !important; border-color: rgba(204,119,102,0.15) !important; }
+
+/* ── BOND DESCRIPTION ── */
+.bond-desc {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border);
+  padding: 32px 28px; margin-bottom: 32px;
+}
+.bond-desc h3 {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.bond-desc p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px; color: var(--text); line-height: 1.9;
+  margin-bottom: 16px; font-weight: 300;
+}
+.bond-desc p.blurred {
+  filter: blur(5px); user-select: none; -webkit-user-select: none;
+  pointer-events: none; color: var(--text2);
+}
+.bond-unlock {
+  display: block; margin-top: 20px; padding: 14px 24px; text-align: center;
+  background: var(--gold); color: #0A0A0A;
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.bond-unlock:hover { opacity: 0.85; }
+.bond-unlock-2 { background: transparent; color: var(--gold); border: 1px solid var(--border2); margin-top: 12px; }
+.bond-unlock { line-height: 1.5; }
+
+/* ── TENSION BAR ── */
+.tension-wrap { width: 100%; margin-bottom: 32px; }
+.tension-label {
+  font-size: 10px; letter-spacing: 4px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 10px; text-align: center;
+}
+.tension-bar-bg {
+  width: 100%; height: 2px; background: var(--bg2);
+  overflow: hidden; border-top: 1px solid var(--border);
+}
+.tension-bar-fill { height: 100%; transition: width 0.8s ease; }
+.tension-pct {
+  font-size: 10px; color: var(--muted); text-align: center;
+  margin-top: 8px; letter-spacing: 2px;
+}
+
+/* ── FOOTER ── */
+.result-footer {
+  font-size: 9px; color: var(--muted); letter-spacing: 4px;
+  text-transform: uppercase; margin-top: 8px;
+}
+
+/* ── NAV BUTTONS ── */
+.nav-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 520px; margin-top: 32px; }
+.btn-gold {
+  flex: 1; min-width: 180px; padding: 16px 20px; text-align: center;
+  background: transparent; border: 1px solid var(--border2); color: var(--gold);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-gold:hover { background: rgba(201,169,110,0.06); }
+
+@media(max-width: 520px) {
+  h1 { font-size: 30px; }
+  .bond-desc p { font-size: 16px; }
+  select { min-width: 160px; }
+}
+
+/* ── CERTIFICATE ── */
+.cert { margin-top: 28px; padding: 24px; border: 1px solid var(--border2); background: var(--bg2); text-align: center; }
+.cert h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: 22px; letter-spacing: 3px; color: var(--gold2); margin-bottom: 6px; }
+.cert-note { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 18px; }
+.cert-names { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+.cert-names input {
+  background: var(--bg); border: 1px solid var(--border2); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 300; font-size: 13px;
+  padding: 10px 14px; outline: none; width: 170px; text-align: center; letter-spacing: 1px;
+}
+.cert-names input:focus { border-color: var(--gold); }
+#certCanvas { display: block; width: 100%; max-width: 260px; height: auto; margin: 0 auto 18px; border: 1px solid var(--border2); }
+.cert-btn {
+  padding: 16px 44px; border: 0; border-radius: 999px; cursor: pointer; color: #111;
+  background: linear-gradient(90deg, #8799D6 0%, #C5A7CE 33%, #E9AEC9 55%, #F6BC79 82%, #F6C156 100%);
+  font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; font-size: 16px;
+  letter-spacing: -0.5px; transition: opacity 0.2s, transform 0.2s;
+}
+.cert-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+</style>
+
+
+<!-- StarSeed Funnel Tracking -->
+<script src="funnel-tracking.js"></script>
+<!-- End StarSeed Funnel Tracking -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+
+<div class="eyebrow">StarSeed Soul · Звёздное происхождение</div>
+<h1>Калькулятор связи душ</h1>
+<div class="subtitle">Выберите два звёздных типа · Узнайте связь</div>
+
+<div class="selectors">
+  <div class="selector-block">
+    <div class="selector-label">Первая душа</div>
+    <select id="type1"></select>
+  </div>
+  <div class="vs">✦</div>
+  <div class="selector-block">
+    <div class="selector-label">Вторая душа</div>
+    <select id="type2"></select>
+  </div>
+</div>
+
+<button class="calc-btn" onclick="calculate()">Узнать связь</button>
+
+<div id="result">
+  <div class="bond-banner">
+    <div class="bond-symbol" id="bondSymbol"></div>
+    <div class="bond-name" id="bondName"></div>
+    <div class="bond-tension" id="bondTension"></div>
+  </div>
+
+  <div class="tension-wrap">
+    <div class="tension-label">Напряжение связи</div>
+    <div class="tension-bar-bg">
+      <div class="tension-bar-fill" id="tensionFill"></div>
+    </div>
+    <div class="tension-pct" id="tensionPct"></div>
+  </div>
+
+  <div class="merged-wrap">
+    <canvas id="mergedCrystal" width="420" height="240"></canvas>
+    <div class="merged-labels">
+      <div class="merged-label">
+        <div class="crystal-name" id="cname1"></div>
+        <div class="crystal-tagline" id="ctagline1"></div>
+      </div>
+      <div class="merged-label">
+        <div class="crystal-name" id="cname2"></div>
+        <div class="crystal-tagline" id="ctagline2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="func-grid" id="funcGrid"></div>
+
+  <div class="bond-desc">
+    <h3>Чтение вашей связи</h3>
+    <p id="bondWhy"></p>
+    <p id="bondHow" class="blurred"></p>
+    <a id="bondUnlock" href="https://t.me/starseedsoul_bot?start=para" class="bond-unlock" target="_blank" rel="noopener">✦ &nbsp; Подробнее о вашей паре в Telegram &nbsp; ✦</a>
+    <a id="bondPersonal" href="https://t.me/alexandra_source" class="bond-unlock bond-unlock-2" target="_blank" rel="noopener">Личное чтение пары</a>
+  </div>
+
+  <div class="cert" id="certBox">
+    <h3>Сертификат вашей связи</h3>
+    <div class="cert-note">Создаётся в вашем браузере. Имена никуда не отправляются.</div>
+    <div class="cert-names">
+      <input id="certName1" type="text" maxlength="18" placeholder="Первое имя" autocomplete="off">
+      <input id="certName2" type="text" maxlength="18" placeholder="Второе имя" autocomplete="off">
+    </div>
+    <canvas id="certCanvas" width="1080" height="1920"></canvas>
+    <button class="cert-btn" id="certDownload" type="button">Поделиться связью</button>
+  </div>
+
+  <div class="result-footer">StarSeed Soul · Матрица связи душ</div>
+
+  <div class="nav-row">
+    <a href="quizru.html" class="btn-gold">Узнать свой тип</a>
+    <a href="ru.html" class="btn-gold">← StarSeed Soul</a>
+  </div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const TYPES = [
+  { en:"Siriusian", name:"Сириус" },
+  { en:"Pleiadian", name:"Плеяды" },
+  { en:"Lemurian", name:"Лемурия" },
+  { en:"Cassiopeian", name:"Кассиопея" },
+  { en:"Procyonian", name:"Прокси" },
+  { en:"Lyran", name:"Лира" },
+  { en:"Arcturian", name:"Арктур" },
+  { en:"Orion", name:"Орион" },
+  { en:"Vegan", name:"Вега" },
+  { en:"Zeta Reticulan", name:"Зета" },
+  { en:"Epsilon Eridan", name:"Эпсилон Эридана" },
+  { en:"Atlantean", name:"Атлантида" },
+  { en:"Andromedan", name:"Андромеда" },
+  { en:"Polarisian", name:"Полярис" },
+  { en:"Nibiruan", name:"Нибиру" },
+  { en:"Egyptian", name:"Египет" },
+  { en:"Titanian", name:"Титан" },
+  { en:"Blue Avian", name:"Голубые Авианы" },
+  { en:"Tau Cetian", name:"Тау Кита" },
+  { en:"Aldebaran", name:"Альдебаран" },
+  { en:"Centaurian", name:"Альфа Центавра" },
+  { en:"Herculean", name:"Геркулес" },
+  { en:"Anunnaki", name:"Ануннаки" },
+  { en:"Hyperborean", name:"Гиперборея" },
+];
+
+const AXIS_COLORS = {
+  up:{ r:255,g:200,b:20,  hex:"#ffc814" },
+  down:{ r:210,g:40, b:40,  hex:"#d22828" },
+  right:{ r:40, g:180,b:80,  hex:"#28b450" },
+  left:{ r:60, g:120,b:255, hex:"#3c78ff" },
+};
+
+const AXIS_ANGLE = { up:-Math.PI/2, down:Math.PI/2, right:0, left:Math.PI };
+const CH_RADIUS = [0,80,56,34,17];
+const CH_WEIGHT = [0,0.60,0.25,0.12,0.03];
+
+// ── PAIR READING ─────────────────────────────────────────────────────────────
+// The reading of a pair and both crystal shapes come from the server; the page only shows them.
+const VIEW_URL = 'https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/origin-view';
+async function loadBond(a, b) {
+  const r = await fetch(VIEW_URL, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ bond:[a, b], set:'ru' }) });
+  if (!r.ok) throw new Error('bond failed');
+  return r.json();
+}
+
+function blendColors(axes) {
+  let r=0,g=0,b=0;
+  axes.forEach((f,i) => {
+    const w = CH_WEIGHT[i+1];
+    const c = AXIS_COLORS[f];
+    r += c.r*w; g += c.g*w; b += c.b*w;
+  });
+  return { r:Math.round(r), g:Math.round(g), b:Math.round(b) };
+}
+
+// ── DRAW MERGED CRYSTALS ──────────────────────────────────────────────────────
+
+function drawMergedCrystals(t1, t2, bondName) {
+  const canvas = document.getElementById('mergedCrystal');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#0A0A0A';
+  ctx.fillRect(0,0,W,H);
+
+  const blend1 = blendColors(t1.axes);
+  const blend2 = blendColors(t2.axes);
+  const blendC = {
+    r: Math.round((blend1.r + blend2.r) / 2),
+    g: Math.round((blend1.g + blend2.g) / 2),
+    b: Math.round((blend1.b + blend2.b) / 2),
+  };
+
+  // Background glow
+  const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 100);
+  bg.addColorStop(0, `rgba(${blendC.r},${blendC.g},${blendC.b},0.12)`);
+  bg.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  // Draw both crystals at SAME center, one rotated +22.5°, other -22.5°
+  const ROT = 22.5 * Math.PI / 180;
+
+  drawCrystalOnContextRotated(ctx, t1, cx, cy, 1.0, 0.82, +ROT);
+  drawCrystalOnContextRotated(ctx, t2, cx, cy, 1.0, 0.82, -ROT);
+
+  // Center star
+  const starGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 14);
+  starGrad.addColorStop(0, 'rgba(255,255,255,0.7)');
+  starGrad.addColorStop(0.3, `rgba(${blendC.r+80},${blendC.g+80},${blendC.b+80},0.3)`);
+  starGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  ctx.fillStyle = starGrad;
+  ctx.beginPath(); ctx.arc(cx, cy, 14, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+}
+
+function drawCrystalOnContextRotated(ctx, type, cx, cy, scale, globalAlpha, rotation) {
+  const channels = {};
+  type.axes.forEach((f,i) => channels[f] = i+1);
+  const blend = blendColors(type.axes);
+
+  const R = [0, 80, 56, 34, 17].map(r => r * scale);
+
+  // Apply rotation to axes
+  const tips = {};
+  for (const [f,ch] of Object.entries(channels)) {
+    const baseAngle = AXIS_ANGLE[f];
+    const angle = baseAngle + rotation;
+    tips[f] = { x: cx + Math.cos(angle)*R[ch], y: cy + Math.sin(angle)*R[ch] };
+  }
+
+  const tUp=tips.up, tDown=tips.down, tRight=tips.right, tLeft=tips.left;
+
+  ctx.save();
+  ctx.globalAlpha = globalAlpha;
+  ctx.globalCompositeOperation = 'screen';
+
+  const faces = [
+    {pts:[cx,cy,tUp.x,tUp.y,tRight.x,tRight.y], f1:'up',f2:'right', b:0.85},
+    {pts:[cx,cy,tUp.x,tUp.y,tLeft.x,tLeft.y], f1:'up',f2:'left', b:0.65},
+    {pts:[cx,cy,tDown.x,tDown.y,tRight.x,tRight.y], f1:'down',f2:'right', b:0.55},
+    {pts:[cx,cy,tDown.x,tDown.y,tLeft.x,tLeft.y], f1:'down',f2:'left', b:0.40},
+  ];
+
+  faces.forEach(face => {
+    const c1=AXIS_COLORS[face.f1], c2=AXIS_COLORS[face.f2];
+    const bf={ r:Math.round((c1.r+c2.r)/2), g:Math.round((c1.g+c2.g)/2), b:Math.round((c1.b+c2.b)/2) };
+    const alpha = 0.14 + face.b * 0.18;
+    const pts = face.pts;
+
+    const grad = ctx.createLinearGradient(pts[0],pts[1],pts[4],pts[5]);
+    grad.addColorStop(0, `rgba(${bf.r},${bf.g},${bf.b},${alpha+0.1})`);
+    grad.addColorStop(1, `rgba(${Math.round(blend.r*.5)},${Math.round(blend.g*.5)},${Math.round(blend.b*.5)},${alpha*.4})`);
+
+    ctx.beginPath();
+    ctx.moveTo(pts[0],pts[1]); ctx.lineTo(pts[2],pts[3]); ctx.lineTo(pts[4],pts[5]);
+    ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(pts[0],pts[1]); ctx.lineTo(pts[2],pts[3]); ctx.lineTo(pts[4],pts[5]);
+    ctx.closePath();
+    ctx.strokeStyle=`rgba(${bf.r+80},${bf.g+80},${bf.b+80},0.5)`;
+    ctx.lineWidth=1.0; ctx.stroke();
+  });
+
+  // Outer silhouette
+  ctx.beginPath();
+  ctx.moveTo(tUp.x,tUp.y); ctx.lineTo(tRight.x,tRight.y); ctx.lineTo(tDown.x,tDown.y); ctx.lineTo(tLeft.x,tLeft.y);
+  ctx.closePath();
+  ctx.strokeStyle=`rgba(${blend.r+100},${blend.g+100},${blend.b+100},0.65)`;
+  ctx.lineWidth=1.5; ctx.stroke();
+
+  ctx.restore();
+  ctx.save();
+  ctx.globalAlpha = globalAlpha;
+  ctx.globalCompositeOperation = 'screen';
+
+  // Core glow
+  const coreGrad = ctx.createRadialGradient(cx,cy,0,cx,cy,24*scale);
+  coreGrad.addColorStop(0, `rgba(${blend.r},${blend.g},${blend.b},0.45)`);
+  coreGrad.addColorStop(0.5, `rgba(${blend.r},${blend.g},${blend.b},0.12)`);
+  coreGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle=coreGrad;
+  ctx.beginPath(); ctx.arc(cx, cy, 80*scale, 0, Math.PI*2); ctx.fill();
+
+  // Tip glows
+  for (const [f,ch] of Object.entries(channels)) {
+    const tip=tips[f], fc=AXIS_COLORS[f];
+    const size=[0,7,5,3.5,2][ch]*scale;
+    const glowR=[0,20,13,8,5][ch]*scale;
+    const a=[0,0.5,0.35,0.22,0.12][ch];
+    const glow=ctx.createRadialGradient(tip.x,tip.y,0,tip.x,tip.y,glowR);
+    glow.addColorStop(0,`rgba(${fc.r},${fc.g},${fc.b},${a})`);
+    glow.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=glow; ctx.beginPath(); ctx.arc(tip.x,tip.y,glowR,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(tip.x,tip.y,size,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${fc.r},${fc.g},${fc.b},0.9)`; ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+
+// ── CERTIFICATE (story image built in the browser, nothing leaves the page) ──
+const CERT_LINES = {
+  'Близнецы частоты': 'Между ними закрыто каждое место.',
+  'Звёзды-близнецы': 'Мгновенное узнавание, и каждый питает самое нежное место другого.',
+  'Космический поток': 'Что один знает наверняка, другой принимает целиком.',
+  'Зеркальные порталы': 'Каждый видит себя яснее рядом с другим.',
+  'Небесный наставник': 'Связь, в которой кто-то всегда растёт.',
+  'Кармическая связь': 'Каждый уверен там, где другой сомневается, и играть вместе им не надоедает.',
+  'Теневые контракты': 'Двое, которые изнутри знают одно и то же уязвимое место.',
+  'Чёрные дыры': 'Каждый сильнее всего там, где другой уязвим больше всего.',
+  'Звёздная алхимия': 'Самая требовательная связь. Оба выходят из неё другими.',
+  'Вечное отражение': 'Одна и та же природа дважды. Они поняли друг друга с первого слова.'
+};
+const CERT_ELEMENT_COLORS = { 'Огонь':'#ffb900', 'Вода':'#28be50', 'Земля':'#dc2828', 'Воздух':'#3c82ff' };
+const CERT_TIP = { up:['F'], right:['W'], down:['E'], left:['A'] };
+const CERT_FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+let certData = null;
+const certMoon = new Image();
+certMoon.onload = () => { if (certData) drawCertificate(); };
+certMoon.src = 'cert-moon.webp';
+
+function certFit(ctx, text, weight, size, maxW, minSize) {
+  let s = size;
+  while (s > minSize) {
+    ctx.font = `${weight} ${s}px ${CERT_FONT}`;
+    if (ctx.measureText(text).width <= maxW) break;
+    s -= 4;
+  }
+  return s;
+}
+
+function certWrap(ctx, text, maxW) {
+  const words = text.split(' '), lines = [];
+  let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function drawCertificate() {
+  if (!certData) return;
+  const { v, t1, t2 } = certData;
+  const c = document.getElementById('certCanvas');
+  const ctx = c.getContext('2d');
+  const W = 1080, H = 1920;
+  const n1 = (document.getElementById('certName1').value || '').trim() || 'Первое имя';
+  const n2 = (document.getElementById('certName2').value || '').trim() || 'Второе имя';
+  const CH = '#FBF1D8';
+  const LS = (px) => { if ('letterSpacing' in ctx) ctx.letterSpacing = px + 'px'; };
+
+  ctx.clearRect(0, 0, W, H);
+  LS(0);
+
+  // sky: blue to lilac and pink
+  const a = 160 * Math.PI / 180, len = Math.abs(W * Math.sin(a)) + Math.abs(H * Math.cos(a));
+  const dx = Math.sin(a) * len / 2, dy = -Math.cos(a) * len / 2;
+  const g = ctx.createLinearGradient(W/2 - dx, H/2 - dy, W/2 + dx, H/2 + dy);
+  [[0,'#2F6DB5'],[.2,'#6C86C4'],[.42,'#B79ACB'],[.66,'#F2AEC0'],[.84,'#E7A4CB'],[1,'#C99BDD']].forEach(([o,col]) => g.addColorStop(o, col));
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+  // huge faint planet
+  const px = 880, py = 350, pr = 500;
+  ctx.save();
+  ctx.shadowColor = 'rgba(255,255,255,0.10)'; ctx.shadowBlur = 120;
+  ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.fillStyle = 'rgba(255,255,255,0.02)'; ctx.fill();
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.clip();
+  const pg = ctx.createRadialGradient(680, 130, 0, 680, 130, 1004);
+  pg.addColorStop(0,'rgba(255,255,255,.34)'); pg.addColorStop(.38,'rgba(255,255,255,.20)');
+  pg.addColorStop(.7,'rgba(255,255,255,.07)'); pg.addColorStop(1,'rgba(255,255,255,.02)');
+  ctx.fillStyle = pg; ctx.fillRect(px-pr, py-pr, pr*2, pr*2);
+  ctx.save(); ctx.translate(px, py); ctx.rotate(-12 * Math.PI / 180);
+  for (let y = -900; y < 900; y += 250) {
+    ctx.fillStyle = 'rgba(255,255,255,.05)'; ctx.fillRect(-700, y + 70, 1400, 50);
+    ctx.fillStyle = 'rgba(120,100,200,.06)'; ctx.fillRect(-700, y + 210, 1400, 40);
+  }
+  ctx.restore();
+  const sg = ctx.createRadialGradient(px - 90, py - 70, 0, px - 90, py - 70, 600);
+  sg.addColorStop(0,'rgba(40,30,110,0)'); sg.addColorStop(.62,'rgba(40,30,110,0)'); sg.addColorStop(1,'rgba(40,30,110,.28)');
+  ctx.fillStyle = sg; ctx.fillRect(px-pr, py-pr, pr*2, pr*2);
+  ctx.restore();
+
+  // small moon
+  if (certMoon.complete && certMoon.naturalWidth) {
+    ctx.save(); ctx.globalAlpha = 0.3; ctx.drawImage(certMoon, 282, 10, 124, 124); ctx.restore();
+  }
+
+  // crystal of the pair, behind the plate
+  const R = [0, 80, 56, 34, 17];
+  const ANG = { up:-90, right:0, down:90, left:180 };
+  const ORDER = ['up','right','down','left'];
+  ctx.save();
+  ctx.translate(540, 960); ctx.scale(1539 / 184, 1539 / 184);
+  v.axes.forEach((ax, k) => {
+    const rot = k ? -22.5 : 22.5, t = {};
+    ax.forEach((f, i) => { const an = (ANG[f] + rot) * Math.PI / 180; t[f] = [Math.cos(an) * R[i+1], Math.sin(an) * R[i+1]]; });
+    ORDER.forEach((f, i) => {
+      const A = t[f], B = t[ORDER[(i+1) % 4]];
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(A[0],A[1]); ctx.lineTo(B[0],B[1]); ctx.closePath();
+      ctx.fillStyle = 'rgba(255,255,255,.07)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(251,241,216,.8)'; ctx.lineWidth = .25; ctx.stroke();
+    });
+    ctx.beginPath(); ORDER.forEach((f, i) => i ? ctx.lineTo(t[f][0], t[f][1]) : ctx.moveTo(t[f][0], t[f][1])); ctx.closePath();
+    ctx.strokeStyle = CH; ctx.lineWidth = .68; ctx.stroke();
+    [['up','down'],['right','left']].forEach(([p, q]) => {
+      const P = t[p], Q = t[q], mx = (P[0]+Q[0])/2, my = (P[1]+Q[1])/2;
+      const L = Math.hypot(P[0]-Q[0], P[1]-Q[1]) / 2, an = Math.atan2(Q[1]-P[1], Q[0]-P[0]);
+      ctx.beginPath(); ctx.ellipse(mx, my, L, L * .32, an, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(251,241,216,.85)'; ctx.lineWidth = .38; ctx.stroke();
+    });
+    ax.forEach((f, i) => {
+      const rr = [0, 2.6, 2, 1.5, 1][i+1];
+      ctx.beginPath(); ctx.arc(t[f][0], t[f][1], rr, 0, Math.PI*2); ctx.fillStyle = CH; ctx.fill();
+      const L = Math.hypot(t[f][0], t[f][1]), kk = (L + 7.5) / L;
+      ctx.font = `200 6px ${CERT_FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      // tip letters removed in the Russian version
+    });
+  });
+  ctx.beginPath(); ctx.arc(0, 0, 1.6, 0, Math.PI*2); ctx.fillStyle = CH; ctx.fill();
+  ctx.restore();
+
+  // black plate, half transparent
+  ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(0, 1330, W, H - 1330);
+
+  // top block
+  ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#0b0b0b';
+  ctx.textAlign = 'left'; ctx.font = `400 32px ${CERT_FONT}`;
+  ctx.fillText(new Date().toLocaleDateString('ru-RU', { year:'numeric', month:'long', day:'numeric' }), 80, 227);
+  ctx.textAlign = 'right'; ctx.fillText('Связь душ', 1000, 227);
+
+  ctx.textAlign = 'left';
+  LS(-6);
+  const label2 = '& ' + n2;
+  const fs = Math.min(certFit(ctx, n1, 700, 190, 920, 90), certFit(ctx, label2, 700, 190, 920, 90));
+  ctx.font = `700 ${fs}px ${CERT_FONT}`;
+  ctx.fillText(n1, 80, 444);
+  ctx.fillText(label2, 80, 712);
+  LS(0);
+  ctx.font = `300 42px ${CERT_FONT}`;
+  ctx.fillText(t1.name, 80, 517);
+  ctx.fillText(t2.name, 80, 785);
+
+  LS(-12);
+  ctx.font = `700 250px ${CERT_FONT}`;
+  ctx.fillText(v.tension + '%', 80, 1211);
+  LS(0);
+  ctx.font = `300 44px ${CERT_FONT}`;
+  ctx.fillText('напряжение', 80, 1272);
+
+  // plate text, right aligned
+  ctx.fillStyle = '#F4EEE2'; ctx.textAlign = 'right';
+  LS(-2); ctx.font = `700 68px ${CERT_FONT}`; ctx.fillText(v.verdict, 1000, 1432); LS(0);
+  ctx.font = `400 38px ${CERT_FONT}`;
+  certWrap(ctx, CERT_LINES[v.verdict] || '', 920).slice(0, 2).forEach((ln, i) => ctx.fillText(ln, 1000, 1492 + i * 45));
+
+  ctx.strokeStyle = CH; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(80, 1572); ctx.lineTo(1000, 1572); ctx.moveTo(80, 1674); ctx.lineTo(1000, 1674);
+  [310, 540, 770].forEach(x => { ctx.moveTo(x, 1572); ctx.lineTo(x, 1674); });
+  ctx.stroke();
+  v.cells.slice(0, 4).forEach((cell, i) => {
+    const right = 80 + 230 * (i + 1) - 16;
+    ctx.font = `600 26px ${CERT_FONT}`; ctx.fillStyle = CERT_ELEMENT_COLORS[cell.element] || CH;
+    ctx.fillText(cell.element, right, 1610);
+    ctx.font = `600 33px ${CERT_FONT}`; ctx.fillStyle = '#F4EEE2';
+    ctx.fillText((cell.label || '').replace(/[^А-Яа-яЁё ]/g, '').trim(), right, 1647);
+  });
+
+  ctx.font = `500 32px ${CERT_FONT}`; ctx.textAlign = 'left'; ctx.fillText('Alexandra', 80, 1723);
+  ctx.font = `400 32px ${CERT_FONT}`; ctx.textAlign = 'right'; ctx.fillText('starseedsoultype.com', 1000, 1723);
+}
+
+document.getElementById('certName1').addEventListener('input', drawCertificate);
+document.getElementById('certName2').addEventListener('input', drawCertificate);
+const certBtn = document.getElementById('certDownload');
+function certCanShareFiles() {
+  try {
+    if (!navigator.canShare || !navigator.share) return false;
+    return navigator.canShare({ files: [new File([''], 'a.png', { type: 'image/png' })] });
+  } catch (e) { return false; }
+}
+if (!certCanShareFiles()) certBtn.textContent = 'Сохранить связь';
+certBtn.addEventListener('click', () => {
+  if (!certData) return;
+  drawCertificate();
+  document.getElementById('certCanvas').toBlob(async blob => {
+    const name = 'soul-bond-' + certData.t1.en.toLowerCase().replace(/ /g, '-') + '-' + certData.t2.en.toLowerCase().replace(/ /g, '-') + '.png';
+    const file = new File([blob], name, { type: 'image/png' });
+    if (certCanShareFiles() && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'Наша связь душ' }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }, 'image/png');
+});
+
+// ── CALCULATE ─────────────────────────────────────────────────────────────────
+let calcSeq = 0;
+async function calculate() {
+  const i1 = parseInt(document.getElementById('type1').value);
+  const i2 = parseInt(document.getElementById('type2').value);
+  const t1 = TYPES[i1], t2 = TYPES[i2];
+  const seq = ++calcSeq;
+  const v = await loadBond(t1.en, t2.en).catch(() => null);
+  if (!v || seq !== calcSeq) return;
+
+  // Bond banner
+  document.getElementById('bondSymbol').textContent = v.sym;
+  document.getElementById('bondName').textContent = v.verdict;
+  document.getElementById('bondName').style.color = v.color;
+  document.getElementById('bondTension').textContent = `Напряжение: ${v.tension}%`;
+
+  // Tension bar
+  const fill = document.getElementById('tensionFill');
+  const pct = v.tension;
+  const barColor = pct <= 25 ? '#88ccaa' : pct <= 50 ? '#C9A96E' : pct <= 75 ? '#cc9966' : '#cc7766';
+  fill.style.width = pct + '%';
+  fill.style.background = `linear-gradient(90deg, ${barColor}88, ${barColor})`;
+  document.getElementById('tensionPct').textContent = `${pct}% напряжения`;
+
+  // Merged crystal
+  drawMergedCrystals({ axes: v.axes[0] }, { axes: v.axes[1] }, v.verdict);
+  document.getElementById('cname1').textContent = t1.name;
+  document.getElementById('cname2').textContent = t2.name;
+  document.getElementById('ctagline1').textContent = 'Звёздный тип';
+  document.getElementById('ctagline2').textContent = 'Звёздный тип';
+
+  // Element grid
+  const grid = document.getElementById('funcGrid');
+  grid.innerHTML = '';
+  for (const c of v.cells) {
+    const cell = document.createElement('div');
+    cell.className = `func-cell ${c.css}`;
+    cell.innerHTML = `
+      <div class="func-sym">${c.sym}</div>
+      <div class="func-name">${c.element}</div>
+      <div class="pair-quality ${c.css}">${c.label}</div>
+      <div class="pair-desc">${c.desc}</div>
+    `;
+    grid.appendChild(cell);
+  }
+
+  // Bond description
+  document.getElementById('bondWhy').textContent = v.why;
+  document.getElementById('bondHow').textContent = v.how;
+
+  certData = { v, t1, t2 };
+  drawCertificate();
+
+  // Show result
+  const resultEl = document.getElementById('result');
+  resultEl.style.display = 'flex';
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── POPULATE SELECTS ──────────────────────────────────────────────────────────
+function populateSelects() {
+  ['type1','type2'].forEach((id, idx) => {
+    const sel = document.getElementById(id);
+    TYPES.forEach((t, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = t.name;
+      if (i === (idx === 0 ? 12 : 0)) opt.selected = true; // default: Andromedan + Siriusian
+      sel.appendChild(opt);
+    });
+  });
+}
+
+populateSelects();
+</script>
+
+</body>
+</html>
