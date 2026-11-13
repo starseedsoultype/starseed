@@ -14,9 +14,9 @@ To change the order, move lines. To skip an article, delete its line.
 - [x] should-i-contact-my-twin-flame | Should I Contact My Twin Flame, or Wait? | Should I contact my twin flame during separation? / Should I text my twin flame first? / Should I wait for my twin flame to reach out?
 - [x] when-is-twin-flame-no-contact-over | How Do I Know When No Contact Is Over? | How do I know when no contact is over?
 - [x] twin-flame-mixed-signals | Mixed Signals: Why They Come Close and Then Disappear | Why does my twin flame give me mixed signals? / Why do they come close and then disappear?
+- [x] twin-flame-repeating-numbers-synchronicities | Repeating Numbers and Synchronicities After Meeting Them | What do repeated signs and synchronicities mean? / Why do I keep seeing repeating numbers after meeting them?
 
 ## Queue
-- [ ] twin-flame-repeating-numbers-synchronicities | Repeating Numbers and Synchronicities After Meeting Them | What do repeated signs and synchronicities mean? / Why do I keep seeing repeating numbers after meeting them?
 - [ ] why-did-my-twin-flame-block-me | Why Did My Twin Flame Block Me? | Why did my twin flame block me?
 - [ ] said-they-love-me-then-rejected-me | They Said They Love Me, Then Rejected Me | Why did they say they love me and then reject me? / Why did they change their feelings so suddenly?
 - [ ] is-my-twin-flame-afraid-of-the-connection | Is My Twin Flame Afraid of the Connection? | Is my twin flame afraid of the connection? / Are they confused about their feelings?
