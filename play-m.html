@@ -1,0 +1,41 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>StarSeed</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#EEF6FC;color:#1A2433;font-family:-apple-system,BlinkMacSystemFont,system-ui,Arial,sans-serif;font-size:17px;line-height:1.45}
+main{max-width:640px;margin:0 auto;padding:16px 16px 48px}h1{font-size:24px;margin:8px 0 14px}h2{font-size:17px;margin:20px 0 6px}
+button,select,textarea{font:inherit;color:inherit}button{cursor:pointer}.p{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;background:#fff;border:2px solid #DCE9F5;border-radius:14px;padding:15px;margin-bottom:8px}.p.new{border-color:#1F5FAE}.p small,.muted{color:#4A5A70}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}.chips button{font-size:clamp(13px,3.7vw,16px);white-space:nowrap;background:#fff;border:2px solid #DCE9F5;border-radius:24px;padding:9px 2px;min-height:46px}.chips .on{background:#0E2A4D;border-color:#0E2A4D;color:#fff}
+textarea,select{width:100%;border:2px solid #DCE9F5;border-radius:12px;padding:12px;background:#fff;min-height:50px}textarea{min-height:64px;resize:vertical}
+.btn{display:block;width:100%;border:0;border-radius:12px;background:#AFFC41;color:#24400A;font-weight:700;padding:16px;margin-top:16px}.btn:disabled{opacity:.4}.two{background:#fff;border:2px solid #1F5FAE;color:#1F5FAE}
+.link{background:none;border:0;color:#4A5A70;text-decoration:underline;padding:12px 0}table{border-collapse:collapse;width:100%;font-size:clamp(12px,3.35vw,17px);background:#fff;border-radius:12px;overflow:hidden;margin:6px 0 10px}td,th{text-align:left;padding:10px 3px;border-bottom:1px solid #DCE9F5}.y{background:#D9FBA0}
+code{word-break:break-all}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #1F5FAE;outline-offset:2px}
+</style></head><body><main id="m"><p class="muted">…</p></main><script>
+const API='https://pewgupxikbswhaqxjrwk.supabase.co/functions/v1/game-check',W=window.Telegram&&Telegram.WebApp,INIT=W?W.initData:'',m=document.getElementById('m');
+let D=null,L=null,cur=new URLSearchParams(location.search).get('p'),dr={},ed={},v=cur?'card':'list';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),on=(s,f)=>m.querySelectorAll(s).forEach(b=>b.onclick=()=>f(b));
+async function api(o){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...o,init:INIT})});if(!r.ok)throw r.status;return r.json()}
+async function load(){D=await api({a:'people'});L=D.labels;draw()}
+function draw(){scrollTo(0,0);if(v==='card'){const p=D.people.find(x=>x.id===cur);if(p)return card(p);v='list'}if(v==='total')return total();list()}
+function list(){m.innerHTML='<h1>Участники</h1>'+(D.people.length?'':'<p class="muted">Пока никто не ответил.</p>')+D.people.map(p=>`<button class="p ${p.done&&!p.mark?'new':''}" data-p="${esc(p.id)}"><span>${esc(p.name||'без имени')}</span><small>${!p.done?'отвечает':p.mark?'отмечено':'новые ответы'}</small></button>`).join('')+`<button class="btn" id="cp">Скопировать ссылку для людей</button><button class="btn two" id="tt">Итог по всем</button><button class="link" id="re">Обновить</button>`;
+on('[data-p]',b=>{cur=b.dataset.p;v='card';draw()});on('#tt',()=>{v='total';draw()});on('#re',load);on('#cp',async b=>{try{await navigator.clipboard.writeText(D.link);b.textContent='Скопировано'}catch(e){b.outerHTML=`<p><code>${esc(D.link)}</code></p>`}})}
+function card(p){const k=p.mark,open=!k||ed[p.id];dr[p.id]=dr[p.id]||{pl:k?[...k.places].map(c=>c==='?'?'':c):['','','',''],n:{...(k?k.notes:{})}};const d=dr[p.id],st=d.pl.join('');
+let h=`<button class="link" id="bk">← Все</button><h1>${esc(p.name||'без имени')}</h1>`;
+if(!p.done)h+='<p class="muted">Ещё отвечает на вопросы.</p>';
+if(p.res&&!ed[p.id])h+=res(p);
+if(open)h+=`<h2>Тип, если видишь сразу</h2><select id="ty" aria-label="Тип"><option value="">выбрать</option>${Object.entries(L.t).sort((a,b)=>a[1].localeCompare(b[1],'ru')).map(([s,n])=>`<option value="${s}" ${st===s?'selected':''}>${esc(n)}</option>`).join('')}</select>`+L.w.map((w,i)=>`<h2>${w}</h2><div class="chips">${['R','E','M','L'].map(f=>`<button data-k="${i}" data-f="${f}" aria-pressed="${d.pl[i]===f}" class="${d.pl[i]===f?'on':''}">${L.f[f]}</button>`).join('')}</div>`).join('');
+h+=`<details ${Object.values(d.n).some(Boolean)?'open':''}><summary style="padding:14px 0;font-weight:600">Заметки</summary>${L.n.map(([a,t])=>`<h2>${t}</h2><textarea data-n="${a}" aria-label="${t}">${esc(d.n[a]||'')}</textarea>`).join('')}</details>`;
+h+=`<button class="btn" id="sv">${!k?'Записать':ed[p.id]?'Сохранить исправление':'Сохранить заметки'}</button>`;
+if(k&&!ed[p.id])h+='<button class="btn two" id="fx">Исправить</button>';if(!k&&p.done)h+='<button class="link" id="sk">Показать результат без отметки</button><br>';h+='<button class="link" id="hd">Убрать из списка</button><p id="ms" class="muted" aria-live="polite"></p>';m.innerHTML=h;
+on('#bk',()=>{v='list';load().catch(draw)});on('[data-f]',b=>{const i=+b.dataset.k,f=b.dataset.f,y=scrollY,was=d.pl[i]===f;d.pl=d.pl.map(x=>x===f?'':x);d.pl[i]=was?'':f;const e=d.pl.filter(Boolean);if(e.length===3){const j=d.pl.indexOf('');d.pl[j]=['R','E','M','L'].find(c=>!e.includes(c))}card(p);scrollTo(0,y)});
+const ty=m.querySelector('#ty');if(ty)ty.onchange=()=>{const y=scrollY;d.pl=ty.value?[...ty.value]:['','','',''];card(p);scrollTo(0,y)};m.querySelectorAll('[data-n]').forEach(t=>t.oninput=()=>d.n[t.dataset.n]=t.value);
+const pl=()=>d.pl.map(x=>x||'?').join('');const save=async(places)=>{try{const r=await api({a:'mark',id:p.id,places,notes:d.n});ed[p.id]=false;const i=D.people.findIndex(x=>x.id===p.id);D.people[i]=r.person;delete dr[p.id];draw()}catch(e){m.querySelector('#ms').textContent='Не записалось, нажми ещё раз.'}};
+m.querySelector('#sv').disabled=!p.done||(open&&!st);on('#sv',()=>save(pl()));on('#sk',()=>save('????'));on('#fx',()=>{ed[p.id]=true;card(p);scrollTo(0,0)});
+on('#hd',async()=>{const go=async()=>{try{await api({a:'hide',id:p.id});v='list';load()}catch(e){m.querySelector('#ms').textContent='Не получилось.'}};if(W&&W.showConfirm)W.showConfirm('Убрать из списка?',x=>x&&go());else if(confirm('Убрать из списка?'))go()})}
+function res(p){const r=p.res,k=p.mark.places,cols=[['Ты',k],['Сайт',r.site],['По местам',r.places]];
+let h=`<table><tr><th></th>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr>`+L.w.map((w,i)=>`<tr><th>${w}</th>${cols.map(([t,s],j)=>`<td class="${j&&s&&s[i]===k[i]?'y':''}">${s?L.f[s[i]]:''}</td>`).join('')}</tr>`).join('')+`<tr><th>Тип</th>${cols.map(([t,s])=>`<td><b>${esc(L.t[s]||'')}</b></td>`).join('')}</tr></table>`;
+if(r.close.length>1)h+=`<p class="muted">По местам почти вровень: ${r.close.map(esc).join(', ')}.</p>`;if(r.median&&r.median<3000)h+='<p class="muted">Отвечал очень быстро, меньше трёх секунд на вопрос.</p>';if(p.fixed)h+='<p class="muted">Исправлено.</p>';return h}
+function total(){const s=D.summary;let h='<button class="link" id="bk">← Все</button><h1>Итог</h1>';if(!s.n)h+='<p class="muted">Появится, когда отметишь первого человека.</p>';else{h+=`<p>Людей: ${s.n}</p><table><tr><th></th><th>Сайт</th><th>По местам</th></tr>`+L.w.map((w,i)=>`<tr><th>${w}</th><td>${s.site[i]} из ${s.known[i]}</td><td>${s.places[i]} из ${s.known[i]}</td></tr>`).join('')+'</table>';
+h+=s.n>=5?'<h2>Какие вопросы слышат своё место</h2><table>'+Object.entries(s.q).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1]).map(([i,q])=>`<tr><td>Вопрос ${i}</td><td>${q[0]} из ${q[1]}</td></tr>`).join('')+'</table>':'<p class="muted">Какие вопросы врут, покажу после пятого человека.</p>'}m.innerHTML=h;on('#bk',()=>{v='list';draw()})}
+if(W){W.ready();W.expand()}
+load().catch(e=>{m.innerHTML=e===403?'<p>Открой эту страницу из бота.</p>':'<p>Нет связи. Закрой и открой ещё раз.</p>'});
+</script></body></html>
