@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Journal · StarSeed Intelligence</title>
+<meta name="description" content="Notes on yourself and the people around you: your Origin, your shadow and growth point, love, family, work and the connections that shape you.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://www.starseedsoultype.com/favicon.svg">
+<link rel="stylesheet" href="si.css">
+<style>
+@media (min-width:721px) and (max-width:1060px){.nav{display:none;position:absolute;top:100px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid var(--line)}.nav.open{display:flex}.nav a{padding:14px 24px;border-top:1px solid var(--line)}.menu-btn{display:block}}
+
+/* journal (redesign sketch 26.11.2026) */
+.j-head{background:var(--bg-soft);padding:clamp(36px,7vh,64px) 0 clamp(28px,5vh,40px)}
+.j-head .h1{font-size:clamp(36px,4.3vw,54.4px);font-weight:300;line-height:1.15;color:var(--blue-deep)}
+.j-head .lead{margin-top:12px;font-size:20px;line-height:28px;color:var(--text);max-width:640px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chip{--c:var(--blue);font:500 14px/20px var(--font);padding:8px 16px;border-radius:999px;border:1.5px solid var(--c);background:var(--white);color:var(--blue-deep);cursor:pointer;transition:background .15s}
+.chip[aria-pressed="true"]{background:var(--c);background:color-mix(in srgb,var(--c) 30%,#fff)}
+.chip:hover{background:color-mix(in srgb,var(--c) 18%,#fff)}
+
+.j-list{padding:clamp(32px,6vh,56px) 0 clamp(48px,8vh,80px)}
+.feature{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center;color:var(--text);padding-bottom:clamp(32px,6vh,48px);margin-bottom:clamp(32px,6vh,48px);border-bottom:1px solid var(--line)}
+.feature:hover{text-decoration:none}
+.feature-art{aspect-ratio:16/10;border-radius:var(--radius);background:radial-gradient(120% 140% at 85% 20%,#3A5F8C 0%,#1D3D66 38%,#0E2A4D 72%,#0A2140 100%);position:relative;overflow:hidden}
+.feature-art::before,.feature-art::after{content:"";position:absolute;border-radius:50%;border:1px solid var(--c)}
+.feature-art::before{--c:#C2EE7C;width:46%;aspect-ratio:1;left:18%;top:22%;opacity:.7}
+.feature-art::after{--c:#6FBDF2;width:46%;aspect-ratio:1;left:38%;top:30%;opacity:.7}
+.feature .tag{margin-bottom:12px}
+.feature h2{font-size:28.8px;font-weight:500;line-height:35px;color:var(--blue);margin-bottom:12px;text-wrap:balance}
+.feature p{font-size:16px;line-height:24px}
+.feature .link-arrow{display:inline-block;margin-top:18px}
+
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:var(--muted)}
+.tag b{font-weight:500;color:var(--blue-deep);padding:2px 10px;border-radius:999px;background:color-mix(in srgb,var(--c) 28%,#fff)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,32px) clamp(20px,3vw,28px)}
+.pcard{--c:var(--blue);display:flex;flex-direction:column;color:var(--text);border-top:3px solid var(--c);padding-top:16px}
+.pcard:hover{text-decoration:none}
+.pcard:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.pcard h3{font-size:19px;font-weight:500;line-height:26px;color:var(--blue);margin:10px 0 8px;text-wrap:balance}
+.pcard p{font-size:15px;line-height:22px;color:var(--muted)}
+.pcard[hidden],.feature[hidden]{display:none}
+
+/* topic colours: the three hero-word colours + deep blue */
+[data-t="self"]{--c:#7FDCC4}
+[data-t="others"]{--c:#6FBDF2}
+[data-t="connection"]{--c:#C2EE7C}
+[data-t="origins"]{--c:#1F5FAE}
+.tag b[data-t="origins"]{color:var(--white);background:var(--blue)}
+
+.j-cta{background:linear-gradient(var(--blue-deep) 62%,#1F86D1);color:var(--white);text-align:center;padding:clamp(40px,8vh,72px) 0}
+.j-cta p{max-width:560px;margin:0 auto 24px;color:var(--ice-soft);text-wrap:balance}
+.j-cta h2{font-size:28.8px;font-weight:500;line-height:36px;margin-bottom:28px;text-wrap:balance}
+.j-cta .btn{font-size:17.6px;line-height:24px;padding:20px 34px;min-width:320px}
+
+@media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){
+  .feature{grid-template-columns:minmax(0,1fr)}
+  .feature-art{display:none}
+  .feature h2{font-size:24px;line-height:30px}
+  .grid3{grid-template-columns:minmax(0,1fr)}
+  .j-cta .btn{min-width:0}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="utilbar">
+    <div class="util-links">
+      <a href="partners.html">Partner program</a>
+      <a href="mailto:timsocion@gmail.com">Contact</a>
+    </div>
+    <a class="util-cta" href="scan.html">Begin your Origin Scan</a>
+  </div>
+  <div class="wrap navrow">
+    <a class="wordmark" href="index.html"><b>StarSeed</b> <span>Intelligence</span></a>
+    <nav class="nav" id="nav">
+      <a href="origins.html">Origins</a>
+      <a href="scan.html#bond">Connections</a>
+      <a href="scan.html#bond">Bond Calculator</a>
+      <a href="index.html#readings">Readings</a>
+      <a href="index.html#practitioners">For practitioners</a>
+      <a href="https://twinfrequency.io">TwinF App</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+  </div>
+</header>
+
+<section class="j-head">
+  <div class="wrap">
+    <p class="eyebrow">The Journal</p>
+    <h1 class="h1">Notes on yourself, and on the people around you</h1>
+    <p class="lead">Your Origin, your shadow and your growth point. And the people you live beside: in love, in your family, at work.</p>
+    <div class="chips" role="group" aria-label="Topics">
+      <button class="chip" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="self" data-t="self" aria-pressed="false">Yourself</button>
+      <button class="chip" data-f="others" data-t="others" aria-pressed="false">Others</button>
+      <button class="chip" data-f="connection" data-t="connection" aria-pressed="false">Connection</button>
+      <button class="chip" data-f="origins" data-t="origins" aria-pressed="false">Origins</button>
+    </div>
+  </div>
+</section>
+
+<main class="j-list">
+  <div class="wrap">
+    <a class="feature" data-topic="connection" href="blog/is-my-twin-flame-afraid-of-the-connection.html">
+      <div class="feature-art" aria-hidden="true"></div>
+      <div>
+        <span class="tag"><b data-t="connection">Connection</b> November 24, 2026</span>
+        <h2>Is My Twin Flame Afraid of the Connection?</h2>
+        <p>How to tell fear of closeness from confusion or fading interest, and what their retreat after the closest moments shows.</p>
+        <span class="link-arrow">Read the article</span>
+      </div>
+    </a>
+
+    <div class="grid3" id="grid">
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/said-they-love-me-then-rejected-me.html"><span class="tag"><b data-t="connection">Connection</b> Nov 20, 2026</span><h3>They Said They Love Me, Then Rejected Me</h3><p>Why someone can say I love you and then reject you, why the change feels so sudden, and how to read what really happened.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/why-did-my-twin-flame-block-me.html"><span class="tag"><b data-t="connection">Connection</b> Nov 17, 2026</span><h3>Why Did My Twin Flame Block Me?</h3><p>What a sudden block from someone you feel deeply connected to shows, and what to do in the first days after.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/twin-flame-repeating-numbers-synchronicities.html"><span class="tag"><b data-t="connection">Connection</b> Nov 13, 2026</span><h3>Repeating Numbers and Synchronicities After Meeting Them</h3><p>Why 11:11 and their name start appearing everywhere after you meet, and how to read it through the pattern between you.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/twin-flame-mixed-signals.html"><span class="tag"><b data-t="connection">Connection</b> Nov 10, 2026</span><h3>Mixed Signals: Why They Come Close and Then Disappear</h3><p>Why the warm night and the silent morning come from the same person, and what stays constant underneath.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/when-is-twin-flame-no-contact-over.html"><span class="tag"><b data-t="connection">Connection</b> Nov 6, 2026</span><h3>How Do I Know When No Contact Is Over?</h3><p>The inner signs that the silence has done its work, what their messages actually show, and when the silence becomes the ending.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/should-i-contact-my-twin-flame.html"><span class="tag"><b data-t="connection">Connection</b> Nov 3, 2026</span><h3>Should I Contact My Twin Flame, or Wait?</h3><p>How to tell when reaching out is clear and when it restarts an old loop, and how to write a message you can stand behind.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/does-my-twin-flame-think-about-me.html"><span class="tag"><b data-t="connection">Connection</b> Oct 30, 2026</span><h3>Does My Twin Flame Think About Me Too?</h3><p>How to tell your own longing from signals that come from them, and the six behaviors that show someone misses you.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/why-did-my-twin-flame-pull-away.html"><span class="tag"><b data-t="connection">Connection</b> Oct 23, 2026</span><h3>Why Did My Twin Flame Pull Away?</h3><p>Five kinds of distance, what each one points to, and how to read what happened right before they went quiet.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/runner-and-chaser-twin-flame.html"><span class="tag"><b data-t="connection">Connection</b> Oct 20, 2026</span><h3>Runner and Chaser: Is It Real, and Which One Are You?</h3><p>How the runner and chaser loop moves, how to see which role you play, and how to step out of it.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/is-my-twin-flame-coming-back.html"><span class="tag"><b data-t="connection">Connection</b> Oct 17, 2026</span><h3>Is My Twin Flame Coming Back?</h3><p>What the signs you are watching really show, and the five conditions that make reunion possible.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/twin-flame-or-infatuation.html"><span class="tag"><b data-t="connection">Connection</b> Oct 17, 2026</span><h3>Twin Flame or Infatuation? How to Read the Pull You Feel</h3><p>Infatuation, limerence or a real connection. How to tell what you are feeling, and what the pull between you is made of.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/how-to-know-if-someone-is-your-twin-flame.html"><span class="tag"><b data-t="connection">Connection</b> Oct 17, 2026</span><h3>How Do I Know If Someone Is Really My Twin Flame?</h3><p>Seven signs people describe, what each one shows about the two of you, and how to read the connection you are actually in.</p></a>
+      <a class="pcard" data-t="self" data-topic="self" href="blog/unhealed-wounds-of-specialists.html"><span class="tag"><b data-t="self">Yourself</b> Oct 8, 2026</span><h3>When a Psychologist's Unhealed Wounds Shape a Client's Life</h3><p>How the unhealed wounds of psychologists and family members can shape a client's life, and the return to one's own inner center.</p></a>
+      <a class="pcard" data-t="self" data-topic="self" href="blog/ocean-inside-the-glass.html"><span class="tag"><b data-t="self">Yourself</b> Sep 11, 2026</span><h3>The Ocean Inside the Glass</h3><p>Asthma, a near-death experience, consciousness, and the feeling that we may be larger than the forms that hold us.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/twin-flames-do-not-exist.html"><span class="tag"><b data-t="connection">Connection</b> Sep 11, 2026</span><h3>Twin Flames Do Not Exist. So Why Does This Connection Feel So Real?</h3><p>Why intense connections feel so powerful, and how relationships can lead you back to yourself.</p></a>
+      <a class="pcard" data-t="others" data-topic="others" href="blog/why-do-we-attract-the-same-people.html"><span class="tag"><b data-t="others">Others</b> May 28, 2025</span><h3>Why Do You Keep Attracting the Same Relationship Patterns?</h3><p>Why the same dynamics keep finding you, and how to break the cycle.</p></a>
+      <a class="pcard" data-t="origins" data-topic="origins" href="blog/what-is-a-soul-origin.html"><span class="tag"><b data-t="origins">Origins</b> May 22, 2025</span><h3>What Is a Soul Origin? Understanding Your Core Frequency</h3><p>What an Origin is, how it shapes the way you meet reality, and why discovering it changes so much.</p></a>
+      <a class="pcard" data-t="connection" data-topic="connection" href="blog/karmic-bond-vs-twin-flame.html"><span class="tag"><b data-t="connection">Connection</b> May 15, 2025</span><h3>Karmic Bond vs Twin Flame: How to Tell the Difference</h3><p>The difference between a karmic bond and a twin flame connection, and how to recognize the one you are in.</p></a>
+    </div>
+  </div>
+</main>
+
+<section class="j-cta">
+  <div class="wrap">
+    <p>Every article here reads a pattern. The scan shows you your own.</p>
+    <h2>Which of the 24 Origins is yours?</h2>
+    <a class="btn btn-lime" href="scan.html">Start the scan</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <a class="wordmark" href="index.html"><b>StarSeed</b> <span>Intelligence</span></a>
+        <p class="footer-tag">24 Origins, 10 connection types, and one map that hands you back to yourself.</p>
+      </div>
+      <div>
+        <h4>System</h4>
+        <a href="https://www.starseedsoultype.com/about-the-system.html">About the system</a>
+        <a href="origins.html">All 24 Origins</a>
+        <a href="scan.html#bond">Connection types</a>
+        <a href="https://www.starseedsoultype.com/glossary.html">Glossary</a>
+        <a href="blog.html">Journal</a>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <a href="https://www.starseedsoultype.com/mirror.html">Mirror</a>
+        <a href="https://www.starseedsoultype.com/cards.html">Metaphor Cards</a>
+        <a href="https://starseedsoul.gumroad.com/l/free">Twin Flame Guide</a>
+      </div>
+      <div>
+        <h4>Work with us</h4>
+        <a href="partners.html">Partner program</a>
+        <a href="https://www.starseedsoultype.com/workshop.html">Workshop</a>
+        <a href="https://forms.gle/bL1YKUWpbncTsoFa6">Origin Reader training</a>
+      </div>
+      <div>
+        <h4>Stay close</h4>
+        <a href="https://instagram.com/starseedsoul.type">Instagram</a>
+        <a href="https://t.me/starseedsoul">Telegram library</a>
+        <a href="mailto:timsocion@gmail.com">Email Alexandra</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 StarSeed Intelligence · Alexandra · <a href="https://www.starseedsoultype.com/privacy.html" style="display:inline">Privacy</a> · <a href="https://www.starseedsoultype.com/terms.html" style="display:inline">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('menuBtn').onclick=()=>document.getElementById('nav').classList.toggle('open');
+const chips=[...document.querySelectorAll('.chip')],items=[...document.querySelectorAll('[data-topic]')];
+chips.forEach(c=>c.onclick=()=>{
+  chips.forEach(x=>x.setAttribute('aria-pressed',x===c));
+  const f=c.dataset.f;
+  items.forEach(i=>i.hidden=!(f==='all'||i.dataset.topic===f));
+});
+</script>
+</body>
+</html>

@@ -284,7 +284,7 @@ $('start').onclick=()=>{ev('ss_origin_quiz_started');cur=0;load();show('quiz');r
 (function restore(){
   const p=params.get('origin'),n=store.get();
   if(!p&&!n)return;
-  server(p?{quiz:'scan',origin_slug:p}:{quiz:'scan',origin_name:n}).then(r=>calm(r.result)).then(o=>{origin=o;result();ev('ss_origin_result_restored');}).catch(()=>{});
+  server(p?{quiz:'scan',origin_slug:p}:{quiz:'scan',origin_name:n}).then(r=>calm(r.result)).then(o=>{origin=o;result();ev('ss_origin_result_restored');if(location.hash==='#bond')setTimeout(()=>{const b=$('bond');if(b)b.scrollIntoView({block:'start'});},400);}).catch(()=>{});
 })();
 track('quiz_open');
 </script>

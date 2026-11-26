@@ -27,9 +27,9 @@
   <div class="wrap navrow">
     <a class="wordmark" href="#"><b>StarSeed</b> <span>Intelligence</span></a>
     <nav class="nav" id="nav">
-      <a href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Типы">Origins</a>
-      <a href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connections</a>
-      <a href="https://www.starseedsoultype.com/bond.html" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Калькулятор связи">Bond Calculator</a>
+      <a href="origins.html" data-ru-href="ruflipbook.html" data-ru="Типы">Origins</a>
+      <a href="scan.html#bond" data-ru-href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connections</a>
+      <a href="scan.html#bond" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Калькулятор связи">Bond Calculator</a>
       <a href="#readings" data-ru="Разборы">Readings</a>
       <a href="#practitioners" data-ru="Специалистам">For practitioners</a>
       <a href="https://twinfrequency.io" data-ru="Приложение TwinF">TwinF App</a>
@@ -115,7 +115,7 @@
         <h2 class="vstep-title" data-ru="Посмотрите на свои отношения с другими">See your connections</h2>
         <p class="vstep-lead" data-ru="Полный разбор вашего типа и точная связь двух типов: что вас притягивает, где искрит и как сохранить тепло.">Your full Origin reading, and the exact connection between two Origins: what draws you together, where it sparks, how to keep it warm.</p>
         <a class="btn btn-blue vbtn" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Мой разбор">Get my reading</a>
-        <a class="btn btn-blue vbtn" href="https://www.starseedsoultype.com/bond.html" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Наша связь">Read our connection</a>
+        <a class="btn btn-blue vbtn" href="scan.html#bond" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Наша связь">Read our connection</a>
       </div>
       <div class="device"><div class="device-screen">
         <div class="dv-bar"></div>
@@ -158,7 +158,7 @@
     <h2 class="h2" data-ru="24 типа. Один из них ваш.">24 Origins. One of them is yours.</h2>
     <p class="lead" data-ru="Наведите на звёздного, чтобы узнать подробнее. Вдруг вы узнаете себя без всякого сканера.">Hover over an Origin and read its first line. Some people know before they take the scan.</p>
     <div class="grid24" id="grid24"></div>
-    <p style="margin-top:32px"><a class="link-arrow" href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Читать все 24 портрета во флипбуке">Read all 24 portraits in the flipbook</a></p>
+    <p style="margin-top:32px"><a class="link-arrow" href="origins.html" data-ru-href="ruflipbook.html" data-ru="Читать все 24 портрета во флипбуке">Read all 24 portraits in the flipbook</a></p>
   </div>
 </section>
 
@@ -246,10 +246,10 @@
       <div>
         <h4 data-ru="Система">System</h4>
         <a href="https://www.starseedsoultype.com/about-the-system.html" data-ru="О системе">About the system</a>
-        <a href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Все 24 типа">All 24 Origins</a>
-        <a href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connection types</a>
+        <a href="origins.html" data-ru-href="ruflipbook.html" data-ru="Все 24 типа">All 24 Origins</a>
+        <a href="scan.html#bond" data-ru-href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connection types</a>
         <a href="https://www.starseedsoultype.com/glossary.html" data-l="en">Glossary</a>
-        <a href="https://www.starseedsoultype.com/blog.html" data-ru="Журнал">Journal</a>
+        <a href="blog.html" data-ru="Журнал">Journal</a>
       </div>
       <div>
         <h4 data-ru="Инструменты">Tools</h4>
@@ -304,7 +304,7 @@ const ORIGINS_RU=[["Сириус", "Тёплое течение", "Если ря
 let ORIGINS=ORIGINS_EN;
 const grid=document.getElementById('grid24');
 const slug=n=>n.toLowerCase().replace(/ /g,'-');
-function drawGrid(){const ru=document.documentElement.lang==='ru';grid.innerHTML=ORIGINS_EN.map((o,i)=>{const r=ru?ORIGINS_RU[i]:o;const a=i%2?'m':'f',b=i%2?'f':'m',s=slug(o[0]);return `<a class="origin" href="${ru?'ruflipbook.html':'https://www.starseedsoultype.com/flipbook.html'}"><span class="origin-face"><img src="origins/${s}-${a}.jpg" alt="${r[0]}" loading="lazy" width="120" height="120"><img class="alt" src="origins/${s}-${b}.jpg" alt="" loading="lazy" width="120" height="120"></span><div class="origin-name">${r[0]}</div><div class="origin-sub">${r[1]}</div><span class="origin-tip">${r[2]}</span></a>`}).join('');}
+function drawGrid(){const ru=document.documentElement.lang==='ru';grid.innerHTML=ORIGINS_EN.map((o,i)=>{const r=ru?ORIGINS_RU[i]:o;const a=i%2?'m':'f',b=i%2?'f':'m',s=slug(o[0]);return `<a class="origin" href="${ru?'ruflipbook.html':'origins.html'}"><span class="origin-face"><img src="origins/${s}-${a}.jpg" alt="${r[0]}" loading="lazy" width="120" height="120"><img class="alt" src="origins/${s}-${b}.jpg" alt="" loading="lazy" width="120" height="120"></span><div class="origin-name">${r[0]}</div><div class="origin-sub">${r[1]}</div><span class="origin-tip">${r[2]}</span></a>`}).join('');}
 drawGrid();
 /* touch screens have no hover: first tap shows the line, second tap opens the portrait */
 (function(){const bar=document.createElement('div');bar.className='tip-bar';bar.setAttribute('role','status');document.body.appendChild(bar);let on=null;
