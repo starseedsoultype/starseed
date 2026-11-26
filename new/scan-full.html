@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Starseed Soul Origin · StarSeed Intelligence</title>
+<meta name="description" content="28 questions, 7 minutes. See which of the 24 Origins is yours.">
+<meta name="robots" content="noindex">
+<!-- Preview of the full 28-question scan. Before replacing quiz-full.html: GA4, pixel.js, og tags from the live quiz.html; remove noindex. -->
+<link rel="icon" href="https://www.starseedsoultype.com/favicon.svg">
+<link rel="stylesheet" href="si.css">
+<link rel="stylesheet" href="scan.css">
+</head>
+<body>
+<header>
+  <div class="scan-head"><div class="wrap">
+    <a class="wordmark" href="index.html"><b>StarSeed</b> <span>Intelligence</span></a>
+    <span class="scan-count" id="count"></span>
+  </div></div>
+  <div class="bar" id="bar" hidden><i></i></div>
+</header>
+<main>
+  <section class="screen dark on" id="intro"><div class="wrap">
+    <div>
+      <p class="res-eyebrow">Origin Consciousness System</p><h1 class="h1">Your Starseed Soul Origin</h1>
+      <p class="lead">Your soul arrived here carrying a specific frequency. A particular way of seeing, of knowing, of moving through this dimension. What follows is a remembering.</p>
+      <button class="btn btn-lime big" id="start">Begin</button>
+      <p class="note">28 questions · 7 minutes · answer from inner knowing</p>
+    </div>
+    <div class="faces" id="faces" aria-hidden="true"></div>
+  </div></section>
+
+  <section class="screen" id="quiz" aria-live="polite"></section>
+
+  <section class="screen dark" id="email"><div class="wrap">
+    <div>
+      <h1 class="h1" tabindex="-1">Your Origin has been identified</h1>
+      <p class="lead">Enter your email to receive your Soul Frequency reading and unlock your result.</p>
+      <form class="form" id="ecForm" novalidate>
+        <input type="hidden" name="access_key" value="5e2462a8-4fac-406d-bf44-c9457170c983">
+        <input type="hidden" name="subject" value="New Origin Scan Lead">
+        <input type="hidden" name="from_name" value="Origin Scan">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="soul_type" id="ecSoulType" value="">
+        <input type="email" name="email" id="ecEmail" placeholder="Your email" aria-label="Your email" autocomplete="email" required>
+        <p class="err" id="ecError" role="alert">Please enter a valid email address</p>
+        <button class="btn btn-lime big" type="submit">Reveal My Origin</button>
+      </form>
+      <p class="note">By submitting you agree to receive your reading and occasional updates. Unsubscribe anytime. <a href="https://www.starseedsoultype.com/privacy.html">Privacy Policy</a></p>
+    </div>
+    <div class="faces" id="faces2" aria-hidden="true"></div>
+  </div></section>
+
+  <section class="screen" id="result"></section>
+</main>
+<script>
+// LIVE = the real site. Anywhere else (preview) nothing is written: no leads, no statistics.
+const LIVE=/(^|\.)starseedsoultype\.com$/.test(location.hostname);
+const SITE=LIVE?'/':'https://www.starseedsoultype.com/';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Order of the options is fixed: the server reads them by place. Never reorder.
+// Her words from the live quiz.html, long dashes replaced with ordinary punctuation, every word kept (her rule, 26.11.2026). Extra questions and result texts come from the server as they are.
+const QUESTIONS=[{"id": 1, "type": "force4", "text": "You arrive somewhere a conversation is already in motion. Before you consciously decide to pay attention, what has your body already registered?", "opts": ["The physical reality. What feels grounded, what resources are present, the tangible facts of the space.", "The underlying structure. Whether the situation holds together or if something feels fundamentally off-balance.", "The unspoken dynamic. Who needs what, the invisible threads connecting the people, what is being carefully avoided.", "The current of desire. Who is truly alive in this moment, and where the real energy is trying to move."]}, {"id": 9, "type": "most_least", "text": "Select the gift you most naturally bring into a space, and the one that feels least like you.", "opts": ["A presence that creates deep safety, making others feel profoundly seen.", "A spark of aliveness that activates the energy and makes things move.", "An anchoring stability that helps others feel physically and practically grounded.", "A clarifying perspective that cuts through confusion and illuminates the path."]}, {"id": 15, "type": "force4", "text": "There is a theme your soul cannot stop exploring. You return to it, notice when others miss it, and care about it deeply. Which domain pulls you the most?", "opts": ["The art of genuine connection. What it means to truly meet another soul without losing yourself.", "The truth of our desires. What it means to follow your authentic calling and live fully alive.", "The mastery of the physical world. How we handle our bodies, our resources, and build a grounded life.", "The pursuit of clarity. How we find truth, build sound frameworks, and see without illusion."]}, {"id": 21, "type": "most_least", "text": "We all have areas where we prefer to simply receive rather than lead. Select the domain where you most naturally let others take the reins, and the one where you least do this.", "opts": ["In navigating group dynamics. If someone else is reading the room, I can just exist in it.", "In finding the spark. If the environment already has a strong current, I can just flow with it.", "In handling the physical details. If someone else manages the logistics and resources, I can just receive them.", "In building the framework. If a coherent system is provided, I can just work within it."]}, {"id": 25, "type": "ranking", "text": "Rank these four ways of moving through an experience, from most like you (1) to least like you (4).", "opts": ["I want to dwell inside the moment. Completion feels like a loss; the beauty is in the unfolding.", "I move toward the resolution. The point is to arrive, and lingering in the middle feels uncomfortable.", "I need to feel the tangible result. After it ends, I want to see what was actually built and what remains.", "I need to understand what it meant. After it ends, I want to see the pattern it revealed."]}, {"id": 2, "type": "force4", "text": "A stranger is pouring their heart out to you. Minutes in, without trying to analyze them, you already know something essential. What is it?", "opts": ["Whether their story actually makes sense, or if there is a crack in their reasoning.", "What they truly need from you, hiding just beneath the words they are saying.", "Whether they actually want to change, or if they are secretly holding onto the pain.", "The practical, concrete step they are avoiding that would actually solve their problem."]}, {"id": 10, "type": "most_least", "text": "Select the mark you most often leave on a conversation, and the one you least often leave.", "opts": ["People leave feeling deeply understood, as if something real was finally witnessed.", "People leave feeling activated, carrying a new spark of energy they didn’t have before.", "People leave with a concrete shift, feeling a practical matter was finally handled.", "People leave with a new perspective, seeing their situation with sudden clarity."]}, {"id": 16, "type": "force4", "text": "You are watching someone handle a situation carelessly, and you feel an irresistible pull to step in. What are they mishandling?", "opts": ["Their impact on others. They are breaking the connection or ignoring the emotional reality.", "Their own truth. They are performing a life instead of honoring what they actually want.", "The practical reality. They are ignoring the physical facts or mismanaging resources.", "The logic of the situation. They are operating on a flawed assumption that will collapse."]}, {"id": 22, "type": "most_least", "text": "Select the pattern that most resonates with your experience, and the one that least resonates.", "opts": ["I sometimes absorb the emotional weight of a room before deciding if it’s good for me.", "I sometimes get swept up in another person’s energy before realizing it isn’t my own.", "I sometimes accept the physical arrangements provided without questioning if they serve me.", "I sometimes adopt a way of thinking without testing if the foundation is truly sound."]}, {"id": 26, "type": "force4", "text": "A significant chapter in your life has just closed. What is your very first instinct?", "opts": ["To linger in the feeling of it, letting the experience wash over me a little longer.", "To cleanly close the door. The energy is already moving toward what comes next.", "To look at what remains. To assess the tangible reality of what was built.", "To extract the lesson. To understand the hidden structure of why it happened."]}, {"id": 3, "type": "force4", "text": "The energy in a group suddenly derails. People are confused and directionless. Before you even decide to act, where does your focus automatically go?", "opts": ["To the immediate physical fix. What tangible action will ground the situation right now.", "To the unspoken tension. Who caused the shift and what the people actually need to feel safe again.", "To the root cause. Where the plan broke down and what the most logical next step is.", "To the lost spark. What everyone is secretly craving but not saying, and how to bring the life back."]}, {"id": 11, "type": "most_least", "text": "Select the reason people most often seek you out, and the reason they least often do.", "opts": ["When they need to feel less alone, seeking someone who will truly hear them.", "When they feel numb, seeking someone who can remind them how to feel alive.", "When they are overwhelmed, seeking someone who knows how to ground the situation.", "When they are confused, seeking someone who can untangle the complexity."]}, {"id": 17, "type": "force4", "text": "There is a central question your soul has been exploring in this lifetime. Which of these feels closest to that core inquiry?", "opts": ["How do we create genuine intimacy without losing our own center?", "How do we know when a desire is truly ours, and find the courage to follow it?", "How do we build a life that feels deeply rooted and secure in the physical world?", "How do we strip away illusions to see the pure, unvarnished truth?"]}, {"id": 23, "type": "most_least", "text": "Select the area where you most prefer to just receive the final outcome, and the area where you least prefer this.", "opts": ["Knowing where I stand with someone. I’d rather just be told than have to figure it out.", "Knowing my own direction. I sometimes wish my desires would just arrive fully formed.", "Managing the logistics of life. I’d love it if the practical details were just handled for me.", "Finding a framework to trust. I’d rather be given a solid philosophy to work within."]}, {"id": 27, "type": "force4", "text": "When you are trying to deeply understand something, how does that clarity usually arrive?", "opts": ["Through connection. I need to talk it out and feel it in the presence of someone else.", "Through movement. I think toward a resolution and feel restless until I reach the point.", "Through tangible action. I need to work with it physically and understand it by doing.", "Through deconstruction. I need to take it apart, find the pattern, and see how it fits."]}, {"id": 4, "type": "force4", "text": "You watch others struggle to learn a skill that has simply always been second nature to you. What is it?", "opts": ["Knowing exactly what you want. You don’t understand why others find it so hard to hear their own desires.", "Reading the emotional undercurrents of a room. You’ve never needed a guide to understand people.", "Seeing the architecture of an idea. You instantly know if a concept is built on a solid foundation.", "Navigating the material world. You’ve always felt a natural ease with the physical and practical aspects of life."]}, {"id": 12, "type": "most_least", "text": "Select the capacity that flows from you most effortlessly, and the one that flows least effortlessly.", "opts": ["The ability to create profound, authentic contact with another person.", "The ability to bring a palpable, magnetic energy into any space.", "The ability to manifest ideas into solid, tangible reality.", "The ability to distill chaos into elegant, structural clarity."]}, {"id": 18, "type": "force4", "text": "You have a high standard in one specific area, and you find it difficult to tolerate when others are careless with it. Which area is this?", "opts": ["How people treat one another. You have a deep reverence for the sacredness of connection.", "Authenticity of spirit. You can instantly feel when someone is performing rather than living truly.", "Respect for the material. You see the cost of ignoring physical reality, resources, or the body.", "Intellectual integrity. You feel a flawed argument or a false assumption like a wrong note in a song."]}, {"id": 24, "type": "most_least", "text": "Select the domain where you have historically been most likely to accept what wasn’t quite right for you, and the domain where you are least likely to do this.", "opts": ["In relationships. I have sometimes stayed too long or trusted too readily.", "In following a path. I have sometimes been swept into a current that wasn’t truly mine.", "In material situations. I have sometimes accepted practical arrangements without asking if they served me.", "In adopting beliefs. I have sometimes built my life on a foundation someone else created."]}, {"id": 28, "type": "ranking", "text": "Rank these four deep yearnings from what pulls your soul the most (1) to what pulls it the least (4).", "opts": ["To experience profound, unmasked intimacy and love.", "To live with unapologetic passion, following my truest spark.", "To build something enduring and real in the physical world.", "To see the universe clearly, without illusion or distortion."]}, {"id": 5, "type": "force4", "text": "A group decision is dragging on endlessly. What is the glaring issue that is obvious to you, but everyone else is ignoring?", "opts": ["The practical constraints. They are ignoring the actual, physical limitations of the situation.", "The hidden desires. No one is admitting what they actually want, so nothing can move forward.", "The unspoken tension. The real issue is who trusts whom, not the decision itself.", "The flawed premise. They are arguing over the wrong question entirely."]}, {"id": 13, "type": "most_least", "text": "Select the experience where you feel most fully yourself, and the one where you feel least fully yourself.", "opts": ["When a conversation deepens unexpectedly and a profound truth is shared between us.", "When I am moving toward something I deeply desire, and all distractions fall away.", "When I can feel the weight of something I have built and know it will last.", "When a complex concept suddenly clicks into place and I understand the hidden pattern."]}, {"id": 19, "type": "force4", "text": "We all have an edge where we push ourselves to perform a mastery we are still developing. Where do you feel the strain of this overreach?", "opts": ["In the emotional field. I try to hold space for more than is mine to carry.", "In my sense of direction. I project a certainty about what I want, even when I am still searching.", "In the material world. I try to project a competence with physical reality that I am still learning to embody.", "In my convictions. I defend viewpoints with more certainty than I actually feel inside."]}, {"id": 6, "type": "force4", "text": "You meet a stranger and instantly recognize them as part of your cosmic family. What gave them away?", "opts": ["The effortless, grounded way they navigated the physical details of the moment.", "The sharp, structural elegance of how they observed the world.", "The unspoken way they immediately felt and responded to the energy between you.", "The undeniable, authentic spark of life running beneath everything they did."]}, {"id": 14, "type": "most_least", "text": "Select the gift your soul has been offering the world since before you had words for it, and the one that feels least natural.", "opts": ["The gift of true meeting. Creating a space where people feel safe enough to drop their masks.", "The gift of awakening. Carrying a frequency that invites others to remember their own passion.", "The gift of grounding. Knowing how to anchor ideas into the tangible, physical world.", "The gift of vision. Seeing the truth clearly and having the courage to name it."]}, {"id": 20, "type": "force4", "text": "There is a specific territory where life has handed you your deepest lessons and most complex challenges. Which domain has been your greatest teacher?", "opts": ["The physical world. Navigating the reality of the body, resources, and earthly stability.", "The relational field. Navigating the beautiful, messy reality of human connection and love.", "The domain of truth. Navigating belief systems, illusions, and learning how to see clearly.", "The domain of desire. Navigating what it means to claim my own path and follow my spark."]}, {"id": 7, "type": "force4", "text": "There is something you do so naturally that you barely notice it, while others spend years trying to cultivate it. What is it?", "opts": ["Sensing the invisible currents between people and knowing exactly what is needed.", "Trusting my own internal compass and knowing which way to move before thinking begins.", "Existing comfortably in my body and moving through the practical world with ease.", "Instantly sensing whether an idea or system is fundamentally sound or flawed."]}, {"id": 8, "type": "force4", "text": "In moments when a deep, sudden knowing lands in your body, faster than thought, what are you usually recognizing?", "opts": ["The structural truth. A sudden, felt sense of whether something holds together or falls apart.", "The relational truth. A sudden awareness of who is being genuine and who is wearing a mask.", "The material truth. A sudden understanding of what is solid and what is fragile in the physical space.", "The energetic truth. A sudden recognition of where the real momentum wants to flow."]}];
+// No long dashes on screen: result texts come in the server's plain set (quiz "full"), any dash left becomes ordinary punctuation.
+// Two texts of that set changed words; here they keep hers, only the dashes become brackets.
+const SAME={'The question of desire, what you truly want and whether you are living your actual life, runs through everything you do.':'The question of desire (what you truly want, whether you are living your actual life) runs through everything you do.',
+ 'You understand the physical world with an authority that is simply native to you: money, the body, space, time.':'You understand the physical world (money, the body, space, time) with an authority that is simply native to you.'};
+const plain=t=>{let x=String(t??'');for(const k in SAME)x=x.replace(k,SAME[k]);return x.replace(/\s*[—–]\s*/g,', ');};
+const calm=o=>server({quiz:'full',origin_name:o.name}).then(r=>({...o,...r.result,name:o.name})).catch(()=>o);
+
+const NUM={'Siriusian':20,'Pleiadian':17,'Lemurian':13,'Cassiopeian':7,'Procyonian':19,'Lyran':14,'Arcturian':4,'Orion':16,'Vegan':23,'Zeta Reticulan':24,'Epsilon Eridan':10,'Atlantean':5,'Andromedan':2,'Polarisian':18,'Nibiruan':15,'Egyptian':9,'Titanian':22,'Blue Avian':6,'Tau Cetian':21,'Aldebaran':1,'Centaurian':8,'Herculean':11,'Anunnaki':3,'Hyperborean':12};
+const slug=n=>String(n||'').toLowerCase().trim().replace(/[\s_]+/g,'-');
+const pdfLink=n=>'https://starseedsoul.gumroad.com/l/soul-'+NUM[n];
+
+// ── statistics and links with the bots: same as the live quiz.html ──
+const SB='https://pewgupxikbswhaqxjrwk.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
+const sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
+const params=new URLSearchParams(location.search);
+const tg=params.get('tg')||'', oli=params.get('oli')||'';
+function ev(n){if(LIVE&&window.fbq)fbq('trackCustom',n,{page:location.pathname});}
+function post(path,body,auth){
+  if(!LIVE)return;
+  const h={'Content-Type':'application/json'};
+  if(auth){h.apikey=KEY;h.Authorization='Bearer '+KEY;h.Prefer='return=minimal';}
+  fetch(SB+path,{method:'POST',headers:h,body:JSON.stringify(body)}).catch(()=>{});
+}
+const track=(e,k)=>post('/rest/v1/quiz_analytics',{event:e,result_key:k||null,session_id:sid,quiz_type:'soul_origin_landing'},true);
+const store={get(){try{return localStorage.getItem('starseedsoul_origin');}catch(e){return null;}},set(v){try{localStorage.setItem('starseedsoul_origin',v);}catch(e){}},del(){try{localStorage.removeItem('starseedsoul_origin');}catch(e){}}};
+
+async function server(body){
+  const r=await fetch(SB+'/functions/v1/origin-scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('scan');
+  return r.json();
+}
+
+// ── screens ──
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $('bar').hidden=id!=='quiz';
+  if(id!=='quiz')$('count').textContent='';
+  window.scrollTo(0,0);
+}
+const names=Object.keys(NUM);
+['faces','faces2'].forEach(id=>{$(id).innerHTML=names.map((n,i)=>`<img src="origins/${slug(n)}-${i%2?'m':'f'}.jpg" alt="">`).join('');});
+
+let cur=0, ans={}, extra=[], picks=[], half=false, locked=false;
+const order={};
+function shuffled(q){
+  if(!order[q.id]){const a=q.opts.map((_,i)=>i);for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}order[q.id]=a;}
+  return order[q.id];
+}
+const step=()=>cur<QUESTIONS.length?QUESTIONS[cur]:extra[cur-QUESTIONS.length];
+function load(){const q=step(),a=ans[q.id];picks=q.type==='most_least'?(a?[a.most,a.least]:[]):q.type==='ranking'?(a?[...a]:[]):(a!==undefined?[a]:[]);}
+
+function render(fresh){
+  const q=step(), total=QUESTIONS.length+extra.length;
+  if(cur===14&&!half){half=true;ev('ss_origin_quiz_halfway');}
+  $('count').textContent=(cur+1)+' / '+total;
+  document.querySelector('#bar i').style.width=Math.round(cur/total*100)+'%';
+  let title=q.text, hint='';
+  if(q.type==='most_least'){
+    hint=picks.length===0?'Step 1 of 2: tap the one that is <b>MOST like you</b>':'Step 2 of 2: tap the one that is <b class="no">LEAST like you</b>';
+  }
+  if(q.type==='ranking')hint='Tap them in order, starting with the one most like you';
+  const opt=i=>{
+    const at=picks.indexOf(i); let cls='',mark='';
+    if(at>=0){
+      if(q.type==='ranking'){cls='yes';mark=at+1;}
+      else if(q.type==='most_least'&&at===1){cls='no';mark='✕';}
+      else{cls='yes';mark='✓';}
+    }
+    return `<button class="opt ${cls}" data-i="${i}" aria-pressed="${at>=0}"><i>${mark}</i><span>${esc(q.opts[i])}</span></button>`;
+  };
+  const next=q.type==='ranking'&&picks.length===q.opts.length;
+  $('quiz').innerHTML=`<div class="q-in"${fresh?'':' style="animation:none"'}>${cur>=QUESTIONS.length?'<p class="q-hint">One more question before your origin is revealed</p>':''}<h1 class="q-title" tabindex="-1">${esc(title)}</h1>${hint?`<p class="q-hint">${hint}</p>`:''}
+    <div class="opts">${shuffled(q).map(opt).join('')}</div>
+    <div class="q-nav"><button class="back" ${cur||picks.length?'':'disabled'}>‹ Back</button>${next?'<button class="btn btn-lime next">Continue</button>':''}</div></div>`;
+  if(fresh){window.scrollTo(0,0);document.querySelector('.q-title').focus({preventScroll:true});}
+}
+
+$('quiz').addEventListener('click',e=>{
+  if(locked)return;
+  const b=e.target.closest('button'); if(!b)return;
+  const q=step();
+  if(b.classList.contains('again')){finish();return;}
+  if(b.classList.contains('back')){
+    if(q.type!=='force4'&&picks.length&&!b.dataset.x){delete ans[q.id];picks=[];render(false);return;}
+    if(cur>=QUESTIONS.length){extra.length=cur-QUESTIONS.length;delete ans[q.id];}
+    if(cur>0){cur--;load();if(step().type!=='force4'){delete ans[step().id];picks=[];}render(true);}
+    return;
+  }
+  if(b.classList.contains('next')){ans[q.id]=[...picks];go();return;}
+  if(!b.classList.contains('opt'))return;
+  const i=+b.dataset.i;
+  if(q.type==='ranking'){
+    const at=picks.indexOf(i);
+    if(at>=0)picks=picks.slice(0,at);else picks.push(i);
+    if(picks.length===q.opts.length-1)picks.push(q.opts.map((_,k)=>k).find(k=>!picks.includes(k)));
+    render(false);return;
+  }
+  if(q.type==='most_least'){
+    if(picks[0]===i){picks=[];render(false);return;}
+    picks.push(i);render(false);
+    if(picks.length<2)return;
+    ans[q.id]={most:picks[0],least:picks[1]};
+  }else{
+    picks=[i];ans[q.id]=i;render(false);
+    if(q.id===1)ev('ss_origin_quiz_q1_answered');
+  }
+  locked=true;setTimeout(()=>{locked=false;go();},420);
+});
+
+function go(){
+  const q=step();
+  const on=()=>{locked=false;cur++;if(cur<QUESTIONS.length+extra.length){load();render(true);}else finish();};
+  if(q.say){locked=true;$('quiz').innerHTML=`<p class="say">${esc(q.say)}</p>`;setTimeout(on,1800);}else on();
+}
+
+let busy=false;
+function finish(){
+  if(busy)return; busy=true;
+  document.querySelector('#bar i').style.width='100%';
+  $('quiz').innerHTML='<p class="say">Looking for your Origin…</p>';
+  const a={},t={};
+  QUESTIONS.forEach(q=>a[q.id]=ans[q.id]);
+  extra.forEach(q=>{if(ans[q.id]!==undefined)t[q.id]=ans[q.id];});
+  server({quiz:'full',answers:a,tb:t}).then(r=>{
+    busy=false;
+    if(r.ask){
+      const x=[plain(r.ask.text),r.ask.opts.map(t=>String(t).replace(/\s*[—–]\s*/g,': '))];
+      extra.push({id:r.ask.id,type:'force4',text:x[0],opts:x[1]});
+      cur=QUESTIONS.length+extra.length-1;load();render(true);return;
+    }
+    origin=r.result;
+    ev('ss_origin_quiz_completed');
+    if(tg){post('/functions/v1/bot-origin-capture',{token:tg,origin:origin.name});reveal();}
+    else if(oli){post('/functions/v1/oli-origin-capture',{token:oli,origin:origin.name});reveal();}
+    else{$('ecSoulType').value=origin.name;ev('ss_origin_email_step_viewed');show('email');}
+  }).catch(()=>{busy=false;$('quiz').innerHTML='<div class="q-in center"><h1 class="q-title">The portal flickered.</h1><p class="q-hint">Please check your connection and try again.</p><button class="btn btn-lime again">Try again</button></div>';});
+}
+
+let origin=null;
+$('ecForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const mail=$('ecEmail').value.trim(), ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+  $('ecError').classList.toggle('on',!ok);
+  if(!ok)return;
+  const b=e.target.querySelector('button');b.disabled=true;
+  if(LIVE){try{await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target)});}catch(x){}}
+  post('/rest/v1/api_leads',{email:mail,source:'portal',interest:origin.name,session_id:sid},true);
+  ev('ss_origin_email_submitted');
+  b.disabled=false;reveal();
+});
+
+async function reveal(){
+  origin=await calm(origin);
+  if(LIVE&&window.fbq)fbq('track','Lead');
+  ev('ss_origin_result_viewed');
+  store.set(origin.name);
+  history.replaceState(null,'',location.pathname+'?origin='+encodeURIComponent(slug(origin.name)));
+  result();track('quiz_complete',origin.name.toLowerCase().replace(/\s+/g,'_'));
+}
+
+function result(){
+  const o=origin,s=slug(o.name);
+  $('result').innerHTML=`${oli?'<div class="oli">Oli now knows your Origin. <a href="https://twinfrequency.io/oli/">Return to Oli</a></div>':''}
+  <div class="res-hero dark"><div class="wrap">
+    <div><p class="res-eyebrow">Your origin has been revealed</p><h1 class="h1" tabindex="-1">${esc(o.name)}</h1><p class="lead">${esc(plain(o.resonance))}</p>
+      <button class="btn btn-lime big" id="share">Save your origin card and share to Stories</button></div>
+    <div class="pair"><img src="origins/${s}-f.jpg" alt=""><img src="origins/${s}-m.jpg" alt=""></div>
+  </div></div>
+  <div class="res-body">
+    <div class="res-card"><h2>Your Core Frequency</h2><p>${esc(plain(o.core))}</p></div>
+    <div class="res-card"><h2>Your Creative Force</h2><p>${esc(plain(o.creative))}</p></div>
+    <div class="res-card"><h2>Your Growth Edge</h2><p>${esc(plain(o.growth))}</p></div>
+  </div>
+  <div class="gift"><h2>Your full reading is ready</h2><p>An 11-page PDF written for your Origin, to keep and return to.</p><a class="btn btn-lime big" id="pdf" href="${pdfLink(o.name)}">Download your Full Origin Reading</a></div>
+  <div class="bond" id="bond">
+    <h2>Soul Bond Calculator</h2>
+    <div class="bond-row">
+      <div class="bond-f"><label for="b1">First Soul</label><select id="b1">${names.map(n=>`<option${n===o.name?' selected':''}>${n}</option>`).join('')}</select></div>
+      <span class="bond-x" aria-hidden="true">✦</span>
+      <div class="bond-f"><label for="b2">Second Soul</label><select id="b2"><option value="">Choose</option>${names.map(n=>`<option>${n}</option>`).join('')}</select></div>
+      <button class="btn btn-blue" id="bgo" disabled>Reveal Bond</button>
+    </div>
+    <p class="bond-send">Don’t know their Origin? <button type="button" id="bsend">Send them the scan</button></p>
+    <div id="bres" aria-live="polite"></div>
+  </div>
+  <div class="res-end"><button class="back" id="again">Begin again</button></div>`;
+  $('pdf').onclick=e=>{e.preventDefault();ev('ss_origin_clicked_gumroad');const u=e.currentTarget.href;setTimeout(()=>location.href=u,LIVE?600:0);};
+  $('again').onclick=()=>{ev('ss_origin_retake_clicked');store.del();history.replaceState(null,'',location.pathname);cur=0;ans={};extra=[];picks=[];half=false;origin=null;show('intro');};
+  $('share').onclick=e=>{
+    const b=e.currentTarget,u=SITE+'shares/'+s+'.png';
+    fetch(u).then(r=>r.blob()).then(x=>{const a=document.createElement('a');a.href=URL.createObjectURL(x);a.download=s+'-origin.png';a.click();b.textContent='Saved';}).catch(()=>window.open(u,'_blank'));
+  };
+  const b1=$('b1'),b2=$('b2'),bres=$('bres');
+  const clear=()=>{$('bgo').disabled=!b2.value;bres.innerHTML='';};
+  b1.onchange=b2.onchange=clear;
+  $('bgo').onclick=async()=>{
+    const x=b1.value,y=b2.value;
+    ev('ss_origin_bond_revealed');
+    try{
+      const r=await fetch(SB+'/functions/v1/origin-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bond:[x,y],set:'ss'})});
+      if(!r.ok)throw 0;
+      const v=await r.json();
+      if(b1.value!==x||b2.value!==y)return;
+      bres.innerHTML=`<div class="bond-card"><p class="bond-who">${esc(x)} ✦ ${esc(y)}</p><h3>${esc(v.verdict)}</h3><p>${esc(v.why)}</p><a class="btn btn-lime" href="${SITE}bond.html?me=${slug(x)}&with=${slug(y)}">See the full bond</a></div>`;
+      bres.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }catch(e){bres.innerHTML='<p class="bond-send">Please try again.</p>';}
+  };
+  $('bsend').onclick=async e=>{
+    const url='https://www.starseedsoultype.com/quiz.html',b=e.currentTarget;
+    ev('ss_origin_scan_shared');
+    if(navigator.share){try{await navigator.share({title:'The Origin Scan',url});return;}catch(x){if(x.name==='AbortError')return;}}
+    try{await navigator.clipboard.writeText(url);b.textContent='Link copied';}catch(x){prompt('',url);}
+  };
+  show('result');
+}
+
+$('start').onclick=()=>{ev('ss_origin_quiz_started');cur=0;load();show('quiz');render(true);};
+(function restore(){
+  const p=params.get('origin'),n=store.get();
+  if(!p&&!n)return;
+  server(p?{quiz:'full',origin_slug:p}:{quiz:'full',origin_name:n}).then(r=>calm(r.result)).then(o=>{origin=o;result();ev('ss_origin_result_restored');}).catch(()=>{});
+})();
+track('quiz_open');
+</script>
+</body>
+</html>

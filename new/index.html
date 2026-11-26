@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StarSeed Intelligence · Discover your Origin</title>
+<meta name="description" content="24 Origins, 10 connection types, 300 pair readings. Discover your Origin and understand your connections.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://www.starseedsoultype.com/favicon.svg">
+<link rel="stylesheet" href="si.css?v=26">
+<style>
+/* six menu items: below 1060px the menu folds into the button */
+@media (min-width:721px) and (max-width:1060px){.nav{display:none;position:absolute;top:100px;left:0;right:0;flex-direction:column;gap:0;background:var(--white);border-bottom:1px solid var(--line)}.nav.open{display:flex}.nav a{padding:14px 24px;border-top:1px solid var(--line)}.menu-btn{display:block}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="utilbar">
+    <div class="lang-switch" role="group" aria-label="Language"><button type="button" data-set="en">EN</button><button type="button" data-set="ru">RU</button></div>
+    <div class="util-links">
+      <a href="partners.html" data-ru="Партнёрская программа">Partner program</a>
+      <a href="mailto:timsocion@gmail.com" data-ru="Контакты">Contact</a>
+    </div>
+    <a class="util-cta" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Пройти сканер">Begin your Origin Scan</a>
+  </div>
+  <div class="wrap navrow">
+    <a class="wordmark" href="#"><b>StarSeed</b> <span>Intelligence</span></a>
+    <nav class="nav" id="nav">
+      <a href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Типы">Origins</a>
+      <a href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connections</a>
+      <a href="https://www.starseedsoultype.com/bond.html" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Калькулятор связи">Bond Calculator</a>
+      <a href="#readings" data-ru="Разборы">Readings</a>
+      <a href="#practitioners" data-ru="Специалистам">For practitioners</a>
+      <a href="https://twinfrequency.io" data-ru="Приложение TwinF">TwinF App</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+  </div>
+</header>
+
+<section class="hero">
+  <img class="hero-people" src="alexandra-hero.webp" alt="Alexandra" width="1086" height="1448">
+  <div class="wrap">
+    <div class="hero-block">
+      <div class="hero-stage" aria-hidden="true"><canvas id="hero-canvas"></canvas></div>
+      <div class="hero-text">
+      <h1 class="h1" data-ru="Какой из 24 звёздных типов ваш?">Which of the 24 Origins is yours?</h1>
+      <p class="lead" data-ru="Звёздный архетип - это отражение того, как вы проявляетесь здесь, в 3D мире. Как вселенная проявляет себя через вас. Это зеркало, в котором ваши части собираются воедино.">Your Origin is how you show up here on Earth. Understand it, and come back to yourself, to your true scale.</p>
+      </div>
+    </div>
+  </div>
+  <nav class="hero-words" id="heroWords" aria-label="What is inside">
+    <svg aria-hidden="true"><g><path class="link"/><path class="frame"/><path class="echo"/><path class="tip"/><circle class="halo"/><circle class="dot"/></g><g><path class="link"/><path class="frame"/><path class="echo"/><path class="tip"/><circle class="halo"/><circle class="dot"/></g><g><path class="link"/><path class="frame"/><path class="echo"/><path class="tip"/><circle class="halo"/><circle class="dot"/></g></svg>
+    <a href="#why-know" data-ru="Себя">Yourself</a>
+    <a href="#why-grow" data-ru="Других">Others</a>
+    <a href="#universe" data-ru="Вселенную">The universe</a>
+  </nav>
+</section>
+
+<section class="fork" id="practitioners">
+  <div class="wrap cards-2">
+    <div class="card card-raise">
+      <h2 class="h3" data-ru="Узнайте свой звёздный тип">Discover your Origin</h2>
+      <p data-ru="Типология поведенческих паттернов: как вы думаете и чувствуете, как общаетесь и творите, что живёт в вашей тени и где ваша точка роста. Когда вы понимаете себя, все ваши части собираются в одну Самость.">A typology of behavioral patterns: how you think and feel, how you communicate and create, what is in your shadow and where your growth point is. Understand yourself, and all your parts come together in one Self, at its true scale.</p>
+      <a class="btn btn-lime" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Пройти сканер">Start the scan</a>
+    </div>
+    <div class="card card-raise">
+      <h2 class="h3" data-ru="Помогите другим понять себя">Help others understand themselves</h2>
+      <p data-ru="Для коучей, психологов и ведущих ретритов. С первой встречи вы видите то, чего человек в себе не замечает: его сильные стороны, тень, точку роста и то, как он встречает других. Если хотите читать звёздные типы со своими людьми, напишите мне.">For coaches, therapists and retreat hosts. From the first session you see what people miss in themselves: their strengths, their shadow, their growth point, and how they meet others. If you want to read Origins with your people, write to me.</p>
+      <a class="btn btn-blue" href="mailto:timsocion@gmail.com?subject=Origin%20Reader%20training" data-ru="Написать Александре">Write to Alexandra</a>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <h2 class="h2"><span data-l="en">Join <strong>1,000+ people</strong> who found their Origin and finally understood their connections</span><span data-l="ru">Уже <strong>1000+ людей</strong>, которые узнали свой звёздный тип и поняли себя и других чуточку лучше!</span></h2>
+    <div class="stats">
+      <div class="center"><div class="stat-num" data-count="24">24</div><div class="stat-label" data-ru="звёздных типа">Origins</div></div>
+      <div class="center"><div class="stat-num" data-count="10">10</div><div class="stat-label" data-ru="типов связи">connection types</div></div>
+      <div class="center"><div class="stat-num" data-count="300">300</div><div class="stat-label" data-ru="парных разборов">pair readings</div></div>
+    </div>
+    <div class="rev-wrap"><button class="rev-arrow prev" aria-label="Previous reviews">&#8249;</button><div class="reviews" id="reviews"></div><button class="rev-arrow next" aria-label="Next reviews">&#8250;</button></div>
+    <div class="rev-dots" id="revDots"></div>
+  </div>
+</section>
+
+<section class="steps" id="readings">
+  <div class="wrap">
+    <div class="vstep">
+      <div class="vstep-text">
+        <p class="vstep-num" data-ru="Шаг 1">Step 1</p>
+        <h2 class="vstep-title" data-ru="Узнайте свой звёздный тип">Discover your Origin</h2>
+        <p class="vstep-lead" data-ru="Сканер займёт около 10 минут. Отвечайте интуитивно, не слишком раздумывая - это самый лёгкий способ встретиться с собой настоящим.">The Origin Scan takes about 3 minutes. Seven questions, and you meet the pattern you have been living all along.</p>
+        <a class="btn btn-lime vbtn" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Пройти сканер">Start the scan</a>
+      </div>
+      <div class="device"><div class="device-screen">
+        <div class="dv-bar"></div>
+        <p class="dv-title" data-ru="Сканер звёздного типа">The Origin Scan</p>
+        <div class="dv-q">
+          <p class="dv-label" data-ru="Пример вопроса">Sample question</p>
+          <p class="dv-text" data-ru="Вы пришли в компанию, где уже идёт важный разговор. Что вы замечаете первым?">When you enter a space, what do you most naturally bring?</p>
+          <div class="dv-opts">
+            <span class="dv-opt"><i></i><span data-ru="Что здесь есть по делу: деньги, ресурсы, кто что реально может.">A sense of connection</span></span>
+            <span class="dv-opt on"><i></i><span data-ru="Логику спора: где аргументы держатся, а где дыра.">A charge</span></span>
+            <span class="dv-opt"><i></i><span data-ru="Людей: кто на кого обижен, кто кому нравится, о чём молчат.">Something solid</span></span>
+            <span class="dv-opt"><i></i><span data-ru="Энергию: кто здесь горит, кто уже сдулся. И чего хотите вы сами.">A framework</span></span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="vstep rev">
+      <div class="vstep-text">
+        <p class="vstep-num" data-ru="Шаг 2">Step 2</p>
+        <h2 class="vstep-title" data-ru="Посмотрите на свои отношения с другими">See your connections</h2>
+        <p class="vstep-lead" data-ru="Полный разбор вашего типа и точная связь двух типов: что вас притягивает, где искрит и как сохранить тепло.">Your full Origin reading, and the exact connection between two Origins: what draws you together, where it sparks, how to keep it warm.</p>
+        <a class="btn btn-blue vbtn" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Мой разбор">Get my reading</a>
+        <a class="btn btn-blue vbtn" href="https://www.starseedsoultype.com/bond.html" data-ru-href="https://www.starseedsoultype.com/bondru.html" data-ru="Наша связь">Read our connection</a>
+      </div>
+      <div class="device"><div class="device-screen">
+        <div class="dv-bar"></div>
+        <p class="dv-title" data-ru="Парный разбор">Pair Reading</p>
+        <div class="dv-pair">
+          <figure><img src="origins/andromedan-f.jpg" alt=""><figcaption data-ru="Андромеда">Andromedan</figcaption></figure>
+          <span class="dv-plus">✦</span>
+          <figure><img src="origins/siriusian-m.jpg" alt=""><figcaption data-ru="Сириус">Siriusian</figcaption></figure>
+        </div>
+        <p class="dv-type" data-l="en">Mirror Portals</p>
+        <p class="dv-sub" data-ru="Одна из 300 парных связей">One of 300 pair readings</p>
+      </div></div>
+    </div>
+    <div class="vstep">
+      <div class="vstep-text">
+        <p class="vstep-num" data-ru="Шаг 3">Step 3</p>
+        <h2 class="vstep-title" data-ru="Поговорите с Александрой">Talk with Alexandra</h2>
+        <p class="vstep-lead" data-l="en">The scan knows what you tell it. <span class="vstep-turn">The cards show what you would never tell yourself.</span></p>
+        <p class="vstep-lead" data-l="ru">Я создала сканер как способ узнать ваш звёздный тип души: вы отвечаете - сканер считает. <span class="vstep-turn">Карты же показывают то, что вы никогда не расскажете себе сами.</span></p>
+        <p class="vstep-lead" data-ru="Я использую метафорические ассоциативные карты, которые специально разработала для этого процесса. Это проективная методика, и я называю процесс иллюстрированным путешествием в собственное бессознательное. Вы приносите мне свой запрос, а уходите с глубоким пониманием себя и своего следующего шага. Отзывы выше, и вот ещё один ↓">I work with metaphor cards, a projective method. Bring your own question, and leave knowing where to move next.</p>
+        <figure class="vstep-review" data-l="ru"><blockquote>Спасибо большое за сеанс! Для меня это был очень интересный опыт. Получился экологичный и бесстрессовый контакт с подсознанием, разговор с ним на языке образов. При работе с картами нам удалось поднять какие-то совершенно новые пласты моей психики, в которые мы не ходили даже с моим постоянным психотерапевтом. Я считаю, что метафорические карты - удивительно глубокий и при этом нетравматичный метод работы, и ты очень чутко вела меня по этому пути, задавала правильные и своевременные вопросы. Я уходила уже с вполне чётким инсайтом и понятными рекомендациями, но такое ощущение, что он запустил процесс внутренней трансформации, который идёт и сейчас. Мысли и образы «догорают», и мне в этом процессе на удивление комфортно и приятно! Буду очень рекомендовать этот метод другим людям: уверена, он впечатлит и новичков, и тех, кто не первый день находится в терапии. А я обязательно приду ещё, с новым запросом. Спасибо!</blockquote><figcaption>Аноним</figcaption></figure>
+        <p class="vstep-lead vstep-quote" data-l="en">"All the answers are inside, but how do you find them without the right questions?"</p>
+        <p class="vstep-lead" data-ru="К сессии прилагается полный персональный PDF-разбор вашего звёздного типа.">Your full personal Origin reading in PDF comes with the session.</p>
+        <p class="vstep-lead vstep-price" data-ru="45 минут, один на один. $111.">45 minutes, one to one. $111.</p>
+        <a class="btn btn-blue vbtn" href="https://cal.com/starseedsoul-typology-nctndd/starseed" data-ru="Обо мне">About me</a>
+        <a class="btn btn-blue vbtn" href="https://cal.com/starseedsoul-typology-nctndd/45min" data-ru="О нас двоих">About the two of us</a>
+      </div>
+      <div class="photo-frame"><img src="alexandra-step3-portrait.jpg" alt="Alexandra" width="966" height="1288"></div>
+    </div>
+  </div>
+</section>
+
+<section class="strip" aria-label="Recognition">
+  <div class="wrap"><p class="strip-line" id="stripLine">If people soften and open around you without quite knowing why, this page is yours.<em>· Siriusian</em></p></div>
+</section>
+
+<section class="section section-soft" id="origins">
+  <div class="wrap center">
+    <p class="eyebrow" data-ru="Карта">The map</p>
+    <h2 class="h2" data-ru="24 типа. Один из них ваш.">24 Origins. One of them is yours.</h2>
+    <p class="lead" data-ru="Наведите на звёздного, чтобы узнать подробнее. Вдруг вы узнаете себя без всякого сканера.">Hover over an Origin and read its first line. Some people know before they take the scan.</p>
+    <div class="grid24" id="grid24"></div>
+    <p style="margin-top:32px"><a class="link-arrow" href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Читать все 24 портрета во флипбуке">Read all 24 portraits in the flipbook</a></p>
+  </div>
+</section>
+
+
+<section class="why" id="why">
+  <div class="wrap">
+  <div data-l="en">
+    <h2 class="h2">What is an Origin, and why know yours?</h2>
+    <div class="why-cols">
+      <div class="why-col reveal" style="--c:#C2EE7C">
+        <span class="why-n">1</span>
+        <h3 class="why-h">What it is</h3>
+        <p>A typology of behavioral patterns: how you show up in this 3D world, here on Earth. How you think and feel. How you communicate and create. What is in your shadow, and where your growth point is. What you are ready to receive from the world, like a child from Mother Universe.</p>
+      </div>
+      <div class="why-col reveal" id="why-know" style="--c:#7FDCC4">
+        <span class="why-n">2</span>
+        <h3 class="why-h">Why know it</h3>
+        <p>To know your essence, your strong sides and your weak ones. To integrate your shadow. Most people simply do not see this in themselves. To understand yourself, so that all your parts come together in one Self, at its true scale.</p>
+      </div>
+      <div class="why-col reveal" id="why-grow" style="--c:#6FBDF2">
+        <span class="why-n">3</span>
+        <h3 class="why-h">What grows from it</h3>
+        <p>Once you accept yourself, you can understand those so very other others, and make peace with them. This is how we grow harmony, and peace in the whole world. And this goes far beyond romance: your children, your parents, your boss, your colleagues, and even your clients 😉</p>
+      </div>
+    </div>
+    <div class="life reveal">
+      <p class="life-lead"><span>In everyday life it means this:</span></p>
+      <div class="life-row">
+        <p><svg class="life-ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F5FAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8c3-2.5 6 2.5 9 0s6-2.5 9 0"/><path d="M3 13c3-2.5 6 2.5 9 0s6-2.5 9 0"/><path d="M3 18c3-2.5 6 2.5 9 0s6-2.5 9 0"/></svg><span>you stop spending your strength proving the part that tires you, and put it where it flows without effort.</span></p>
+        <p><svg class="life-ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F5FAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20v-7l5-4 5 4v7z"/><path d="M15 11a3 3 0 0 1 5.6-1.2A2.6 2.6 0 0 1 21 15h-6.5a2.2 2.2 0 0 1 .5-4z"/></svg><span>You see why one person feels like home and another like a storm.</span></p>
+        <p><svg class="life-ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F5FAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18h20"/><path d="M6 18a6 6 0 0 1 12 0"/><path d="M12 8V6M5.6 11.4 4.2 10M18.4 11.4 19.8 10"/></svg><span>And the restless place that keeps asking for proof grows calm.</span></p>
+      </div>
+      <p class="life-write">If you know a part of life that has nothing to do with relationships, write to me personally.</p>
+    </div>
+  </div>
+  <div data-l="ru">
+    <h2 class="h2">Что такое звёздный тип и зачем вам это знать?</h2>
+    <div class="why-cols">
+      <div class="why-col reveal" style="--c:#C2EE7C">
+        <span class="why-n">1</span>
+        <h3 class="why-h">Что это</h3>
+        <p>Типология поведенческих паттернов: как вы проявляетесь в этом 3D мире, здесь, на Земле. Как вы думаете и чувствуете. Как общаетесь и творите. Что живёт в вашей тени и где ваша точка роста. Что вы готовы принять от мира, как ребёнок, которому нравится, когда о нём заботятся.</p>
+      </div>
+      <div class="why-col reveal" style="--c:#7FDCC4">
+        <span class="why-n">2</span>
+        <h3 class="why-h">Зачем это знать</h3>
+        <p>Чтобы узнать свою суть, свои сильные и слабые стороны. Чтобы интегрировать тень. Понять себя, чтобы все ваши части собрались в одну Самость, в её истинном масштабе.</p>
+      </div>
+      <div class="why-col reveal" style="--c:#6FBDF2">
+        <span class="why-n">3</span>
+        <h3 class="why-h">И что дальше?</h3>
+        <p>Когда вы принимаете себя, вы можете понять таких других других и примириться с ними. Так мы растим гармонию и мир во всём мире. Отношения тут понимаются в широком смысле: это не только романтические, но и отношения родителей и детей, дружеские, рабочие, с коллегами, начальниками и, конечно, с клиентами.</p>
+      </div>
+    </div>
+    <div class="life reveal">
+      <p class="life-lead"><span>В обычной жизни это значит:</span></p>
+      <ul class="life-list">
+        <li>Вы перестаёте тратить силы на то, чтобы делать в жизни то, что никогда не было задумано как ваше, и начинаете направлять энергию внимания туда, где ваша истинная сила и масштаб.</li>
+        <li>Вы начинаете видеть, почему отношения с теми или иными людьми складываются так, а не иначе.</li>
+        <li>Почему что-то идёт легко, но вы это не цените. А что-то даётся трудно, но вы продолжаете упорствовать и создаёте лишнее напряжение.</li>
+        <li>Когда вы видите себя через свой звёздный архетип, что-то внутри щёлкает и успокаивается, многие вещи становятся понятными, и появляется ясность, куда двигаться дальше.</li>
+      </ul>
+      <p class="life-write">Если вы знаете сферу жизни, которая никак не связана с отношениями, напишите мне лично.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="finale" id="universe">
+  <div class="wrap reveal">
+    <p class="finale-dust" data-ru="Мы все звёздная пыль, и вы тоже. И, судя по косвенным признакам, мы здесь, чтобы растить осознанность и сеять семена сознания по всей вселенной.">We are all stardust, you too. And by all indirect signs, we are here to grow awareness and sow the seeds of consciousness across the universe.</p>
+    <p class="finale-line" data-l="ru">Эта система для тех, кто ищет <em>вселенную</em> <span class="why-big"><span>и находит её</span> <span>в себе.</span></span></p>
+    <p class="finale-line" data-l="en">This system is for those who search for <em>the universe,</em> <span class="why-big"><span>and find it</span> <span>within themselves.</span></span></p>
+    <a class="btn btn-lime" href="scan.html" data-ru-href="https://www.starseedsoultype.com/quizru.html" data-ru="Пройти сканер">Start the scan</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-cols">
+      <div>
+        <a class="wordmark" href="#"><b>StarSeed</b> <span>Intelligence</span></a>
+        <p class="footer-tag" data-ru="24 звёздных типа, 10 типов связи, одна система, которая возвращает вас к себе.">24 Origins, 10 connection types, and one map that hands you back to yourself.</p>
+      </div>
+      <div>
+        <h4 data-ru="Система">System</h4>
+        <a href="https://www.starseedsoultype.com/about-the-system.html" data-ru="О системе">About the system</a>
+        <a href="https://www.starseedsoultype.com/flipbook.html" data-ru-href="ruflipbook.html" data-ru="Все 24 типа">All 24 Origins</a>
+        <a href="https://www.starseedsoultype.com/connections.html" data-ru="Типы связи">Connection types</a>
+        <a href="https://www.starseedsoultype.com/glossary.html" data-l="en">Glossary</a>
+        <a href="https://www.starseedsoultype.com/blog.html" data-ru="Журнал">Journal</a>
+      </div>
+      <div>
+        <h4 data-ru="Инструменты">Tools</h4>
+        <a href="https://www.starseedsoultype.com/cards.html" data-ru="Метафорические карты">Metaphor Cards</a>
+        <a href="https://starseedsoul.gumroad.com/l/free" data-ru="Гид по близнецовым пламенам">Twin Flame Guide</a>
+      </div>
+      <div>
+        <h4 data-ru="Работа с нами">Work with us</h4>
+        <a href="partners.html" data-ru="Партнёрская программа">Partner program</a>
+        <a href="https://www.starseedsoultype.com/workshop.html" data-ru="Воркшоп">Workshop</a>
+        <a href="https://forms.gle/bL1YKUWpbncTsoFa6" data-ru="Обучение чтению типов">Origin Reader training</a>
+      </div>
+      <div>
+        <h4 data-ru="Будем на связи">Stay close</h4>
+        <a href="https://www.instagram.com/starseed.soultype/" data-ru-href="https://www.instagram.com/starseed.type/">Instagram</a>
+        <a href="https://t.me/starseedsoul" data-ru-href="https://t.me/starseedtype" data-ru="Библиотека в Telegram">Telegram library</a>
+        <a href="mailto:timsocion@gmail.com" data-ru="Написать Александре">Email Alexandra</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 StarSeed Intelligence · <span data-ru="Александра">Alexandra</span> · <a href="https://www.starseedsoultype.com/privacy.html" style="display:inline" data-ru="Конфиденциальность">Privacy</a> · <a href="https://www.starseedsoultype.com/terms.html" style="display:inline" data-ru="Условия">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+const ORIGINS_EN=[
+["Siriusian","The Warm Current","If people soften and open around you without quite knowing why, this page is yours."],
+["Pleiadian","Pure Harmony","If you feel the space between two people go warm or cold before a word is spoken, this page is yours."],
+["Lemurian","The Tender Fire","If your love runs hot and immediate, and half measures feel like a small death, this page is yours."],
+["Cassiopeian","The Knowing Heart","If you can name exactly why two people clash while they are still arguing, this page is yours."],
+["Procyonian","The Caring Hand","If you show love by quietly making sure everyone has what they need, this page is yours."],
+["Lyran","The Guiding Light","If you see who a person could become and cannot help drawing it out of them, this page is yours."],
+["Arcturian","The Bridge Between Worlds","If you can see five layers of a project at once, dream it and build it, this page is yours."],
+["Orion","Pure Clarity","If you need things to make sense all the way down, and people come to you when they panic, this page is yours."],
+["Vegan","The Open Sky","If your mind runs on big what-if questions the people around you never think to ask, this page is yours."],
+["Zeta Reticulan","The Quiet Knowing","If you read a room or a person with an accuracy that unsettles people, this page is yours."],
+["Epsilon Eridan","The Elegant Build","If you turn complex problems into clean working solutions and quietly enjoy it, this page is yours."],
+["Atlantean","The Humane Order","If you design how things should work but always ask how it will land on people, this page is yours."],
+["Andromedan","Pure Expansion","If you feel where a room wants to go before anyone speaks, this page is yours."],
+["Polarisian","The Bright Spark","If your ideas and your drive fire together, and you build things from nothing, this page is yours."],
+["Nibiruan","The Living Forge","If your drive lives in your hands and your body, and you have to make the thing real, this page is yours."],
+["Egyptian","The Rising Flame","If you are driven to build meaning and leave something that outlasts you, this page is yours."],
+["Titanian","The Standing Fire","If you carry enough force to move mountains and build things meant to last, this page is yours."],
+["Blue Avian","The Open Heart","If your drive is aimed at healing, harmony, and bringing people together, this page is yours."],
+["Tau Cetian","The Living Ground","If you build abundance through people and trust, and everyone feels like your most important guest, this page is yours."],
+["Aldebaran","The Steady Architect","If you build real things through clear systems and thorough plans, this page is yours."],
+["Centaurian","The Sure Builder","If you build relentlessly and clearly, and obstacles just look like the next task, this page is yours."],
+["Herculean","The Tireless Hand","If you build through sheer sustained effort and finish what you start, this page is yours."],
+["Anunnaki","The Founding Stone","If you carry a natural authority and shape reality through will and presence, this page is yours."],
+["Hyperborean","The Deep Foundation","If you build things meant to last, patiently and with real care, this page is yours."]
+];
+const ORIGINS_RU=[["Сириус", "Тёплое течение", "Если рядом с вами люди почему-то расслабляются и начинают рассказывать лишнее, эта страница про вас."], ["Плеяды", "Чистое созвучие", "Если вы чувствуете, что между двумя людьми похолодало, раньше, чем они сами это замечают, эта страница про вас."], ["Лемурия", "Связь до объяснения", "Если вас тянет к людям раньше, чем вы успеваете решить, стоит ли, эта страница про вас."], ["Кассиопея", "Незаходящая", "Если вам доверяют правду о своих отношениях, эта страница про вас."], ["Процион", "Идущий первым", "Если рядом с вами людям становится спокойно и сытно, эта страница про вас."], ["Лира", "Слух на глубину", "Если вас зовут, когда нужно, чтобы кто-то услышал по-настоящему, эта страница про вас."], ["Арктур", "Взгляд снаружи", "Если вы видите конструкцию там, где остальные видят кашу, эта страница про вас."], ["Орион", "Чертёж из хаоса", "Если вы умеете превратить хаос в понятную схему, а потом в готовую вещь, эта страница про вас."], ["Вега", "Мера точности", "Если вам важно, чтобы было сделано правильно, а не просто сделано, эта страница про вас."], ["Зета Ретикули", "Близость на расстоянии", "Если вы понимаете людей через устройство, а не через настроение, эта страница про вас."], ["Эпсилон Эридана", "Вечная стройка", "Если вы сначала строите систему, а потом по ней строите вещь, эта страница про вас."], ["Атлантида", "Замысел целиком", "Если вы держите в голове целую систему, которой пока нигде нет, эта страница про вас."], ["Андромеда", "Чистое расширение", "Если вы понимаете, чем кончится разговор, когда он ещё не начался, эта страница про вас."], ["Полярис", "Направление", "Если вы начинаете делать то, что остальные ещё обсуждают, эта страница про вас."], ["Нибиру", "След вместо портрета", "Если вам надо немедленно сделать вещь руками, а не обсуждать её, эта страница про вас."], ["Египет", "То, что останется", "Если вам мало просто работы и нужно, чтобы после вас что-то осталось, эта страница про вас."], ["Титан", "Стоящий огонь", "Если вы берётесь за то, что все назвали неподъёмным, и просто начинаете двигать, эта страница про вас."], ["Голубые Авианы", "Открытое сердце", "Если ваша сила всегда направлена на то, чтобы всем стало лучше, эта страница про вас."], ["Тау Кита", "Живая почва", "Если у вас всё держится на людях, которые вам доверяют, эта страница про вас."], ["Альдебаран", "Отдельно стоящий", "Если вам доверяют то, что ломаться не должно, эта страница про вас."], ["Альфа Центавра", "Просчитанная опора", "Если вы сначала выстраиваете опору, а потом на ней всё остальное, эта страница про вас."], ["Геркулес", "Тот, кто держит вес", "Если вы берёте на себя вес, который остальные не подняли, эта страница про вас."], ["Ануннаки", "Из амбара система", "Если у вас из хозяйства вырастает система, эта страница про вас."], ["Гиперборея", "Хранящая земля", "Если рядом с вами людям становится надёжно и не страшно, эта страница про вас."]];
+let ORIGINS=ORIGINS_EN;
+const grid=document.getElementById('grid24');
+const slug=n=>n.toLowerCase().replace(/ /g,'-');
+function drawGrid(){const ru=document.documentElement.lang==='ru';grid.innerHTML=ORIGINS_EN.map((o,i)=>{const r=ru?ORIGINS_RU[i]:o;const a=i%2?'m':'f',b=i%2?'f':'m',s=slug(o[0]);return `<a class="origin" href="${ru?'ruflipbook.html':'https://www.starseedsoultype.com/flipbook.html'}"><span class="origin-face"><img src="origins/${s}-${a}.jpg" alt="${r[0]}" loading="lazy" width="120" height="120"><img class="alt" src="origins/${s}-${b}.jpg" alt="" loading="lazy" width="120" height="120"></span><div class="origin-name">${r[0]}</div><div class="origin-sub">${r[1]}</div><span class="origin-tip">${r[2]}</span></a>`}).join('');}
+drawGrid();
+/* touch screens have no hover: first tap shows the line, second tap opens the portrait */
+(function(){const bar=document.createElement('div');bar.className='tip-bar';bar.setAttribute('role','status');document.body.appendChild(bar);let on=null;
+  const off=()=>{if(on)on.classList.remove('tapped');on=null;bar.classList.remove('in');};
+  grid.addEventListener('click',e=>{const a=e.target.closest('.origin');if(!a||!matchMedia('(hover:none)').matches||a===on)return;
+    e.preventDefault();off();on=a;a.classList.add('tapped');bar.textContent=a.querySelector('.origin-tip').textContent;bar.classList.add('in');});
+  document.addEventListener('click',e=>{if(on&&!e.target.closest('.origin'))off();});
+  if(window.IntersectionObserver)new IntersectionObserver(es=>{if(!es[0].isIntersecting)off();}).observe(grid);})();
+
+const line=document.getElementById('stripLine');let li=0;
+/* keep the tallest of the 24 lines reserved, so nothing below jumps when the line changes */
+function stripRoom(){const box=line.parentElement,t=line.cloneNode();t.removeAttribute('id');t.style.cssText='position:absolute;visibility:hidden;min-height:0;left:0;right:0';box.style.position='relative';box.appendChild(t);
+  const cs=getComputedStyle(box);t.style.left=cs.paddingLeft;t.style.right=cs.paddingRight;let m=0;
+  ORIGINS.forEach(o=>{t.innerHTML=o[2]+'<em>· '+o[0]+'</em>';m=Math.max(m,t.offsetHeight);});t.remove();box.style.minHeight=m+'px';}
+addEventListener('resize',stripRoom);stripRoom();if(document.fonts)document.fonts.ready.then(stripRoom);
+
+setInterval(()=>{line.classList.add('fade');setTimeout(()=>{li=(li+1)%ORIGINS.length;const o=ORIGINS[li];line.innerHTML=o[2]+'<em>· '+o[0]+'</em>';line.classList.remove('fade');},600);},4200);
+
+
+
+
+function teaser(){
+  const hero=document.querySelector('.hero'), hb=document.querySelector('.hero-block'), btn=document.querySelector('.fork .card .btn');
+  if(!hero||!btn) return;
+  hero.style.height='auto'; hero.style.minHeight='0';
+  const content=hb.getBoundingClientRect().height+28;
+  const vh=innerHeight;
+  const peek=Math.max(14,Math.round(btn.offsetHeight*0.28));
+  const top=btn.getBoundingClientRect().top+scrollY;
+  const h=hero.getBoundingClientRect().height+(vh-peek-top);
+  hero.style.height=Math.max(content,h)+'px';
+}
+addEventListener('load',teaser);addEventListener('resize',teaser);addEventListener('orientationchange',teaser);
+if(document.fonts)document.fonts.ready.then(teaser);teaser();
+
+
+const REV_EN="<figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">K</div><div class=\"review-name\">Katya</div></div><blockquote>Something completely new. I felt so much freedom to express myself and to interpret things in my own way. I was struck by how precisely we got to the essence of my request every single time. Everything was simple, clear, and to the point — question, answer. Afterward, I felt like a new layer of perception opened up. I looked at my situation from a completely different side.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">A</div><div class=\"review-name\">Arina</div></div><blockquote>I didn&#x27;t know what to expect. With Alexandra I saw how powerful it is to work with thinking and the subconscious. I came out feeling truly different — I broke through one of my biggest fears holding me back from wealth. The whole process was deeply healing. I recommend it to everyone!</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">V</div><div class=\"review-name\">Vilena</div></div><blockquote>Thank you for such deep work. So much came up that needs to be worked through to reach a new level. I left understanding which direction to move in, and which parts of me need attention.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">N</div><div class=\"review-name\">Natasha</div></div><blockquote>I loved the voice — so flowing, calm, pleasant, and clear. At first there was only one thought: &#x27;Oh God, I understand nothing!&#x27; But the well-asked questions helped me get to the essence. In the end, everything fell into place. It gave me a start in moving toward my goal. It pulled the right answers out of my subconscious.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">A</div><div class=\"review-name\">Anastasia</div></div><blockquote>With Alexandra I found a bridge and a starting point that unfolded important realizations at a turbulent, transitional stage of my life. We managed to put my emotional state into words, as &#x27;loss of meaning, lost bearings.&#x27; And then we searched for &#x27;solutions&#x27; and &#x27;resource states.&#x27; Days later it opened me up to a very important question: who else am I?</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Anonymous</div></div><blockquote>I loved it because answers to deep questions came easily, playfully. Even though some answers were completely unexpected, there was a feeling of hitting exactly the target. The process feels like a quest, where you get insights and unexpected discoveries about yourself. I felt safe. The experience was whole, complete, useful.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Anonymous</div></div><blockquote>Afterwards, there was a feeling of calm and inner support, and confidence that things are not actually as bad with me as I thought. I also loved that your attention and approach are directed holistically — not only at the mental level, but at the physical level too. All day, my thoughts kept returning to that one insight about my destiny — it inspired me so much.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Anonymous</div></div><blockquote>It&#x27;s amazing how Alexandra is able to clearly guide the flow of the river of the subconscious. Of course, all the answers are inside, but how do you find them without correctly asked questions? Thank you for revealing meanings, revealing my question and my result. I&#x27;m happy to see new potentials!</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Anonymous</div></div><blockquote>Alexandra, thank you so much! For me it was a very interesting experience. It was an ecological and stress-free contact with my subconscious. We managed to reach completely new layers of my psyche that we hadn&#x27;t even touched with my regular psychotherapist. You led me so sensitively along this path, asking the right and timely questions. I left with a very clear insight and understandable recommendations, but it feels like it launched a process of inner transformation that is still going on. Thoughts and images are still &#x27;settling,&#x27; and I&#x27;m surprisingly comfortable and at ease in this process! Thank you so much, I will definitely recommend it to others. And I will definitely come back with a new request. Thank you!</blockquote></figure>";
+const REV_RU="<figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">К</div><div class=\"review-name\">Катя</div></div><blockquote>Игра супер! Это что-то новенькое. Мне очень понравилось. Особенно тем, что использовались метафорические карты и была свобода для личной проявленности и интерпретации. Меня поразило, насколько точно карты каждый раз указывали на суть запроса. Ещё мне понравилось, что всё очень просто и не перегружено лишней информацией. Всё чётко и по делу. Вопрос - ответ))) … И запомнилось несколько моментов, когда явно «перещёлкнуло» что-то и открылась новая грань восприятия моей ситуации, моего запроса. Посмотрела совершенно с другой стороны.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">А</div><div class=\"review-name\">Арина</div></div><blockquote>Я не много работала с картами до этого и не знала, чего ожидать. Опыт работы в группе показал мне, насколько карты сильные в работе с мышлением и подсознанием! Я вышла и себя действительно по-другому чувствую - я разбила один из самых больших страхов, сдерживающих меня к богатству 💸 … Для меня весь процесс был очень исцеляющим 🤗 Спасибо ещё раз 🙏 Всем рекомендую!</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Аноним</div></div><blockquote>Хочу поделиться своими впечатлениями о занятии с метафорическими картами. Это был удивительно интересный опыт. Глубокое понимание метафорических карт и умение задавать точные вопросы помогли мне глубже понять эмоциональные и психологические процессы. На занятиях была очень комфортная атмосфера, что позволило мне чувствовать себя открыто и спокойно в процессе исследования собственных мыслей и чувств. Занятия с метафорическими картами стали для меня ценным опытом самопознания и личностного роста. Я благодарен за профессионализм и поддержку в этом уникальном путешествии.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">В</div><div class=\"review-name\">Вилена</div></div><blockquote>Хочу поблагодарить за такую глубокую работу 🙏 Метафорические карты - это всегда погружение в подсознание. Много вскрылось участков, которые нужно проработать, для того чтобы выйти на новый уровень. Я ушла со встречи с пониманием, в какую сторону двигаться и каким моим частям нужно внимание 🙏❤️</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">Н</div><div class=\"review-name\">Наташа</div></div><blockquote>В самом боте понравился голос, такой текучий, спокойный, приятный и понятный, который хочется слушать. Невероятно красивые, яркие и необычные метафорические карты. Их хочется рассматривать до мельчайших деталей. … Потому что в начале только одна мысль: «О боже, я ничего не понимаю!» Но грамотно заданные вопросы помогли в дальнейшем выхватывать суть карты, исходя из своего запроса. … В восторге от выпавших карт, как они попадали в точку и в суть заданных вопросов. Как вытаскивали нужные ответы из подсознания. В итоге как будто всё разложилось по полочкам. … Благодарю за практику и за карты 🙏</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Аноним</div></div><blockquote>Мне понравилась практика тем, что ответы на глубокие вопросы находятся легко, играючи. Несмотря на то, что некоторые ответы совершенно неожиданные, есть ощущение попадания точно в цель. Сам процесс напоминает игру, квест, проходя который получаешь инсайты, неожиданные открытия о самом себе. Чувствовалась безопасность процесса. Практика целостная, законченная, полезная. Буду пользоваться техниками, которым научился. Спасибо большое!</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">А</div><div class=\"review-name\">Анастасия</div></div><blockquote>Сессия с метафорическими картами в формате «проблема - ресурс» стала своего рода следующим звеном, мостиком и уникальной самой по себе отправной точкой, распускающей важные осознания на моём и без того турбулентном, переходном этапе в жизни. Мне было полезно, как мы вместе сумели облечь моё эмоционально-чувственное состояние, с которым я пришла, тот самый запрос - «проблему» в слова, как «потеря смыслов, сбитые ориентиры». … Ярким моментом, который особенно хочется отметить, стало чувство сопротивления, которое я прожила, когда мы начали приближаться к «черноте и бездне» на одной из карт. Оно лишь спустя несколько дней вскрылось и подвело меня к очень важным, экзистенциальным вопросам: а кто я ЕЩЁ? А какие роли, кроме тех, что я знаю и привыкла отыгрывать, я бы хотела примерить на себя, что ещё просится прожить?</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Аноним</div></div><blockquote>После нашего занятия было ощущение спокойствия и появления внутренней опоры или уверенности, что со мной на самом деле не так всё плохо, как я думала)) Неожиданный эффект для меня, хотя безумно приятный. Также приятно, что твоё внимание и подход направлен комплексно на состояние человека, не только на ментальном уровне, но и на физическом)) … И сегодня весь день мыслями я возвращалась к той карте «Предназначение», она меня очень вдохновила … Спасибо тебе за интересный опыт, всё, что я увидела и осознала при работе с картами, мне этой информации очень не хватало!! Что очень для меня ценно.</blockquote></figure><figure class=\"review\"><div class=\"review-who\"><div class=\"avatar\">✦</div><div class=\"review-name\">Аноним</div></div><blockquote>Это удивительно, насколько волшебно работают карты и как чётко можно вести течение реки бессознательного. Конечно, все ответы внутри, но как их найти без верно заданных вопросов? Спасибо за раскрытие смыслов, раскрытие моего вопроса и результата, я рада увидеть новые потенциалы! Благодарю! Ещё увидимся! 💕🐬</blockquote></figure>";
+function buildReviews(){const tr=document.getElementById('reviews'),dots=document.getElementById('revDots');if(!tr)return;
+const ru=document.documentElement.lang==='ru';tr.innerHTML=ru?REV_RU:REV_EN;tr.scrollLeft=0;
+const cards=[...tr.children];
+/* every review can be read to the end */
+function more(){cards.forEach(c=>{const q=c.querySelector('blockquote');if(c.classList.contains('open'))return;let b=c.querySelector('.rev-more');const cut=q.scrollHeight>q.clientHeight+2;
+  if(cut&&!b){b=document.createElement('button');b.className='rev-more';b.type='button';b.textContent=ru?'Читать дальше':'Read more';b.onclick=()=>{c.classList.add('open');b.remove();};c.appendChild(b);}
+  if(!cut&&b)b.remove();});}
+function step(){const c=cards[0];return c.getBoundingClientRect().width+parseFloat(getComputedStyle(tr).columnGap||20);}
+function center(i,smooth){const c=cards[i];tr.scrollTo({left:c.offsetLeft-(tr.clientWidth-c.offsetWidth)/2,behavior:smooth?'smooth':'auto'});}
+function mark(){const mid=tr.scrollLeft+tr.clientWidth/2;let best=0,bd=1e9;cards.forEach((c,i)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(d<bd){bd=d;best=i;}});cards.forEach((c,i)=>c.classList.toggle('is-center',i===best));[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===best));}
+dots.innerHTML='';cards.forEach((c,i)=>{const b=document.createElement('button');b.className='dot';b.setAttribute('aria-label','Review '+(i+1));b.onclick=()=>center(i,true);dots.appendChild(b);});
+more();
+document.querySelector('.rev-arrow.prev').onclick=()=>tr.scrollBy({left:-step(),behavior:'smooth'});
+document.querySelector('.rev-arrow.next').onclick=()=>tr.scrollBy({left:step(),behavior:'smooth'});
+let t;tr.addEventListener('scroll',()=>{clearTimeout(t);t=setTimeout(mark,60)});
+function init(){center(Math.min(1,cards.length-1),false);mark();}
+window.__revInit=init;window.__revMore=more;init();}
+buildReviews();
+addEventListener('load',()=>{window.__revMore();window.__revInit();});addEventListener('resize',()=>{window.__revMore();window.__revInit();});
+
+
+function setHdr(){const h=document.querySelector('.header');if(h)document.documentElement.style.setProperty('--hdr',h.getBoundingClientRect().height+'px');}
+setHdr();addEventListener('resize',setHdr);addEventListener('load',setHdr);
+
+document.getElementById('menuBtn').onclick=()=>document.getElementById('nav').classList.toggle('open');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
+  e.target.querySelectorAll?.('[data-count]').forEach(n=>{const end=+n.dataset.count,t0=performance.now();const tick=t=>{const k=Math.min(1,(t-t0)/1400);n.textContent=Math.round(end*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)});
+  io.unobserve(e.target);}),{threshold:.25});
+document.querySelectorAll('.reveal,.stats').forEach(el=>io.observe(el));
+
+/* EN / RU on one page: short texts swap from data-ru, blocks toggle by data-l (CSS), lists rebuild. */
+function setLang(l){
+  l=l==='ru'?'ru':'en';document.documentElement.lang=l;
+  document.querySelectorAll('[data-ru]').forEach(e=>{if(e.dataset.en===undefined)e.dataset.en=e.textContent;e.textContent=l==='ru'?e.dataset.ru:e.dataset.en;});
+  document.querySelectorAll('[data-ru-href]').forEach(e=>{if(e.dataset.enHref===undefined)e.dataset.enHref=e.getAttribute('href');e.setAttribute('href',l==='ru'?e.dataset.ruHref:e.dataset.enHref);});
+  document.querySelectorAll('.lang-switch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.set===l)));
+  document.title=l==='ru'?'StarSeed Intelligence · Узнайте свой звёздный тип':'StarSeed Intelligence · Discover your Origin';
+  ORIGINS=l==='ru'?ORIGINS_RU:ORIGINS_EN;
+  drawGrid();buildReviews();
+  const o=ORIGINS[li%ORIGINS.length];line.innerHTML=o[2]+'<em>· '+o[0]+'</em>';stripRoom();
+  try{localStorage.setItem('si-lang',l)}catch(e){}
+  try{const u=new URL(location.href);if(l==='ru')u.searchParams.set('lang','ru');else u.searchParams.delete('lang');history.replaceState(null,'',u);}catch(e){}
+  requestAnimationFrame(()=>{teaser();dispatchEvent(new Event('resize'));if(window.ScrollTrigger)ScrollTrigger.refresh();});
+}
+document.querySelectorAll('.lang-switch button').forEach(b=>b.onclick=()=>setLang(b.dataset.set));
+(function(){let l=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('si-lang')}catch(e){}
+  if(l==='ru')setLang('ru');else document.querySelectorAll('.lang-switch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.set==='en')));})();
+</script>
+
+<script>
+/* hero words: three dots on an arc beside the portrait, three links fanning out from them.
+   Everything is measured in portrait units, then the widest fan that touches no text is chosen. */
+(function(){
+  const hero=document.querySelector('.hero'),img=hero.querySelector('.hero-people'),nav=document.getElementById('heroWords'),
+    h1=hero.querySelector('.h1'),lead=hero.querySelector('.lead'),links=[...nav.querySelectorAll('a')],
+    groups=[...nav.querySelectorAll('g')],small=matchMedia('(max-width:759px),(max-aspect-ratio:1/1)');
+  // text box inside the hero, ignoring scroll-animation transforms
+  function box(el,m){let x=0,y=0,e=el;while(e&&e!==hero){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent;}
+    const r=document.createRange();r.selectNodeContents(el);const a=r.getBoundingClientRect(),b=el.getBoundingClientRect();
+    return {l:x+a.left-b.left-m,t:y+a.top-b.top-m,r:x+a.right-b.left+m,b:y+a.bottom-b.top+m};}
+  function words(k){
+    k=typeof k==='number'?k:1;
+    nav.classList.remove('on');
+    if(small.matches||!img.offsetWidth) return;
+    const W=img.offsetWidth,s=W/1086,L=img.offsetLeft,T=img.offsetTop,fs=Math.max(13,Math.min(25,.066*W)*k),PH=fs*1.75,
+      H=box(h1,0),D=box(lead,12),floor=hero.offsetHeight-32,ceil=16;H.t+=8;H.b-=2;H.r+=14;
+    links.forEach(a=>{a.style.cssText='font-size:'+fs+'px';});
+    const tw=links.map(a=>a.offsetWidth);
+    const hit=(a,b)=>a.l<b.r&&a.r>b.l&&a.t<b.b&&a.b>b.t;
+    const sleeve=(x,y)=>((x-L-230*s)/(235*s))**2+((y-T-955*s)/(248*s))**2<1;   // keep off the sweater
+    // two arcs with one centre (drawn by Alexandra): dots on the small one by the hand, word centres on the big one
+    const CX=L+490*s,CY=T+855*s,r=454*s,P=[54,39,24].map(a=>({x:CX-r*Math.cos(a*Math.PI/180),y:CY-r*Math.sin(a*Math.PI/180)}));
+    function fan(g,dy,R,near){
+      const my=T+589*s+dy,rows=P.map((p,n)=>{const by=my+(n-1)*g-fs*.4,h=CY-by,c=CX-Math.sqrt(Math.max(0,R*R-h*h))+(n?0:fs*near);return {x:p.x,y:p.y,by,l:c-tw[n]/2,bx:c+tw[n]/2};});
+      if(rows.some(w=>w.x-w.bx<18)) return null;
+      for(let n=0;n<3;n++){const w=rows[n];
+        w.rect={l:w.l,r:w.l+tw[n],t:w.by-PH/2,b:w.by+PH/2};
+        if(w.rect.t<ceil||w.rect.b>floor||hit(w.rect,H)||hit(w.rect,D)||w.rect.l<16) return null;
+        for(let q=.25;q<=1;q+=.25) if(sleeve(w.x+(w.bx-w.x)*q,w.y+(w.by-w.y)*q)) return null;}
+      // no line may run over another dot or another word
+      const seg=(p,ax,ay,bx,by)=>{const q=Math.max(0,Math.min(1,((p.x-ax)*(bx-ax)+(p.y-ay)*(by-ay))/((bx-ax)**2+(by-ay)**2||1)));return Math.hypot(p.x-ax-q*(bx-ax),p.y-ay-q*(by-ay));};
+      for(let a=0;a<3;a++)for(let b=0;b<3;b++){if(a===b)continue;const w=rows[a],o=rows[b];
+        if(seg(o,w.x,w.y,w.bx,w.by)<42*s+2) return null;
+        for(let q=0;q<=1;q+=.05){const x=w.x+(w.bx-w.x)*q,y=w.y+(w.by-w.y)*q;if(x>o.rect.l-6&&x<o.rect.r+6&&y>o.rect.t&&y<o.rect.b+4) return null;}
+        if(hit(w.rect,o.rect)) return null;}
+      return rows;
+    }
+    const off=[];for(let d=0;d<=90;d+=3){off.push(d);if(d&&d<=45)off.push(-d);}
+    let best=null;
+    const g0=Math.min(210*s,96),R0=r+Math.min(523*s,235),gs=[];for(let f=1;f>=.35;f-=.05)if(g0*f>=fs*2.15)gs.push(g0*f);gs.push(fs*2.05);
+    search:for(const near of k>.65&&fs>13?[1.1]:[1.1,0])for(const R of [R0,R0-.12*(R0-r),R0+.12*(R0-r),R0-.25*(R0-r),R0+.3*(R0-r)])for(const g of gs)for(const d of off)if(best=fan(g,d*s*3.3,R,near))break search;
+    if(!best){if(k>.65&&fs>13)words(k-.12);return;}
+    best.forEach((w,n)=>{const g=groups[n],set=(q,o)=>{const e=g.querySelector(q);for(const a in o)e.setAttribute(a,o[a]);},
+        l=w.rect.l,r=w.rect.r,t=w.rect.t,b=w.rect.b,y=w.by,m=PH*.42,e=fs*.24,u=fs*1.2;
+      links[n].style.cssText='font-size:'+fs+'px;left:'+l+'px;top:'+t+'px';
+      set('.frame',{d:`M${l+m} ${t}L${r-m} ${t}L${r} ${y}L${r-m} ${b}L${l+m} ${b}L${l} ${y}Z`});
+      set('.echo',{d:`M${l-e} ${y}L${l+m-e*.6} ${t-e}L${l+m+u} ${t-e}M${r-m+e*.6} ${b+e}L${r-m-u} ${b+e}`});
+      set('.tip',{d:`M${l+fs*.3} ${y}L${l+m+fs*.16} ${y-PH*.28}L${l+m+fs*.16} ${y+PH*.28}Z`});
+      set('.link',{d:`M${r} ${y}L${r+(w.x-r)*.42} ${y}L${w.x} ${w.y}`});
+      set('.halo',{cx:w.x,cy:w.y,r:Math.max(5,Math.min(8.5,24*s))});set('.dot',{cx:w.x,cy:w.y,r:Math.max(2.4,Math.min(4,11*s))});});
+    nav.classList.add('on');
+  }
+  const ro=new ResizeObserver(()=>words());ro.observe(hero);ro.observe(img);ro.observe(lead);
+  if(document.fonts)document.fonts.ready.then(()=>words());words();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  if(!window.gsap||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsap.registerPlugin(ScrollTrigger);
+  const hdr=()=>parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hdr'))||100;
+  // hero: scrub crystal, people parallax, headline fade
+  ScrollTrigger.create({trigger:'.hero',start:'top top+='+hdr(),end:'bottom top',scrub:true,onUpdate:s=>{window.__sp=s.progress;}});
+  gsap.to('.hero-people',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('.hero-words',{y:()=>-.12*document.querySelector('.hero-people').offsetHeight,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true,invalidateOnRefresh:true}});
+  gsap.to('.hero-text',{y:-60,opacity:0.15,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  // proof: heading + stats + cards rise in sequence
+  gsap.from('.proof .h2, .proof .stats',{y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:'.proof',start:'top 75%'}});
+  gsap.from('.proof .rev-wrap',{y:60,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:'.proof .reviews',start:'top 85%'}});
+  // steps: text slides from its side, device from the other with a 3D tilt scrubbed by scroll
+  document.querySelectorAll('.vstep').forEach(st=>{
+    const txt=st.querySelector('.vstep-text'), vis=st.querySelector('.device, .photo-frame');
+    const tl=gsap.timeline({scrollTrigger:{trigger:st,start:'top 72%'}});
+    tl.from(txt.children,{y:40,opacity:0,duration:.8,stagger:.08,ease:'power3.out'});
+    if(vis){
+      gsap.set(vis,{transformPerspective:1200,transformOrigin:'50% 100%'});
+      tl.from(vis,{y:70,opacity:0,rotationX:14,duration:1.1,ease:'power3.out'},'-=.55');
+      const opts=vis.querySelectorAll('.dv-opt');
+      if(opts.length){
+        tl.from(opts,{x:-12,opacity:0,duration:.35,stagger:.12,ease:'power2.out'},'-=.5');
+        const on=vis.querySelector('.dv-opt.on');
+        if(on){on.classList.remove('on');tl.add(()=>on.classList.add('on'),'+=.25');}
+      }
+      const pair=vis.querySelectorAll('.dv-pair figure, .dv-type, .dv-sub');
+      if(pair.length) tl.from(pair,{y:16,opacity:0,duration:.45,stagger:.12,ease:'power2.out'},'-=.6');
+    }
+  });
+  // 24 origins: wave
+  gsap.from('.origin',{y:30,opacity:0,scale:.9,duration:.6,stagger:{each:.035,from:'start'},ease:'back.out(1.6)',scrollTrigger:{trigger:'.grid24',start:'top 80%'}});
+  addEventListener('load',()=>ScrollTrigger.refresh());
+})();
+</script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const heroCanvas = document.getElementById('hero-canvas');
+const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+heroRenderer.toneMappingExposure = 1.0;
+
+const heroScene = new THREE.Scene();
+const heroCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+heroCamera.position.set(0, 0, 4);
+
+const heroGroup = new THREE.Group();
+
+const coreGeo = new THREE.IcosahedronGeometry(0.65, 0);
+const coreMat = new THREE.MeshPhysicalMaterial({
+  color: 0x1D4E7E, metalness: 0.9, roughness: 0.15,
+  emissive: 0x3FD0E6, emissiveIntensity: 0.15,
+  clearcoat: 1.0, clearcoatRoughness: 0.05, reflectivity: 1.0, envMapIntensity: 0.5,
+});
+heroGroup.add(new THREE.Mesh(coreGeo, coreMat));
+
+const shellGeo = new THREE.IcosahedronGeometry(1.0, 1);
+const shellMat = new THREE.MeshPhysicalMaterial({
+  color: 0x3A78C2, metalness: 0.1, roughness: 0.0,
+  transmission: 0.85, thickness: 0.5, clearcoat: 1.0, clearcoatRoughness: 0.0,
+  ior: 1.5, transparent: true, opacity: 0.28, envMapIntensity: 0.3,
+  flatShading: true, specularIntensity: 1.0,
+});
+shellMat.envMap = new THREE.PMREMGenerator(heroRenderer).fromScene(new RoomEnvironment(), 0.04).texture;
+shellMat.envMapIntensity = 0.5;
+const shellMesh = new THREE.Mesh(shellGeo, shellMat);
+heroGroup.add(shellMesh);
+
+const ringGeo = new THREE.TorusGeometry(1.35, 0.008, 16, 64);
+const ringMat = new THREE.MeshStandardMaterial({ color: 0xE4F6FF, metalness: 1, roughness: 0.5, emissive: 0xC6ECFF, emissiveIntensity: 0.25, transparent: true, opacity: 0.55 });
+const ringMesh = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.008, 16, 96), ringMat);
+ringMesh.rotation.x = Math.PI / 2;
+heroGroup.add(ringMesh);
+
+const ring2Mesh = new THREE.Mesh(ringGeo, ringMat);
+ring2Mesh.rotation.x = Math.PI / 2;
+ring2Mesh.rotation.y = Math.PI / 3;
+heroGroup.add(ring2Mesh);
+
+heroGroup.add(new THREE.LineSegments(
+  new THREE.EdgesGeometry(shellGeo),
+  new THREE.LineBasicMaterial({ color: 0x9DD3F5, transparent: true, opacity: 0.45 })
+));
+
+heroScene.add(heroGroup);
+heroScene.add(new THREE.AmbientLight(0xffffff, 0.08));
+
+const heroDir = new THREE.DirectionalLight(0x9DD3F5, 2.4);
+heroDir.position.set(3, 4, 5);
+heroScene.add(heroDir);
+
+const heroDir2 = new THREE.DirectionalLight(0x5DB4E8, 1.0);
+heroDir2.position.set(-4, -2, 3);
+heroScene.add(heroDir2);
+
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+function resizeHero() {
+  const w = heroCanvas.clientWidth;
+  const h = heroCanvas.clientHeight;
+  if (!w || !h) return;
+  heroRenderer.setSize(w, h);
+  heroCamera.aspect = w / h;
+  heroCamera.updateProjectionMatrix();
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+const clock = new THREE.Clock();
+(function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  const sp = window.__sp || 0;
+  heroGroup.rotation.y = t * 0.08 + mouseX * 0.15 + sp * 2.2;
+  heroGroup.scale.setScalar(1 + sp * 0.35);
+  heroGroup.rotation.x = Math.sin(t * 0.05) * 0.1 + mouseY * 0.1;
+  shellMesh.rotation.y = -t * 0.04;
+  ringMesh.rotation.z = t * 0.06;
+  ring2Mesh.rotation.z = -t * 0.04;
+  ring2Mesh.rotation.x = Math.PI / 2 + t * 0.03;
+  heroRenderer.render(heroScene, heroCamera);
+})();
+</script>
+</body>
+</html>

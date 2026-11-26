@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Origin Scan · StarSeed Intelligence</title>
+<meta name="description" content="7 questions, 3 minutes. See which of the 24 Origins is yours.">
+<meta name="robots" content="noindex">
+<!-- Preview. Before replacing quiz.html: GA4, pixel.js, og tags from the live quiz.html; remove noindex. -->
+<link rel="icon" href="https://www.starseedsoultype.com/favicon.svg">
+<link rel="stylesheet" href="si.css">
+<link rel="stylesheet" href="scan.css">
+</head>
+<body>
+<header>
+  <div class="scan-head"><div class="wrap">
+    <a class="wordmark" href="index.html"><b>StarSeed</b> <span>Intelligence</span></a>
+    <span class="scan-count" id="count"></span>
+  </div></div>
+  <div class="bar" id="bar" hidden><i></i></div>
+</header>
+<main>
+  <section class="screen dark on" id="intro"><div class="wrap">
+    <div>
+      <p class="res-eyebrow">The Origin Scan</p><h1 class="h1">24 soul origins. One of them is yours.</h1>
+      <p class="lead">You have always operated from a specific frequency. Most people spend years trying to name it.</p>
+      <button class="btn btn-lime big" id="start">Begin</button>
+      <p class="note">7 questions · 3 minutes · your soul type revealed</p>
+    </div>
+    <div class="faces" id="faces" aria-hidden="true"></div>
+  </div></section>
+
+  <section class="screen" id="quiz" aria-live="polite"></section>
+
+  <section class="screen dark" id="email"><div class="wrap">
+    <div>
+      <h1 class="h1" tabindex="-1">Your Origin has been identified</h1>
+      <p class="lead">Enter your email to reveal your Origin and open your personal Soul Frequency preview.</p>
+      <form class="form" id="ecForm" novalidate>
+        <input type="hidden" name="access_key" value="5e2462a8-4fac-406d-bf44-c9457170c983">
+        <input type="hidden" name="subject" value="New Origin Scan Lead">
+        <input type="hidden" name="from_name" value="Origin Scan">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="soul_type" id="ecSoulType" value="">
+        <input type="email" name="email" id="ecEmail" placeholder="Your email" aria-label="Your email" autocomplete="email" required>
+        <p class="err" id="ecError" role="alert">Please enter a valid email address</p>
+        <button class="btn btn-lime big" type="submit">Reveal My Origin</button>
+      </form>
+      <p class="note">By submitting you agree to receive occasional updates. Unsubscribe anytime. <a href="https://www.starseedsoultype.com/privacy.html">Privacy Policy</a></p>
+    </div>
+    <div class="faces" id="faces2" aria-hidden="true"></div>
+  </div></section>
+
+  <section class="screen" id="result"></section>
+</main>
+<script>
+// LIVE = the real site. Anywhere else (preview) nothing is written: no leads, no statistics.
+const LIVE=/(^|\.)starseedsoultype\.com$/.test(location.hostname);
+const SITE=LIVE?'/':'https://www.starseedsoultype.com/';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Order of the options is fixed: the server reads them by place. Never reorder.
+// Her words from the live quiz.html, long dashes replaced with ordinary punctuation, every word kept (her rule, 26.11.2026). Extra questions and result texts come from the server as they are.
+const QUESTIONS=[{"id": 1, "type": "force4", "say": "This has always been yours. You were born fluent in it.", "text": "There is something you have always done naturally, so naturally that you rarely notice it yourself, while others work for years to develop it. Which of these is closest to that gift?", "opts": ["Sensing what is happening between people, before words, before explanations.", "Knowing what I want, and letting that knowing move me.", "Moving through the physical world with ease: space, resources, the body.", "Seeing how things connect: the structure beneath the surface."]}, {"id": 2, "type": "force4", "text": "When you enter a space (a conversation, a room, a collaboration), what do you most naturally bring?", "opts": ["A sense of connection: people feel seen, the room softens.", "A charge: something wakes up, people feel more alive.", "Something solid: clarity on what actually needs to happen.", "A framework: suddenly people can think more clearly."]}, {"id": 3, "type": "most_least", "say": "The soul knows where it lives.", "text": "Select the experience where you feel most fully yourself, and the one where you feel least like yourself.", "opts": ["A conversation that goes somewhere real: masks come off, something true passes between people.", "Moving toward something you genuinely want: desire leading, no apology.", "Holding something you built: solid, lasting, yours.", "A moment of clarity, when the pattern finally clicks into place."]}, {"id": 4, "type": "force4", "text": "There is one domain where you have strong opinions, where you notice things others miss, and yet, if you're honest, the world has never quite recognized you as the master here. It's the place you're still quietly proving yourself. Which one?", "opts": ["Understanding people: connection, what's really going on between them.", "Knowing what you want: living by your own desire, not others' expectations.", "The material world: resources, stability, making things work.", "Thinking clearly: seeing through complexity, getting to the truth of things."]}, {"id": 5, "type": "ranking", "say": "Your frequency is taking shape.", "text": "Rank these four deep longings from the one that pulls your soul most to the one that pulls it least.", "opts": ["To be truly known by another person: no masks, no performance.", "To want something completely, and have the courage to go after it.", "To build something real, that outlasts the moment, that you can touch.", "To see clearly, through the noise, to what is actually true."]}, {"id": 6, "type": "most_least", "text": "Select the area where you're most relieved to simply receive what you need, no involvement required. And the one where receiving someone else's version just doesn't satisfy.", "opts": ["The emotional atmosphere: connection, closeness, feeling met.", "The energy and direction: the spark, the wanting, the momentum.", "The practical foundation: stability, logistics, what's in place.", "The understanding: the framework, the meaning, how things connect."]}, {"id": 7, "type": "ranking", "text": "Rank these four from the one that feels most like home to the one that feels furthest from you.", "opts": ["Being in real contact with someone, the kind where something true actually passes between you.", "Being in motion toward something you want: desire leading, no apology.", "Having something to show for it: something built, something that lasts, something real.", "Finally seeing how it all fits together: the moment the pattern clicks."]}];
+// No long dashes on screen: result texts come in the server's plain set (quiz "full"), any dash left becomes ordinary punctuation.
+// Two texts of that set changed words; here they keep hers, only the dashes become brackets.
+const SAME={'The question of desire, what you truly want and whether you are living your actual life, runs through everything you do.':'The question of desire (what you truly want, whether you are living your actual life) runs through everything you do.',
+ 'You understand the physical world with an authority that is simply native to you: money, the body, space, time.':'You understand the physical world (money, the body, space, time) with an authority that is simply native to you.'};
+const plain=t=>{let x=String(t??'');for(const k in SAME)x=x.replace(k,SAME[k]);return x.replace(/\s*[—–]\s*/g,', ');};
+const calm=o=>server({quiz:'full',origin_name:o.name}).then(r=>({...o,...r.result,name:o.name})).catch(()=>o);
+
+const NUM={'Siriusian':20,'Pleiadian':17,'Lemurian':13,'Cassiopeian':7,'Procyonian':19,'Lyran':14,'Arcturian':4,'Orion':16,'Vegan':23,'Zeta Reticulan':24,'Epsilon Eridan':10,'Atlantean':5,'Andromedan':2,'Polarisian':18,'Nibiruan':15,'Egyptian':9,'Titanian':22,'Blue Avian':6,'Tau Cetian':21,'Aldebaran':1,'Centaurian':8,'Herculean':11,'Anunnaki':3,'Hyperborean':12};
+const slug=n=>String(n||'').toLowerCase().trim().replace(/[\s_]+/g,'-');
+const pdfLink=n=>'https://starseedsoul.gumroad.com/l/soul-'+NUM[n];
+
+// ── statistics and links with the bots: same as the live quiz.html ──
+const SB='https://pewgupxikbswhaqxjrwk.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBld2d1cHhpa2Jzd2hhcXhqcndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyNjY0MTEsImV4cCI6MjA5MDg0MjQxMX0.rQIz0R_4Oz6VqHgSvjx9YAtF8BojdcMU7RcqDiVP1NU';
+const sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
+const params=new URLSearchParams(location.search);
+const tg=params.get('tg')||'', oli=params.get('oli')||'';
+function ev(n){if(LIVE&&window.fbq)fbq('trackCustom',n,{page:location.pathname});}
+function post(path,body,auth){
+  if(!LIVE)return;
+  const h={'Content-Type':'application/json'};
+  if(auth){h.apikey=KEY;h.Authorization='Bearer '+KEY;h.Prefer='return=minimal';}
+  fetch(SB+path,{method:'POST',headers:h,body:JSON.stringify(body)}).catch(()=>{});
+}
+const track=(e,k)=>post('/rest/v1/quiz_analytics',{event:e,result_key:k||null,session_id:sid,quiz_type:'origin_scan'},true);
+const store={get(){try{return localStorage.getItem('starseedsoul_origin');}catch(e){return null;}},set(v){try{localStorage.setItem('starseedsoul_origin',v);}catch(e){}},del(){try{localStorage.removeItem('starseedsoul_origin');}catch(e){}}};
+
+async function server(body){
+  const r=await fetch(SB+'/functions/v1/origin-scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('scan');
+  return r.json();
+}
+
+// ── screens ──
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  $('bar').hidden=id!=='quiz';
+  if(id!=='quiz')$('count').textContent='';
+  window.scrollTo(0,0);
+}
+const names=Object.keys(NUM);
+['faces','faces2'].forEach(id=>{$(id).innerHTML=names.map((n,i)=>`<img src="origins/${slug(n)}-${i%2?'m':'f'}.jpg" alt="">`).join('');});
+
+let cur=0, ans={}, extra=[], picks=[], half=false, locked=false;
+const order={};
+function shuffled(q){
+  if(!order[q.id]){const a=q.opts.map((_,i)=>i);for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}order[q.id]=a;}
+  return order[q.id];
+}
+const step=()=>cur<QUESTIONS.length?QUESTIONS[cur]:extra[cur-QUESTIONS.length];
+function load(){const q=step(),a=ans[q.id];picks=q.type==='most_least'?(a?[a.most,a.least]:[]):q.type==='ranking'?(a?[...a]:[]):(a!==undefined?[a]:[]);}
+
+function render(fresh){
+  const q=step(), total=QUESTIONS.length+extra.length;
+  if(cur===3&&!half){half=true;ev('ss_origin_quiz_halfway');}
+  $('count').textContent=(cur+1)+' / '+total;
+  document.querySelector('#bar i').style.width=Math.round(cur/total*100)+'%';
+  let title=q.text, hint='';
+  if(q.type==='most_least'){
+    hint=picks.length===0?'Step 1 of 2: tap <b>most like you</b>':'Step 2 of 2: tap <b class="no">least like you</b>';
+  }
+  if(q.type==='ranking')hint='Tap them in order, starting with the one most like you';
+  const opt=i=>{
+    const at=picks.indexOf(i); let cls='',mark='';
+    if(at>=0){
+      if(q.type==='ranking'){cls='yes';mark=at+1;}
+      else if(q.type==='most_least'&&at===1){cls='no';mark='✕';}
+      else{cls='yes';mark='✓';}
+    }
+    return `<button class="opt ${cls}" data-i="${i}" aria-pressed="${at>=0}"><i>${mark}</i><span>${esc(q.opts[i])}</span></button>`;
+  };
+  const next=q.type==='ranking'&&picks.length===q.opts.length;
+  $('quiz').innerHTML=`<div class="q-in"${fresh?'':' style="animation:none"'}>${cur>=QUESTIONS.length?'<p class="q-hint">One final question</p>':''}<h1 class="q-title" tabindex="-1">${esc(title)}</h1>${hint?`<p class="q-hint">${hint}</p>`:''}
+    <div class="opts">${shuffled(q).map(opt).join('')}</div>
+    <div class="q-nav"><button class="back" ${cur||picks.length?'':'disabled'}>‹ Back</button>${next?'<button class="btn btn-lime next">Continue</button>':''}</div></div>`;
+  if(fresh){window.scrollTo(0,0);document.querySelector('.q-title').focus({preventScroll:true});}
+}
+
+$('quiz').addEventListener('click',e=>{
+  if(locked)return;
+  const b=e.target.closest('button'); if(!b)return;
+  const q=step();
+  if(b.classList.contains('again')){finish();return;}
+  if(b.classList.contains('back')){
+    if(q.type!=='force4'&&picks.length&&!b.dataset.x){delete ans[q.id];picks=[];render(false);return;}
+    if(cur>=QUESTIONS.length){extra.length=cur-QUESTIONS.length;delete ans[q.id];}
+    if(cur>0){cur--;load();if(step().type!=='force4'){delete ans[step().id];picks=[];}render(true);}
+    return;
+  }
+  if(b.classList.contains('next')){ans[q.id]=[...picks];go();return;}
+  if(!b.classList.contains('opt'))return;
+  const i=+b.dataset.i;
+  if(q.type==='ranking'){
+    const at=picks.indexOf(i);
+    if(at>=0)picks=picks.slice(0,at);else picks.push(i);
+    if(picks.length===q.opts.length-1)picks.push(q.opts.map((_,k)=>k).find(k=>!picks.includes(k)));
+    render(false);return;
+  }
+  if(q.type==='most_least'){
+    if(picks[0]===i){picks=[];render(false);return;}
+    picks.push(i);render(false);
+    if(picks.length<2)return;
+    ans[q.id]={most:picks[0],least:picks[1]};
+  }else{
+    picks=[i];ans[q.id]=i;render(false);
+    if(q.id===1)ev('ss_origin_quiz_q1_answered');
+  }
+  locked=true;setTimeout(()=>{locked=false;go();},420);
+});
+
+function go(){
+  const q=step();
+  const on=()=>{locked=false;cur++;if(cur<QUESTIONS.length+extra.length){load();render(true);}else finish();};
+  if(q.say){locked=true;$('quiz').innerHTML=`<p class="say">${esc(q.say)}</p>`;setTimeout(on,1800);}else on();
+}
+
+let busy=false;
+function finish(){
+  if(busy)return; busy=true;
+  document.querySelector('#bar i').style.width='100%';
+  $('quiz').innerHTML='<p class="say">Looking for your Origin…</p>';
+  const a={},t={};
+  QUESTIONS.forEach(q=>a[q.id]=ans[q.id]);
+  extra.forEach(q=>{if(ans[q.id]!==undefined)t[q.id]=ans[q.id];});
+  server({quiz:'scan',answers:a,tb:t}).then(r=>{
+    busy=false;
+    if(r.ask){
+      const x=[plain(r.ask.text),r.ask.opts.map(t=>String(t).replace(/\s*[—–]\s*/g,': '))];
+      extra.push({id:r.ask.id,type:'force4',text:x[0],opts:x[1]});
+      cur=QUESTIONS.length+extra.length-1;load();render(true);return;
+    }
+    origin=r.result;
+    ev('ss_origin_quiz_completed');
+    if(tg){post('/functions/v1/bot-origin-capture',{token:tg,origin:origin.name});reveal();}
+    else if(oli){post('/functions/v1/oli-origin-capture',{token:oli,origin:origin.name});reveal();}
+    else{$('ecSoulType').value=origin.name;ev('ss_origin_email_step_viewed');show('email');}
+  }).catch(()=>{busy=false;$('quiz').innerHTML='<div class="q-in center"><h1 class="q-title">The portal flickered.</h1><p class="q-hint">Please check your connection and try again.</p><button class="btn btn-lime again">Try again</button></div>';});
+}
+
+let origin=null;
+$('ecForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const mail=$('ecEmail').value.trim(), ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+  $('ecError').classList.toggle('on',!ok);
+  if(!ok)return;
+  const b=e.target.querySelector('button');b.disabled=true;
+  if(LIVE){try{await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target)});}catch(x){}}
+  post('/rest/v1/api_leads',{email:mail,source:'portal',interest:origin.name,session_id:sid},true);
+  ev('ss_origin_email_submitted');
+  b.disabled=false;reveal();
+});
+
+async function reveal(){
+  origin=await calm(origin);
+  if(LIVE&&window.fbq)fbq('track','Lead');
+  ev('ss_origin_result_viewed');
+  store.set(origin.name);
+  history.replaceState(null,'',location.pathname+'?origin='+encodeURIComponent(slug(origin.name)));
+  result();track('quiz_complete',origin.name.toLowerCase().replace(/\s+/g,'_'));
+}
+
+function result(){
+  const o=origin,s=slug(o.name);
+  $('result').innerHTML=`${oli?'<div class="oli">Oli now knows your Origin. <a href="https://twinfrequency.io/oli/">Return to Oli</a></div>':''}
+  <div class="res-hero dark"><div class="wrap">
+    <div><p class="res-eyebrow">Your origin has been revealed</p><h1 class="h1" tabindex="-1">${esc(o.name)}</h1><p class="lead">${esc(plain(o.resonance))}</p>
+      <button class="btn btn-lime big" id="share">Save your origin card</button></div>
+    <div class="pair"><img src="origins/${s}-f.jpg" alt=""><img src="origins/${s}-m.jpg" alt=""></div>
+  </div></div>
+  <div class="res-body">
+    <div class="res-card"><h2>Your Core Frequency</h2><p>${esc(plain(o.core))}</p></div>
+    <div class="res-card"><h2>Your Creative Force</h2><p>${esc(plain(o.creative))}</p></div>
+    <div class="res-card"><h2>Your Growth Edge</h2><p>${esc(plain(o.growth))}</p></div>
+  </div>
+  <div class="gift"><h2>Your full reading is ready</h2><p>An 11-page PDF written for your Origin, to keep and return to.</p><a class="btn btn-lime big" id="pdf" href="${pdfLink(o.name)}">Download your Full Origin Reading</a></div>
+  <div class="bond" id="bond">
+    <h2>Soul Bond Calculator</h2>
+    <div class="bond-row">
+      <div class="bond-f"><label for="b1">First Soul</label><select id="b1">${names.map(n=>`<option${n===o.name?' selected':''}>${n}</option>`).join('')}</select></div>
+      <span class="bond-x" aria-hidden="true">✦</span>
+      <div class="bond-f"><label for="b2">Second Soul</label><select id="b2"><option value="">Choose</option>${names.map(n=>`<option>${n}</option>`).join('')}</select></div>
+      <button class="btn btn-blue" id="bgo" disabled>Reveal Bond</button>
+    </div>
+    <p class="bond-send">Don’t know their Origin? <button type="button" id="bsend">Send them the scan</button></p>
+    <div id="bres" aria-live="polite"></div>
+  </div>
+  <div class="res-end"><button class="back" id="again">Begin again</button></div>`;
+  $('pdf').onclick=e=>{e.preventDefault();ev('ss_origin_clicked_gumroad');const u=e.currentTarget.href;setTimeout(()=>location.href=u,LIVE?600:0);};
+  $('again').onclick=()=>{ev('ss_origin_retake_clicked');store.del();history.replaceState(null,'',location.pathname);cur=0;ans={};extra=[];picks=[];half=false;origin=null;show('intro');};
+  $('share').onclick=e=>{
+    const b=e.currentTarget,u=SITE+'shares/'+s+'.png';
+    fetch(u).then(r=>r.blob()).then(x=>{const a=document.createElement('a');a.href=URL.createObjectURL(x);a.download=s+'-origin.png';a.click();b.textContent='Saved';}).catch(()=>window.open(u,'_blank'));
+  };
+  const b1=$('b1'),b2=$('b2'),bres=$('bres');
+  const clear=()=>{$('bgo').disabled=!b2.value;bres.innerHTML='';};
+  b1.onchange=b2.onchange=clear;
+  $('bgo').onclick=async()=>{
+    const x=b1.value,y=b2.value;
+    ev('ss_origin_bond_revealed');
+    try{
+      const r=await fetch(SB+'/functions/v1/origin-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bond:[x,y],set:'ss'})});
+      if(!r.ok)throw 0;
+      const v=await r.json();
+      if(b1.value!==x||b2.value!==y)return;
+      bres.innerHTML=`<div class="bond-card"><p class="bond-who">${esc(x)} ✦ ${esc(y)}</p><h3>${esc(v.verdict)}</h3><p>${esc(v.why)}</p><a class="btn btn-lime" href="${SITE}bond.html?me=${slug(x)}&with=${slug(y)}">See the full bond</a></div>`;
+      bres.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }catch(e){bres.innerHTML='<p class="bond-send">Please try again.</p>';}
+  };
+  $('bsend').onclick=async e=>{
+    const url='https://www.starseedsoultype.com/quiz.html',b=e.currentTarget;
+    ev('ss_origin_scan_shared');
+    if(navigator.share){try{await navigator.share({title:'The Origin Scan',url});return;}catch(x){if(x.name==='AbortError')return;}}
+    try{await navigator.clipboard.writeText(url);b.textContent='Link copied';}catch(x){prompt('',url);}
+  };
+  show('result');
+}
+
+$('start').onclick=()=>{ev('ss_origin_quiz_started');cur=0;load();show('quiz');render(true);};
+(function restore(){
+  const p=params.get('origin'),n=store.get();
+  if(!p&&!n)return;
+  server(p?{quiz:'scan',origin_slug:p}:{quiz:'scan',origin_name:n}).then(r=>calm(r.result)).then(o=>{origin=o;result();ev('ss_origin_result_restored');}).catch(()=>{});
+})();
+track('quiz_open');
+</script>
+</body>
+</html>
