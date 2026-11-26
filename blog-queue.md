@@ -20,14 +20,24 @@ To change the order, move lines. To skip an article, delete its line.
 - [x] is-my-twin-flame-afraid-of-the-connection | Is My Twin Flame Afraid of the Connection? | Is my twin flame afraid of the connection? / Are they confused about their feelings?
 
 ## Queue
+Broad lines (from 26.11.2026, Olesya's plan): every second article is NOT about twin flames. In those, do not use the words twin flame, do not use the connection-frequency section or the Bond CTA unless the topic is a pair; close with the Origin Scan (quiz.html). The audience: understanding yourself (shadow, growth point) and the people around you (children, parents, colleagues, clients). Never expose the typology mechanics.
+
 - [ ] why-does-this-connection-feel-so-intense | Why Does This Connection Feel So Intense? | Why can't I stop thinking about my twin flame? / Why does this connection feel so intense?
+- [ ] types-of-starseeds | Types of Starseeds: How to Recognize Yours | What are the different types of starseeds? / How do I know which starseed type I am? / What are the signs of each starseed origin?
 - [ ] twin-flame-dreams-meaning | Twin Flame Dreams: What They Mean | What do dreams about my twin flame mean?
+- [ ] what-is-my-shadow-side | What Is My Shadow Side, and How Do I See It? | What is my shadow side? / How do I find my shadow self? / Why do other people's traits annoy me so much?
 - [ ] twin-flame-telepathy | Twin Flame Telepathy: Why You Feel Them in Silence | Why do I feel connected even when we are not speaking? / Is telepathy between twin flames real?
+- [ ] why-do-i-feel-different-from-everyone | Why Do I Feel So Different From Everyone Around Me? | Why do I feel so different from everyone? / Why do I feel like I do not belong anywhere? / Is something wrong with me or am I just wired differently?
 - [ ] why-does-my-twin-flame-trigger-my-wounds | Why Does My Twin Flame Trigger My Deepest Wounds? | Is this connection helping me grow or hurting me? / Why does this relationship bring up so much pain? / Why does my twin flame trigger my deepest wounds?
+- [ ] my-child-is-nothing-like-me | My Child Is Nothing Like Me. How Do I Understand Them? | How do I understand a child who is nothing like me? / Why does my child react so differently from me? / How do I stop trying to make my child more like me?
 - [ ] how-to-stop-obsessing-over-your-twin-flame | How to Stop Obsessing Over Your Twin Flame | How do I stop obsessing over my twin flame? / How do I let go without losing the connection?
+- [ ] why-do-i-clash-with-my-mother | Why Do I Still Clash With My Mother as an Adult? | Why do I still clash with my mother as an adult? / Why does my mother trigger me so easily? / How do I make peace with a parent who is so different from me?
 - [ ] my-twin-flame-is-with-someone-else | My Twin Flame Is With Someone Else | Is my twin flame in a relationship with someone else?
+- [ ] why-does-one-colleague-drain-me | Why Does One Colleague Drain Me and Another Energize Me? | Why do some people at work drain my energy? / Why do I click with some colleagues and not others? / How do I work with a boss who is completely different from me?
 - [ ] one-sided-twin-flame-connection | Can a Twin Flame Connection Be One Sided? | Can my twin flame feel the connection if they do not believe in twin flames? / Can someone be your twin flame if the feelings are not mutual? / Can a twin flame connection be one sided?
+- [ ] how-to-know-what-to-work-on-in-yourself | How to Know What to Work On in Yourself | How do I know what to work on in myself? / What is my growth point? / Why do I keep hitting the same wall in life?
 - [ ] intuition-or-wishful-thinking | Intuition or Wishful Thinking? | Is this love, attachment, obsession, or limerence? / Am I romanticizing the connection? / How do I tell the difference between intuition and wishful thinking?
+- [ ] why-some-clients-feel-easy-and-others-exhausting | Why Some Clients Feel Easy and Others Exhausting | Why do some clients drain me? / Why do I click with some clients and not others? / How can coaches and therapists understand clients faster?
 - [ ] peaceful-with-them-anxious-without-them | Peaceful With Them, Anxious Without Them | Why do I feel peaceful with them and anxious without them?
 - [ ] why-does-this-connection-feel-familiar | Why Does This Connection Feel So Familiar, and Why Now? | Why does this connection feel familiar? / Why did we meet at this particular time in our lives?
 - [ ] what-is-my-twin-flame-teaching-me | What Is My Twin Flame Teaching Me? | What is this connection trying to teach me? / What am I supposed to learn from my twin flame?
