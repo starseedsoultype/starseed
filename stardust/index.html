@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E2A4D">
+<title>We Are Stardust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1F5FAE;--deep:#0E2A4D;--deeper:#081B33;--sky:#5DB4E8;--ice:#9DD3F5;--ice-soft:#CFE6F7;--bg-soft:#EEF6FC;
+  --lime:#AFFC41;--lime-ink:#24400A;--lime-l:#C2EE7C;--mint:#7FDCC4;--white:#fff;
+  --font:"Advent Pro",-apple-system,BlinkMacSystemFont,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ratio:0.6364;--ease:cubic-bezier(.215,.61,.355,1);--slow:1.1s;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);color:var(--white);background:radial-gradient(120% 80% at 50% 0%,#163C68 0%,var(--deep) 45%,var(--deeper) 100%);font-size:19px;font-weight:300;letter-spacing:.02em;line-height:1.45;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block;max-width:100%;-webkit-user-drag:none;pointer-events:none}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 56px) 16px calc(env(safe-area-inset-bottom) + 20px)}
+.screen.on{display:flex}
+@keyframes enter{from{opacity:0;transform:translateY(18px) scale(.985);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* stars in the sky */
+#sky{position:fixed;inset:0;pointer-events:none;z-index:0}
+.screen,.overlay{z-index:2}
+
+/* top bar */
+.top{position:fixed;top:calc(env(safe-area-inset-top) + 12px);left:16px;right:16px;display:flex;justify-content:space-between;align-items:center;z-index:30;pointer-events:none}
+.top>*{pointer-events:auto}
+.lang{display:flex;border:1px solid rgba(157,211,245,.4);border-radius:20px;overflow:hidden;font-size:13px;font-weight:600;letter-spacing:.06em}
+.lang button{padding:6px 12px;color:var(--ice)}
+.lang button.on{background:var(--ice);color:var(--deep)}
+.close{width:38px;height:38px;border-radius:50%;background:rgba(8,27,51,.6);border:1px solid rgba(157,211,245,.35);font-size:20px;line-height:36px;color:var(--ice);visibility:hidden}
+.close.on{visibility:visible}
+
+.btn{display:inline-block;font-size:17px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:14px 38px;border-radius:999px;background:var(--lime);color:var(--lime-ink);box-shadow:0 0 0 1px rgba(175,252,65,.4),0 10px 34px -10px rgba(175,252,65,.55);transition:transform .5s var(--ease),opacity .5s var(--ease),box-shadow .5s var(--ease)}
+.btn:active{transform:scale(.97)}
+@media (hover:hover){.btn:hover{box-shadow:0 0 0 1px rgba(175,252,65,.6),0 14px 44px -8px rgba(175,252,65,.7)}}
+.btn[disabled]{opacity:.35}
+.btn-ghost{background:transparent;color:var(--ice);border:1px solid rgba(157,211,245,.5);box-shadow:none;padding:13px 32px}
+.small-link{font-size:14px;color:var(--ice);text-decoration:underline;text-underline-offset:3px;opacity:.8}
+
+/* welcome */
+#welcome{justify-content:center;text-align:center;gap:22px}
+.title{font-size:clamp(40px,11vw,64px);font-weight:200;line-height:1;letter-spacing:.04em;text-transform:uppercase}
+.title b{display:block;font-weight:500;color:var(--lime);letter-spacing:.06em;margin-top:6px}
+.sub{color:var(--ice-soft);font-size:20px;line-height:1.4;max-width:380px}
+.name{width:min(300px,100%);padding:14px 16px;border-radius:10px;border:1px solid rgba(157,211,245,.4);background:rgba(8,27,51,.5);color:#fff;font-size:17px;text-align:center;font-family:inherit;user-select:text;-webkit-user-select:text}
+.name::placeholder{color:rgba(207,230,247,.5)}
+
+/* tutorial */
+#tut{padding-left:0;padding-right:0}
+.tut-top{display:flex;gap:6px;width:calc(100% - 32px);max-width:520px;margin-top:6px}
+.tut-top i{flex:1;height:3px;border-radius:2px;background:rgba(157,211,245,.22);overflow:hidden}
+.tut-top b{display:block;height:100%;width:0;background:var(--lime);box-shadow:0 0 8px rgba(175,252,65,.8)}
+.tut-top i.done b{width:100%}
+.tut-skip{font-size:15px;color:var(--ice);opacity:.7;letter-spacing:.06em;margin-left:18px}
+#howto{justify-content:center;text-align:center;gap:28px}
+#howto h2{font-size:clamp(34px,9vw,52px);font-weight:200;letter-spacing:.12em;text-transform:uppercase}
+.slides{flex:1;width:100%;position:relative;touch-action:pan-y}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;gap:26px}
+.slide .num{font-size:14px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--sky)}
+.blink{font-style:normal;color:var(--lime);animation:blink 3.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.slide p{font-size:clamp(22px,6vw,30px);font-weight:300;line-height:1.3;letter-spacing:.02em;max-width:520px}
+.slide p.long{font-size:clamp(19px,5vw,25px)}
+.slide .ln{display:block}.slide .gap{display:block;height:.7em}
+.slide .mini{width:min(34vw,120px,18vh);aspect-ratio:var(--ratio);border-radius:8px;overflow:hidden;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+.slide .mini img{width:100%;height:100%;object-fit:cover}
+.dots{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(157,211,245,.35);transition:background .2s,transform .2s}
+.dots i.on{background:var(--lime);transform:scale(1.25)}
+.tut-foot{height:64px;display:flex;align-items:center;justify-content:center}
+.start{font-size:22px;letter-spacing:.08em;text-transform:none;padding:14px 44px;position:relative}
+.start b{font-weight:800}
+.start span{font-weight:400;font-size:.8em}
+.burst{position:fixed;pointer-events:none;color:var(--lime);font-size:18px;z-index:99;margin:-.5em 0 0 -.5em;text-shadow:0 0 10px rgba(175,252,65,.7)}
+
+/* table */
+#table{justify-content:center;gap:14px}
+.table-hint{font-size:18px;letter-spacing:.06em;color:var(--ice-soft);text-align:center;min-height:1.5em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(100%,calc((100dvh - 250px) * var(--ratio)),440px)}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+.slot .face{width:100%;aspect-ratio:var(--ratio);border-radius:9px;overflow:hidden;box-shadow:0 10px 26px -12px rgba(0,0,0,.7);transition:filter .9s var(--ease),opacity .9s var(--ease),box-shadow .9s var(--ease)}
+.slot .face img{width:100%;height:100%;object-fit:cover}
+.slot label{font-size:14px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--ice)}
+.slot.sleep .face{filter:saturate(.4) brightness(.6);opacity:.7}
+.slot.sleep label{opacity:.5}
+.slot.now .face{box-shadow:0 0 0 2px var(--lime),0 0 26px 2px rgba(175,252,65,.35);animation:glow 3.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 2px var(--lime),0 0 40px 6px rgba(175,252,65,.5)}}
+.slot.wait .face{opacity:.55}
+.slot .note{position:absolute;inset:auto 6px 34px;font-size:12px;line-height:1.3;text-align:center;color:var(--white);background:rgba(8,27,51,.75);border-radius:6px;padding:6px}
+.table-foot{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:60px}
+
+/* overlays */
+.overlay{position:fixed;inset:0;display:none;background:rgba(8,27,51,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:20;flex-direction:column;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 60px) 16px calc(env(safe-area-inset-bottom) + 18px);overflow:hidden}
+.overlay.on{display:flex}
+
+/* a card that can flip from its back */
+.flip{position:relative;aspect-ratio:var(--ratio);perspective:1400px}
+.flip .in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.65,0,.35,1)}
+.flip.open .in{transform:rotateY(180deg)}
+.flip .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px -18px rgba(0,0,0,.8)}
+.flip .side img{width:100%;height:100%;object-fit:cover}
+.flip .front{transform:rotateY(180deg)}
+
+/* hero: question */
+#heroAsk .flip{height:min(56dvh,calc((100vw - 32px) / var(--ratio)))}
+.ask{margin-top:18px;text-align:center}
+.ask h2{font-size:clamp(22px,6vw,28px);font-weight:300;letter-spacing:.06em}
+.fan{position:relative;width:340px;height:110px;margin:6px auto 0}
+.fan svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.fan g{--c:#C2EE7C;fill:none;stroke:var(--c);stroke-width:1}
+.fan g.no{--c:#7FDCC4}
+.fan .arc{stroke:rgba(157,211,245,.3);fill:none}
+.fan .frame{stroke-opacity:.8}.fan .link{stroke-opacity:.65}.fan .echo{stroke-width:.8;stroke-opacity:.4}
+.fan .halo{stroke-opacity:.7;fill:var(--c);fill-opacity:.08}
+.fan .tip,.fan .dot{fill:var(--c);stroke:none}
+.hex{--c:#C2EE7C;position:absolute;top:56px;height:1.75em;line-height:1.75em;font-size:20px;padding:0 1.1em 0 1.75em;font-family:-apple-system,BlinkMacSystemFont,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:400;letter-spacing:0;color:#fff;white-space:nowrap;background:rgba(14,42,77,.55);background:color-mix(in srgb,var(--c) 24%,rgba(14,42,77,.7));clip-path:polygon(.735em 0,calc(100% - .735em) 0,100% 50%,calc(100% - .735em) 100%,.735em 100%,0 50%);transition:background .5s var(--ease),color .5s var(--ease)}
+.hex::after{content:"\203A";margin-left:.3em}
+.hex:hover,.hex:active,.hex:focus-visible{background:var(--c);color:var(--deep)}
+.hex.yes{left:0}.hex.no{--c:#7FDCC4;right:0}
+
+/* hero picker */
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:70dvh;background:rgba(11,35,66,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid rgba(157,211,245,.25);border-radius:18px 18px 0 0;padding:14px 16px calc(env(safe-area-inset-bottom) + 18px);transform:translateY(105%);transition:transform 1s var(--ease);z-index:25;overflow-y:auto}
+.sheet.on{transform:none}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:rgba(157,211,245,.35);margin:0 auto 12px}
+.sheet h3{font-size:16px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--ice);text-align:center;margin-bottom:14px}
+.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px;max-width:640px;margin:0 auto}
+.pick{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--ice-soft)}
+.pick .face{width:100%;aspect-ratio:var(--ratio);border-radius:7px;overflow:hidden;border:2px solid transparent;transition:border-color .2s}
+.pick .face img{width:100%;height:100%;object-fit:cover}
+.pick:active .face{border-color:var(--lime)}
+
+/* full-screen card view (hero / situation / resource) */
+#view{justify-content:flex-start;padding-top:calc(env(safe-area-inset-top) + 60px)}
+.viewbox{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;touch-action:none}
+.vcard{position:relative;height:100%;max-height:calc((100vw - 32px) / var(--ratio));aspect-ratio:var(--ratio);transform-origin:50% 0;transition:transform 1s var(--ease)}
+.vcard .rot{position:absolute;inset:0;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -20px rgba(0,0,0,.85);transition:transform 1.1s var(--ease)}
+.vcard .rot img{width:100%;height:100%;object-fit:cover}
+.vcard.turn .rot{transform:rotate(180deg)}
+.vcard.bounce{animation:bounce 1.6s var(--ease) .6s 1}
+@keyframes bounce{0%,100%{translate:0 0}35%{translate:0 -18px}65%{translate:0 0}82%{translate:0 -5px}}
+.tap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:lowercase;color:var(--lime);padding:5px 10px 5px 14px;border-radius:12px;background:rgba(8,27,51,.55);opacity:0;transition:opacity .5s;pointer-events:none}
+.tap.on{opacity:1;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+.desc{position:absolute;left:0;right:0;bottom:0;padding:18px 22px calc(env(safe-area-inset-bottom) + 22px);background:linear-gradient(transparent,rgba(8,27,51,.96) 18%);transform:translateY(100%);transition:transform 1s var(--ease);max-width:640px;margin:0 auto;touch-action:none;padding-bottom:calc(env(safe-area-inset-bottom) + 90px)}
+.desc.on{transform:none}
+.desc h4{font-size:26px;font-weight:400;letter-spacing:.08em;color:var(--lime);margin-bottom:8px}
+.desc p{font-size:19px;font-weight:300;line-height:1.55;color:var(--ice-soft)}
+.view-foot{position:relative;z-index:3;padding-top:10px}
+.swipe-hint{cursor:pointer;height:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ice);opacity:.7;letter-spacing:.04em}
+.swipe-hint::before{content:"";width:9px;height:9px;border-left:1.5px solid currentColor;border-top:1.5px solid currentColor;transform:rotate(45deg);margin-right:10px;margin-top:5px}
+.swipe-hint.down::before{transform:rotate(225deg);margin-top:-5px}
+
+/* situations carousel */
+#sitPick{padding-left:0;padding-right:0;justify-content:space-between}
+.reel{flex:1;width:100%;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:center}
+.reel::-webkit-scrollbar{display:none}
+.reel .it{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;height:100%;padding:0 16px}
+.reel .it .c{height:100%;max-height:calc((100vw - 32px) / var(--ratio));aspect-ratio:var(--ratio);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -20px rgba(0,0,0,.85)}
+.reel .it img{width:100%;height:100%;object-fit:cover}
+.arr{position:absolute;top:50%;width:46px;height:46px;margin-top:-50px;border-radius:50%;background:rgba(8,27,51,.7);border:1px solid rgba(157,211,245,.4);color:var(--ice);font-size:24px;line-height:42px;display:none;z-index:3}
+.arr.l{left:max(12px,calc(50% - 300px))}.arr.r{right:max(12px,calc(50% - 300px))}
+@media (hover:hover) and (pointer:fine){.arr{display:block}}
+.reel-foot{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:12px}
+.count{font-size:13px;color:var(--ice);letter-spacing:.08em}
+
+/* resources */
+#resPick{gap:18px}
+.pair{display:flex;gap:14px;justify-content:center;width:100%}
+.pair .col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pair .flip{height:min(52dvh,calc((50vw - 24px) / var(--ratio)))}
+.pair .btn{font-size:13px;padding:12px 18px;visibility:hidden}
+.pair.ready .btn{visibility:visible}
+.res-hint{font-size:16px;color:var(--ice-soft);text-align:center;max-width:360px;min-height:3em}
+
+/* gift */
+#giftOut{gap:14px;overflow-y:auto;justify-content:flex-start}
+.gift-row{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+.gift-card{height:min(30dvh,220px);aspect-ratio:var(--ratio);border-radius:10px;overflow:hidden;box-shadow:0 14px 30px -14px #000}
+.gift-card img{width:100%;height:100%;object-fit:cover}
+.qr{background:#fff;border-radius:12px;padding:10px;width:min(30dvh,220px);aspect-ratio:1}
+.qr svg{width:100%;height:100%;display:block}
+.gift-h{font-size:clamp(20px,5.4vw,24px);font-weight:300;text-align:center}
+.gift-h small{display:block;font-size:15px;color:var(--ice);margin-top:4px}
+.gift-p{font-size:15px;color:var(--ice-soft);text-align:center;max-width:360px}
+.code{font-size:22px;font-weight:700;letter-spacing:.18em;color:var(--lime)}
+.share-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* received */
+#giftIn{gap:18px;text-align:center}
+#giftIn .flip{height:min(52dvh,calc((100vw - 64px) / var(--ratio)))}
+.code-in{display:flex;gap:8px;justify-content:center}
+.code-in input{width:150px;padding:12px;border-radius:10px;border:1px solid rgba(157,211,245,.4);background:rgba(8,27,51,.5);color:#fff;font-size:18px;text-align:center;letter-spacing:.12em;font-family:inherit;text-transform:uppercase;user-select:text;-webkit-user-select:text}
+
+/* story */
+#story{gap:14px;justify-content:center}
+.story-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(100%,calc((100dvh - 230px) * var(--ratio) * 4 + 30px),760px)}
+.story-grid .c{display:flex;flex-direction:column;align-items:center;gap:6px}
+.story-grid .face{width:100%;aspect-ratio:var(--ratio);border-radius:8px;overflow:hidden;box-shadow:0 12px 30px -14px #000}
+.story-grid .face img{width:100%;height:100%;object-fit:cover}
+.story-grid label{font-size:13px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ice)}
+@media (max-aspect-ratio:3/4){.story-grid{grid-template-columns:1fr 1fr;width:min(100%,calc((100dvh - 360px) * var(--ratio) + 10px),440px)}}
+.story-h{font-size:clamp(22px,6vw,30px);font-weight:300;text-align:center}
+.story-foot{display:flex;flex-direction:column;align-items:center;gap:10px}
+.scan-link{font-size:15px;color:var(--ice);text-align:center}
+.scan-link a{color:var(--lime)}
+
+/* long texts in the home-page font, Advent Pro stays for titles, buttons, labels */
+.sub,.slide p,.desc p,.gift-p,.res-hint,.scan-link,.name,.code-in input,.toast{font-family:-apple-system,BlinkMacSystemFont,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;letter-spacing:0}
+.slide p{font-size:clamp(19px,5vw,24px);font-weight:300;line-height:1.4}
+.slide p.long{font-size:clamp(16px,4.3vw,20px)}
+.sub{font-size:17px;font-weight:300}
+.desc p{font-size:17px;line-height:1.55}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translate(-50%,40px);background:var(--ice);color:var(--deep);font-size:15px;padding:12px 18px;border-radius:10px;opacity:0;transition:all .35s;z-index:100;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+
+<div class="top">
+  <button class="close" id="closeBtn" aria-label="Close">✕</button>
+  <div class="lang"><button data-l="ru">RU</button><button data-l="en">EN</button></div>
+</div>
+
+<!-- 1. welcome -->
+<section class="screen" id="welcome">
+  <h1 class="title" data-t="title"></h1>
+  <p class="sub" data-t="welcomeSub"></p>
+  <input class="name" id="nameIn" maxlength="24" autocomplete="given-name" data-ph="namePh">
+  <button class="btn" id="welcomeGo" data-t="next"></button>
+</section>
+
+<!-- 2. how to play -->
+<section class="screen" id="howto">
+  <h2 data-t="howH"></h2>
+  <button class="btn" id="howGo" data-t="howGo"></button>
+  <button class="small-link" id="howSkip" data-t="howSkip"></button>
+</section>
+
+<!-- 3. tutorial -->
+<section class="screen" id="tut">
+  <div class="tut-top" id="tutTop"></div>
+  <div class="slides" id="slides"></div>
+  <div class="tut-foot" id="tutFoot"></div>
+</section>
+
+<!-- 3. table -->
+<section class="screen" id="table">
+  <p class="table-hint" id="tableHint"></p>
+  <div class="grid" id="grid"></div>
+  <div class="table-foot" id="tableFoot"></div>
+</section>
+
+<!-- hero: back + question -->
+<div class="overlay" id="heroAsk">
+  <div class="flip" id="heroFlip"><div class="in"><div class="side back"><img src="img/back/hero.webp" alt=""></div><div class="side front"><img alt=""></div></div></div>
+  <div class="ask" id="askBox">
+    <h2 data-t="knowType"></h2>
+    <div class="fan">
+      <svg id="fanSvg"><path class="arc"/><g class="yes"><path class="link"/><path class="frame"/><path class="echo"/><path class="tip"/><circle class="halo"/><circle class="dot"/></g><g class="no"><path class="link"/><path class="frame"/><path class="echo"/><path class="tip"/><circle class="halo"/><circle class="dot"/></g></svg>
+      <button class="hex yes" id="yesBtn" data-t="yes"></button>
+      <button class="hex no" id="noBtn" data-t="no"></button>
+    </div>
+  </div>
+</div>
+<div class="sheet" id="picker"><div class="grab"></div><h3 data-t="pickHero"></h3><div class="picks" id="picks"></div></div>
+
+<!-- full-screen card view -->
+<div class="overlay" id="view">
+  <div class="viewbox" id="viewbox">
+    <div class="vcard" id="vcard"><div class="rot"><img id="vimg" alt=""></div><span class="tap" id="tapHint">tap</span></div>
+  </div>
+  <div class="swipe-hint" id="swipeHint"></div>
+  <div class="desc" id="desc"><h4 id="descH"></h4><p id="descP"></p></div>
+  <div class="view-foot"><button class="btn" id="viewNext" data-t="giftOk"></button></div>
+</div>
+
+<!-- situations -->
+<div class="overlay" id="sitPick">
+  <div class="reel" id="reel"></div>
+  <button class="arr l" id="arrL" aria-label="Previous">‹</button><button class="arr r" id="arrR" aria-label="Next">›</button>
+  <div class="reel-foot"><span class="count" id="count"></span><button class="btn" id="sitChoose" data-t="thisMine"></button></div>
+</div>
+
+<!-- resources -->
+<div class="overlay" id="resPick">
+  <p class="res-hint" id="resHint"></p>
+  <div class="pair" id="pair"></div>
+</div>
+
+<!-- gift: give -->
+<div class="overlay" id="giftOut">
+  <h2 class="gift-h" data-t="giftH"></h2>
+  <div class="gift-row"><div class="gift-card"><img id="giftImg" alt=""></div><div class="qr" id="qr"></div></div>
+  <p class="gift-p" data-t="giftP"></p>
+  <div class="share-row"><button class="btn btn-ghost" id="shareBtn" data-t="sendLink"></button></div>
+  <p class="gift-p"><span data-t="orCode"></span><br><span class="code" id="codeOut"></span></p>
+  <button class="btn" id="givenBtn" data-t="given"></button>
+</div>
+
+<!-- gift: receive -->
+<div class="overlay" id="giftIn">
+  <h2 class="gift-h" id="giftInH"></h2>
+  <div class="flip" id="giftInFlip"><div class="in"><div class="side back"><img src="img/back/res.webp" alt=""></div><div class="side front"><img alt=""></div></div></div>
+  <div id="giftInBody"></div>
+</div>
+
+<!-- story -->
+<section class="screen" id="story">
+  <h2 class="story-h" data-t="storyH"></h2>
+  <div class="story-grid" id="storyGrid"></div>
+  <div class="story-foot">
+    <button class="btn" id="saveBtn" data-t="save"></button>
+    <p class="scan-link"><span data-t="scanLine"></span> <a id="scanA" target="_blank" rel="noopener"></a></p>
+    <button class="small-link" id="backTable" data-t="toTable"></button>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* ---------- data ---------- */
+const HEROES={"siriusian": {"ru": "Сириус", "en": "Siriusian", "dru": "Вы словно слышите, какие звёзды тянутся друг к другу и где между ними возникла тишина. Вам естественно согревать близких, возвращать им желание двигаться и менять силу своего присутствия в зависимости от их настроения. При этом вам бывает важно услышать, что ваша забота обрела ощутимую форму и действительно помогла.", "den": "You seem to sense which stars are drawn together and where silence has grown between them. You naturally lift the spirits of those you love, adjusting your presence to the way they feel. It matters to you to hear that your care made a real, tangible difference."}, "pleiadian": {"ru": "Плеяды", "en": "Pleiadian", "dru": "Любовь в ваших руках обретает форму убежища, где каждому найдётся своё место. Вы умеете почувствовать, какая именно забота сейчас нужна близкому человеку. Даже среди самых тёплых чувств вам хочется понимать, почему всё сложилось именно так, и вы можете долго возвращаться к этому вопросу. Вас притягивают спутники, которые уверенно зовут за собой.", "den": "In your hands, love becomes a sanctuary with room for everyone. You have a gift for sensing exactly what kind of care a loved one needs. Even in the warmth of a close bond, you may keep returning to the question of why things unfolded as they did. You feel drawn to companions who confidently lead the way."}, "lemurian": {"ru": "Лемурия", "en": "Lemurian", "dru": "Стоит вам почувствовать близость, и между звёздами начинается танец. Вы умеете подхватить едва заметную искру чужого желания и помочь ей разгореться. Когда ваши собственные мысли встречают сомнение, вам хочется продолжать разговор, пока снова не почувствуете уверенность в своём понимании.", "den": "When you feel close to someone, the stars seem to begin a dance. You can catch the faintest spark of another person's desire and help it grow. When your own understanding is questioned, you want to keep talking until your thoughts feel clear and certain again."}, "cassiopeian": {"ru": "Кассиопея", "en": "Cassiopeian", "dru": "У каждого дорогого вам человека словно есть своё место в вашем созвездии. Вы можете терпеливо распутывать клубок чужих мыслей, пока собеседник сам не увидит, как всё связано. О собственных земных достижениях вам бывает сложнее судить с такой же уверенностью. Вера близких в то, что вы сумели создать, помогает вам почувствовать себя крепче.", "den": "Everyone dear to you seems to have a place in your constellation. You patiently untangle another person's thoughts until they can see how everything fits together. Judging your own tangible achievements can feel more difficult. Hearing that someone believes in what you have built helps you feel steadier."}, "procyonian": {"ru": "Прокси", "en": "Procyonian", "dru": "Ваш свет становится теплом, которое можно почувствовать кожей. Вы умеете воплощать привязанность в заботе и с лёгкостью находите для неё новую форму. Когда приходит время следовать собственному желанию, вам хочется, чтобы кто-то верил в вашу силу и разделял с вами этот порыв. Чёткое объяснение из уст человека, которому вы доверяете, приносит облегчение.", "den": "Your light becomes a warmth people can almost feel on their skin. You express affection through care and easily find new ways to offer it. When a desire of your own calls to you, having someone believe in your strength and share your excitement helps you move forward. A clear explanation from someone you trust brings relief."}, "lyran": {"ru": "Лира", "en": "Lyran", "dru": "Вы умеете находить слова для того, что происходит между двумя душами. Вы любите разговоры, которые открывают новые горизонты: вместе исследовать идеи и находить смыслы, вдохновляющие вас обоих. А когда речь заходит о вашем собственном желании, вам важно слышать, что оно имеет силу и что близкий человек готов поддержать ваше движение. Земная забота позволяет вам почувствовать себя дома.", "den": "You have a gift for putting into words what happens between two souls. You love conversations that open new horizons, where you can explore ideas together and discover meanings that inspire you both. When the desire is your own, hearing that it matters and feeling supported as you pursue it gives you courage. Practical care helps you feel at home."}, "arcturian": {"ru": "Арктур", "en": "Arcturian", "dru": "Там, где другие видят россыпь звёзд, вы уже различаете закономерность. Вам нравится оживлять открывшийся замысел, увлекать им других и вместе искать, куда он может привести. Самая тонкая часть этого путешествия начинается, когда нужно оценить, что получилось воплотить: вам важно, чтобы окружающие замечали ваш вклад. Прямое признание в любви вы принимаете с особой лёгкостью.", "den": "Where others see scattered stars, you already recognize a pattern. You enjoy bringing an insight to life, sharing the excitement and discovering where it might lead. The tender part of the journey is judging what you have managed to create, and recognition of your contribution matters. You easily receive love when it is expressed openly."}, "orion": {"ru": "Орион", "en": "Orion", "dru": "В вашем мире даже далёкая звезда занимает понятное место. Вы умеете превращать ясный замысел в живую, осязаемую форму и менять её по мере необходимости. В близости вы гораздо внимательнее к малейшим переменам: вам хочется снова и снова чувствовать, что связь остаётся взаимной.", "den": "In your world, even a distant star has a place that makes sense. You can turn a clear idea into something real and reshape it as needed. Close relationships bring out a more watchful side of you, one that wants to keep feeling that affection flows both ways."}, "vegan": {"ru": "Вега", "en": "Vegan", "dru": "Вам достаточно увидеть связь между далёкими точками, чтобы перед вами открылась целая галактика. Радость открытия становится ещё ярче, когда вы можете увлечь им другого человека и вместе дать ему движение. Даже при такой ясности мысли вам важно чувствовать живой ответ на свою привязанность. Знаки взаимности могут занимать вас гораздо дольше, чем сам поиск истины.", "den": "A connection between distant points can reveal an entire galaxy to you. Discovery becomes even more exciting when you can share it with someone and give it momentum together. With all that clarity of thought, you still care deeply about feeling affection returned. Signs of mutual love can hold your attention long after a question about the world has been answered."}, "zeta-reticulan": {"ru": "Зета Ретикули", "en": "Zeta Reticulan", "dru": "Вам легко увидеть устройство сложного мира и объяснить его себе. Встречая другую душу, вы с интересом ищете её особенный язык близости и умеете менять расстояние между вами. Собственные желания могут вызывать у вас долгий внутренний спор о том, хватит ли сил на выбранный путь. Поддержка решимости от близкого человека помогает вам доверять своему порыву.", "den": "You readily make sense of a complicated world. When you meet another soul, you enjoy discovering their unique language of closeness and adjusting the space between you. Your own desires can lead to a long inner debate about whether you have the strength to follow them. Encouragement from someone close helps you trust that impulse."}, "epsilon-eridan": {"ru": "Эпсилон Эридана", "en": "Epsilon Eridan", "dru": "Из звёздной пыли вы умеете собрать то, устройство чего вам уже ясно. Вам интересно пробовать разные способы воплощения замысла, пока он обретает нужную форму. Даже когда путь понятен, вопрос собственной решимости может ещё долго занимать вас. Душа, которая открыто дарит вам любовь, приносит ощущение покоя.", "den": "From stardust, you can build something whose design is already clear in your mind. You enjoy trying different ways to give an idea the shape it needs. Even with a clear path ahead, you may spend a long time questioning your own resolve. A soul that offers love freely brings you peace."}, "atlantean": {"ru": "Атлантида", "en": "Atlantean", "dru": "Вы способны увидеть целое там, где мир кажется раздробленным на тысячи частей. В человеческой близости вам нравится находить множество оттенков и менять рисунок общения вместе с другим. Вам бывает важно услышать, что то, чему вы придали земную форму, действительно имеет ценность. Уверенный зов спутника помогает вам выбрать направление путешествия.", "den": "You can see the whole when the world seems scattered into a thousand pieces. Human connection invites you to discover its many shades and shape the way you relate together. Hearing that something you brought into the tangible world truly has value matters to you. A companion's confident call helps you choose a direction for the journey."}, "andromedan": {"ru": "Андромеда", "en": "Andromedan", "dru": "Ваш полёт начинается в тот миг, когда вы чувствуете собственное желание. Вы сами знаете, куда вас влечёт, и с удовольствием открываете новые способы быть рядом с теми, кто вам дорог. В поисках ответов вы можете снова возвращаться к одной мысли, пока собеседник помогает вам разобраться в ней. Чья-то забота о земной стороне путешествия даёт вам свободу лететь дальше.", "den": "Your flight begins the moment you feel a desire of your own. You know where it is calling you, and you enjoy discovering new ways to stay close to those you love. In search of an answer, you may return to the same thought repeatedly while someone helps you work through it. Having someone care for the practical side of the journey gives you freedom to fly farther."}, "polarisian": {"ru": "Полярис", "en": "Polarisian", "dru": "Направление своего пути вы чувствуете раньше, чем успеваете подобрать к нему объяснение. Вам интересно исследовать звёздные тропы мысли, менять объяснения и открывать новые связи вместе с другими. Когда путешествие оставляет после себя что-то осязаемое, вам хочется услышать, что созданное вами действительно имеет вес. Открытая любовь приносит покой.", "den": "You sense your direction before you find the words to explain it. You enjoy exploring trails of thought, trying different explanations and discovering new connections with others. When your journey leaves something tangible behind, you want to hear that what you created truly carries weight. Openly expressed love brings you peace."}, "nibiruan": {"ru": "Нибиру", "en": "Nibiruan", "dru": "Ваше желание обладает силой притяжения, вокруг которой постепенно собирается новый мир. Вам нравится менять форму создаваемого, пока оно не станет продолжением вашего замысла. В любви вы замечаете малейшие перемены в ответном тепле и ищете живое подтверждение взаимности. Ясный ответ от человека, которому вы доверяете, помогает вам обрести спокойствие.", "den": "Your desire has a gravitational pull around which a new world gradually forms. You enjoy reshaping what you create until it becomes an extension of your vision. In love, you notice the slightest changes in warmth and look for ongoing signs that your affection is returned. A clear answer from someone you trust helps you find peace."}, "egyptian": {"ru": "Египет", "en": "Egyptian", "dru": "Ваша воля подобна реке, которая сама знает, к какому морю стремится. На её берегах рождаются новые идеи, и вам нравится обсуждать их, позволяя чужим мыслям менять русло разговора. Сердечная близость требует от вас совсем другого внимания: даже сильное чувство хочется постоянно ощущать во взаимном отклике.", "den": "Your will is like a river that knows which sea it is flowing toward. New ideas rise along its banks, and you enjoy discussing them, letting another person's thoughts change the course of the conversation. Closeness draws a different kind of attention from you: even a strong bond needs to feel alive through mutual affection."}, "titanian": {"ru": "Титан", "en": "Titanian", "dru": "Вы знаете, какое желание достойно вашей силы, и умеете лепить из звёздной пыли его воплощение. Само создание увлекает вас возможностью менять форму задуманного. Зато одна сложная мысль может удерживать ваше внимание надолго, и вам хочется, чтобы рядом был человек, готовый терпеливо разбирать её вместе с вами. Искренне выраженная любовь даёт ощущение принадлежности.", "den": "You know which desire deserves your strength, and you can shape its expression from stardust. The act of creating draws you in because you can keep changing the form of your vision. A single difficult thought, however, may hold your attention for a long time, and you appreciate someone willing to patiently work through it with you. Freely expressed love gives you a sense of belonging."}, "blue-avian": {"ru": "Голубые Авианы", "en": "Blue Avian", "dru": "Вы сами выбираете высоту своего полёта, а встречаясь с другими, умеете менять ритм близости и находить созвучие с каждым. Ваши земные достижения порой вызывают гораздо больше сомнений, чем направление самого пути. Вам важно слышать, что созданное вами имеет ценность и способно сохраниться. Чёткое объяснение помогает вам освободиться от лишних вопросов.", "den": "You choose the height of your own flight, while adapting the rhythm of closeness to the person you meet. Your tangible achievements can raise far more doubts than the direction of the journey itself. You want to hear that what you have created has value and can last. A clear explanation frees you from lingering questions."}, "tau-cetian": {"ru": "Тау Кита", "en": "Tau Cetian", "dru": "В вашем присутствии мир обретает плотность, и появляется ощущение, что на этой земле можно остаться. Вы умеете менять форму близости, чувствуя, какой отклик нужен другому. Когда же собственное желание требует от вас решимости, вам важно, чтобы рядом верили в вашу силу. Ясный ответ человека, которому вы доверяете, помогает обрести покой.", "den": "Around you, the world takes on substance and feels like somewhere one could stay. You can shape closeness according to the kind of response another person needs. When your own desire calls for courage, having someone believe in your strength matters. A clear answer from someone you trust helps you settle into peace."}, "aldebaran": {"ru": "Альдебаран", "en": "Aldebaran", "dru": "Вы чувствуете, из какой звёздной пыли можно создать мир, способный выдержать время. Вам нравится исследовать устройство этого мира вместе с другими, открывая всё новые способы его понять. При всей вашей уверенности в прочности созданного близость требует живого подтверждения: вам хочется чувствовать, что любовь по-прежнему взаимна. Спутник с ясным желанием помогает вам выбрать следующий путь.", "den": "You sense which stardust can become a world strong enough to endure. You enjoy exploring how that world works with others, discovering new ways to understand it. For all your certainty about what can last, closeness calls for living reassurance that love continues to flow both ways. A companion with a clear desire helps you choose the next path."}, "centaurian": {"ru": "Центавр", "en": "Centaurian", "dru": "Вы умеете возводить своды, под которыми жизнь может спокойно продолжаться. Разобраться в устройстве мира вместе с другим человеком для вас настоящее удовольствие, и вы охотно меняете угол зрения в таком поиске. Собственная решимость порой кажется вам более хрупкой, чем всё созданное вашими руками. Слова поддержки помогают вам отважиться на то, чего вы хотите.", "den": "You know how to build arches beneath which life can safely unfold. Exploring how the world works with another person brings you joy, and you readily shift your perspective along the way. Your own resolve can sometimes feel more fragile than anything you have built. Encouragement helps you find the courage to pursue what you want."}, "herculean": {"ru": "Геркулес", "en": "Herculean", "dru": "Ваш дар позволяет давать форму тому, что должно устоять, а чужое вдохновение вы умеете превращать в совместное движение. В любви вам хочется замечать ответ на каждую волну своего тепла и чувствовать продолжение этой связи. Когда вокруг возникает путаница, чьё-то ясное объяснение помогает вам обрести спокойствие.", "den": "Your gift is giving shape to what needs to endure, and you know how to turn another person's inspiration into shared momentum. In love, you want to feel a response to each wave of warmth you offer and sense the bond continuing. When things grow confusing, someone's clear explanation helps you find peace."}, "anunnaki": {"ru": "Ануннаки", "en": "Anunnaki", "dru": "Там, где вы создаёте мир, у него появляется прочное основание и простор для движения. Вам нравится пробуждать чужие желания, подхватывать их и вместе искать, куда они ведут. С собственными мыслями вы можете обращаться гораздо осторожнее, снова возвращаясь к ним в разговоре и проверяя, верно ли поняли происходящее. Открыто предложенная любовь приносит вам радость.", "den": "Where you create a world, it gains a lasting foundation and room for movement. You enjoy awakening another person's desires, catching their momentum and discovering where they lead together. You may approach your own thoughts with greater caution, returning to them in conversation to check your understanding. Love offered openly brings you joy."}, "hyperborean": {"ru": "Гиперборея", "en": "Hyperborean", "dru": "Ваше присутствие подобно тихому острову среди звёзд, где жизнь обретает устойчивость. Вы с удовольствием ищете особенную форму близости с каждой душой, подстраивая её под того, кто рядом. Бывает, одна мысль надолго удерживает вас, и вам важно, чтобы собеседник всерьёз включался в ваш поиск понимания. Вам легко отправиться в путь со спутником, который уверенно знает, куда хочет идти.", "den": "Your presence is like a quiet island among the stars, where life finds stability. You enjoy discovering a unique form of closeness with each soul, adapting it to the person beside you. Sometimes a single thought holds your attention for a long time, and you value someone who genuinely joins your search for understanding. You readily set out with a companion who confidently knows where they want to go."}};
+const HERO_CARDS=Object.keys(HEROES);
+const SITS=Array.from({length:29},(_,i)=>'s'+String(i+1).padStart(2,'0'));
+const RES=Array.from({length:28},(_,i)=>'r'+String(i+1).padStart(2,'0'));
+const SCAN={ru:'https://www.starseedsoultype.com/quizru.html',en:'https://www.starseedsoultype.com/quiz.html'};
+const img={hero:s=>'img/hero/'+s+'.webp',sit:s=>'img/sit/'+s+'.webp',res:s=>'img/res/'+s+'.webp',back:k=>'img/back/'+k+'.webp'};
+
+const T={
+ru:{title:'Мы —<b>звёздная пыль</b>',welcomeSub:'В тебе свет,<br>который летел сюда миллиарды лет,<br>чтобы встретиться сегодня<br>в этом круге.',namePh:'Как тебя зовут?',next:'Дальше',
+ tut:['Однажды ты воплотишься|и найдёшь себя|среди 24 звёздных.','Ещё не знаешь свой тип?|Звёзды выберут за тебя.','Тебя погрузит в игру|под названием жизнь.|Выбери ситуацию,|которая сейчас наиболее актуальна.','Ты обнаружишь силу внутри себя,|встретишь друзей,|готовых прийти на помощь,|и сам станешь таким другом|другому звёздному.||Вытяни 2 карты ресурса:|одну для себя,|другую для друга.','Эти карты - это иллюстрированное путешествие|в мир, где решение твоей ситуации|находится играючи.||Ещё бы, когда рядом другие звёзды!','Мы открываем карту,|и каждый делится тем,|что видит и чувствует.||Мы не судим, не даём советов,|не оцениваем и не критикуем,|не подсказываем.||Историю другого мы никогда|никому нигде не рассказываем.|Правило конфиденциальности.'],
+ howH:'Как играть',howGo:'Пройти обучение',howSkip:'Я уже играл(а)',tutTop:(i,n)=>'Обучение · '+i+' из '+n,skip:'Пропустить',
+ tutNum:['Круг 1 · Герой','Круг 1 · Герой','Круг 2 · Ситуация','Круг 3 · Ресурсы','Круг 4 · История','Как играем'],
+ slots:['Герой','Ситуация','Мой ресурс','Подарок'],
+ hint:['<i class="blink">Выбери карту героя</i>','Открой карту ситуации','Вытяни ресурсы','Твоя история готова'],
+ waitGift:'Тебе ещё подарят',enterCode:'Ввести код подарка',
+ knowType:'Я знаю свой звёздный тип',yes:'Да',no:'Нет',pickHero:'Выбери своего героя',
+ swipeUp:'Смахни вверх',swipeDown:'Смахни вниз',thisMine:'Это моя',
+ res1:'Открой обе карты',res2:'Одну оставь себе, другую подари',keep:'Оставляю себе',
+ giftH:'Подари эту карту',giftP:'Покажи QR тому, кому она сейчас нужнее, или отправь ссылкой.',sendLink:'Отправить ссылкой',orCode:'или продиктуй код',given:'Подарено',
+ giftFrom:n=>'Тебе подарок'+(n?'<small>Дарит: '+n+'</small>':''),giftOk:'На стол',alreadyGift:'У тебя уже есть подарок, пусть эту карту получит кто-то другой.',
+ codeH:'Тебе ещё подарят',codeP:'Если тебе продиктовали код, введи его здесь.',codeGo:'Принять',badCode:'Такого кода нет',
+ collect:'Собрать историю',storyH:'Твоя история',save:'Сохранить картинку',scanLine:'Узнай свой звёздный тип:',toTable:'Вернуться к столу',
+ newGame:'Новая игра',newGameQ:'Начать новую игру? Карты этой игры исчезнут.',
+ shareText:'Тебе звёздный подарок в игре «Мы звёздная пыль»',copied:'Ссылка скопирована',saved:'Картинка сохранена',
+ cardStory:['Герой','Ситуация','Ресурс','Подарок'],imgTitle:'Моя история'},
+en:{title:'We Are<b>Stardust</b>',welcomeSub:'Within you is a light<br>that has travelled for billions of years<br>to meet today<br>in this circle.',namePh:'Your name',next:'Next',
+ tut:['One day you will incarnate|and find yourself|among the 24 star souls.','Not sure of your type yet?|The stars will choose for you.','You will be immersed|in a game called life.|Choose the situation|that feels most relevant right now.','You will discover the strength within you,|meet friends|ready to help,|and become that friend|for another star soul.||Draw 2 resource cards:|one for yourself,|one for a friend.','These cards are an illustrated journey|into a world where the answer to your situation|is found through play.||Of course it is, with other stars beside you!','We open a card,|and each of us shares|what we see and feel.||We do not judge, give advice,|evaluate or criticise,|or prompt.||We never tell anyone, anywhere,|another person’s story.|The rule of confidentiality.'],
+ howH:'How to play',howGo:'Take the tutorial',howSkip:'I have played before',tutTop:(i,n)=>'Tutorial · '+i+' of '+n,skip:'Skip',
+ tutNum:['Round 1 · Hero','Round 1 · Hero','Round 2 · Situation','Round 3 · Resources','Round 4 · Story','How we play'],
+ slots:['Hero','Situation','My resource','Gift'],
+ hint:['<i class="blink">Choose your hero card</i>','Open the situation card','Draw your resources','Your story is ready'],
+ waitGift:'A gift is on its way',enterCode:'Enter a gift code',
+ knowType:'I know my star type',yes:'Yes',no:'No',pickHero:'Choose your hero',
+ swipeUp:'Swipe up',swipeDown:'Swipe down',thisMine:'This is mine',
+ res1:'Open both cards',res2:'Keep one, give the other',keep:'I keep this',
+ giftH:'Give this card',giftP:'Show the QR to the person who needs it most right now, or send a link.',sendLink:'Send a link',orCode:'or say the code',given:'Given',
+ giftFrom:n=>'A gift for you'+(n?'<small>From: '+n+'</small>':''),giftOk:'To the table',alreadyGift:'You already have a gift. Let someone else receive this card.',
+ codeH:'A gift is on its way',codeP:'If someone told you a code, enter it here.',codeGo:'Accept',badCode:'No such code',
+ collect:'Build the story',storyH:'Your story',save:'Save the picture',scanLine:'Discover your star type:',toTable:'Back to the table',
+ newGame:'New game',newGameQ:'Start a new game? The cards of this game will disappear.',
+ shareText:'A star gift for you in the game We Are Stardust',copied:'Link copied',saved:'Picture saved',
+ cardStory:['Hero','Situation','Resource','Gift'],imgTitle:'My story'}
+};
+
+/* ---------- state ---------- */
+const KEY='stardust-v1';
+let S=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+if(!S.lang){let q=null;try{q=new URLSearchParams(location.search).get('lang');}catch(e){}
+  S.lang=q==='en'||q==='ru'?q:((navigator.language||'').toLowerCase().startsWith('ru')?'ru':'en');}
+const t=k=>T[S.lang][k];
+const $=id=>document.getElementById(id);
+const esc=v=>String(v||'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ---------- language ---------- */
+function applyLang(){
+  document.documentElement.lang=S.lang;
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===S.lang));
+  document.querySelectorAll('[data-t]').forEach(e=>{const v=t(e.dataset.t);if(typeof v==='string')e.innerHTML=v;});
+  document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
+  buildTut();renderTable();if(cur==='story')renderStory();
+  if(viewKind==='hero')fillDesc();
+  if($('heroAsk').classList.contains('on'))requestAnimationFrame(drawFan);
+  if($('picker').classList.contains('on'))buildPicks();
+  if($('resPick').classList.contains('on'))resHint();
+}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{S.lang=b.dataset.l;save();applyLang();});
+
+/* ---------- screens ---------- */
+let cur=null;
+const G=()=>window.gsap;
+function revealIn(el){if(!G())return;const kids=[...el.children].filter(k=>k.offsetParent!==null||k.tagName==='CANVAS');
+  gsap.fromTo(kids,{y:40,opacity:0},{y:0,opacity:1,duration:.9,stagger:.09,ease:'power3.out',clearProps:'transform,opacity'});}
+function show(id,cb){
+  const old=cur&&$(cur),next=$(id);
+  const swap=()=>{document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));cur=id;if(cb)cb();revealIn(next);};
+  if(old&&old!==next&&G()){gsap.to(old,{opacity:0,y:-16,duration:.55,ease:'power2.in',onComplete:()=>{gsap.set(old,{clearProps:'opacity,transform'});swap();}});}
+  else swap();
+}
+function overlay(id,on){
+  const o=$(id);
+  if(on){o.classList.add('on');syncClose();if(G()){gsap.fromTo(o,{opacity:0},{opacity:1,duration:.7,ease:'power2.out'});
+      const kids=[...o.children].filter(k=>!k.classList.contains('desc'));gsap.set(kids,{transformPerspective:1200,transformOrigin:'50% 100%'});
+      gsap.fromTo(kids,{y:60,opacity:0,rotationX:12},{y:0,opacity:1,rotationX:0,duration:1.1,stagger:.1,ease:'power3.out',clearProps:'transform,opacity'});}
+    return;}
+  if(!o.classList.contains('on'))return;
+  if(G()){gsap.to(o,{opacity:0,duration:.5,ease:'power2.in',onComplete:()=>{o.classList.remove('on');gsap.set(o,{clearProps:'opacity'});syncClose();}});}
+  else{o.classList.remove('on');syncClose();}
+}
+function syncClose(){const any=[...document.querySelectorAll('.overlay')].some(o=>o.classList.contains('on'));$('closeBtn').classList.toggle('on',any);}
+$('viewNext').onclick=()=>$('closeBtn').onclick();
+$('closeBtn').onclick=()=>{
+  if($('picker').classList.contains('on')){$('picker').classList.remove('on');return;}
+  document.querySelectorAll('.overlay.on').forEach(o=>overlay(o.id,false));viewKind=null;renderTable();};
+function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2600);}
+
+/* ---------- welcome ---------- */
+$('nameIn').value=S.name||'';
+$('welcomeGo').onclick=()=>{S.name=$('nameIn').value.trim();save();show('howto');};
+$('howGo').onclick=()=>{tutI=0;show('tut',()=>renderSlide(0,0,true));};
+$('howSkip').onclick=()=>goTable();
+function goTable(){S.tut=1;save();show('table',()=>renderTable());setTimeout(deal,60);}
+
+/* ---------- tutorial ---------- */
+const TUT_IMG=[img.hero('pleiadian'),img.back('hero'),img.sit('s10'),img.res('r03'),null,null];
+let tutI=0,tutBusy=false;
+const slideHTML=i=>{const p=t('tut')[i],lines=p.split('|').map(l=>l?`<span class="ln">${l}</span>`:'<span class="gap"></span>').join('');
+  return `<span class="num">${t('tutNum')[i]}</span>${TUT_IMG[i]?`<div class="mini"><img src="${TUT_IMG[i]}" alt=""></div>`:''}<p class="${p.length>150?'long':''}">${lines}</p>`;};
+function buildTut(){const n=t('tut').length;$('tutTop').innerHTML=t('tut').map(()=>'<i><b></b></i>').join('');
+  if($('slides').firstChild)$('slides').firstChild.innerHTML=slideHTML(tutI);tutFoot(true);}
+function renderSlide(i,dir,first){
+  const sl=$('slides'),n=t('tut').length,old=sl.firstChild,el=document.createElement('div');
+  el.className='slide';el.innerHTML=slideHTML(i);
+  const go=()=>{if(old)old.remove();sl.appendChild(el);tutI=i;tutFoot();
+    if(G()){const k=[...el.children];gsap.fromTo(k,{x:dir*50,y:first?30:0,opacity:0},{x:0,y:0,opacity:1,duration:1,stagger:.12,ease:'power3.out',onComplete:()=>tutBusy=false});}
+    else tutBusy=false;};
+  if(old&&G()){gsap.to([...old.children],{x:-dir*50,opacity:0,duration:.5,stagger:.05,ease:'power2.in',onComplete:go});}else go();
+}
+function tutGo(d){const n=t('tut').length,i=tutI+d;if(tutBusy||i<0||i>=n)return;tutBusy=true;renderSlide(i,d);}
+function tutFoot(force){
+  const n=t('tut').length,i=tutI,last=i>=n-1,f=$('tutFoot');
+  [...$('tutTop').children].forEach((e,k)=>{e.classList.toggle('done',k<i);const b=e.firstChild;if(k===i){if(G())gsap.fromTo(b,{width:'0%'},{width:'100%',duration:1.4,ease:'power2.inOut'});else b.style.width='100%';}else if(G())gsap.set(b,{clearProps:'width'});});
+  if(!force&&f.dataset.last===String(last))return;f.dataset.last=last;
+  f.innerHTML=last?'<button class="btn start" id="startBtn"><b>STAR</b><span>t</span></button>':`<button class="btn btn-ghost" id="tutNext">${t('next')}</button><button class="tut-skip" id="tutSkip">${t('skip')}</button>`;
+  if(G())gsap.fromTo(f.children,{opacity:0,y:14},{opacity:1,y:0,duration:.8,stagger:.08,ease:'power3.out'});
+  if(last)$('startBtn').onclick=goTable;
+  else{$('tutNext').onclick=()=>tutGo(1);$('tutSkip').onclick=goTable;}
+}
+(function(){const sl=$('slides');let x0=null,y0=0;
+  sl.addEventListener('pointerdown',e=>{x0=e.clientX;y0=e.clientY;});
+  sl.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0,dy=e.clientY-y0;x0=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))tutGo(dx<0?1:-1);else if(Math.abs(dx)<10&&Math.abs(dy)<10){const r=sl.getBoundingClientRect();tutGo(e.clientX-r.left<r.width*.33?-1:1);}});
+  addEventListener('keydown',e=>{if(cur!=='tut')return;if(e.key==='ArrowRight')tutGo(1);if(e.key==='ArrowLeft')tutGo(-1);});})();
+/* ---------- table ---------- */
+function deal(){if(!G())return;const sl=$('grid').children;gsap.set(sl,{transformPerspective:1200,transformOrigin:'50% 100%'});gsap.fromTo(sl,{y:70,opacity:0,rotationX:14},{y:0,opacity:1,rotationX:0,duration:1.1,stagger:.12,ease:'power3.out',delay:.2,clearProps:'transform,opacity'});}
+function stage(){if(!S.hero)return 0;if(!S.sit)return 1;if(!S.res||!S.res.keep)return 2;return 3;}
+function renderTable(){
+  if(!$('grid'))return;
+  const st=stage(),L=t('slots');
+  const faces=[S.hero?img.hero(S.hero.slug):img.back('hero'),S.sit?img.sit(S.sit):img.back('sit'),S.res&&S.res.keep?img.res(S.res.keep):img.back('res'),S.gift?img.res(S.gift.id):img.back('res')];
+  $('grid').innerHTML=faces.map((f,i)=>{
+    let c='';if(i<3){if(i===st)c='now';else if(i>st)c='sleep';}else c=S.gift?'':'wait';
+    return `<button class="slot ${c}" data-i="${i}"><div class="face"><img src="${f}" alt=""></div><label>${L[i]}</label></button>`;}).join('');
+  $('grid').querySelectorAll('.slot').forEach(b=>b.onclick=()=>openSlot(+b.dataset.i));
+  $('tableHint').innerHTML=st===3&&S.res.given===false?t('res2'):t('hint')[st];
+  const f=$('tableFoot');
+  f.innerHTML=(st===3?`<button class="btn" id="collectBtn">${t('collect')}</button>`:'')+`<button class="small-link" id="newGame">${t('newGame')}</button>`;
+  if(st===3)$('collectBtn').onclick=()=>{show('story');renderStory();};
+  $('newGame').onclick=()=>{if(confirm(t('newGameQ'))){const l=S.lang,n=S.name;S={lang:l,name:n,tut:1};save();renderTable();}};
+}
+function openSlot(i){
+  const st=stage();
+  if(i===0){if(S.hero)openView('hero');else if(st===0)heroStart();}
+  if(i===1){if(S.sit)openView('sit');else if(st===1)sitStart();}
+  if(i===2){if(S.res&&S.res.keep){if(!S.res.given)giftStart();else openView('res');}else if(st===2)resStart();}
+  if(i===3){if(S.gift)openView('gift');else codeEntry();}
+}
+
+/* ---------- round 1: hero ---------- */
+function heroStart(){
+  const f=$('heroFlip');f.classList.remove('open');$('askBox').style.visibility='visible';
+  overlay('heroAsk',true);requestAnimationFrame(drawFan);if(document.fonts)document.fonts.ready.then(drawFan);
+}
+function drawFan(){
+  const f=document.querySelector('.fan'),svg=$('fanSvg');if(!f.offsetWidth)return;
+  const W=f.offsetWidth,cx=W/2,arcY=6,R=150;
+  svg.querySelector('.arc').setAttribute('d',`M${cx-110} ${arcY} Q${cx} ${arcY+44} ${cx+110} ${arcY}`);
+  [['yes',$('yesBtn'),-1],['no',$('noBtn'),1]].forEach(([k,b,side])=>{
+    const g=svg.querySelector('g.'+k),set=(q,o)=>{const e=g.querySelector(q);for(const a in o)e.setAttribute(a,o[a]);};
+    const fs=parseFloat(getComputedStyle(b).fontSize),PH=fs*1.75,l=b.offsetLeft,r=l+b.offsetWidth,t=b.offsetTop,bt=t+PH,y=t+PH/2,m=PH*.42,e=fs*.24,u=fs*1.2;
+    const dx=cx+side*34,dy=arcY+20;
+    set('.frame',{d:`M${l+m} ${t}L${r-m} ${t}L${r} ${y}L${r-m} ${bt}L${l+m} ${bt}L${l} ${y}Z`});
+    set('.echo',{d:`M${l-e} ${y}L${l+m-e*.6} ${t-e}L${l+m+u} ${t-e}M${r-m+e*.6} ${bt+e}L${r-m-u} ${bt+e}`});
+    set('.tip',{d:`M${l+fs*.3} ${y}L${l+m+fs*.16} ${y-PH*.28}L${l+m+fs*.16} ${y+PH*.28}Z`});
+    const ex=side<0?r:l;set('.link',{d:`M${ex} ${y}L${ex+(dx-ex)*.42} ${y}L${dx} ${dy}`});
+    set('.halo',{cx:dx,cy:dy,r:7});set('.dot',{cx:dx,cy:dy,r:3.2});
+  });
+}
+addEventListener('resize',drawFan);
+$('noBtn').onclick=()=>chooseHero(rnd(HERO_CARDS));
+$('yesBtn').onclick=()=>{buildPicks();$('picker').classList.add('on');};
+function buildPicks(){
+  $('picks').innerHTML=HERO_CARDS.map(s=>`<button class="pick" data-s="${s}"><div class="face"><img src="${img.hero(s)}" alt=""></div>${S.lang==='ru'?HEROES[s].ru:HEROES[s].en}</button>`).join('');
+  $('picks').querySelectorAll('.pick').forEach(b=>b.onclick=()=>{$('picker').classList.remove('on');chooseHero(b.dataset.s);});
+}
+function chooseHero(slug){
+  S.hero={slug,turn:false};save();
+  $('askBox').style.visibility='hidden';
+  const f=$('heroFlip');f.querySelector('.front img').src=img.hero(slug);
+  requestAnimationFrame(()=>f.classList.add('open'));
+  setTimeout(()=>{$('heroAsk').classList.remove('on');openView('hero',true);},1500);
+}
+
+/* ---------- full-screen view ---------- */
+let viewKind=null,raised=false;
+function openView(kind,first){
+  viewKind=kind;raised=false;
+  const v=$('vcard'),src={hero:()=>img.hero(S.hero.slug),sit:()=>img.sit(S.sit),res:()=>img.res(S.res.keep),gift:()=>img.res(S.gift.id)}[kind]();
+  $('vimg').src=src;v.style.transform='';$('desc').classList.remove('on');
+  v.classList.toggle('turn',kind==='hero'&&!!S.hero.turn);
+  const isHero=kind==='hero';
+  $('swipeHint').style.visibility=isHero?'visible':'hidden';
+  $('swipeHint').className='swipe-hint';$('swipeHint').textContent=t('swipeUp');
+  $('tapHint').classList.toggle('on',isHero&&!S.hero.tapped);
+  if(isHero){fillDesc();v.classList.remove('bounce');if(first||!S.hero.tapped){void v.offsetWidth;v.classList.add('bounce');}}
+  overlay('view',true);
+}
+function fillDesc(){if(!S.hero)return;const h=HEROES[S.hero.slug];$('descH').textContent=S.lang==='ru'?h.ru:h.en;$('descP').textContent=S.lang==='ru'?h.dru:h.den;}
+function setRaised(on){
+  if(viewKind!=='hero')return;raised=on;
+  const v=$('vcard'),bh=$('viewbox').offsetHeight;
+  if(on){const sc=Math.min(.55,bh*.46/v.offsetHeight);v.style.transform=`translateY(${-v.offsetTop}px) scale(${sc})`;}
+  else v.style.transform='';
+  $('desc').classList.toggle('on',on);
+  const sh=$('swipeHint');sh.textContent=on?t('swipeDown'):t('swipeUp');sh.classList.toggle('down',on);
+}
+function turnHero(){
+  const v=$('vcard');S.hero.turn=!S.hero.turn;S.hero.tapped=1;save();
+  v.classList.toggle('turn',S.hero.turn);$('tapHint').classList.remove('on');
+}
+(function gestures(){
+  const box=$('viewbox');let sx=0,sy=0,st=0,down=false;
+  box.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;st=Date.now();});
+  box.addEventListener('pointerup',e=>{
+    if(!down)return;down=false;const dx=e.clientX-sx,dy=e.clientY-sy;
+    if(Math.abs(dy)>40&&Math.abs(dy)>Math.abs(dx)){setRaised(dy<0);return;}
+    if(Math.abs(dx)<10&&Math.abs(dy)<10&&viewKind==='hero'){
+      const r=$('vcard').getBoundingClientRect(),y=(e.clientY-r.top)/r.height,x=(e.clientX-r.left)/r.width;
+      if(x>=0&&x<=1&&y>=0&&y<=1)turnHero();
+    }
+  });
+  box.addEventListener('pointercancel',()=>down=false);
+  box.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>8)setRaised(e.deltaY>0);},{passive:true});
+  $('swipeHint').onclick=()=>setRaised(!raised);
+  // swipe on the description panel too
+  const d=$('desc');let dy0=0;
+  d.addEventListener('pointerdown',e=>{dy0=e.clientY;});
+  d.addEventListener('pointerup',e=>{if(e.clientY-dy0>40)setRaised(false);});
+})();
+
+/* ---------- round 2: situation ---------- */
+let sitOrder=[];
+function sitStart(){
+  const start=Math.floor(Math.random()*SITS.length);sitOrder=SITS.slice(start).concat(SITS.slice(0,start));
+  $('reel').innerHTML=sitOrder.map(s=>`<div class="it"><div class="c"><img src="${img.sit(s)}" alt="" loading="lazy"></div></div>`).join('');
+  overlay('sitPick',true);$('reel').scrollLeft=0;sitCount();
+}
+function sitIdx(){const r=$('reel');return Math.round(r.scrollLeft/Math.max(1,r.clientWidth));}
+function sitCount(){$('count').textContent=(sitIdx()+1)+' / '+SITS.length;}
+$('reel').addEventListener('scroll',()=>{cancelAnimationFrame(sitCount.r);sitCount.r=requestAnimationFrame(sitCount);});
+function sitGo(d){const r=$('reel'),n=SITS.length,i=(sitIdx()+d+n)%n;r.scrollTo({left:i*r.clientWidth,behavior:Math.abs(i-sitIdx())>1?'auto':'smooth'});}
+$('arrL').onclick=()=>sitGo(-1);$('arrR').onclick=()=>sitGo(1);
+addEventListener('keydown',e=>{if(!$('sitPick').classList.contains('on'))return;if(e.key==='ArrowLeft')sitGo(-1);if(e.key==='ArrowRight')sitGo(1);});
+$('sitChoose').onclick=()=>{S.sit=sitOrder[sitIdx()];save();overlay('sitPick',false);renderTable();openView('sit');};
+
+/* ---------- round 3: resources ---------- */
+function resStart(){
+  if(!S.res){let a=rnd(RES),b;do{b=rnd(RES);}while(b===a);S.res={a,b,open:[0,0],keep:null,given:false};save();}
+  const p=$('pair');
+  p.innerHTML=['a','b'].map((k,i)=>`<div class="col"><div class="flip${S.res.open[i]?' open':''}" data-i="${i}"><div class="in"><div class="side back"><img src="${img.back('res')}" alt=""></div><div class="side front"><img src="${img.res(S.res[k])}" alt=""></div></div></div><button class="btn" data-k="${k}">${t('keep')}</button></div>`).join('');
+  p.querySelectorAll('.flip').forEach(f=>f.onclick=()=>{const i=+f.dataset.i;if(S.res.open[i])return;S.res.open[i]=1;save();f.classList.add('open');resReady();});
+  p.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{const k=b.dataset.k;S.res.keep=S.res[k];S.res.out=S.res[k==='a'?'b':'a'];save();overlay('resPick',false);giftStart();});
+  resReady();overlay('resPick',true);
+}
+function resReady(){const ok=S.res.open[0]&&S.res.open[1];$('pair').classList.toggle('ready',!!ok);resHint();}
+function resHint(){if(S.res)$('resHint').textContent=S.res.open[0]&&S.res.open[1]?t('res2'):t('res1');}
+
+/* ---------- gift: give ---------- */
+function giftLink(){
+  const u=new URL(location.href);u.search='';u.hash='gift='+S.res.out+(S.name?'&from='+encodeURIComponent(S.name):'');
+  if(S.lang==='en')u.search='?lang=en';
+  return u.toString();
+}
+function giftStart(){
+  $('giftImg').src=img.res(S.res.out);
+  const q=qrcode(0,'M');q.addData(giftLink());q.make();$('qr').innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true});
+  $('codeOut').textContent='STAR-'+S.res.out.slice(1);
+  overlay('giftOut',true);
+}
+$('shareBtn').onclick=async()=>{
+  const url=giftLink();
+  if(navigator.share){try{await navigator.share({text:t('shareText'),url});return;}catch(e){if(e.name==='AbortError')return;}}
+  try{await navigator.clipboard.writeText(url);toast(t('copied'));}catch(e){prompt('',url);}
+};
+$('givenBtn').onclick=()=>{S.res.given=true;save();overlay('giftOut',false);renderTable();};
+
+/* ---------- gift: receive ---------- */
+function receive(id,from){
+  if(!RES.includes(id))return false;
+  overlay('giftIn',true);const f=$('giftInFlip');f.classList.remove('open');f.querySelector('.front img').src=img.res(id);
+  if(S.gift){$('giftInH').textContent='';$('giftInBody').innerHTML=`<p class="gift-p">${t('alreadyGift')}</p><br><button class="btn" id="giftInOk">${t('giftOk')}</button>`;
+    f.classList.add('open');}
+  else{S.gift={id,from:from||''};save();$('giftInH').innerHTML=t('giftFrom')(esc(from));
+    $('giftInBody').innerHTML=`<button class="btn" id="giftInOk">${t('giftOk')}</button>`;
+    setTimeout(()=>f.classList.add('open'),500);}
+  $('giftInOk').onclick=()=>{overlay('giftIn',false);if(!S.tut){show('welcome');}else{show('table');renderTable();}};
+  return true;
+}
+function codeEntry(){
+  overlay('giftIn',true);const f=$('giftInFlip');f.classList.remove('open');
+  $('giftInH').textContent=t('codeH');
+  $('giftInBody').innerHTML=`<p class="gift-p">${t('codeP')}</p><br><div class="code-in"><input id="codeIn" placeholder="STAR-07" inputmode="text"><button class="btn" id="codeGo">${t('codeGo')}</button></div>`;
+  $('codeGo').onclick=()=>{const m=($('codeIn').value.match(/(\d{1,2})/)||[])[1];const id=m?'r'+m.padStart(2,'0'):'';
+    if(!RES.includes(id)){toast(t('badCode'));return;}receive(id,'');};
+}
+
+/* ---------- round 4: story ---------- */
+function storyCards(){return [img.hero(S.hero.slug),img.sit(S.sit),img.res(S.res.keep),S.gift?img.res(S.gift.id):img.back('res')];}
+function renderStory(){
+  if(!S.hero)return;
+  $('storyGrid').innerHTML=storyCards().map((s,i)=>`<button class="c" data-i="${i}"><div class="face"><img src="${s}" alt=""></div><label>${t('cardStory')[i]}</label></button>`).join('');
+  $('storyGrid').querySelectorAll('.c').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i===3&&!S.gift)return;openView(['hero','sit','res','gift'][i]);});
+  const a=$('scanA');a.href=SCAN[S.lang];a.textContent=SCAN[S.lang].replace('https://www.','');
+}
+$('backTable').onclick=()=>{show('table');renderTable();};
+async function buildStory(){
+  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const g=x.createRadialGradient(W/2,0,50,W/2,0,H*1.1);g.addColorStop(0,'#163C68');g.addColorStop(.45,'#0E2A4D');g.addColorStop(1,'#081B33');x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(let i=0;i<140;i++){x.fillStyle=`rgba(207,230,247,${Math.random()*.6+.1})`;x.beginPath();x.arc(Math.random()*W,Math.random()*H,Math.random()*1.8+.3,0,7);x.fill();}
+  x.textAlign='center';x.fillStyle='#AFFC41';x.font='600 34px -apple-system,system-ui,Arial';x.fillText(S.lang==='ru'?'МЫ — ЗВЁЗДНАЯ ПЫЛЬ':'WE ARE STARDUST',W/2,92);
+  x.fillStyle='#fff';x.font='300 56px -apple-system,system-ui,Arial';x.fillText(t('imgTitle')+(S.name?' · '+S.name:''),W/2,160);
+  const ims=await Promise.all(storyCards().map(s=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=s;})));
+  const gy=205,ch=(H-180-gy-26)/2,cw=ch*0.6364,gx=(W-cw*2-30)/2;
+  ims.forEach((im,i)=>{const cx=gx+(i%2)*(cw+30),cy=gy+Math.floor(i/2)*(ch+26);if(!im)return;
+    x.save();x.beginPath();x.roundRect(cx,cy,cw,ch,18);x.clip();const r=Math.max(cw/im.width,ch/im.height),w=im.width*r,h=im.height*r;x.drawImage(im,cx+(cw-w)/2,cy+(ch-h)/2,w,h);x.restore();});
+  const bottom=H-140;
+  // link + QR
+  const url=SCAN[S.lang],q=qrcode(0,'M');q.addData(url);q.make();const n=q.getModuleCount(),qs=110,cell=qs/n,qx=W-80-qs-16,qy=bottom+10;
+  x.fillStyle='#fff';x.beginPath();x.roundRect(qx-8,qy-8,qs+16,qs+16,10);x.fill();x.fillStyle='#0E2A4D';
+  for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect(qx+k*cell,qy+r*cell,cell+.5,cell+.5);
+  x.textAlign='left';x.fillStyle='#CFE6F7';x.font='400 30px -apple-system,system-ui,Arial';x.fillText(t('scanLine'),80,bottom+52);
+  x.fillStyle='#AFFC41';x.font='600 34px -apple-system,system-ui,Arial';x.fillText(url.replace('https://www.',''),80,bottom+98);
+  return c;}
+$('saveBtn').onclick=async()=>{const c=await buildStory();
+  c.toBlob(async b=>{
+    const file=new File([b],'stardust-story.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file]});return;}catch(e){if(e.name==='AbortError')return;}}
+    const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='stardust-story.png';a.click();toast(t('saved'));
+  },'image/png');
+};
+
+/* ---------- sky ---------- */
+(function sky(){const c=$('sky'),x=c.getContext('2d');let st=[];
+  function size(){c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;st=Array.from({length:90},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:(Math.random()*1.2+.3)*devicePixelRatio,p:Math.random()*6}));}
+  function draw(tm){x.clearRect(0,0,c.width,c.height);st.forEach(s=>{x.globalAlpha=.25+.35*Math.sin(tm/1400+s.p)**2;x.fillStyle='#CFE6F7';x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();});requestAnimationFrame(draw);}
+  addEventListener('resize',size);size();requestAnimationFrame(draw);})();
+
+/* ---------- start ---------- */
+applyLang();
+(function boot(){
+  const h=new URLSearchParams(location.hash.slice(1)),gid=h.get('gift');
+  if(gid){history.replaceState(null,'',location.pathname+location.search);show(S.tut?'table':'welcome');renderTable();receive(gid,h.get('from'));return;}
+  if(!S.tut)show('welcome');else{show('table',()=>renderTable());setTimeout(deal,30);}
+})();
+</script>
+</body>
+</html>
