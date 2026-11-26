@@ -214,18 +214,45 @@ function finish(){
 let origin=null;
 // RU result: the words and the bot link of the live quizru.html, in the new design
 const RU_SLUG={"Сириус":"siriusian","Плеяды":"pleiadian","Лемурия":"lemurian","Кассиопея":"cassiopeian","Прокси":"procyonian","Процион":"procyonian","Лира":"lyran","Арктур":"arcturian","Орион":"orion","Вега":"vegan","Зета":"zeta-reticulan","Зета Ретикули":"zeta-reticulan","Эпсилон Эридана":"epsilon-eridan","Атлантида":"atlantean","Андромеда":"andromedan","Полярис":"polarisian","Нибиру":"nibiruan","Египет":"egyptian","Титан":"titanian","Голубые Авианы":"blue-avian","Тау Кита":"tau-cetian","Альдебаран":"aldebaran","Альфа Центавра":"centaurian","Геркулес":"herculean","Ануннаки":"anunnaki","Гиперборея":"hyperborean"};
+// Russian names of the live bondru.html
+const RU_TYPES=[["Siriusian","Сириус"],["Pleiadian","Плеяды"],["Lemurian","Лемурия"],["Cassiopeian","Кассиопея"],["Procyonian","Прокси"],["Lyran","Лира"],["Arcturian","Арктур"],["Orion","Орион"],["Vegan","Вега"],["Zeta Reticulan","Зета"],["Epsilon Eridan","Эпсилон Эридана"],["Atlantean","Атлантида"],["Andromedan","Андромеда"],["Polarisian","Полярис"],["Nibiruan","Нибиру"],["Egyptian","Египет"],["Titanian","Титан"],["Blue Avian","Голубые Авианы"],["Tau Cetian","Тау Кита"],["Aldebaran","Альдебаран"],["Centaurian","Альфа Центавра"],["Herculean","Геркулес"],["Anunnaki","Ануннаки"],["Hyperborean","Гиперборея"]];
 function resultRu(){
   if(LIVE&&window.fbq)fbq('track','Lead');
-  const o=origin,s=RU_SLUG[o.name]||'';
+  const o=origin,s=RU_SLUG[o.name]||'',me=(RU_TYPES.find(x=>slug(x[0])===s)||[])[1];
   $('result').innerHTML=`<div class="res-hero dark"><div class="wrap">
     <div><p class="res-eyebrow">Ваш звёздный тип</p><h1 class="h1" tabindex="-1">${esc(o.name)}</h1><p class="lead">Ваше чтение готово: основная частота, творческая сила, точка роста и 8 признаков вашего типа.</p>
       <a class="btn btn-lime big" id="botBtn" href="https://t.me/starseedsoul_bot?start=${s}" target="_blank" rel="noopener">Полное чтение в Telegram!</a>
       <p class="note"><button type="button" class="link-btn" id="again">Пройти заново</button></p></div>
     ${s?`<div class="pair"><img src="origins/${s}-f.jpg" alt=""><img src="origins/${s}-m.jpg" alt=""></div>`:''}
-  </div></div>`;
+  </div></div>
+  <div class="bond" id="bond">
+    <h2>Калькулятор связи</h2>
+    <div class="bond-row">
+      <div class="bond-f"><label for="b1">Первый звёздный тип</label><select id="b1">${RU_TYPES.map(([e,r])=>`<option value="${e}"${r===me?' selected':''}>${r}</option>`).join('')}</select></div>
+      <span class="bond-x" aria-hidden="true">✦</span>
+      <div class="bond-f"><label for="b2">Второй звёздный тип</label><select id="b2"><option value="">Выберите</option>${RU_TYPES.map(([e,r])=>`<option value="${e}">${r}</option>`).join('')}</select></div>
+      <button class="btn btn-blue" id="bgo" disabled>Показать связь</button>
+    </div>
+    <div id="bres" aria-live="polite"></div>
+  </div>`;
+  const b1=$('b1'),b2=$('b2'),bres=$('bres'),ru=e=>(RU_TYPES.find(x=>x[0]===e)||[e,e])[1];
+  const clear=()=>{$('bgo').disabled=!b2.value;bres.innerHTML='';};
+  b1.onchange=clear;b2.onchange=clear;
+  $('bgo').onclick=async()=>{
+    const x=b1.value,y=b2.value;if(!y)return;
+    bres.innerHTML='<p class="bond-send">…</p>';
+    try{
+      // same request as the live bondru.html: English names, Russian set
+      const r=await fetch(SB+'/functions/v1/origin-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bond:[x,y],set:'ru'})});
+      if(!r.ok)throw 0;const v=await r.json();
+      bres.innerHTML=`<div class="bond-card"><p class="bond-who">${esc(ru(x))} ✦ ${esc(ru(y))}</p><h3>${esc(v.verdict)}</h3><p>${esc(v.why)}</p><a class="btn btn-lime" href="https://t.me/starseedsoul_bot?start=para" target="_blank" rel="noopener">Узнать про вашу пару в Telegram</a></div>`;
+      bres.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }catch(e){bres.innerHTML='<p class="bond-send">Портал мигнул. Проверьте соединение и попробуйте ещё раз.</p>';}
+  };
   $('botBtn').onclick=()=>{if(LIVE&&window.fbq)fbq('trackCustom','OpenBotRU',{origin:s});};
   $('again').onclick=()=>location.reload();
   show('result');
+  if(location.hash==='#bond')setTimeout(()=>$('bond').scrollIntoView({block:'start'}),400);
 }
 $('ecForm').addEventListener('submit',async e=>{
   e.preventDefault();
