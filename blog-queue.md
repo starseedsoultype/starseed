@@ -18,11 +18,11 @@ To change the order, move lines. To skip an article, delete its line.
 - [x] why-did-my-twin-flame-block-me | Why Did My Twin Flame Block Me? | Why did my twin flame block me?
 - [x] said-they-love-me-then-rejected-me | They Said They Love Me, Then Rejected Me | Why did they say they love me and then reject me? / Why did they change their feelings so suddenly?
 - [x] is-my-twin-flame-afraid-of-the-connection | Is My Twin Flame Afraid of the Connection? | Is my twin flame afraid of the connection? / Are they confused about their feelings?
+- [x] why-does-this-connection-feel-so-intense | Why Does This Connection Feel So Intense? | Why can't I stop thinking about my twin flame? / Why does this connection feel so intense?
 
 ## Queue
 Broad lines (from 26.11.2026, Olesya's plan): every second article is NOT about twin flames. In those, do not use the words twin flame, do not use the connection-frequency section or the Bond CTA unless the topic is a pair; close with the Origin Scan (quiz.html). The audience: understanding yourself (shadow, growth point) and the people around you (children, parents, colleagues, clients). Never expose the typology mechanics.
 
-- [ ] why-does-this-connection-feel-so-intense | Why Does This Connection Feel So Intense? | Why can't I stop thinking about my twin flame? / Why does this connection feel so intense?
 - [ ] types-of-starseeds | Types of Starseeds: How to Recognize Yours | What are the different types of starseeds? / How do I know which starseed type I am? / What are the signs of each starseed origin?
 - [ ] twin-flame-dreams-meaning | Twin Flame Dreams: What They Mean | What do dreams about my twin flame mean?
 - [ ] what-is-my-shadow-side | What Is My Shadow Side, and How Do I See It? | What is my shadow side? / How do I find my shadow self? / Why do other people's traits annoy me so much?
