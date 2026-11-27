@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Partner Program · Starseed Soul</title>
 <meta name="description" content="Share the Origin Scanner with your audience. They get 10% off their Full Origin Reading, you earn $6 for every confirmed paid Full Origin Reading.">
 <meta name="robots" content="noindex">
-<!-- redesign preview. Before publishing: put back pixel.js, drop noindex -->
+<!-- redesign preview. Before publishing: drop noindex -->
 <link rel="icon" href="https://www.starseedsoultype.com/icons/handshake-32.png" sizes="32x32">
 <link rel="icon" href="https://www.starseedsoultype.com/icons/handshake.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="https://www.starseedsoultype.com/icons/handshake-180.png">
@@ -351,7 +359,7 @@
       if (!res.ok) throw new Error('status ' + res.status);
       form.style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-      try { fbq('track', 'Lead', { content_name: 'partner_application' }); } catch(_){}
+      try { if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'partner_application' }); } catch(_){}
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Send application';
       showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');

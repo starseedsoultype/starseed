@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -497,7 +502,7 @@
         </ul>
       </div>
       <div class="product-action">
-        <a href="https://cal.com/starseedsoul-typology-nctndd/starseed" class="btn-card" onclick="if(typeof fbq!=='undefined')fbq('trackCustom','ss_clicked_book',{page:'/ru',session:'origin'})">Записаться</a>
+        <a href="https://cal.com/starseedsoul-typology-nctndd/starseed" class="btn-card" onclick="if(typeof gtag==='function')gtag('event','book_click',{page:'/ru',session:'origin'})">Записаться</a>
       </div>
     </div>
 
@@ -513,7 +518,7 @@
         </ul>
       </div>
       <div class="product-action">
-        <a href="https://cal.com/starseedsoul-typology-nctndd/45min" class="btn-card" onclick="if(typeof fbq!=='undefined')fbq('trackCustom','ss_clicked_book',{page:'/ru',session:'twin_flame'})">Записаться</a>
+        <a href="https://cal.com/starseedsoul-typology-nctndd/45min" class="btn-card" onclick="if(typeof gtag==='function')gtag('event','book_click',{page:'/ru',session:'twin_flame'})">Записаться</a>
       </div>
     </div>
 

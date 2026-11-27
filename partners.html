@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partner Program · Starseed Soul</title>
@@ -495,7 +500,7 @@ footer a { color: var(--text4); }
       if (!res.ok) throw new Error('status ' + res.status);
       form.style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-      try { fbq('track', 'Lead', { content_name: 'partner_application' }); } catch(_){}
+      try { if (typeof gtag === 'function') gtag('event', 'generate_lead', { content_name: 'partner_application' }); } catch(_){}
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Send application';
       showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');

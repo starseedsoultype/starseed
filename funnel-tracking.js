@@ -1,7 +1,7 @@
 (function () {
   function track(eventName) {
-    if (window.fbq) {
-      window.fbq('trackCustom', eventName, { page: window.location.pathname });
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, { page: window.location.pathname });
     }
   }
 

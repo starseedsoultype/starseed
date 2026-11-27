@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Workshop · StarSeed Intelligence</title>
 <meta name="description" content="Pre-register for the free StarSeedSoul workshop. Study the system of 24 Origins, relationship frequencies, and soul structure.">
 <meta name="robots" content="noindex">
-<!-- redesign preview. Before publishing: put back pixel.js, drop noindex -->
+<!-- redesign preview. Before publishing: drop noindex -->
 <link rel="icon" href="/new/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="si.css">
 <link rel="stylesheet" href="pages.css">
@@ -42,7 +50,7 @@
     <div class="w-badge">Free · Pre-Registration Open</div>
     <h1>Understand Your <span>Soul Origin</span>, and the People You Attract</h1>
     <p class="lead">A free workshop on the 24 Soul Origins, relationship frequencies, and why certain connections feel like destiny, and others like lessons you keep repeating.</p>
-    <a class="btn btn-lime" href="https://forms.gle/hRyoU39FJhwZKexq7" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
+    <a class="btn btn-lime" href="https://forms.gle/hRyoU39FJhwZKexq7" onclick="if(typeof gtag==='function')gtag('event','workshop_preregister')">Pre-Register Now</a>
   </div>
 </section>
 <section class="w-sec">
@@ -85,7 +93,7 @@
     <div class="w-badge">Free Workshop · Pre-Registration</div>
     <h2 class="h2">Save your place, it's free</h2>
     <p>The workshop is free. Pre-registration secures your place and ensures you receive all materials and scheduling details as soon as the workshop dates are confirmed.</p>
-    <a class="btn btn-lime" href="https://forms.gle/hRyoU39FJhwZKexq7" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
+    <a class="btn btn-lime" href="https://forms.gle/hRyoU39FJhwZKexq7" onclick="if(typeof gtag==='function')gtag('event','workshop_preregister')">Pre-Register Now</a>
     <p class="small">Pre-registration does not commit you to attending. You will be notified when the workshop is scheduled.</p>
   </div>
 </section>

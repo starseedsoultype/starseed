@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -233,7 +238,7 @@ footer { border-top:1px solid var(--border); padding:40px 24px; text-align:cente
   <div class="hero-sub">
     A free workshop on the 24 Soul Origins, relationship frequencies, and why certain connections feel like destiny — and others like lessons you keep repeating.
   </div>
-  <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="hero-cta" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
+  <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="hero-cta" onclick="if(typeof gtag==='function')gtag('event','workshop_preregister')">Pre-Register Now</a>
 </section>
 
 <div class="divider"></div>
@@ -336,7 +341,7 @@ footer { border-top:1px solid var(--border); padding:40px 24px; text-align:cente
     <div class="cta-body">
       The workshop is free. Pre-registration secures your place and ensures you receive all materials and scheduling details as soon as the workshop dates are confirmed.
     </div>
-    <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-gold" onclick="if(typeof fbq!=='undefined')fbq('track','CompleteRegistration')">Pre-Register Now</a>
+    <a href="https://forms.gle/hRyoU39FJhwZKexq7" class="btn-gold" onclick="if(typeof gtag==='function')gtag('event','workshop_preregister')">Pre-Register Now</a>
     <div class="cta-note">Pre-registration does not commit you to attending. You will be notified when the workshop is scheduled.</div>
   </div>
 </section>

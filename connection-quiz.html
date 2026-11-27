@@ -2,9 +2,14 @@
 
 <html lang="en">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -567,11 +572,8 @@ to { opacity: 0; transform: translateY(-12px); }
 </div>
 
 <script>
-function mcEvent(eventName) {
-  if (window.fbq) window.fbq('trackCustom', eventName, { page: window.location.pathname });
-  if (window.MC_PIXEL && typeof window.MC_PIXEL.fireLogConversionEvent === 'function') {
-    window.MC_PIXEL.fireLogConversionEvent(eventName);
-  }
+function gaEvent(eventName) {
+  if (typeof gtag === 'function') gtag('event', eventName, { page: window.location.pathname });
 }
 let _startedFired = false, _q1Fired = false, _q2Fired = false, _q3Fired = false, _resultFired = false;
 
@@ -777,9 +779,9 @@ function render(key, animate = true) {
     answeredSteps = 3;
     if (!_resultFired) {
       _resultFired = true;
-      mcEvent('ss_connection_result_viewed');
+      gaEvent('ss_connection_result_viewed');
       const _rm = {result_ft:'ss_connection_result_frequency_twins',result_er:'ss_connection_result_eternal_reflection',result_ts:'ss_connection_result_twin_stars',result_cm:'ss_connection_result_celestial_mentor',result_mp:'ss_connection_result_mirror_portal',result_sa:'ss_connection_result_star_alchemy',result_sc:'ss_connection_result_shadow_contracts',result_bh:'ss_connection_result_black_holes',result_kb:'ss_connection_result_karmic_bond',result_cf:'ss_connection_result_cosmic_flow'};
-      if (_rm[key]) mcEvent(_rm[key]);
+      if (_rm[key]) gaEvent(_rm[key]);
     }
     area.innerHTML = `
       <div class="progress" style="animation-delay:0s">
@@ -833,7 +835,7 @@ function render(key, animate = true) {
 
         <div id="next-steps-section" style="margin-top:28px;">
           <p style="font-size:14px;color:rgba(232, 228, 223,0.7);text-align:center;margin-bottom:20px;line-height:1.7;">Want to understand this connection more deeply, with me?</p>
-          <a href="clarity.html?utm_source=quiz&utm_medium=connection_quiz&utm_campaign=clarity" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="if(typeof fbq!=='undefined')fbq('trackCustom','ss_connection_clicked_book'); mcEvent('ss_connection_clicked_calendly'); track('calendly_clicked');">Book a Personal Session ✦ $111</a>
+          <a href="clarity.html?utm_source=quiz&utm_medium=connection_quiz&utm_campaign=clarity" target="_blank" class="cta-button" style="text-decoration:none;display:block;margin-bottom:12px;" onclick="gaEvent('ss_connection_clicked_calendly'); track('calendly_clicked');">Book a Personal Session ✦ $111</a>
           <p style="font-size:11px;text-align:center;margin-top:18px;line-height:2;letter-spacing:0.05em;">
             <a href="https://twinfrequency.io/library.html" target="_blank" style="color:rgba(201, 169, 110,0.55);text-decoration:none;border-bottom:1px solid rgba(201, 169, 110,0.2);">Explore all 10 connection types</a>
             &nbsp;&middot;&nbsp;
@@ -854,7 +856,7 @@ function render(key, animate = true) {
         const btn = form.querySelector('button[type="submit"]');
         btn.textContent = 'Sending...';
         btn.disabled = true;
-        mcEvent('ss_connection_email_submitted');
+        gaEvent('ss_connection_email_submitted');
         track('email_submitted');
         try {
           const emailInput = form.querySelector('input[type="email"]');
@@ -924,7 +926,7 @@ function choose(nextKey) {
 }
 
 function restart() {
-  mcEvent('ss_connection_retake_clicked');
+  gaEvent('ss_connection_retake_clicked');
   _startedFired = false; _q1Fired = false; _q2Fired = false; _q3Fired = false; _resultFired = false;
   const area = document.getElementById('quiz-area');
   const card = area.querySelector('.result-card');
@@ -957,8 +959,8 @@ function track(event, resultKey) {
 
 // Track page visit on load
 track('quiz_open');
-mcEvent('ss_connection_quiz_page_visited');
-mcEvent('ss_connection_page_visited');
+gaEvent('ss_connection_quiz_page_visited');
+gaEvent('ss_connection_page_visited');
 
 // Library link tracking (delegate)
 document.getElementById('quiz-area').addEventListener('click', function(e) {
@@ -967,7 +969,7 @@ document.getElementById('quiz-area').addEventListener('click', function(e) {
   var href = a.getAttribute('href') || '';
   var text = (a.innerText || '').trim();
   if (href.indexOf('flipbook.html') !== -1 || href.indexOf('library.html') !== -1 || /Read full description/i.test(text)) {
-    mcEvent('ss_connection_clicked_library');
+    gaEvent('ss_connection_clicked_library');
     track('library_clicked');
   }
 }, true);
@@ -977,22 +979,22 @@ const _origChoose = choose;
 window.choose = function(nextKey) {
   if (currentQ === 'q1' && !_startedFired) {
     _startedFired = true;
-    mcEvent('ss_connection_quiz_started');
+    gaEvent('ss_connection_quiz_started');
     track('quiz_started');
   }
   if (currentQ === 'q1' && !_q1Fired) {
     _q1Fired = true;
-    mcEvent('ss_connection_q1_answered');
+    gaEvent('ss_connection_q1_answered');
     track('q1_answered');
   }
   if ((currentQ === 'q2a' || currentQ === 'q3' || currentQ === 'q4') && !_q2Fired) {
     _q2Fired = true;
-    mcEvent('ss_connection_quiz_q2_answered');
+    gaEvent('ss_connection_quiz_q2_answered');
     track('q2_answered');
   }
   if ((currentQ === 'q2b' || currentQ === 'q2c') && !_q3Fired) {
     _q3Fired = true;
-    mcEvent('ss_connection_q3_answered');
+    gaEvent('ss_connection_q3_answered');
     track('q3_answered');
   }
   if (nextKey.startsWith('result_')) { track('quiz_complete', nextKey); }

@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+
 
 <!-- Google Analytics 4 · cookieless -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
@@ -711,7 +709,7 @@ Cal.ns.clarity("ui", { theme: "dark", cssVarsPerTheme: { dark: { "cal-brand": "#
        has not loaded yet. */
     var booking = e.target.closest('a[href*="cal.com/starseedsoul"]');
     if(booking){
-      if(typeof fbq === 'function') fbq('trackCustom', 'ss_clicked_book', { page: '/clarity' });
+      send('book_click', { page: '/clarity' });
       if(window.Cal && Cal.ns && Cal.ns.clarity){
         e.preventDefault();
         Cal.ns.clarity('modal', { calLink: withTags(CAL_LINK), config: { layout: 'month_view', theme: 'dark' } });
@@ -725,7 +723,6 @@ Cal.ns.clarity("ui", { theme: "dark", cssVarsPerTheme: { dark: { "cal-brand": "#
     Cal.ns.clarity('on', { action: 'bookerViewed', callback: function(){ send('calendly_opened'); } });
     Cal.ns.clarity('on', { action: 'bookingSuccessfulV2', callback: function(){
       send('calendly_scheduled');
-      if(typeof fbq === 'function') fbq('track', 'Schedule');
     } });
   }
 })();

@@ -9,9 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
 </script>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -367,9 +365,6 @@ footer a { color:var(--text3); text-decoration:none; }
   function ev(name, params){
     try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch(_){}
   }
-  function fb(name, params){
-    try { if (typeof fbq === 'function') fbq('trackCustom', name, params || {}); } catch(_){}
-  }
 
   // Carry the visitor's UTM tags into the Scan, default to this page
   var inParams = new URLSearchParams(location.search);
@@ -380,13 +375,11 @@ footer a { color:var(--text3); text-decoration:none; }
     a.href = 'quiz.html?' + out.toString();
     a.addEventListener('click', function(){
       ev('portal_enter', { where: a.dataset.where });
-      fb('ss_portal_enter', { page: '/portal', where: a.dataset.where });
     });
   });
 
   document.getElementById('book-btn').addEventListener('click', function(){
     ev('book_click', { page: '/portal', session: 'origin' });
-    fb('ss_clicked_book', { page: '/portal', session: 'origin' });
   });
 
 
@@ -477,7 +470,6 @@ footer a { color:var(--text3); text-decoration:none; }
       form.style.display = 'none';
       document.getElementById('q-success').style.display = 'block';
       ev('question_sent', { page: '/portal' });
-      try { if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'portal_question' }); } catch(_){}
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Send my question';
       showError('Something went wrong. Please try again, or write to timsocion@gmail.com.');

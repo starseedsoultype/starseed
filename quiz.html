@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -340,15 +345,12 @@ body {
 <div id="result"></div>
 
 <script>
-function mcEvent(eventName) {
-  if (window.fbq) window.fbq('trackCustom', eventName, { page: window.location.pathname });
-  if (window.MC_PIXEL && typeof window.MC_PIXEL.fireLogConversionEvent === 'function') {
-    window.MC_PIXEL.fireLogConversionEvent(eventName);
-  }
+function gaEvent(eventName) {
+  if (typeof gtag === 'function') gtag('event', eventName, { page: window.location.pathname });
 }
 
 function openGumroadTracked(url){
-  try{mcEvent('ss_origin_clicked_gumroad');}catch(e){}
+  try{gaEvent('ss_origin_clicked_gumroad');}catch(e){}
   setTimeout(function(){window.location.href=url;},600);
 }
 
@@ -491,7 +493,7 @@ function calculateResult(){
     resolvedType=r.result;
     // Opened from the Telegram bot: the person is already a subscriber,
     // so the email step is skipped and the result is shown straight away.
-    if(_tgToken){mcEvent('ss_origin_quiz_completed');captureOriginForBot();showResult();}
+    if(_tgToken){gaEvent('ss_origin_quiz_completed');captureOriginForBot();showResult();}
     else if(_oliToken){captureOriginForOli();showResult();}
     else showEmailCapture();
   }).catch(function(){_scanBusy=false;alert('The portal flickered. Please check your connection and try again.');});
@@ -512,7 +514,7 @@ function startQuiz(){
   document.getElementById('quiz').style.display='block';
   document.getElementById('progressWrap').style.display='block';
   current=0;_shownStep=null;renderQuestion();
-  mcEvent('ss_origin_quiz_started');
+  gaEvent('ss_origin_quiz_started');
 }
 
 function updateProgress(){
@@ -550,7 +552,7 @@ function renderQuestion(){
   if(current>=QUESTIONS.length){calculateResult();return;}
   const q=QUESTIONS[current];
   updateProgress();
-  if(current===3&&!_halfwayFired){_halfwayFired=true;mcEvent('ss_origin_quiz_halfway');}
+  if(current===3&&!_halfwayFired){_halfwayFired=true;gaEvent('ss_origin_quiz_halfway');}
   let html=`<div class="q-block"><div class="q-num">Question ${current+1} of ${QUESTIONS.length}</div><div class="q-text" tabindex="-1">${q.text}</div>`;
   if(q.type==="force4"){
     html+=`<div class="opts-force4">`;
@@ -604,7 +606,7 @@ function renderTiebreaker(tb){
 
 function selectF4(qId,idx){
   answers[qId]=idx;
-  if(qId===1) mcEvent('ss_origin_quiz_q1_answered');
+  if(qId===1) gaEvent('ss_origin_quiz_q1_answered');
   const q=QUESTIONS.find(q=>q.id===qId);
   if(q&&q.teaser){
     document.getElementById('quiz').innerHTML=`<div class="teaser-block"><div class="teaser-line">${q.teaser}</div></div>`;
@@ -652,8 +654,8 @@ function showEmailCapture(){
   document.getElementById('progressWrap').style.display='none';
   document.getElementById('email-capture').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
-  mcEvent('ss_origin_quiz_completed');
-  mcEvent('ss_origin_email_step_viewed');
+  gaEvent('ss_origin_quiz_completed');
+  gaEvent('ss_origin_email_step_viewed');
   const t=getType();
   document.getElementById('ecSoulType').value=t.name;
   const form=document.getElementById('ecForm');
@@ -667,7 +669,7 @@ function showEmailCapture(){
     const btn=nf.querySelector('.ec-btn');btn.textContent='Opening portal...';btn.disabled=true;
     try{await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(nf)});}catch(e){}
     try{fetch(_SB_URL+'/rest/v1/api_leads',{method:'POST',headers:{'apikey':_SB_KEY,'Authorization':'Bearer '+_SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({email:email,source:'portal',interest:nf.querySelector('[name="soul_type"]')?.value||null,session_id:_sid})});}catch(e){}
-    mcEvent('ss_origin_email_submitted');
+    gaEvent('ss_origin_email_submitted');
     document.getElementById('email-capture').style.display='none';
     showResult();
   });
@@ -746,8 +748,7 @@ function showResultForOrigin(origin,options){
 }
 
 function showResult(){
-  if(typeof fbq!=='undefined')fbq('track','Lead');
-  mcEvent('ss_origin_result_viewed');
+  gaEvent('ss_origin_result_viewed');
   const type=getType();
   saveOriginResult(type);
   showResultForOrigin(type,{restored:false});
@@ -768,7 +769,7 @@ function downloadShareCard(typeName){
 
 function retake(){
   clearSavedOriginResult();
-  mcEvent('ss_origin_retake_clicked');
+  gaEvent('ss_origin_retake_clicked');
   current=0;answers={};tbQueue=[];inTiebreaker=false;_halfwayFired=false;
   document.getElementById('result').style.display='none';
   document.getElementById('progressWrap').style.display='none';
@@ -857,7 +858,7 @@ function restoreResultOnLoad(){
     document.getElementById('email-capture').style.display='none';
     document.getElementById('progressWrap').style.display='none';
     showResultForOrigin(origin,{restored:true});
-    mcEvent('ss_origin_result_restored');
+    gaEvent('ss_origin_result_restored');
   }).catch(function(){/* сервер молчит — остаёмся на интро */});
   return true;
 }

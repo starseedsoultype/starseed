@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -688,7 +693,7 @@ const ORIGIN_SLUGS = {
 const BOT_URL = 'https://t.me/starseedsoul_bot';
 
 function showResult() {
-  if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+  if (typeof gtag === 'function') gtag('event', 'generate_lead', { page: '/quizru' });
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
   const box = document.getElementById('result');
@@ -720,7 +725,7 @@ function showResult() {
     </div>`;
 
   document.getElementById('botBtn').addEventListener('click', function(){
-    if (typeof fbq !== 'undefined') fbq('trackCustom', 'OpenBotRU', { origin: slug });
+    if (typeof gtag === 'function') gtag('event', 'open_bot_ru', { origin: slug });
   });
   document.getElementById('saveBtn').addEventListener('click', function(){ saveStory(type.name, dateStr); });
   window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your Starseed Soul Origin · StarSeed Intelligence</title>
 <meta name="description" content="28 questions, 7 minutes. See which of the 24 Origins is yours.">
 <meta name="robots" content="noindex">
-<!-- Preview of the full 28-question scan. Before replacing quiz-full.html: GA4, pixel.js, og tags from the live quiz.html; remove noindex. -->
+<!-- Preview of the full 28-question scan. Before replacing quiz-full.html: og tags from the live quiz.html; remove noindex. -->
 <link rel="icon" href="/new/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="si.css">
 <link rel="stylesheet" href="scan.css">
@@ -80,7 +88,7 @@ const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6
 const sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
 const params=new URLSearchParams(location.search);
 const tg=params.get('tg')||'', oli=params.get('oli')||'';
-function ev(n){if(LIVE&&window.fbq)fbq('trackCustom',n,{page:location.pathname});}
+function ev(n){if(LIVE&&window.gtag)gtag('event',n,{page:location.pathname});}
 function post(path,body,auth){
   if(!LIVE)return;
   const h={'Content-Type':'application/json'};
@@ -217,7 +225,7 @@ $('ecForm').addEventListener('submit',async e=>{
 
 async function reveal(){
   origin=await calm(origin);
-  if(LIVE&&window.fbq)fbq('track','Lead');
+  if(LIVE&&window.gtag)gtag('event','generate_lead');
   ev('ss_origin_result_viewed');
   store.set(origin.name);
   history.replaceState(null,'',location.pathname+'?origin='+encodeURIComponent(slug(origin.name)));

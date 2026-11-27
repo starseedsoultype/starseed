@@ -9,9 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
 </script>
-<!-- Meta Pixel Code (consent aware, see pixel.js) -->
-<script src="pixel.js"></script>
-<!-- End Meta Pixel Code -->
+
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +102,6 @@ footer a { color:var(--text3); text-decoration:none; }
 <script>
 document.getElementById('dl').addEventListener('click', function () {
   if (typeof gtag === 'function') gtag('event', 'book_download', { book: 'just_because' });
-  if (typeof fbq === 'function') fbq('trackCustom', 'BookDownload', { book: 'just_because' });
 });
 </script>
 </body>

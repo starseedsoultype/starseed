@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics 4 (no cookies) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-70C5S50WDL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-70C5S50WDL', { client_storage: 'none' });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Origin Scan · StarSeed Intelligence</title>
 <meta name="description" content="7 questions, 3 minutes. See which of the 24 Origins is yours.">
 <meta name="robots" content="noindex">
-<!-- Preview. Before replacing quiz.html: GA4, pixel.js, og tags from the live quiz.html; remove noindex. -->
+<!-- Preview. Before replacing quiz.html: og tags from the live quiz.html; remove noindex. -->
 <link rel="icon" href="/new/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="si.css">
 <link rel="stylesheet" href="scan.css">
@@ -88,7 +96,7 @@ const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6
 const sid=Math.random().toString(36).slice(2)+Date.now().toString(36);
 const params=new URLSearchParams(location.search);
 const tg=params.get('tg')||'', oli=params.get('oli')||'';
-function ev(n){if(LIVE&&window.fbq)fbq('trackCustom',n,{page:location.pathname});}
+function ev(n){if(LIVE&&window.gtag)gtag('event',n,{page:location.pathname});}
 function post(path,body,auth){
   if(!LIVE)return;
   const h={'Content-Type':'application/json'};
@@ -217,7 +225,7 @@ const RU_SLUG={"Сириус":"siriusian","Плеяды":"pleiadian","Лемур
 // Russian names of the live bondru.html
 const RU_TYPES=[["Siriusian","Сириус"],["Pleiadian","Плеяды"],["Lemurian","Лемурия"],["Cassiopeian","Кассиопея"],["Procyonian","Прокси"],["Lyran","Лира"],["Arcturian","Арктур"],["Orion","Орион"],["Vegan","Вега"],["Zeta Reticulan","Зета"],["Epsilon Eridan","Эпсилон Эридана"],["Atlantean","Атлантида"],["Andromedan","Андромеда"],["Polarisian","Полярис"],["Nibiruan","Нибиру"],["Egyptian","Египет"],["Titanian","Титан"],["Blue Avian","Голубые Авианы"],["Tau Cetian","Тау Кита"],["Aldebaran","Альдебаран"],["Centaurian","Альфа Центавра"],["Herculean","Геркулес"],["Anunnaki","Ануннаки"],["Hyperborean","Гиперборея"]];
 function resultRu(){
-  if(LIVE&&window.fbq)fbq('track','Lead');
+  if(LIVE&&window.gtag)gtag('event','generate_lead');
   const o=origin,s=RU_SLUG[o.name]||'',me=(RU_TYPES.find(x=>slug(x[0])===s)||[])[1];
   $('result').innerHTML=`<div class="res-hero dark"><div class="wrap">
     <div><p class="res-eyebrow">Ваш звёздный тип</p><h1 class="h1" tabindex="-1">${esc(o.name)}</h1><p class="lead">Ваше чтение готово: основная частота, творческая сила, точка роста и 8 признаков вашего типа.</p>
@@ -249,7 +257,7 @@ function resultRu(){
       bres.scrollIntoView({behavior:'smooth',block:'nearest'});
     }catch(e){bres.innerHTML='<p class="bond-send">Портал мигнул. Проверьте соединение и попробуйте ещё раз.</p>';}
   };
-  $('botBtn').onclick=()=>{if(LIVE&&window.fbq)fbq('trackCustom','OpenBotRU',{origin:s});};
+  $('botBtn').onclick=()=>{if(LIVE&&window.gtag)gtag('event','open_bot_ru',{origin:s});};
   $('again').onclick=()=>location.reload();
   show('result');
   if(location.hash==='#bond')setTimeout(()=>$('bond').scrollIntoView({block:'start'}),400);
@@ -268,7 +276,7 @@ $('ecForm').addEventListener('submit',async e=>{
 
 async function reveal(){
   origin=await calm(origin);
-  if(LIVE&&window.fbq)fbq('track','Lead');
+  if(LIVE&&window.gtag)gtag('event','generate_lead');
   ev('ss_origin_result_viewed');
   store.set(origin.name);
   history.replaceState(null,'',location.pathname+'?origin='+encodeURIComponent(slug(origin.name)));
